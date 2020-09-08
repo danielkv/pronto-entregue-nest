@@ -6,9 +6,11 @@ import { CompanyMeta } from './entities/company.meta.entity';
 import { CompanyPaymentMethod } from './entities/company.payment.method.entity';
 import { CompanySection } from './entities/company.type.entity';
 import { CompanyUser } from './entities/company.user.entity';
+import { CompanyController } from './company.controller';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Company, CompanyMeta, CompanyPaymentMethod, CompanySection, CompanyUser])],
 	providers: [CompanyService],
+	controllers: [CompanyController],
 })
 export class CompanyModule { }

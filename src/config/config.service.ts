@@ -1,68 +1,66 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import path from 'path';
 
-import 'dotenv/config'
+import 'dotenv/config';
 
 class ConfigService {
+    constructor(private env: { [k: string]: string | undefined }) {}
 
-	constructor(private env: { [k: string]: string | undefined }) { }
+    private getValue(key: string, throwOnMissing = true): string {
+        const value = this.env[key];
+        if (typeof value === 'undefined' && throwOnMissing) {
+            throw new Error(`config error - missing env.${key}`);
+        }
 
-	private getValue(key: string, throwOnMissing = true): string {
-		const value = this.env[key];
-		if (typeof value === 'undefined' && throwOnMissing) {
-			throw new Error(`config error - missing env.${key}`);
-		}
+        return value;
+    }
 
-		return value;
-	}
+    public ensureValues(keys: string[]) {
+        keys.forEach(k => this.getValue(k, true));
+        return this;
+    }
 
-	public ensureValues(keys: string[]) {
-		keys.forEach(k => this.getValue(k, true));
-		return this;
-	}
+    public getPort() {
+        return this.getValue('PORT', true);
+    }
 
-	public getPort() {
-		return this.getValue('PORT', true);
-	}
+    public isProduction() {
+        const mode = this.getValue('NODE_ENV', false);
+        return mode === 'production';
+    }
 
-	public isProduction() {
-		const mode = this.getValue('NODE_ENV', false);
-		return mode === 'production';
-	}
+    public getTypeOrmConfig(): TypeOrmModuleOptions {
+        return {
+            type: 'mysql',
 
-	public getTypeOrmConfig(): TypeOrmModuleOptions {
-		return {
-			type: 'mysql',
+            host: this.getValue('MYSQL_HOST'),
+            port: parseInt(this.getValue('MYSQL_PORT')),
+            username: this.getValue('MYSQL_USER'),
+            password: this.getValue('MYSQL_PASSWORD'),
+            database: this.getValue('MYSQL_DATABASE'),
 
-			host: this.getValue('MYSQL_HOST'),
-			port: parseInt(this.getValue('MYSQL_PORT')),
-			username: this.getValue('MYSQL_USER'),
-			password: this.getValue('MYSQL_PASSWORD'),
-			database: this.getValue('MYSQL_DATABASE'),
+            entities: ['dist/**/**.entity{.js,.ts}'],
+            //autoLoadEntities: true,
 
-			entities: ['src/**/**.entity{.js,.ts}'],
-			//autoLoadEntities: true,
+            migrationsTableName: 'migration',
 
-			migrationsTableName: 'migration',
+            migrations: ['../migration/*.js'],
 
-			migrations: ['src/migration/*.ts'],
+            cli: {
+                migrationsDir: 'src/migration',
+            },
 
-			cli: {
-				migrationsDir: 'src/migration',
-			},
-
-			ssl: this.isProduction(),
-		};
-	}
-
+            ssl: this.isProduction(),
+        };
+    }
 }
 
-const configService = new ConfigService(process.env)
-	.ensureValues([
-		'MYSQL_HOST',
-		'MYSQL_PORT',
-		'MYSQL_USER',
-		'MYSQL_PASSWORD',
-		'MYSQL_DATABASE'
-	]);
+const configService = new ConfigService(process.env).ensureValues([
+    'MYSQL_HOST',
+    'MYSQL_PORT',
+    'MYSQL_USER',
+    'MYSQL_PASSWORD',
+    'MYSQL_DATABASE',
+]);
 
 export { configService };
