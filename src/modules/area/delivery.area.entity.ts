@@ -6,11 +6,11 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "../company/company.entity";
+import { Company } from "../company/entities/company.entity";
 
 @Index("companyId", ["companyId"], {})
-@Entity("delivery_areas", { schema: "pronto_entregue" })
-export class DeliveryAreas {
+@Entity("delivery_areas")
+export class DeliveryArea {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -35,18 +35,18 @@ export class DeliveryAreas {
 	@Column("int", { name: "companyId", nullable: true })
 	companyId: number | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
-	@ManyToOne(() => Companies, (companies) => companies.deliveryAreas, {
+	@ManyToOne(() => Company, (company) => company.deliveryAreas, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 }

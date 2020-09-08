@@ -1,10 +1,10 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { Coupons } from "./coupon.entity";
-import { Users } from "../user/user.entity";
+import { Coupon } from "./coupon.entity";
+import { User } from "../user/user.entity";
 
 @Index("userId", ["userId"], {})
-@Entity("coupon_users", { schema: "pronto_entregue" })
-export class CouponUsers {
+@Entity("coupon_users")
+export class CouponUser {
 	@Column("datetime", { name: "createdAt" })
 	createdAt: Date;
 
@@ -17,17 +17,17 @@ export class CouponUsers {
 	@Column("int", { primary: true, name: "userId" })
 	userId: number;
 
-	@ManyToOne(() => Coupons, (coupons) => coupons.couponUsers, {
+	@ManyToOne(() => Coupon, (coupons) => coupons.couponUsers, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "couponId", referencedColumnName: "id" }])
-	coupon: Coupons;
+	coupon: Coupon;
 
-	@ManyToOne(() => Users, (users) => users.couponUsers, {
+	@ManyToOne(() => User, (users) => users.couponUsers, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 }

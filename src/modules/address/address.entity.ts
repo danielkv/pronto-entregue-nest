@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Companies } from "../company/company.entity";
-import { UserAddresses } from "../user/user.address.entity";
+import { Company } from "../company/entities/company.entity";
+import { UserAddress } from "../user/user.address.entity";
 
-@Entity("addresses", { schema: "pronto_entregue" })
-export class Addresses {
+@Entity("addresses")
+export class Address {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -43,9 +43,9 @@ export class Addresses {
 	@Column("varchar", { name: "reference", nullable: true, length: 255 })
 	reference: string | null;
 
-	@OneToMany(() => Companies, (companies) => companies.address)
-	companies: Companies[];
+	@OneToMany(() => Company, (companies) => companies.address)
+	companies: Company[];
 
-	@OneToMany(() => UserAddresses, (userAddresses) => userAddresses.address)
-	userAddresses: UserAddresses[];
+	@OneToMany(() => UserAddress, (userAddresses) => userAddresses.address)
+	userAddresses: UserAddress[];
 }

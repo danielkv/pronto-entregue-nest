@@ -8,7 +8,7 @@ class ConfigService {
 
 	private getValue(key: string, throwOnMissing = true): string {
 		const value = this.env[key];
-		if (!value && throwOnMissing) {
+		if (typeof value === 'undefined' && throwOnMissing) {
 			throw new Error(`config error - missing env.${key}`);
 		}
 
@@ -25,8 +25,8 @@ class ConfigService {
 	}
 
 	public isProduction() {
-		const mode = this.getValue('MODE', false);
-		return mode != 'DEV';
+		const mode = this.getValue('NODE_ENV', false);
+		return mode === 'production';
 	}
 
 	public getTypeOrmConfig(): TypeOrmModuleOptions {
@@ -39,7 +39,8 @@ class ConfigService {
 			password: this.getValue('MYSQL_PASSWORD'),
 			database: this.getValue('MYSQL_DATABASE'),
 
-			entities: ['**/*.entity{.ts}'],
+			entities: ['src/**/**.entity{.js,.ts}'],
+			//autoLoadEntities: true,
 
 			migrationsTableName: 'migration',
 

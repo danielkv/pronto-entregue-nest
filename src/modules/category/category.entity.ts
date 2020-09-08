@@ -7,12 +7,12 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "../company/company.entity";
-import { Products } from "../product/product.entity";
+import { Company } from "../company/entities/company.entity";
+import { Product } from "../product/product.entity";
 
 @Index("companyId", ["companyId"], {})
-@Entity("categories", { schema: "pronto_entregue" })
-export class Categories {
+@Entity("categories")
+export class Category {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -25,15 +25,15 @@ export class Categories {
 	@Column("varchar", { name: "description", nullable: true, length: 255 })
 	description: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
-	@Column("int", { name: "order", default: () => "'0'" })
+	@Column("int", { name: "order", default: 0 })
 	order: number;
 
 	@Column("datetime", { name: "createdAt" })
@@ -45,13 +45,13 @@ export class Categories {
 	@Column("int", { name: "companyId", nullable: true })
 	companyId: number | null;
 
-	@ManyToOne(() => Companies, (companies) => companies.categories, {
+	@ManyToOne(() => Company, (companies) => companies.categories, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 
-	@OneToMany(() => Products, (products) => products.category)
-	products: Products[];
+	@OneToMany(() => Product, (products) => products.category)
+	products: Product[];
 }

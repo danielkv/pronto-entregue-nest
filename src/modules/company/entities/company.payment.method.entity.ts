@@ -6,8 +6,8 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "../company/company.entity";
-import { PaymentMethods } from "../payment/payment.method.entity";
+import { Company } from "./company.entity";
+import { PaymentMethod } from "../../payment/payment.method.entity";
 
 @Index(
 	"company_payment_methods_paymentMethodId_companyId_unique",
@@ -15,8 +15,8 @@ import { PaymentMethods } from "../payment/payment.method.entity";
 	{ unique: true }
 )
 @Index("paymentMethodId", ["paymentMethodId"], {})
-@Entity("company_payment_methods", { schema: "pronto_entregue" })
-export class CompanyPaymentMethods {
+@Entity("company_payment_methods")
+export class CompanyPaymentMethod {
 	@PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
 	id: number;
 
@@ -35,18 +35,18 @@ export class CompanyPaymentMethods {
 	@Column("int", { name: "paymentMethodId", nullable: true })
 	paymentMethodId: number | null;
 
-	@ManyToOne(() => Companies, (companies) => companies.companyPaymentMethods, {
+	@ManyToOne(() => Company, (companies) => companies.companyPaymentMethods, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 
 	@ManyToOne(
-		() => PaymentMethods,
+		() => PaymentMethod,
 		(paymentMethods) => paymentMethods.companyPaymentMethods,
 		{ onDelete: "CASCADE", onUpdate: "CASCADE" }
 	)
 	@JoinColumn([{ name: "paymentMethodId", referencedColumnName: "id" }])
-	paymentMethod: PaymentMethods;
+	paymentMethod: PaymentMethod;
 }

@@ -6,11 +6,11 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Users } from "./user.entity";
+import { User } from "./user.entity";
 
 @Index("userId", ["userId"], {})
-@Entity("user_metas", { schema: "pronto_entregue" })
-export class UserMetas {
+@Entity("user_metas")
+export class UserMeta {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -25,11 +25,11 @@ export class UserMetas {
 	@Column("text", { name: "value", nullable: true })
 	value: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "unique",
 		nullable: true,
-		width: 1,
-		default: () => "'0'",
+		default: false,
 	})
 	unique: boolean | null;
 
@@ -42,10 +42,10 @@ export class UserMetas {
 	@Column("int", { name: "userId", nullable: true })
 	userId: number | null;
 
-	@ManyToOne(() => Users, (users) => users.userMetas, {
+	@ManyToOne(() => User, (users) => users.userMetas, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 }

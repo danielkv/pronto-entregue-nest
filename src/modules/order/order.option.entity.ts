@@ -6,13 +6,13 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { OrderOptionGroups } from "./order.option.group.entity";
+import { OrderOptionGroup } from "./order.option.group.entity";
 import { Options } from "../product/option.entity";
 
 @Index("orderOptionsGroupId", ["orderOptionsGroupId"], {})
 @Index("optionRelatedId", ["optionRelatedId"], {})
-@Entity("order_options", { schema: "pronto_entregue" })
-export class OrderOptions {
+@Entity("order_options")
+export class OrderOption {
 	@PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
 	id: number;
 
@@ -38,12 +38,12 @@ export class OrderOptions {
 	optionRelatedId: number | null;
 
 	@ManyToOne(
-		() => OrderOptionGroups,
+		() => OrderOptionGroup,
 		(orderOptionGroups) => orderOptionGroups.orderOptions,
 		{ onDelete: "CASCADE", onUpdate: "CASCADE" }
 	)
 	@JoinColumn([{ name: "orderOptionsGroupId", referencedColumnName: "id" }])
-	orderOptionsGroup: OrderOptionGroups;
+	orderOptionsGroup: OrderOptionGroup;
 
 	@ManyToOne(() => Options, (options) => options.orderOptions, {
 		onDelete: "SET NULL",

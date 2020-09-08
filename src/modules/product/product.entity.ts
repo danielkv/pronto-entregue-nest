@@ -7,18 +7,18 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { CouponProducts } from "../coupon/coupon.product";
-import { FavoriteProducts } from "./favorite.product.entity";
-import { OptionsGroups } from "./option.group.entity";
-import { OrderProducts } from "../order/order.product.entity";
-import { Categories } from "../category/category.entity";
-import { Companies } from "../company/company.entity";
-import { Sales } from "./sale.entity";
+import { CouponProduct } from "../coupon/coupon.product.entity";
+import { FavoriteProduct } from "./favorite.product.entity";
+import { OptionGroup } from "./option.group.entity";
+import { OrderProduct } from "../order/order.product.entity";
+import { Category } from "../category/category.entity";
+import { Company } from "../company/entities/company.entity";
+import { Sale } from "./sale.entity";
 
 @Index("categoryId", ["categoryId"], {})
 @Index("companyId", ["companyId"], {})
-@Entity("products", { schema: "pronto_entregue" })
-export class Products {
+@Entity("products")
+export class Product {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -34,30 +34,30 @@ export class Products {
 	@Column("text", { name: "image", nullable: true })
 	image: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "listed",
 		nullable: true,
 		comment: "Show the product in product list and search",
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	listed: boolean | null;
 
-	@Column("int", { name: "order", default: () => "'0'" })
+	@Column("int", { name: "order", default: 0 })
 	order: number;
 
 	@Column("enum", {
 		name: "type",
 		enum: ["inline", "panel"],
-		default: () => "'inline'",
+		default: 'inline',
 	})
 	type: "inline" | "panel";
 
@@ -87,49 +87,49 @@ export class Products {
 	@Column("int", { name: "minDeliveryTime", nullable: true })
 	minDeliveryTime: number | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "scheduleEnabled",
 		nullable: true,
-		width: 1,
-		default: () => "'0'",
+		default: false,
 	})
 	scheduleEnabled: boolean | null;
 
-	@OneToMany(() => CouponProducts, (couponProducts) => couponProducts.product)
-	couponProducts: CouponProducts[];
+	@OneToMany(() => CouponProduct, (couponProducts) => couponProducts.product)
+	couponProducts: CouponProduct[];
 
 	@OneToMany(
-		() => FavoriteProducts,
+		() => FavoriteProduct,
 		(favoriteProducts) => favoriteProducts.product
 	)
-	favoriteProducts: FavoriteProducts[];
+	favoriteProducts: FavoriteProduct[];
 
-	@OneToMany(() => OptionsGroups, (optionsGroups) => optionsGroups.product)
-	optionsGroups: OptionsGroups[];
+	@OneToMany(() => OptionGroup, (optionsGroups) => optionsGroups.product)
+	optionsGroups: OptionGroup[];
 
-	@OneToMany(() => OrderProducts, (orderProducts) => orderProducts.product)
-	orderProducts: OrderProducts[];
+	@OneToMany(() => OrderProduct, (orderProducts) => orderProducts.product)
+	orderProducts: OrderProduct[];
 
 	@OneToMany(
-		() => OrderProducts,
+		() => OrderProduct,
 		(orderProducts) => orderProducts.productRelated
 	)
-	orderProducts2: OrderProducts[];
+	orderProducts2: OrderProduct[];
 
-	@ManyToOne(() => Categories, (categories) => categories.products, {
+	@ManyToOne(() => Category, (categories) => categories.products, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "categoryId", referencedColumnName: "id" }])
-	category: Categories;
+	category: Category;
 
-	@ManyToOne(() => Companies, (companies) => companies.products, {
+	@ManyToOne(() => Company, (companies) => companies.products, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 
-	@OneToMany(() => Sales, (sales) => sales.product)
-	sales: Sales[];
+	@OneToMany(() => Sale, (sales) => sales.product)
+	sales: Sale[];
 }

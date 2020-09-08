@@ -15,10 +15,15 @@ import { UserModule } from './modules/user/user.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
 import { AreaModule } from './modules/area/area.module';
+import { Connection } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { configService } from './config/config.service';
 
 @Module({
-	imports: [DatabaseModule, CompanyModule, AddressModule, CategoryModule, ConfigModule, CouponModule, CreditModule, DeliveryModule, ProductModule, OrderModule, UserModule, PaymentModule, RatingModule, AreaModule],
+	imports: [TypeOrmModule.forRoot(configService.getTypeOrmConfig()), CompanyModule, AddressModule, CategoryModule, ConfigModule, CouponModule, CreditModule, DeliveryModule, ProductModule, OrderModule, UserModule, PaymentModule, RatingModule, AreaModule],
 	controllers: [AppController],
 	providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {
+	constructor(private connection: Connection) { }
+}

@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Companies } from "../company/company.entity";
+import { Company } from "./company.entity";
 
-@Entity("company_types", { schema: "pronto_entregue" })
-export class CompanyTypes {
+@Entity("company_types")
+export class CompanySection {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -15,11 +15,11 @@ export class CompanyTypes {
 	@Column("varchar", { name: "description", nullable: true, length: 255 })
 	description: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
@@ -29,6 +29,6 @@ export class CompanyTypes {
 	@Column("datetime", { name: "updatedAt" })
 	updatedAt: Date;
 
-	@OneToMany(() => Companies, (companies) => companies.companyType)
-	companies: Companies[];
+	@OneToMany(() => Company, (companies) => companies.companyType)
+	companies: Company[];
 }

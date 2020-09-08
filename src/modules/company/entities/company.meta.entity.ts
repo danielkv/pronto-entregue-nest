@@ -6,11 +6,11 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "../company/company.entity";
+import { Company } from "./company.entity";
 
 @Index("companyId", ["companyId"], {})
-@Entity("company_metas", { schema: "pronto_entregue" })
-export class CompanyMetas {
+@Entity("company_metas")
+export class CompanyMeta {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -25,11 +25,11 @@ export class CompanyMetas {
 	@Column("text", { name: "value", nullable: true })
 	value: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "unique",
 		nullable: true,
-		width: 1,
-		default: () => "'0'",
+		default: false,
 	})
 	unique: boolean | null;
 
@@ -45,10 +45,10 @@ export class CompanyMetas {
 	@Column("varchar", { name: "type", nullable: true, length: 255 })
 	type: string | null;
 
-	@ManyToOne(() => Companies, (companies) => companies.companyMetas, {
+	@ManyToOne(() => Company, (companies) => companies.companyMetas, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 }

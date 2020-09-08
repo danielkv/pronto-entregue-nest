@@ -6,11 +6,11 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Products } from "./product.entity";
+import { Product } from "./product.entity";
 
 @Index("productId", ["productId"], {})
-@Entity("sales", { schema: "pronto_entregue" })
-export class Sales {
+@Entity("sales")
+export class Sale {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -23,10 +23,10 @@ export class Sales {
 	@Column("datetime", { name: "expiresAt", nullable: true })
 	expiresAt: Date | null;
 
-	@Column("tinyint", { name: "active", width: 1, default: () => "'1'" })
+	@Column({ type: 'boolean', name: "active", default: true })
 	active: boolean;
 
-	@Column("tinyint", { name: "removed", width: 1, default: () => "'0'" })
+	@Column({ type: 'boolean', name: "removed", default: false })
 	removed: boolean;
 
 	@Column("datetime", { name: "createdAt" })
@@ -38,10 +38,10 @@ export class Sales {
 	@Column("int", { name: "productId", nullable: true })
 	productId: number | null;
 
-	@ManyToOne(() => Products, (products) => products.sales, {
+	@ManyToOne(() => Product, (products) => products.sales, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "productId", referencedColumnName: "id" }])
-	product: Products;
+	product: Product;
 }

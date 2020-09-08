@@ -1,33 +1,33 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { Users } from "./user.entity";
-import { Addresses } from "../address/address.entity";
+import { User } from "./user.entity";
+import { Address } from "../address/address.entity";
 
 @Index("addressId", ["addressId"], {})
-@Entity("user_addresses", { schema: "pronto_entregue" })
-export class UserAddresses {
+@Entity("user_addresses")
+export class UserAddress {
 	@Column("datetime", { name: "createdAt" })
 	createdAt: Date;
 
 	@Column("datetime", { name: "updatedAt" })
 	updatedAt: Date;
 
-	@Column("int", { primary: true, name: "userId", default: () => "'0'" })
+	@Column("int", { primary: true, name: "userId", default: 0 })
 	userId: number;
 
-	@Column("int", { primary: true, name: "addressId", default: () => "'0'" })
+	@Column("int", { primary: true, name: "addressId", default: 0 })
 	addressId: number;
 
-	@ManyToOne(() => Users, (users) => users.userAddresses, {
+	@ManyToOne(() => User, (user) => user.userAddresses, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 
-	@ManyToOne(() => Addresses, (addresses) => addresses.userAddresses, {
+	@ManyToOne(() => Address, (address) => address.userAddresses, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "addressId", referencedColumnName: "id" }])
-	address: Addresses;
+	address: Address;
 }

@@ -1,16 +1,16 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { CompanyPaymentMethods } from "../company/company.payment.method";
-import { Orders } from "../order/order.entity";
+import { CompanyPaymentMethod } from "../company/entities/company.payment.method.entity";
+import { Order } from "../order/order.entity";
 
-@Entity("payment_methods", { schema: "pronto_entregue" })
-export class PaymentMethods {
+@Entity("payment_methods")
+export class PaymentMethod {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
 	@Column("enum", {
 		name: "type",
 		enum: ["money", "delivery", "app"],
-		default: () => "'delivery'",
+		default: 'delivery',
 	})
 	type: "money" | "delivery" | "app";
 
@@ -20,25 +20,25 @@ export class PaymentMethods {
 	@Column("text", { name: "image", nullable: true })
 	image: string | null;
 
-	@Column("int", { name: "order", default: () => "'0'" })
+	@Column("int", { name: "order", default: 0 })
 	order: number;
 
 	@Column("decimal", {
 		name: "fee",
 		precision: 10,
 		scale: 2,
-		default: () => "'0.00'",
+		default: 0,
 	})
 	fee: string;
 
 	@Column("enum", {
 		name: "feeType",
 		enum: ["value", "pct"],
-		default: () => "'pct'",
+		default: 'pct',
 	})
 	feeType: "value" | "pct";
 
-	@Column("tinyint", { name: "active", width: 1, default: () => "'1'" })
+	@Column({ type: 'boolean', name: "active", default: true })
 	active: boolean;
 
 	@Column("datetime", { name: "createdAt" })
@@ -48,11 +48,11 @@ export class PaymentMethods {
 	updatedAt: Date;
 
 	@OneToMany(
-		() => CompanyPaymentMethods,
+		() => CompanyPaymentMethod,
 		(companyPaymentMethods) => companyPaymentMethods.paymentMethod
 	)
-	companyPaymentMethods: CompanyPaymentMethods[];
+	companyPaymentMethods: CompanyPaymentMethod[];
 
-	@OneToMany(() => Orders, (orders) => orders.paymentMethod)
-	orders: Orders[];
+	@OneToMany(() => Order, (orders) => orders.paymentMethod)
+	orders: Order[];
 }

@@ -7,11 +7,11 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { OptionsGroups } from "./option.group.entity";
-import { OrderOptions } from "../order/order.option.entity";
+import { OptionGroup } from "./option.group.entity";
+import { OrderOption } from "../order/order.option.entity";
 
 @Index("optionsGroupId", ["optionsGroupId"], {})
-@Entity("options", { schema: "pronto_entregue" })
+@Entity("options")
 export class Options {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
@@ -22,21 +22,21 @@ export class Options {
 	@Column("varchar", { name: "description", nullable: true, length: 255 })
 	description: string | null;
 
-	@Column("int", { name: "order", default: () => "'0'" })
+	@Column("int", { name: "order", default: 0 })
 	order: number;
 
 	@Column("int", { name: "maxSelectRestrainOther", nullable: true })
 	maxSelectRestrainOther: number | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
-	@Column("tinyint", { name: "removed", width: 1, default: () => "'0'" })
+	@Column({ type: 'boolean', name: "removed", default: false })
 	removed: boolean;
 
 	@Column("decimal", { name: "price", nullable: true, precision: 10, scale: 2 })
@@ -51,13 +51,13 @@ export class Options {
 	@Column("int", { name: "optionsGroupId", nullable: true })
 	optionsGroupId: number | null;
 
-	@ManyToOne(() => OptionsGroups, (optionsGroups) => optionsGroups.options, {
+	@ManyToOne(() => OptionGroup, (optionsGroups) => optionsGroups.options, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "optionsGroupId", referencedColumnName: "id" }])
-	optionsGroup: OptionsGroups;
+	optionsGroup: OptionGroup;
 
-	@OneToMany(() => OrderOptions, (orderOptions) => orderOptions.optionRelated)
-	orderOptions: OrderOptions[];
+	@OneToMany(() => OrderOption, (orderOptions) => orderOptions.optionRelated)
+	orderOptions: OrderOption[];
 }

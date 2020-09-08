@@ -6,13 +6,13 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Orders } from "../order/order.entity";
-import { Users } from "../user/user.entity";
+import { Order } from "../order/order.entity";
+import { User } from "../user/user.entity";
 
 @Index("orderId", ["orderId"], {})
 @Index("deliveryManId", ["deliveryManId"], {})
-@Entity("deliveries", { schema: "pronto_entregue" })
-export class Deliveries {
+@Entity("deliveries")
+export class Delivery {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -23,7 +23,7 @@ export class Deliveries {
 		name: "size",
 		nullable: true,
 		enum: ["small", "medium", "large"],
-		default: () => "'medium'",
+		default: "medium",
 	})
 	size: "small" | "medium" | "large" | null;
 
@@ -31,7 +31,7 @@ export class Deliveries {
 		name: "status",
 		nullable: true,
 		enum: ["waiting", "waitingDelivery", "delivering", "delivered", "canceled"],
-		default: () => "'waitingDelivery'",
+		default: 'waitingDelivery',
 	})
 	status:
 		| "waiting"
@@ -145,17 +145,17 @@ export class Deliveries {
 	@Column("int", { name: "deliveryManId", nullable: true })
 	deliveryManId: number | null;
 
-	@ManyToOne(() => Orders, (orders) => orders.deliveries, {
+	@ManyToOne(() => Order, (orders) => orders.deliveries, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "orderId", referencedColumnName: "id" }])
-	order: Orders;
+	order: Order;
 
-	@ManyToOne(() => Users, (users) => users.deliveries, {
+	@ManyToOne(() => User, (users) => users.deliveries, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "deliveryManId", referencedColumnName: "id" }])
-	deliveryMan: Users;
+	deliveryMan: User;
 }

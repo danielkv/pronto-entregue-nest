@@ -7,22 +7,22 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Deliveries } from "../delivery/delivery.entity";
-import { OrderProducts } from "./order.product.entity";
-import { Users } from "../user/user.entity";
-import { Companies } from "../company/company.entity";
-import { PaymentMethods } from "../payment/payment.method.entity";
-import { CreditHistory } from "../credit/credit.history";
-import { Coupons } from "../coupon/coupon.entity";
-import { Ratings } from "../rating/rating.entity";
+import { Delivery } from "../delivery/delivery.entity";
+import { OrderProduct } from "./order.product.entity";
+import { User } from "../user/user.entity";
+import { Company } from "../company/entities/company.entity";
+import { PaymentMethod } from "../payment/payment.method.entity";
+import { CreditHistory } from "../credit/credit.history.entity";
+import { Coupon } from "../coupon/coupon.entity";
+import { Rating } from "../rating/rating.entity";
 
 @Index("userId", ["userId"], {})
 @Index("companyId", ["companyId"], {})
 @Index("paymentMethodId", ["paymentMethodId"], {})
 @Index("creditHistoryId", ["creditHistoryId"], {})
 @Index("orders_couponId_foreign_idx", ["couponId"], {})
-@Entity("orders", { schema: "pronto_entregue" })
-export class Orders {
+@Entity("orders")
+export class Order {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -42,13 +42,13 @@ export class Orders {
 	})
 	deliveryPrice: string | null;
 
-	@Column("int", { name: "deliveryTime", default: () => "'0'" })
+	@Column("int", { name: "deliveryTime", default: 0 })
 	deliveryTime: number;
 
 	@Column("enum", {
 		name: "type",
 		enum: ["takeout", "delivery", "peDelivery"],
-		default: () => "'delivery'",
+		default: 'delivery',
 	})
 	type: "takeout" | "delivery" | "peDelivery";
 
@@ -76,7 +76,7 @@ export class Orders {
 			"delivered",
 			"canceled",
 		],
-		default: () => "'waiting'",
+		default: 'waiting',
 	})
 	status:
 		| "waiting"
@@ -146,32 +146,32 @@ export class Orders {
 	@Column("datetime", { name: "scheduledTo", nullable: true })
 	scheduledTo: Date | null;
 
-	@OneToMany(() => Deliveries, (deliveries) => deliveries.order)
-	deliveries: Deliveries[];
+	@OneToMany(() => Delivery, (deliveries) => deliveries.order)
+	deliveries: Delivery[];
 
-	@OneToMany(() => OrderProducts, (orderProducts) => orderProducts.order)
-	orderProducts: OrderProducts[];
+	@OneToMany(() => OrderProduct, (orderProducts) => orderProducts.order)
+	orderProducts: OrderProduct[];
 
-	@ManyToOne(() => Users, (users) => users.orders, {
+	@ManyToOne(() => User, (users) => users.orders, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 
-	@ManyToOne(() => Companies, (companies) => companies.orders, {
+	@ManyToOne(() => Company, (companies) => companies.orders, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 
-	@ManyToOne(() => PaymentMethods, (paymentMethods) => paymentMethods.orders, {
+	@ManyToOne(() => PaymentMethod, (paymentMethods) => paymentMethods.orders, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "paymentMethodId", referencedColumnName: "id" }])
-	paymentMethod: PaymentMethods;
+	paymentMethod: PaymentMethod;
 
 	@ManyToOne(() => CreditHistory, (creditHistory) => creditHistory.orders, {
 		onDelete: "SET NULL",
@@ -180,13 +180,13 @@ export class Orders {
 	@JoinColumn([{ name: "creditHistoryId", referencedColumnName: "id" }])
 	creditHistory: CreditHistory;
 
-	@ManyToOne(() => Coupons, (coupons) => coupons.orders, {
+	@ManyToOne(() => Coupon, (coupons) => coupons.orders, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "couponId", referencedColumnName: "id" }])
-	coupon: Coupons;
+	coupon: Coupon;
 
-	@OneToMany(() => Ratings, (ratings) => ratings.order)
-	ratings: Ratings[];
+	@OneToMany(() => Rating, (ratings) => ratings.order)
+	ratings: Rating[];
 }

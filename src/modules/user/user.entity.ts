@@ -5,20 +5,20 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { CompanyUsers } from "../company/company.user.entity";
-import { CouponUsers } from "../coupon/coupon.user.entity";
-import { CreditBalances } from "../credit/credit.balance.entity";
-import { CreditHistory } from "../credit/credit.history";
-import { Deliveries } from "../delivery/delivery.entity";
-import { FavoriteProducts } from "../product/favorite.product.entity";
-import { Orders } from "../order/order.entity";
-import { Ratings } from "../rating/rating.entity";
-import { UserAddresses } from "./user.address.entity";
-import { UserMetas } from "./user.meta.entity";
+import { CompanyUser } from "../company/entities/company.user.entity";
+import { CouponUser } from "../coupon/coupon.user.entity";
+import { CreditBalance } from "../credit/credit.balance.entity";
+import { CreditHistory } from "../credit/credit.history.entity";
+import { Delivery } from "../delivery/delivery.entity";
+import { FavoriteProduct } from "../product/favorite.product.entity";
+import { Order } from "../order/order.entity";
+import { Rating } from "../rating/rating.entity";
+import { UserAddress } from "./user.address.entity";
+import { UserMeta } from "./user.meta.entity";
 
 @Index("email", ["email"], { unique: true })
-@Entity("users", { schema: "pronto_entregue" })
-export class Users {
+@Entity("users")
+export class User {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -45,11 +45,11 @@ export class Users {
 	@Column("varchar", { name: "salt", nullable: true, length: 255 })
 	salt: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
@@ -57,7 +57,7 @@ export class Users {
 		name: "role",
 		comment: "master | default",
 		length: 255,
-		default: () => "'default'",
+		default: 'default',
 	})
 	role: string;
 
@@ -67,36 +67,36 @@ export class Users {
 	@Column("datetime", { name: "updatedAt" })
 	updatedAt: Date;
 
-	@OneToMany(() => CompanyUsers, (companyUsers) => companyUsers.user)
-	companyUsers: CompanyUsers[];
+	@OneToMany(() => CompanyUser, (companyUsers) => companyUsers.user)
+	companyUsers: CompanyUser[];
 
-	@OneToMany(() => CouponUsers, (couponUsers) => couponUsers.user)
-	couponUsers: CouponUsers[];
+	@OneToMany(() => CouponUser, (couponUsers) => couponUsers.user)
+	couponUsers: CouponUser[];
 
-	@OneToMany(() => CreditBalances, (creditBalances) => creditBalances.user)
-	creditBalances: CreditBalances[];
+	@OneToMany(() => CreditBalance, (creditBalances) => creditBalances.user)
+	creditBalances: CreditBalance[];
 
 	@OneToMany(() => CreditHistory, (creditHistory) => creditHistory.user)
 	creditHistories: CreditHistory[];
 
-	@OneToMany(() => Deliveries, (deliveries) => deliveries.deliveryMan)
-	deliveries: Deliveries[];
+	@OneToMany(() => Delivery, (deliveries) => deliveries.deliveryMan)
+	deliveries: Delivery[];
 
 	@OneToMany(
-		() => FavoriteProducts,
+		() => FavoriteProduct,
 		(favoriteProducts) => favoriteProducts.user
 	)
-	favoriteProducts: FavoriteProducts[];
+	favoriteProducts: FavoriteProduct[];
 
-	@OneToMany(() => Orders, (orders) => orders.user)
-	orders: Orders[];
+	@OneToMany(() => Order, (orders) => orders.user)
+	orders: Order[];
 
-	@OneToMany(() => Ratings, (ratings) => ratings.user)
-	ratings: Ratings[];
+	@OneToMany(() => Rating, (ratings) => ratings.user)
+	ratings: Rating[];
 
-	@OneToMany(() => UserAddresses, (userAddresses) => userAddresses.user)
-	userAddresses: UserAddresses[];
+	@OneToMany(() => UserAddress, (userAddresses) => userAddresses.user)
+	userAddresses: UserAddress[];
 
-	@OneToMany(() => UserMetas, (userMetas) => userMetas.user)
-	userMetas: UserMetas[];
+	@OneToMany(() => UserMeta, (userMetas) => userMetas.user)
+	userMetas: UserMeta[];
 }

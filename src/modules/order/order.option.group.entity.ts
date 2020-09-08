@@ -7,14 +7,14 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { OrderProducts } from "./order.product.entity";
-import { OptionsGroups } from "../product/option.group.entity";
-import { OrderOptions } from "./order.option.entity";
+import { OrderProduct } from "./order.product.entity";
+import { OptionGroup } from "../product/option.group.entity";
+import { OrderOption } from "./order.option.entity";
 
 @Index("orderProductId", ["orderProductId"], {})
 @Index("optionsGroupRelatedId", ["optionsGroupRelatedId"], {})
-@Entity("order_option_groups", { schema: "pronto_entregue" })
-export class OrderOptionGroups {
+@Entity("order_option_groups")
+export class OrderOptionGroup {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -24,7 +24,7 @@ export class OrderOptionGroups {
 	@Column("enum", {
 		name: "priceType",
 		enum: ["higher", "sum"],
-		default: () => "'higher'",
+		default: 'higher',
 	})
 	priceType: "higher" | "sum";
 
@@ -41,24 +41,24 @@ export class OrderOptionGroups {
 	optionsGroupRelatedId: number | null;
 
 	@ManyToOne(
-		() => OrderProducts,
+		() => OrderProduct,
 		(orderProducts) => orderProducts.orderOptionGroups,
 		{ onDelete: "CASCADE", onUpdate: "CASCADE" }
 	)
 	@JoinColumn([{ name: "orderProductId", referencedColumnName: "id" }])
-	orderProduct: OrderProducts;
+	orderProduct: OrderProduct;
 
 	@ManyToOne(
-		() => OptionsGroups,
+		() => OptionGroup,
 		(optionsGroups) => optionsGroups.orderOptionGroups,
 		{ onDelete: "SET NULL", onUpdate: "CASCADE" }
 	)
 	@JoinColumn([{ name: "optionsGroupRelatedId", referencedColumnName: "id" }])
-	optionsGroupRelated: OptionsGroups;
+	optionsGroupRelated: OptionGroup;
 
 	@OneToMany(
-		() => OrderOptions,
+		() => OrderOption,
 		(orderOptions) => orderOptions.orderOptionsGroup
 	)
-	orderOptions: OrderOptions[];
+	orderOptions: OrderOption[];
 }

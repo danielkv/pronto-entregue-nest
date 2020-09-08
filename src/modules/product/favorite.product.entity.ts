@@ -1,33 +1,33 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { Users } from "../user/user.entity";
-import { Products } from "./product.entity";
+import { User } from "../user/user.entity";
+import { Product } from "./product.entity";
 
 @Index("productId", ["productId"], {})
-@Entity("favorite_products", { schema: "pronto_entregue" })
-export class FavoriteProducts {
+@Entity("favorite_products")
+export class FavoriteProduct {
 	@Column("datetime", { name: "createdAt" })
 	createdAt: Date;
 
 	@Column("datetime", { name: "updatedAt" })
 	updatedAt: Date;
 
-	@Column("int", { primary: true, name: "userId", default: () => "'0'" })
+	@Column("int", { primary: true, name: "userId", default: 0 })
 	userId: number;
 
-	@Column("int", { primary: true, name: "productId", default: () => "'0'" })
+	@Column("int", { primary: true, name: "productId", default: 0 })
 	productId: number;
 
-	@ManyToOne(() => Users, (users) => users.favoriteProducts, {
+	@ManyToOne(() => User, (user) => user.favoriteProducts, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 
-	@ManyToOne(() => Products, (products) => products.favoriteProducts, {
+	@ManyToOne(() => Product, (product) => product.favoriteProducts, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "productId", referencedColumnName: "id" }])
-	product: Products;
+	product: Product;
 }

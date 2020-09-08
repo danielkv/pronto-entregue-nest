@@ -6,15 +6,15 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "../company/company.entity";
-import { Orders } from "../order/order.entity";
-import { Users } from "../user/user.entity";
+import { Company } from "../company/entities/company.entity";
+import { Order } from "../order/order.entity";
+import { User } from "../user/user.entity";
 
 @Index("companyId", ["companyId"], {})
 @Index("orderId", ["orderId"], {})
 @Index("userId", ["userId"], {})
-@Entity("ratings", { schema: "pronto_entregue" })
-export class Ratings {
+@Entity("ratings")
+export class Rating {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -24,11 +24,11 @@ export class Ratings {
 	@Column("text", { name: "comment", nullable: true })
 	comment: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "hidden",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	hidden: boolean | null;
 
@@ -47,24 +47,24 @@ export class Ratings {
 	@Column("int", { name: "userId", nullable: true })
 	userId: number | null;
 
-	@ManyToOne(() => Companies, (companies) => companies.ratings, {
+	@ManyToOne(() => Company, (companies) => companies.ratings, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 
-	@ManyToOne(() => Orders, (orders) => orders.ratings, {
+	@ManyToOne(() => Order, (orders) => orders.ratings, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "orderId", referencedColumnName: "id" }])
-	order: Orders;
+	order: Order;
 
-	@ManyToOne(() => Users, (users) => users.ratings, {
+	@ManyToOne(() => User, (users) => users.ratings, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 }

@@ -6,11 +6,11 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Users } from "../user/user.entity";
+import { User } from "../user/user.entity";
 
 @Index("userId", ["userId"], {})
-@Entity("credit_balances", { schema: "pronto_entregue" })
-export class CreditBalances {
+@Entity("credit_balances")
+export class CreditBalance {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -26,10 +26,10 @@ export class CreditBalances {
 	@Column("int", { name: "userId", nullable: true })
 	userId: number | null;
 
-	@ManyToOne(() => Users, (users) => users.creditBalances, {
+	@ManyToOne(() => User, (users) => users.creditBalances, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 }

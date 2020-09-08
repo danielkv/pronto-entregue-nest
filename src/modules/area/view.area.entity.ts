@@ -6,11 +6,11 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "../company/company.entity";
+import { Company } from "../company/entities/company.entity";
 
 @Index("companyId", ["companyId"], {})
-@Entity("view_areas", { schema: "pronto_entregue" })
-export class ViewAreas {
+@Entity("view_areas")
+export class ViewArea {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -32,18 +32,18 @@ export class ViewAreas {
 	@Column("int", { name: "companyId", nullable: true })
 	companyId: number | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
-	@ManyToOne(() => Companies, (companies) => companies.viewAreas, {
+	@ManyToOne(() => Company, (company) => company.viewAreas, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 }

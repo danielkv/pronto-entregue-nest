@@ -8,13 +8,13 @@ import {
 	PrimaryGeneratedColumn,
 } from "typeorm";
 import { Options } from "./option.entity";
-import { Products } from "./product.entity";
-import { OrderOptionGroups } from "../order/order.option.group.entity";
+import { Product } from "./product.entity";
+import { OrderOptionGroup } from "../order/order.option.group.entity";
 
 @Index("productId", ["productId"], {})
 @Index("maxSelectRestrain", ["maxSelectRestrain"], {})
-@Entity("options_groups", { schema: "pronto_entregue" })
-export class OptionsGroups {
+@Entity("options_groups")
+export class OptionGroup {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -24,18 +24,18 @@ export class OptionsGroups {
 	@Column("enum", {
 		name: "type",
 		enum: ["single", "multi"],
-		default: () => "'single'",
+		default: 'single',
 	})
 	type: "single" | "multi";
 
 	@Column("enum", {
 		name: "priceType",
 		enum: ["higher", "sum"],
-		default: () => "'higher'",
+		default: 'higher',
 	})
 	priceType: "higher" | "sum";
 
-	@Column("int", { name: "order", default: () => "'0'" })
+	@Column("int", { name: "order", default: 0 })
 	order: number;
 
 	@Column("int", { name: "minSelect", nullable: true })
@@ -44,15 +44,15 @@ export class OptionsGroups {
 	@Column("int", { name: "maxSelect", nullable: true })
 	maxSelect: number | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
-	@Column("tinyint", { name: "removed", width: 1, default: () => "'0'" })
+	@Column({ type: 'boolean', name: "removed", default: false })
 	removed: boolean;
 
 	@Column("datetime", { name: "createdAt" })
@@ -70,30 +70,30 @@ export class OptionsGroups {
 	@OneToMany(() => Options, (options) => options.optionsGroup)
 	options: Options[];
 
-	@ManyToOne(() => Products, (products) => products.optionsGroups, {
+	@ManyToOne(() => Product, (products) => products.optionsGroups, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "productId", referencedColumnName: "id" }])
-	product: Products;
+	product: Product;
 
 	@ManyToOne(
-		() => OptionsGroups,
+		() => OptionGroup,
 		(optionsGroups) => optionsGroups.optionsGroups,
 		{ onDelete: "SET NULL", onUpdate: "CASCADE" }
 	)
 	@JoinColumn([{ name: "maxSelectRestrain", referencedColumnName: "id" }])
-	maxSelectRestrain2: OptionsGroups;
+	maxSelectRestrain2: OptionGroup;
 
 	@OneToMany(
-		() => OptionsGroups,
+		() => OptionGroup,
 		(optionsGroups) => optionsGroups.maxSelectRestrain2
 	)
-	optionsGroups: OptionsGroups[];
+	optionsGroups: OptionGroup[];
 
 	@OneToMany(
-		() => OrderOptionGroups,
+		() => OrderOptionGroup,
 		(orderOptionGroups) => orderOptionGroups.optionsGroupRelated
 	)
-	orderOptionGroups: OrderOptionGroups[];
+	orderOptionGroups: OrderOptionGroup[];
 }

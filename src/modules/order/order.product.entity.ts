@@ -7,15 +7,15 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { OrderOptionGroups } from "./order.option.group.entity";
-import { Products } from "../product/product.entity";
-import { Orders } from "./order.entity";
+import { OrderOptionGroup } from "./order.option.group.entity";
+import { Product } from "../product/product.entity";
+import { Order } from "./order.entity";
 
 @Index("productId", ["productId"], {})
 @Index("orderId", ["orderId"], {})
 @Index("productRelatedId", ["productRelatedId"], {})
-@Entity("order_products", { schema: "pronto_entregue" })
-export class OrderProducts {
+@Entity("order_products")
+export class OrderProduct {
 	@PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
 	id: number;
 
@@ -47,29 +47,29 @@ export class OrderProducts {
 	productRelatedId: number | null;
 
 	@OneToMany(
-		() => OrderOptionGroups,
+		() => OrderOptionGroup,
 		(orderOptionGroups) => orderOptionGroups.orderProduct
 	)
-	orderOptionGroups: OrderOptionGroups[];
+	orderOptionGroups: OrderOptionGroup[];
 
-	@ManyToOne(() => Products, (products) => products.orderProducts, {
+	@ManyToOne(() => Product, (products) => products.orderProducts, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "productId", referencedColumnName: "id" }])
-	product: Products;
+	product: Product;
 
-	@ManyToOne(() => Orders, (orders) => orders.orderProducts, {
+	@ManyToOne(() => Order, (orders) => orders.orderProducts, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "orderId", referencedColumnName: "id" }])
-	order: Orders;
+	order: Order;
 
-	@ManyToOne(() => Products, (products) => products.orderProducts2, {
+	@ManyToOne(() => Product, (products) => products.orderProducts2, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "productRelatedId", referencedColumnName: "id" }])
-	productRelated: Products;
+	productRelated: Product;
 }

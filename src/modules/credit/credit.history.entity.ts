@@ -7,11 +7,11 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Users } from "../user/user.entity";
-import { Orders } from "../order/order.entity";
+import { User } from "../user/user.entity";
+import { Order } from "../order/order.entity";
 
 @Index("userId", ["userId"], {})
-@Entity("credit_history", { schema: "pronto_entregue" })
+@Entity("credit_history")
 export class CreditHistory {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
@@ -31,13 +31,13 @@ export class CreditHistory {
 	@Column("int", { name: "userId", nullable: true })
 	userId: number | null;
 
-	@ManyToOne(() => Users, (users) => users.creditHistories, {
+	@ManyToOne(() => User, (users) => users.creditHistories, {
 		onDelete: "SET NULL",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 
-	@OneToMany(() => Orders, (orders) => orders.creditHistory)
-	orders: Orders[];
+	@OneToMany(() => Order, (orders) => orders.creditHistory)
+	orders: Order[];
 }

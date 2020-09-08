@@ -1,11 +1,11 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { CouponCompanies } from "./coupon.company.entity";
-import { CouponProducts } from "./coupon.product";
-import { CouponUsers } from "./coupon.user.entity";
-import { Orders } from "../order/order.entity";
+import { CouponCompany } from "./coupon.company.entity";
+import { CouponProduct } from "./coupon.product.entity";
+import { CouponUser } from "./coupon.user.entity";
+import { Order } from "../order/order.entity";
 
-@Entity("coupons", { schema: "pronto_entregue" })
-export class Coupons {
+@Entity("coupons")
+export class Coupon {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
 
@@ -24,39 +24,38 @@ export class Coupons {
 	@Column("varchar", { name: "description", nullable: true, length: 255 })
 	description: string | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "masterOnly",
 		nullable: true,
 		comment: "Se verdadeiro, apenas usuário master consegue alterar",
-		width: 1,
-		default: () => "'0'",
+		default: false,
 	})
 	masterOnly: boolean | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "onlyFirstPurchases",
 		nullable: true,
-		comment:
-			"Se verdadeiro, apenas válido apenas para primeira compra de cada usuário",
-		width: 1,
-		default: () => "'0'",
+		comment: "Se verdadeiro, apenas válido apenas para primeira compra de cada usuário",
+		default: false,
 	})
 	onlyFirstPurchases: boolean | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "featured",
 		nullable: true,
 		comment: "Se verdadeiro, usuário pode pegar cupom na home do app",
-		width: 1,
-		default: () => "'0'",
+		default: false,
 	})
 	featured: boolean | null;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
@@ -66,14 +65,14 @@ export class Coupons {
 		comment: "Porcentagem do cupom que será pago pelo estabelecimento",
 		precision: 10,
 		scale: 2,
-		default: () => "'100.00'",
+		default: 100,
 	})
 	taxable: string | null;
 
-	@Column("int", { name: "maxPerUser", nullable: true, default: () => "'1'" })
+	@Column("int", { name: "maxPerUser", nullable: true, default: 1 })
 	maxPerUser: number | null;
 
-	@Column("int", { name: "maxPurchases", nullable: true, default: () => "'0'" })
+	@Column("int", { name: "maxPurchases", nullable: true, default: 0 })
 	maxPurchases: number | null;
 
 	@Column("decimal", {
@@ -81,7 +80,7 @@ export class Coupons {
 		nullable: true,
 		precision: 10,
 		scale: 2,
-		default: () => "'0.00'",
+		default: 0,
 	})
 	minValue: string | null;
 
@@ -90,21 +89,21 @@ export class Coupons {
 		nullable: true,
 		precision: 10,
 		scale: 2,
-		default: () => "'0.00'",
+		default: 0,
 	})
 	maxValue: string | null;
 
 	@Column("enum", {
 		name: "valueType",
 		enum: ["value", "percentage"],
-		default: () => "'percentage'",
+		default: 'percentage',
 	})
 	valueType: "value" | "percentage";
 
 	@Column("decimal", { name: "value", nullable: true, precision: 2, scale: 0 })
 	value: string | null;
 
-	@Column("tinyint", { name: "freeDelivery", width: 1, default: () => "'0'" })
+	@Column({ type: 'boolean', name: "freeDelivery", default: false })
 	freeDelivery: boolean;
 
 	@Column("datetime", { name: "createdAt" })
@@ -113,15 +112,15 @@ export class Coupons {
 	@Column("datetime", { name: "updatedAt" })
 	updatedAt: Date;
 
-	@OneToMany(() => CouponCompanies, (couponCompanies) => couponCompanies.coupon)
-	couponCompanies: CouponCompanies[];
+	@OneToMany(() => CouponCompany, (couponCompanies) => couponCompanies.coupon)
+	couponCompanies: CouponCompany[];
 
-	@OneToMany(() => CouponProducts, (couponProducts) => couponProducts.coupon)
-	couponProducts: CouponProducts[];
+	@OneToMany(() => CouponProduct, (couponProducts) => couponProducts.coupon)
+	couponProducts: CouponProduct[];
 
-	@OneToMany(() => CouponUsers, (couponUsers) => couponUsers.coupon)
-	couponUsers: CouponUsers[];
+	@OneToMany(() => CouponUser, (couponUsers) => couponUsers.coupon)
+	couponUsers: CouponUser[];
 
-	@OneToMany(() => Orders, (orders) => orders.coupon)
-	orders: Orders[];
+	@OneToMany(() => Order, (orders) => orders.coupon)
+	orders: Order[];
 }

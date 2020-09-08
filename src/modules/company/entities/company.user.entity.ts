@@ -6,25 +6,25 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "../company/company.entity";
-import { Users } from "../user/user.entity";
-import { Roles } from "../user/role.entity";
+import { Company } from "./company.entity";
+import { User } from "../../user/user.entity";
+import { Roles } from "../../user/role.entity";
 
 @Index("company_users_userId_companyId_unique", ["companyId", "userId"], {
 	unique: true,
 })
 @Index("userId", ["userId"], {})
 @Index("roleId", ["roleId"], {})
-@Entity("company_users", { schema: "pronto_entregue" })
-export class CompanyUsers {
+@Entity("company_users")
+export class CompanyUser {
 	@PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
 	id: number;
 
-	@Column("tinyint", {
+	@Column({
+		type: 'boolean',
 		name: "active",
 		nullable: true,
-		width: 1,
-		default: () => "'1'",
+		default: true,
 	})
 	active: boolean | null;
 
@@ -43,19 +43,19 @@ export class CompanyUsers {
 	@Column("int", { name: "roleId", nullable: true })
 	roleId: number | null;
 
-	@ManyToOne(() => Companies, (companies) => companies.companyUsers, {
+	@ManyToOne(() => Company, (companies) => companies.companyUsers, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-	company: Companies;
+	company: Company;
 
-	@ManyToOne(() => Users, (users) => users.companyUsers, {
+	@ManyToOne(() => User, (users) => users.companyUsers, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
 	@JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-	user: Users;
+	user: User;
 
 	@ManyToOne(() => Roles, (roles) => roles.companyUsers, {
 		onDelete: "SET NULL",

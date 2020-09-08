@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { CompanyUsers } from "../company/company.user.entity";
+import { CompanyUser } from "../company/entities/company.user.entity";
 
-@Entity("roles", { schema: "pronto_entregue" })
+@Entity("roles")
 export class Roles {
 	@PrimaryGeneratedColumn({ type: "int", name: "id" })
 	id: number;
@@ -21,6 +21,6 @@ export class Roles {
 	@Column("datetime", { name: "updatedAt" })
 	updatedAt: Date;
 
-	@OneToMany(() => CompanyUsers, (companyUsers) => companyUsers.role)
-	companyUsers: CompanyUsers[];
+	@OneToMany(() => CompanyUser, (companyUsers) => companyUsers.role)
+	companyUsers: CompanyUser[];
 }
