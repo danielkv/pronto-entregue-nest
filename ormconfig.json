@@ -1,16 +1,17 @@
 {
   "type": "mysql",
   "host": "localhost",
-  "port": 3306,
+  "port": 5001,
   "username": "root",
-  "password": "",
+  "password": "0000",
   "database": "pronto_entregue",
   "entities": [
+    "dist/**/**.entity{.js,.ts}",
     "src/**/**.entity{.js,.ts}"
   ],
   "migrationsTableName": "migration",
   "migrations": [
-    "src/migration/*.ts"
+    "../migration/*{.js,.ts}"
   ],
   "cli": {
     "migrationsDir": "src/migration"

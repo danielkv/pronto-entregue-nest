@@ -38,12 +38,15 @@ class ConfigService {
             password: this.getValue('MYSQL_PASSWORD'),
             database: this.getValue('MYSQL_DATABASE'),
 
-            entities: ['dist/**/**.entity{.js,.ts}'],
+            entities: [
+                'dist/**/**.entity{.js,.ts}',
+                'src/**/**.entity{.js,.ts}',
+            ],
             //autoLoadEntities: true,
 
             migrationsTableName: 'migration',
 
-            migrations: ['../migration/*.js'],
+            migrations: ['../migration/*{.js,.ts}'],
 
             cli: {
                 migrationsDir: 'src/migration',
