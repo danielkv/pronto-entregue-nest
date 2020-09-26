@@ -1,117 +1,175 @@
 import {
-	Column,
-	Entity,
-	Index,
-	JoinColumn,
-	ManyToOne,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from "typeorm";
-import { Category } from "../../category/category.entity";
-import { CompanySection } from "./company.type.entity";
-import { Address } from "../../address/address.entity";
-import { CompanyMeta } from "./company.meta.entity";
-import { CompanyPaymentMethod } from "./company.payment.method.entity";
-import { CompanyUser } from "./company.user.entity";
-import { CouponCompany } from "../../coupon/coupon.company.entity";
-import { DeliveryArea } from "../../area/delivery.area.entity";
-import { Order } from "../../order/order.entity";
-import { Product } from "../../product/product.entity";
-import { Rating } from "../../rating/rating.entity";
-import { ViewArea } from "../../area/view.area.entity";
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Category } from '../../category/category.entity';
+import { CompanySection } from './company.type.entity';
+import { Address } from '../../address/address.entity';
+import { CompanyMeta } from './company.meta.entity';
+import { CompanyPaymentMethod } from './company.payment.method.entity';
+import { CompanyUser } from './company.user.entity';
+import { DeliveryArea } from '../../area/delivery.area.entity';
+import { Order } from '../../order/order.entity';
+import { Product } from '../../product/product.entity';
+import { Rating } from '../../rating/rating.entity';
+import { ViewArea } from '../../area/view.area.entity';
+import { PaymentMethod } from '../../payment/payment.method.entity';
+import { Coupon } from 'src/modules/coupon/coupon.entity';
 
-@Index("companyTypeId", ["companyTypeId"], {})
-@Index("addressId", ["addressId"], {})
-@Entity("companies")
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+@Index('companyTypeId', ['companyTypeId'], {})
+@Index('addressId', ['addressId'], {})
+@Entity('companies')
 export class Company {
-	@PrimaryGeneratedColumn({ type: "int", name: "id" })
-	id: number;
+    @Field(() => ID)
+    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+    id: number;
 
-	@Column("varchar", { name: "name", nullable: true, length: 255 })
-	name: string | null;
+    @Field()
+    @Column('varchar', { name: 'name', nullable: true, length: 255 })
+    name: string | null;
 
-	@Column("varchar", { name: "displayName", nullable: true, length: 255 })
-	displayName: string | null;
+    @Field()
+    @Column('varchar', { name: 'displayName', nullable: true, length: 255 })
+    displayName: string | null;
 
-	@Column("text", { name: "image", nullable: true })
-	image: string | null;
+    @Field()
+    @Column('text', { name: 'image', nullable: true })
+    image: string | null;
 
-	@Column("varchar", { name: "backgroundColor", nullable: true, length: 10 })
-	backgroundColor: string | null;
+    @Field()
+    @Column('varchar', { name: 'backgroundColor', nullable: true, length: 10 })
+    backgroundColor: string | null;
 
-	@Column({ type: 'boolean', name: "acceptTakeout", default: true })
-	acceptTakeout: boolean;
+    @Field()
+    @Column({ type: 'boolean', name: 'acceptTakeout', default: true })
+    acceptTakeout: boolean;
 
-	@Column({
-		type: 'boolean',
-		name: "active",
-		nullable: true,
-		default: false,
-	})
-	active: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'active',
+        nullable: true,
+        default: false,
+    })
+    active: boolean | null;
 
-	@Column({ type: 'boolean', name: "published", default: false })
-	published: boolean;
+    @Field()
+    @Column({ type: 'boolean', name: 'published', default: false })
+    published: boolean;
 
-	@Column("datetime", { name: "createdAt" })
-	createdAt: Date;
+    @Field()
+    @Column('datetime', { name: 'createdAt' })
+    createdAt: Date;
 
-	@Column("datetime", { name: "updatedAt" })
-	updatedAt: Date;
+    @Field()
+    @Column('datetime', { name: 'updatedAt' })
+    updatedAt: Date;
 
-	@Column("int", { name: "companyTypeId", nullable: true })
-	companyTypeId: number | null;
+    @Column('int', { name: 'companyTypeId', nullable: true })
+    companyTypeId: number | null;
 
-	@Column("int", { name: "addressId", nullable: true })
-	addressId: number | null;
+    @Column('int', { name: 'addressId', nullable: true })
+    addressId: number | null;
 
-	@OneToMany(() => Category, (categories) => categories.company)
-	categories: Category[];
+    @Field()
+    @OneToMany(
+        () => Category,
+        categories => categories.company,
+    )
+    categories: Category[];
 
-	@ManyToOne(() => CompanySection, (companyTypes) => companyTypes.companies, {
-		onDelete: "SET NULL",
-		onUpdate: "CASCADE",
-	})
-	@JoinColumn([{ name: "companyTypeId", referencedColumnName: "id" }])
-	companyType: CompanySection;
+    @Field()
+    @ManyToOne(
+        () => CompanySection,
+        companyTypes => companyTypes.companies,
+        {
+            onDelete: 'SET NULL',
+            onUpdate: 'CASCADE',
+        },
+    )
+    @JoinColumn([{ name: 'companyTypeId', referencedColumnName: 'id' }])
+    companyType: CompanySection;
 
-	@ManyToOne(() => Address, (addresses) => addresses.companies, {
-		onDelete: "SET NULL",
-		onUpdate: "CASCADE",
-	})
-	@JoinColumn([{ name: "addressId", referencedColumnName: "id" }])
-	address: Address;
+    @Field()
+    @ManyToOne(
+        () => Address,
+        addresses => addresses.companies,
+        {
+            onDelete: 'SET NULL',
+            onUpdate: 'CASCADE',
+        },
+    )
+    @JoinColumn([{ name: 'addressId', referencedColumnName: 'id' }])
+    address: Address;
 
-	@OneToMany(() => CompanyMeta, (companyMetas) => companyMetas.company)
-	companyMetas: CompanyMeta[];
+    @Field(() => [CompanyMeta])
+    @OneToMany(
+        () => CompanyMeta,
+        companyMetas => companyMetas.company,
+    )
+    companyMetas: CompanyMeta[];
 
-	@OneToMany(
-		() => CompanyPaymentMethod,
-		(companyPaymentMethods) => companyPaymentMethods.company
-	)
-	companyPaymentMethods: CompanyPaymentMethod[];
+    @Field(() => [PaymentMethod])
+    @OneToMany(
+        () => CompanyPaymentMethod,
+        companyPaymentMethods => companyPaymentMethods.company,
+    )
+    companyPaymentMethods: CompanyPaymentMethod[];
 
-	@OneToMany(() => CompanyUser, (companyUsers) => companyUsers.company)
-	companyUsers: CompanyUser[];
+    @Field(() => [CompanyUser])
+    @OneToMany(
+        () => CompanyUser,
+        companyUsers => companyUsers.company,
+    )
+    companyUsers: CompanyUser[];
 
-	@OneToMany(
-		() => CouponCompany,
-		(couponCompanies) => couponCompanies.company
-	)
-	couponCompanies: CouponCompany[];
+    @Field(() => [Coupon])
+    @OneToMany(
+        () => Coupon,
+        coupon => coupon.companies,
+    )
+    coupons: Coupon[];
 
-	@OneToMany(() => DeliveryArea, (deliveryAreas) => deliveryAreas.company)
-	deliveryAreas: DeliveryArea[];
+    @Field(() => [DeliveryArea])
+    @OneToMany(
+        () => DeliveryArea,
+        deliveryAreas => deliveryAreas.company,
+    )
+    deliveryAreas: DeliveryArea[];
 
-	@OneToMany(() => Order, (orders) => orders.company)
-	orders: Order[];
+    @Field(() => [Order])
+    @OneToMany(
+        () => Order,
+        orders => orders.company,
+    )
+    orders: Order[];
 
-	@OneToMany(() => Product, (products) => products.company)
-	products: Product[];
+    @Field(() => [Product])
+    @OneToMany(
+        () => Product,
+        products => products.company,
+    )
+    products: Product[];
 
-	@OneToMany(() => Rating, (ratings) => ratings.company)
-	ratings: Rating[];
+    @Field(() => [Rating])
+    @OneToMany(
+        () => Rating,
+        ratings => ratings.company,
+    )
+    ratings: Rating[];
 
-	@OneToMany(() => ViewArea, (viewAreas) => viewAreas.company)
-	viewAreas: ViewArea[];
+    @Field(() => [ViewArea])
+    @OneToMany(
+        () => ViewArea,
+        viewAreas => viewAreas.company,
+    )
+    viewAreas: ViewArea[];
 }

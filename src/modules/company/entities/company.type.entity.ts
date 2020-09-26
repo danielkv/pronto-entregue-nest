@@ -1,34 +1,47 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Company } from "./company.entity";
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Company } from './company.entity';
 
-@Entity("company_types")
+@ObjectType()
+@Entity('company_types')
 export class CompanySection {
-	@PrimaryGeneratedColumn({ type: "int", name: "id" })
-	id: number;
+    @Field(() => ID)
+    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+    id: number;
 
-	@Column("varchar", { name: "name", nullable: true, length: 255 })
-	name: string | null;
+    @Field()
+    @Column('varchar', { name: 'name', nullable: true, length: 255 })
+    name: string | null;
 
-	@Column("varchar", { name: "image", nullable: true, length: 255 })
-	image: string | null;
+    @Field()
+    @Column('varchar', { name: 'image', nullable: true, length: 255 })
+    image: string | null;
 
-	@Column("varchar", { name: "description", nullable: true, length: 255 })
-	description: string | null;
+    @Field()
+    @Column('varchar', { name: 'description', nullable: true, length: 255 })
+    description: string | null;
 
-	@Column({
-		type: 'boolean',
-		name: "active",
-		nullable: true,
-		default: true,
-	})
-	active: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'active',
+        nullable: true,
+        default: true,
+    })
+    active: boolean | null;
 
-	@Column("datetime", { name: "createdAt" })
-	createdAt: Date;
+    @Field()
+    @Column('datetime', { name: 'createdAt' })
+    createdAt: Date;
 
-	@Column("datetime", { name: "updatedAt" })
-	updatedAt: Date;
+    @Field()
+    @Column('datetime', { name: 'updatedAt' })
+    updatedAt: Date;
 
-	@OneToMany(() => Company, (companies) => companies.companyType)
-	companies: Company[];
+    @Field(() => [Company])
+    @OneToMany(
+        () => Company,
+        companies => companies.companyType,
+    )
+    companies: Company[];
 }

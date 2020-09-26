@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CompanyModule } from './modules/company/company.module';
-import { DatabaseModule } from './modules/database/database.module';
 import { AddressModule } from './modules/address/address.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ConfigModule } from './modules/config/config.module';
@@ -18,12 +17,32 @@ import { AreaModule } from './modules/area/area.module';
 import { Connection } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
+import { GraphQLModule } from '@nestjs/graphql';
+import { graphqlConfig } from './config/graphql.config';
+import { CommonModule } from './modules/common/common.module';
 
 @Module({
-	imports: [TypeOrmModule.forRoot(configService.getTypeOrmConfig()), CompanyModule, AddressModule, CategoryModule, ConfigModule, CouponModule, CreditModule, DeliveryModule, ProductModule, OrderModule, UserModule, PaymentModule, RatingModule, AreaModule],
-	controllers: [AppController],
-	providers: [AppService],
+    imports: [
+        GraphQLModule.forRoot(graphqlConfig),
+        TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+        CompanyModule,
+        AddressModule,
+        CategoryModule,
+        ConfigModule,
+        CouponModule,
+        CreditModule,
+        DeliveryModule,
+        ProductModule,
+        OrderModule,
+        UserModule,
+        PaymentModule,
+        RatingModule,
+        AreaModule,
+        CommonModule,
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {
-	constructor(private connection: Connection) { }
+    constructor(private connection: Connection) {}
 }

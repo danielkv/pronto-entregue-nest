@@ -1,5 +1,4 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import path from 'path';
 
 import 'dotenv/config';
 

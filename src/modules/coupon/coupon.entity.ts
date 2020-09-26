@@ -1,126 +1,194 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { CouponCompany } from "./coupon.company.entity";
-import { CouponProduct } from "./coupon.product.entity";
-import { CouponUser } from "./coupon.user.entity";
-import { Order } from "../order/order.entity";
+import {
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Order } from '../order/order.entity';
+import { Product } from '../product/product.entity';
+import { User } from '../user/user.entity';
+import { Company } from '../company/entities/company.entity';
+import {
+    Field,
+    Float,
+    ID,
+    Int,
+    ObjectType,
+    registerEnumType,
+} from '@nestjs/graphql';
 
-@Entity("coupons")
+export enum CouponValueType {
+    VALUE = 'value',
+    PERCENTAGE = 'percentage',
+}
+
+registerEnumType(CouponValueType, { name: 'CouponValueType' });
+
+@ObjectType()
+@Entity('coupons')
 export class Coupon {
-	@PrimaryGeneratedColumn({ type: "int", name: "id" })
-	id: number;
+    @Field(() => ID)
+    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+    id: number;
 
-	@Column("varchar", { name: "name", nullable: true, length: 255 })
-	name: string | null;
+    @Field()
+    @Column('varchar', { name: 'name', nullable: true, length: 255 })
+    name: string | null;
 
-	@Column("text", { name: "image", nullable: true })
-	image: string | null;
+    @Field()
+    @Column('text', { name: 'image', nullable: true })
+    image: string | null;
 
-	@Column("datetime", { name: "startsAt", nullable: true })
-	startsAt: Date | null;
+    @Field()
+    @Column('datetime', { name: 'startsAt', nullable: true })
+    startsAt: Date | null;
 
-	@Column("datetime", { name: "expiresAt", nullable: true })
-	expiresAt: Date | null;
+    @Field()
+    @Column('datetime', { name: 'expiresAt', nullable: true })
+    expiresAt: Date | null;
 
-	@Column("varchar", { name: "description", nullable: true, length: 255 })
-	description: string | null;
+    @Field()
+    @Column('varchar', { name: 'description', nullable: true, length: 255 })
+    description: string | null;
 
-	@Column({
-		type: 'boolean',
-		name: "masterOnly",
-		nullable: true,
-		comment: "Se verdadeiro, apenas usuário master consegue alterar",
-		default: false,
-	})
-	masterOnly: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'masterOnly',
+        nullable: true,
+        comment: 'Se verdadeiro, apenas usuário master consegue alterar',
+        default: false,
+    })
+    masterOnly: boolean | null;
 
-	@Column({
-		type: 'boolean',
-		name: "onlyFirstPurchases",
-		nullable: true,
-		comment: "Se verdadeiro, apenas válido apenas para primeira compra de cada usuário",
-		default: false,
-	})
-	onlyFirstPurchases: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'onlyFirstPurchases',
+        nullable: true,
+        comment:
+            'Se verdadeiro, apenas válido apenas para primeira compra de cada usuário',
+        default: false,
+    })
+    onlyFirstPurchases: boolean | null;
 
-	@Column({
-		type: 'boolean',
-		name: "featured",
-		nullable: true,
-		comment: "Se verdadeiro, usuário pode pegar cupom na home do app",
-		default: false,
-	})
-	featured: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'featured',
+        nullable: true,
+        comment: 'Se verdadeiro, usuário pode pegar cupom na home do app',
+        default: false,
+    })
+    featured: boolean | null;
 
-	@Column({
-		type: 'boolean',
-		name: "active",
-		nullable: true,
-		default: true,
-	})
-	active: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'active',
+        nullable: true,
+        default: true,
+    })
+    active: boolean | null;
 
-	@Column("decimal", {
-		name: "taxable",
-		nullable: true,
-		comment: "Porcentagem do cupom que será pago pelo estabelecimento",
-		precision: 10,
-		scale: 2,
-		default: 100,
-	})
-	taxable: string | null;
+    @Field(() => Float)
+    @Column('decimal', {
+        name: 'taxable',
+        nullable: true,
+        comment: 'Porcentagem do cupom que será pago pelo estabelecimento',
+        precision: 10,
+        scale: 2,
+        default: 100,
+    })
+    taxable: number | null;
 
-	@Column("int", { name: "maxPerUser", nullable: true, default: 1 })
-	maxPerUser: number | null;
+    @Field(() => Int)
+    @Column('int', { name: 'maxPerUser', nullable: true, default: 1 })
+    maxPerUser: number | null;
 
-	@Column("int", { name: "maxPurchases", nullable: true, default: 0 })
-	maxPurchases: number | null;
+    @Field(() => Int)
+    @Column('int', { name: 'maxPurchases', nullable: true, default: 0 })
+    maxPurchases: number | null;
 
-	@Column("decimal", {
-		name: "minValue",
-		nullable: true,
-		precision: 10,
-		scale: 2,
-		default: 0,
-	})
-	minValue: string | null;
+    @Field(() => Float)
+    @Column('decimal', {
+        name: 'minValue',
+        nullable: true,
+        precision: 10,
+        scale: 2,
+        default: 0,
+    })
+    minValue: number | null;
 
-	@Column("decimal", {
-		name: "maxValue",
-		nullable: true,
-		precision: 10,
-		scale: 2,
-		default: 0,
-	})
-	maxValue: string | null;
+    @Field(() => Float)
+    @Column('decimal', {
+        name: 'maxValue',
+        nullable: true,
+        precision: 10,
+        scale: 2,
+        default: 0,
+    })
+    maxValue: number | null;
 
-	@Column("enum", {
-		name: "valueType",
-		enum: ["value", "percentage"],
-		default: 'percentage',
-	})
-	valueType: "value" | "percentage";
+    @Field(() => CouponValueType)
+    @Column('enum', {
+        name: 'valueType',
+        enum: CouponValueType,
+        default: CouponValueType.PERCENTAGE,
+    })
+    valueType: CouponValueType;
 
-	@Column("decimal", { name: "value", nullable: true, precision: 2, scale: 0 })
-	value: string | null;
+    @Field(() => Float)
+    @Column('decimal', {
+        name: 'value',
+        nullable: true,
+        precision: 2,
+        scale: 0,
+    })
+    value: number | null;
 
-	@Column({ type: 'boolean', name: "freeDelivery", default: false })
-	freeDelivery: boolean;
+    @Field()
+    @Column({ type: 'boolean', name: 'freeDelivery', default: false })
+    freeDelivery: boolean;
 
-	@Column("datetime", { name: "createdAt" })
-	createdAt: Date;
+    @Field()
+    @Column('datetime', { name: 'createdAt' })
+    createdAt: Date;
 
-	@Column("datetime", { name: "updatedAt" })
-	updatedAt: Date;
+    @Field()
+    @Column('datetime', { name: 'updatedAt' })
+    updatedAt: Date;
 
-	@OneToMany(() => CouponCompany, (couponCompanies) => couponCompanies.coupon)
-	couponCompanies: CouponCompany[];
+    @Field(() => [Company])
+    @ManyToMany(
+        () => Company,
+        company => company.coupons,
+    )
+    @JoinTable()
+    companies: Company[];
 
-	@OneToMany(() => CouponProduct, (couponProducts) => couponProducts.coupon)
-	couponProducts: CouponProduct[];
+    @Field(() => [Product])
+    @ManyToMany(
+        () => Product,
+        product => product.coupons,
+    )
+    @JoinTable()
+    products: Product[];
 
-	@OneToMany(() => CouponUser, (couponUsers) => couponUsers.coupon)
-	couponUsers: CouponUser[];
+    @Field(() => [User])
+    @ManyToMany(
+        () => User,
+        user => user.coupons,
+    )
+    @JoinTable()
+    users: User[];
 
-	@OneToMany(() => Order, (orders) => orders.coupon)
-	orders: Order[];
+    @Field(() => [Order])
+    @OneToMany(
+        () => Order,
+        orders => orders.coupon,
+    )
+    orders: Order[];
 }

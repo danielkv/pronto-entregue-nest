@@ -1,51 +1,79 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Company } from "../company/entities/company.entity";
-import { UserAddress } from "../user/user.address.entity";
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
-@Entity("addresses")
+import {
+    Column,
+    Entity,
+    ManyToMany,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Company } from '../company/entities/company.entity';
+import { User } from '../user/user.entity';
+
+@ObjectType()
+@Entity('addresses')
 export class Address {
-	@PrimaryGeneratedColumn({ type: "int", name: "id" })
-	id: number;
+    @Field(() => ID)
+    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+    id: number;
 
-	@Column("varchar", { name: "name", nullable: true, length: 255 })
-	name: string | null;
+    @Field()
+    @Column('varchar', { name: 'name', nullable: true, length: 255 })
+    name: string | null;
 
-	@Column("varchar", { name: "street", nullable: true, length: 255 })
-	street: string | null;
+    @Field()
+    @Column('varchar', { name: 'street', nullable: true, length: 255 })
+    street: string | null;
 
-	@Column("int", { name: "number", nullable: true })
-	number: number | null;
+    @Field(() => Int)
+    @Column('int', { name: 'number', nullable: true })
+    number: number | null;
 
-	@Column("varchar", { name: "complement", nullable: true, length: 255 })
-	complement: string | null;
+    @Field()
+    @Column('varchar', { name: 'complement', nullable: true, length: 255 })
+    complement: string | null;
 
-	@Column("varchar", { name: "district", nullable: true, length: 255 })
-	district: string | null;
+    @Field()
+    @Column('varchar', { name: 'district', nullable: true, length: 255 })
+    district: string | null;
 
-	@Column("int", { name: "zipcode", nullable: true })
-	zipcode: number | null;
+    @Field(() => Int)
+    @Column('int', { name: 'zipcode', nullable: true })
+    zipcode: number | null;
 
-	@Column("varchar", { name: "city", nullable: true, length: 255 })
-	city: string | null;
+    @Field()
+    @Column('varchar', { name: 'city', nullable: true, length: 255 })
+    city: string | null;
 
-	@Column("varchar", { name: "state", nullable: true, length: 255 })
-	state: string | null;
+    @Field()
+    @Column('varchar', { name: 'state', nullable: true, length: 255 })
+    state: string | null;
 
-	@Column("point", { name: "location" })
-	location: string;
+    @Field()
+    @Column('point', { name: 'location' })
+    location: string;
 
-	@Column("datetime", { name: "createdAt" })
-	createdAt: Date;
+    @Field()
+    @Column('datetime', { name: 'createdAt' })
+    createdAt: Date;
 
-	@Column("datetime", { name: "updatedAt" })
-	updatedAt: Date;
+    @Field()
+    @Column('datetime', { name: 'updatedAt' })
+    updatedAt: Date;
 
-	@Column("varchar", { name: "reference", nullable: true, length: 255 })
-	reference: string | null;
+    @Field()
+    @Column('varchar', { name: 'reference', nullable: true, length: 255 })
+    reference: string | null;
 
-	@OneToMany(() => Company, (companies) => companies.address)
-	companies: Company[];
+    @OneToMany(
+        () => Company,
+        companies => companies.address,
+    )
+    companies: Company[];
 
-	@OneToMany(() => UserAddress, (userAddresses) => userAddresses.address)
-	userAddresses: UserAddress[];
+    @ManyToMany(
+        () => User,
+        user => user.addresses,
+    )
+    users: User[];
 }

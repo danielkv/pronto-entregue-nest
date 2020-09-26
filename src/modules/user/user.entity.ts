@@ -1,102 +1,157 @@
 import {
-	Column,
-	Entity,
-	Index,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from "typeorm";
-import { CompanyUser } from "../company/entities/company.user.entity";
-import { CouponUser } from "../coupon/coupon.user.entity";
-import { CreditBalance } from "../credit/credit.balance.entity";
-import { CreditHistory } from "../credit/credit.history.entity";
-import { Delivery } from "../delivery/delivery.entity";
-import { FavoriteProduct } from "../product/favorite.product.entity";
-import { Order } from "../order/order.entity";
-import { Rating } from "../rating/rating.entity";
-import { UserAddress } from "./user.address.entity";
-import { UserMeta } from "./user.meta.entity";
+    Column,
+    Entity,
+    Index,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { CompanyUser } from '../company/entities/company.user.entity';
+import { CreditBalance } from '../credit/credit.balance.entity';
+import { CreditHistory } from '../credit/credit.history.entity';
+import { Delivery } from '../delivery/delivery.entity';
+import { Order } from '../order/order.entity';
+import { Rating } from '../rating/rating.entity';
+import { UserMeta } from './user.meta.entity';
+import { Coupon } from '../coupon/coupon.entity';
+import { Product } from '../product/product.entity';
+import { Address } from '../address/address.entity';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-@Index("email", ["email"], { unique: true })
-@Entity("users")
+@ObjectType()
+@Index('email', ['email'], { unique: true })
+@Entity('users')
 export class User {
-	@PrimaryGeneratedColumn({ type: "int", name: "id" })
-	id: number;
+    @Field(() => ID)
+    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+    id: number;
 
-	@Column("varchar", { name: "firstName", nullable: true, length: 255 })
-	firstName: string | null;
+    @Field()
+    @Column('varchar', { name: 'firstName', nullable: true, length: 255 })
+    firstName: string | null;
 
-	@Column("varchar", { name: "lastName", nullable: true, length: 255 })
-	lastName: string | null;
+    @Field()
+    @Column('varchar', { name: 'lastName', nullable: true, length: 255 })
+    lastName: string | null;
 
-	@Column("text", { name: "image", nullable: true })
-	image: string | null;
+    @Field()
+    @Column('text', { name: 'image', nullable: true })
+    image: string | null;
 
-	@Column("varchar", {
-		name: "email",
-		nullable: true,
-		unique: true,
-		length: 255,
-	})
-	email: string | null;
+    @Field()
+    @Column('varchar', {
+        name: 'email',
+        nullable: true,
+        unique: true,
+        length: 255,
+    })
+    email: string | null;
 
-	@Column("varchar", { name: "password", nullable: true, length: 255 })
-	password: string | null;
+    @Field()
+    @Column('varchar', { name: 'password', nullable: true, length: 255 })
+    password: string | null;
 
-	@Column("varchar", { name: "salt", nullable: true, length: 255 })
-	salt: string | null;
+    @Field()
+    @Column('varchar', { name: 'salt', nullable: true, length: 255 })
+    salt: string | null;
 
-	@Column({
-		type: 'boolean',
-		name: "active",
-		nullable: true,
-		default: true,
-	})
-	active: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'active',
+        nullable: true,
+        default: true,
+    })
+    active: boolean | null;
 
-	@Column("varchar", {
-		name: "role",
-		comment: "master | default",
-		length: 255,
-		default: 'default',
-	})
-	role: string;
+    @Field()
+    @Column('varchar', {
+        name: 'role',
+        comment: 'master | default',
+        length: 255,
+        default: 'default',
+    })
+    role: string;
 
-	@Column("datetime", { name: "createdAt" })
-	createdAt: Date;
+    @Field()
+    @Column('datetime', { name: 'createdAt' })
+    createdAt: Date;
 
-	@Column("datetime", { name: "updatedAt" })
-	updatedAt: Date;
+    @Field()
+    @Column('datetime', { name: 'updatedAt' })
+    updatedAt: Date;
 
-	@OneToMany(() => CompanyUser, (companyUsers) => companyUsers.user)
-	companyUsers: CompanyUser[];
+    @Field(() => [CompanyUser])
+    @OneToMany(
+        () => CompanyUser,
+        companyUsers => companyUsers.user,
+    )
+    companyUsers: CompanyUser[];
 
-	@OneToMany(() => CouponUser, (couponUsers) => couponUsers.user)
-	couponUsers: CouponUser[];
+    @Field(() => [Coupon])
+    @ManyToMany(
+        () => Coupon,
+        coupon => coupon.users,
+    )
+    coupons: Coupon[];
 
-	@OneToMany(() => CreditBalance, (creditBalances) => creditBalances.user)
-	creditBalances: CreditBalance[];
+    @Field()
+    @OneToOne(
+        () => CreditBalance,
+        creditBalances => creditBalances.user,
+    )
+    creditBalance: CreditBalance;
 
-	@OneToMany(() => CreditHistory, (creditHistory) => creditHistory.user)
-	creditHistories: CreditHistory[];
+    @Field(() => [CreditHistory])
+    @OneToMany(
+        () => CreditHistory,
+        creditHistory => creditHistory.user,
+    )
+    creditHistories: CreditHistory[];
 
-	@OneToMany(() => Delivery, (deliveries) => deliveries.deliveryMan)
-	deliveries: Delivery[];
+    @Field(() => [Delivery])
+    @OneToMany(
+        () => Delivery,
+        deliveries => deliveries.deliveryMan,
+    )
+    deliveries: Delivery[];
 
-	@OneToMany(
-		() => FavoriteProduct,
-		(favoriteProducts) => favoriteProducts.user
-	)
-	favoriteProducts: FavoriteProduct[];
+    @Field(() => [Product])
+    @ManyToMany(
+        () => Product,
+        product => product.favoritedBy,
+    )
+    @JoinTable()
+    favoriteProducts: Product[];
 
-	@OneToMany(() => Order, (orders) => orders.user)
-	orders: Order[];
+    @Field(() => [Order])
+    @OneToMany(
+        () => Order,
+        orders => orders.user,
+    )
+    orders: Order[];
 
-	@OneToMany(() => Rating, (ratings) => ratings.user)
-	ratings: Rating[];
+    @Field(() => [Rating])
+    @OneToMany(
+        () => Rating,
+        ratings => ratings.user,
+    )
+    ratings: Rating[];
 
-	@OneToMany(() => UserAddress, (userAddresses) => userAddresses.user)
-	userAddresses: UserAddress[];
+    @Field(() => [Address])
+    @ManyToMany(
+        () => Address,
+        address => address.users,
+    )
+    @JoinTable()
+    addresses: Address[];
 
-	@OneToMany(() => UserMeta, (userMetas) => userMetas.user)
-	userMetas: UserMeta[];
+    @Field(() => [UserMeta])
+    @OneToMany(
+        () => UserMeta,
+        userMetas => userMetas.user,
+    )
+    metas: UserMeta[];
 }

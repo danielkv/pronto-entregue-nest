@@ -1,99 +1,138 @@
 import {
-	Column,
-	Entity,
-	Index,
-	JoinColumn,
-	ManyToOne,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from "typeorm";
-import { Options } from "./option.entity";
-import { Product } from "./product.entity";
-import { OrderOptionGroup } from "../order/order.option.group.entity";
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Option } from './option.entity';
+import { Product } from './product.entity';
+import { OrderOptionGroup } from '../order/order.option.group.entity';
+import { Field, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 
-@Index("productId", ["productId"], {})
-@Index("maxSelectRestrain", ["maxSelectRestrain"], {})
-@Entity("options_groups")
+export enum OptionGroupType {
+    SINGLE = 'single',
+    MULTI = 'multi',
+}
+
+export enum OptionGroupPriceType {
+    HIGHER = 'higher',
+    SUM = 'sum',
+}
+
+registerEnumType(OptionGroupPriceType, { name: 'OptionGroupPriceType' });
+registerEnumType(OptionGroupType, { name: 'OptionGroupType' });
+
+@ObjectType()
+@Index('productId', ['productId'], {})
+@Index('maxSelectRestrain', ['maxSelectRestrain'], {})
+@Entity('options_groups')
 export class OptionGroup {
-	@PrimaryGeneratedColumn({ type: "int", name: "id" })
-	id: number;
+    @Field(() => ID)
+    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+    id: number;
 
-	@Column("varchar", { name: "name", nullable: true, length: 255 })
-	name: string | null;
+    @Field()
+    @Column('varchar', { name: 'name', nullable: true, length: 255 })
+    name: string | null;
 
-	@Column("enum", {
-		name: "type",
-		enum: ["single", "multi"],
-		default: 'single',
-	})
-	type: "single" | "multi";
+    @Field(() => OptionGroupType)
+    @Column('enum', {
+        name: 'type',
+        enum: OptionGroupType,
+        default: OptionGroupType.SINGLE,
+    })
+    type: OptionGroupType;
 
-	@Column("enum", {
-		name: "priceType",
-		enum: ["higher", "sum"],
-		default: 'higher',
-	})
-	priceType: "higher" | "sum";
+    @Field(() => OptionGroupPriceType)
+    @Column('enum', {
+        name: 'priceType',
+        enum: OptionGroupPriceType,
+        default: OptionGroupPriceType.HIGHER,
+    })
+    priceType: OptionGroupPriceType;
 
-	@Column("int", { name: "order", default: 0 })
-	order: number;
+    @Field(() => Int)
+    @Column('int', { name: 'order', default: 0 })
+    order: number;
 
-	@Column("int", { name: "minSelect", nullable: true })
-	minSelect: number | null;
+    @Field(() => Int)
+    @Column('int', { name: 'minSelect', nullable: true })
+    minSelect: number | null;
 
-	@Column("int", { name: "maxSelect", nullable: true })
-	maxSelect: number | null;
+    @Field(() => Int)
+    @Column('int', { name: 'maxSelect', nullable: true })
+    maxSelect: number | null;
 
-	@Column({
-		type: 'boolean',
-		name: "active",
-		nullable: true,
-		default: true,
-	})
-	active: boolean | null;
+    @Field()
+    @Column({
+        type: 'boolean',
+        name: 'active',
+        nullable: true,
+        default: true,
+    })
+    active: boolean | null;
 
-	@Column({ type: 'boolean', name: "removed", default: false })
-	removed: boolean;
+    @Field()
+    @Column({ type: 'boolean', name: 'removed', default: false })
+    removed: boolean;
 
-	@Column("datetime", { name: "createdAt" })
-	createdAt: Date;
+    @Field()
+    @Column('datetime', { name: 'createdAt' })
+    createdAt: Date;
 
-	@Column("datetime", { name: "updatedAt" })
-	updatedAt: Date;
+    @Field()
+    @Column('datetime', { name: 'updatedAt' })
+    updatedAt: Date;
 
-	@Column("int", { name: "productId", nullable: true })
-	productId: number | null;
+    @Column('int', { name: 'productId', nullable: true })
+    productId: number | null;
 
-	@Column("int", { name: "maxSelectRestrain", nullable: true })
-	maxSelectRestrain: number | null;
+    @Column('int', { name: 'maxSelectRestrain', nullable: true })
+    maxSelectRestrain: number | null;
 
-	@OneToMany(() => Options, (options) => options.optionsGroup)
-	options: Options[];
+    @Field(() => [Option])
+    @OneToMany(
+        () => Option,
+        options => options.optionsGroup,
+    )
+    options: Option[];
 
-	@ManyToOne(() => Product, (products) => products.optionsGroups, {
-		onDelete: "SET NULL",
-		onUpdate: "CASCADE",
-	})
-	@JoinColumn([{ name: "productId", referencedColumnName: "id" }])
-	product: Product;
+    @Field()
+    @ManyToOne(
+        () => Product,
+        products => products.optionsGroups,
+        {
+            onDelete: 'SET NULL',
+            onUpdate: 'CASCADE',
+        },
+    )
+    @JoinColumn([{ name: 'productId', referencedColumnName: 'id' }])
+    product: Product;
 
-	@ManyToOne(
-		() => OptionGroup,
-		(optionsGroups) => optionsGroups.optionsGroups,
-		{ onDelete: "SET NULL", onUpdate: "CASCADE" }
-	)
-	@JoinColumn([{ name: "maxSelectRestrain", referencedColumnName: "id" }])
-	maxSelectRestrain2: OptionGroup;
+    @Field()
+    @OneToOne(
+        () => OptionGroup,
+        optionsGroup => optionsGroup.restrainedBy,
+        { onDelete: 'SET NULL', onUpdate: 'CASCADE' },
+    )
+    @JoinColumn([{ name: 'maxSelectRestrain', referencedColumnName: 'id' }])
+    groupRestrained: OptionGroup;
 
-	@OneToMany(
-		() => OptionGroup,
-		(optionsGroups) => optionsGroups.maxSelectRestrain2
-	)
-	optionsGroups: OptionGroup[];
+    @Field()
+    @OneToOne(
+        () => OptionGroup,
+        optionsGroup => optionsGroup.groupRestrained,
+    )
+    restrainedBy: OptionGroup;
 
-	@OneToMany(
-		() => OrderOptionGroup,
-		(orderOptionGroups) => orderOptionGroups.optionsGroupRelated
-	)
-	orderOptionGroups: OrderOptionGroup[];
+    @Field(() => [OrderOptionGroup])
+    @OneToMany(
+        () => OrderOptionGroup,
+        orderOptionGroups => orderOptionGroups.optionsGroupRelated,
+    )
+    orderOptionGroups: OrderOptionGroup[];
 }
