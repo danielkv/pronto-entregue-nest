@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { resolve } from 'path';
 import { DateScalar } from '../graphql/scalars/date-scalar';
-//import { GeoPointScalar } from '../graphql/scalars/geo-point-scalar';
+import { GeoPointScalar } from '../graphql/scalars/geo-point-scalar';
 
 @Module({
     imports: [
@@ -13,6 +13,6 @@ import { DateScalar } from '../graphql/scalars/date-scalar';
             autoSchemaFile: resolve(__dirname, 'schema.gql'),
         }),
     ],
-    providers: [DateScalar],
+    providers: [GeoPointScalar, DateScalar],
 })
 export class GraphqlModule {}

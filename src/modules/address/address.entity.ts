@@ -1,4 +1,7 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { geoPointToText } from 'src/commom/helpers/geoPointToText';
+import { textToGeoPoint } from 'src/commom/helpers/textoToGeoPoint';
+import { GeoPoint } from 'src/commom/types/GeoPoint';
 
 import {
     Column,
@@ -49,9 +52,12 @@ export class Address {
     @Column('varchar', { name: 'state', nullable: true, length: 255 })
     state: string | null;
 
-    @Field()
-    @Column('point', { name: 'location' })
-    location: string;
+    @Field(() => GeoPoint)
+    @Column('point', {
+        name: 'location',
+        transformer: { to: geoPointToText, from: textToGeoPoint },
+    })
+    location: GeoPoint;
 
     @Field()
     @Column('datetime', { name: 'createdAt' })
