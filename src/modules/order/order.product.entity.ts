@@ -13,7 +13,6 @@ import { Order } from './order.entity';
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-@Index('productId', ['productId'], {})
 @Index('orderId', ['orderId'], {})
 @Index('productRelatedId', ['productRelatedId'], {})
 @Entity('order_products')

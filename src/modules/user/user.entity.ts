@@ -123,7 +123,11 @@ export class User {
         () => Product,
         product => product.favoritedBy,
     )
-    @JoinTable()
+    @JoinTable({
+        name: 'favorite_products',
+        joinColumn: { name: 'userId' },
+        inverseJoinColumn: { name: 'productId' },
+    })
     favoriteProducts: Product[];
 
     @Field(() => [Order])
@@ -145,7 +149,11 @@ export class User {
         () => Address,
         address => address.users,
     )
-    @JoinTable()
+    @JoinTable({
+        name: 'user_addresses',
+        joinColumn: { name: 'userId' },
+        inverseJoinColumn: { name: 'addressId' },
+    })
     addresses: Address[];
 
     @Field(() => [UserMeta])

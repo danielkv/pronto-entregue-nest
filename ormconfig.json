@@ -11,7 +11,7 @@
   ],
   "migrationsTableName": "migration",
   "migrations": [
-    "../migration/*{.js,.ts}"
+    "C:\\Users\\danie\\Documents\\GitHub\\nest-test\\src\\migration\\*{.js,.ts}"
   ],
   "cli": {
     "migrationsDir": "src/migration"

@@ -166,7 +166,11 @@ export class Coupon {
         () => Company,
         company => company.coupons,
     )
-    @JoinTable()
+    @JoinTable({
+        name: 'coupon_companies',
+        joinColumn: { name: 'couponId' },
+        inverseJoinColumn: { name: 'companyId' },
+    })
     companies: Company[];
 
     @Field(() => [Product])
@@ -174,7 +178,11 @@ export class Coupon {
         () => Product,
         product => product.coupons,
     )
-    @JoinTable()
+    @JoinTable({
+        name: 'coupon_products',
+        joinColumn: { name: 'couponId' },
+        inverseJoinColumn: { name: 'productId' },
+    })
     products: Product[];
 
     @Field(() => [User])
@@ -182,7 +190,11 @@ export class Coupon {
         () => User,
         user => user.coupons,
     )
-    @JoinTable()
+    @JoinTable({
+        name: 'coupon_users',
+        joinColumn: { name: 'couponId' },
+        inverseJoinColumn: { name: 'userId' },
+    })
     users: User[];
 
     @Field(() => [Order])

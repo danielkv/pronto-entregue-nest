@@ -144,7 +144,7 @@ export class Product {
     @Field(() => [User])
     @ManyToMany(
         () => User,
-        product => product.favoriteProducts,
+        user => user.favoriteProducts,
     )
     favoritedBy: User[];
 

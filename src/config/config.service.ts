@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { resolve } from 'path';
 
 import 'dotenv/config';
 
@@ -46,7 +47,7 @@ class ConfigService {
 
             migrationsTableName: 'migration',
 
-            migrations: ['../migration/*{.js,.ts}'],
+            migrations: [resolve(__dirname, '..', 'migration/*{.js,.ts}')],
 
             cli: {
                 migrationsDir: 'src/migration',
