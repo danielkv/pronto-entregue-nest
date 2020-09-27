@@ -23,7 +23,7 @@ import {
     ObjectType,
     registerEnumType,
 } from '@nestjs/graphql';
-import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
+//import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
 
 export enum OrderStatus {
     WAITING = 'waiting',
@@ -162,7 +162,7 @@ export class Order {
     @Column('varchar', { name: 'stateAddress', nullable: true, length: 255 })
     stateAddress: string | null;
 
-    @Field(() => GeoPointScalar)
+    @Field() //GeoPointScalar
     @Column('point', { name: 'locationAddress', nullable: true })
     locationAddress: string | null;
 
@@ -207,7 +207,7 @@ export class Order {
     )
     orderProducts: OrderProduct[];
 
-    @Field()
+    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.orders,
@@ -219,7 +219,7 @@ export class Order {
     @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
     user: User;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.orders,
@@ -231,7 +231,7 @@ export class Order {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field()
+    @Field(() => PaymentMethod)
     @ManyToOne(
         () => PaymentMethod,
         paymentMethods => paymentMethods.orders,
@@ -243,7 +243,7 @@ export class Order {
     @JoinColumn([{ name: 'paymentMethodId', referencedColumnName: 'id' }])
     paymentMethod: PaymentMethod;
 
-    @Field()
+    @Field(() => CreditHistory)
     @ManyToOne(
         () => CreditHistory,
         creditHistory => creditHistory.orders,
@@ -255,7 +255,7 @@ export class Order {
     @JoinColumn([{ name: 'creditHistoryId', referencedColumnName: 'id' }])
     creditHistory: CreditHistory;
 
-    @Field()
+    @Field(() => Coupon)
     @ManyToOne(
         () => Coupon,
         coupons => coupons.orders,

@@ -79,14 +79,14 @@ export class Company {
     @Column('int', { name: 'addressId', nullable: true })
     addressId: number | null;
 
-    @Field()
+    @Field(() => [Category])
     @OneToMany(
         () => Category,
         categories => categories.company,
     )
     categories: Category[];
 
-    @Field()
+    @Field(() => CompanySection)
     @ManyToOne(
         () => CompanySection,
         companyTypes => companyTypes.companies,
@@ -98,7 +98,7 @@ export class Company {
     @JoinColumn([{ name: 'companyTypeId', referencedColumnName: 'id' }])
     companyType: CompanySection;
 
-    @Field()
+    @Field(() => Address, { nullable: true })
     @ManyToOne(
         () => Address,
         addresses => addresses.companies,

@@ -14,9 +14,9 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
 import { Order } from '../order/order.entity';
 import { User } from '../user/user.entity';
+//import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
 
 export enum DeliverStatus {
     WAITING = 'waiting',
@@ -134,7 +134,7 @@ export class Delivery {
     })
     referenceAddressFrom: string | null;
 
-    @Field(() => GeoPointScalar)
+    @Field() //GeoPointScalar
     @Column('point', { name: 'locationAddressFrom', nullable: true })
     locationAddressFrom: string | null;
 
@@ -186,7 +186,7 @@ export class Delivery {
     })
     referenceAddressTo: string | null;
 
-    @Field(() => GeoPointScalar)
+    @Field() //GeoPointScalar
     @Column('point', { name: 'locationAddressTo', nullable: true })
     locationAddressTo: string | null;
 
@@ -204,7 +204,7 @@ export class Delivery {
     @Column('int', { name: 'deliveryManId', nullable: true })
     deliveryManId: number | null;
 
-    @Field()
+    @Field(() => Order)
     @ManyToOne(
         () => Order,
         orders => orders.deliveries,
@@ -216,7 +216,7 @@ export class Delivery {
     @JoinColumn([{ name: 'orderId', referencedColumnName: 'id' }])
     order: Order;
 
-    @Field()
+    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.deliveries,

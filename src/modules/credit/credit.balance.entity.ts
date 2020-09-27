@@ -32,7 +32,7 @@ export class CreditBalance {
     @Column('int', { name: 'userId', nullable: true })
     userId: number | null;
 
-    @Field()
+    @Field(() => User)
     @OneToOne(
         () => User,
         users => users.creditBalance,

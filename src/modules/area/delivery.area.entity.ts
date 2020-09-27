@@ -7,8 +7,8 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
 import { Company } from '../company/entities/company.entity';
+//import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})
@@ -22,7 +22,7 @@ export class DeliveryArea {
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field(() => GeoPointScalar)
+    @Field() //GeoPointScalar
     @Column('point', { name: 'center', nullable: true })
     center: string | null;
 
@@ -54,7 +54,7 @@ export class DeliveryArea {
     })
     active: boolean | null;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         company => company.deliveryAreas,

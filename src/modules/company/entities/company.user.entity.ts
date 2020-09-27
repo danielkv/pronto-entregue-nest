@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Company } from './company.entity';
 import { User } from '../../user/user.entity';
-import { Roles } from '../../user/role.entity';
+import { Role } from '../../user/role.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
@@ -49,7 +49,7 @@ export class CompanyUser {
     @Column('int', { name: 'roleId', nullable: true })
     roleId: number | null;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.companyUsers,
@@ -61,7 +61,7 @@ export class CompanyUser {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field()
+    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.companyUsers,
@@ -73,9 +73,9 @@ export class CompanyUser {
     @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
     user: User;
 
-    @Field()
+    @Field(() => Role)
     @ManyToOne(
-        () => Roles,
+        () => Role,
         roles => roles.companyUsers,
         {
             onDelete: 'SET NULL',
@@ -83,5 +83,5 @@ export class CompanyUser {
         },
     )
     @JoinColumn([{ name: 'roleId', referencedColumnName: 'id' }])
-    role: Roles;
+    role: Role;
 }

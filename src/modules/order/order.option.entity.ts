@@ -50,7 +50,7 @@ export class OrderOption {
     @Column('int', { name: 'optionRelatedId', nullable: true })
     optionRelatedId: number | null;
 
-    @Field()
+    @Field(() => OrderOptionGroup)
     @ManyToOne(
         () => OrderOptionGroup,
         orderOptionGroups => orderOptionGroups.orderOptions,
@@ -59,7 +59,7 @@ export class OrderOption {
     @JoinColumn([{ name: 'orderOptionsGroupId', referencedColumnName: 'id' }])
     orderOptionsGroup: OrderOptionGroup;
 
-    @Field()
+    @Field(() => Option)
     @ManyToOne(
         () => Option,
         options => options.orderOptions,

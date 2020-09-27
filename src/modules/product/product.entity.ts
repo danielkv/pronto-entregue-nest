@@ -162,7 +162,7 @@ export class Product {
     )
     orderProducts: OrderProduct[];
 
-    @Field()
+    @Field(() => Product)
     @ManyToOne(
         () => Category,
         categories => categories.products,
@@ -174,7 +174,7 @@ export class Product {
     @JoinColumn([{ name: 'categoryId', referencedColumnName: 'id' }])
     category: Category;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.products,

@@ -68,7 +68,7 @@ export class Option {
     @Column('int', { name: 'optionsGroupId', nullable: true })
     optionsGroupId: number | null;
 
-    @Field()
+    @Field(() => OptionGroup)
     @ManyToOne(
         () => OptionGroup,
         optionsGroups => optionsGroups.options,

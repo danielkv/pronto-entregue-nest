@@ -48,7 +48,7 @@ export class Sale {
     @Column('int', { name: 'productId', nullable: true })
     productId: number | null;
 
-    @Field()
+    @Field(() => Product)
     @ManyToOne(
         () => Product,
         products => products.sales,

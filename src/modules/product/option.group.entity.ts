@@ -101,7 +101,7 @@ export class OptionGroup {
     )
     options: Option[];
 
-    @Field()
+    @Field(() => Product)
     @ManyToOne(
         () => Product,
         products => products.optionsGroups,

@@ -55,7 +55,7 @@ export class Category {
     @Column('int', { name: 'companyId', nullable: true })
     companyId: number | null;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.categories,

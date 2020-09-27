@@ -56,14 +56,14 @@ export class OrderProduct {
     @Column('int', { name: 'productRelatedId', nullable: true })
     productRelatedId: number | null;
 
-    @Field()
+    @Field(() => OrderOptionGroup)
     @OneToMany(
         () => OrderOptionGroup,
         orderOptionGroups => orderOptionGroups.orderProduct,
     )
     orderOptionGroups: OrderOptionGroup[];
 
-    @Field()
+    @Field(() => Order)
     @ManyToOne(
         () => Order,
         orders => orders.orderProducts,
@@ -75,7 +75,7 @@ export class OrderProduct {
     @JoinColumn([{ name: 'orderId', referencedColumnName: 'id' }])
     order: Order;
 
-    @Field()
+    @Field(() => Product)
     @ManyToOne(
         () => Product,
         products => products.orderProducts,

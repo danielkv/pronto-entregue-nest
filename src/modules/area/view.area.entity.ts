@@ -49,7 +49,7 @@ export class ViewArea {
     })
     active: boolean | null;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         company => company.viewAreas,

@@ -17,13 +17,10 @@ import { AreaModule } from './modules/area/area.module';
 import { Connection } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
-import { GraphQLModule } from '@nestjs/graphql';
-import { graphqlConfig } from './config/graphql.config';
-import { CommonModule } from './modules/common/common.module';
+import { GraphqlModule } from './modules/graphql/graphql.module';
 
 @Module({
     imports: [
-        GraphQLModule.forRoot(graphqlConfig),
         TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
         CompanyModule,
         AddressModule,
@@ -38,7 +35,7 @@ import { CommonModule } from './modules/common/common.module';
         PaymentModule,
         RatingModule,
         AreaModule,
-        CommonModule,
+        GraphqlModule,
     ],
     controllers: [AppController],
     providers: [AppService],

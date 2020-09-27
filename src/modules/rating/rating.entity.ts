@@ -58,7 +58,7 @@ export class Rating {
     @Column('int', { name: 'userId', nullable: true })
     userId: number | null;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.ratings,
@@ -70,7 +70,7 @@ export class Rating {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field()
+    @Field(() => Order)
     @ManyToOne(
         () => Order,
         orders => orders.ratings,
@@ -82,7 +82,7 @@ export class Rating {
     @JoinColumn([{ name: 'orderId', referencedColumnName: 'id' }])
     order: Order;
 
-    @Field()
+    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.ratings,

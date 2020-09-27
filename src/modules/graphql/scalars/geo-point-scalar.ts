@@ -7,7 +7,7 @@ interface IPoint {
     coordinates: number[];
 }
 
-@Scalar('GeoPoint', () => [Number])
+@Scalar('GeoPointScalar', () => [Number])
 export class GeoPointScalar implements CustomScalar<number[], IPoint> {
     description = 'Date custom scalar type';
 

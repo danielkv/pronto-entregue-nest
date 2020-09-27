@@ -4,7 +4,7 @@ import { CompanyUser } from '../company/entities/company.user.entity';
 
 @ObjectType()
 @Entity('roles')
-export class Roles {
+export class Role {
     @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;

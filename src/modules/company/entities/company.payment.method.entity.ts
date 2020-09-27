@@ -41,7 +41,7 @@ export class CompanyPaymentMethod {
     @Column('int', { name: 'paymentMethodId', nullable: true })
     paymentMethodId: number | null;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.companyPaymentMethods,
@@ -53,7 +53,7 @@ export class CompanyPaymentMethod {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field()
+    @Field(() => PaymentMethod)
     @ManyToOne(
         () => PaymentMethod,
         paymentMethods => paymentMethods.companyPaymentMethods,

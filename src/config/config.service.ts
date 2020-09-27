@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { resolve } from 'path';
+import { join, resolve } from 'path';
 
 import 'dotenv/config';
 
@@ -32,7 +32,7 @@ class ConfigService {
     public getTypeOrmConfig(): TypeOrmModuleOptions {
         return {
             type: 'mysql',
-
+            legacySpatialSupport: false,
             host: this.getValue('MYSQL_HOST'),
             port: parseInt(this.getValue('MYSQL_PORT')),
             username: this.getValue('MYSQL_USER'),
@@ -40,8 +40,9 @@ class ConfigService {
             database: this.getValue('MYSQL_DATABASE'),
 
             entities: [
-                'dist/**/**.entity{.js,.ts}',
-                'src/**/**.entity{.js,.ts}',
+                join(__dirname, '..', '**', '**.entity{.js,.ts}'),
+                //'dist/**/**.entity{.js,.ts}',
+                //'src/**/**.entity{.js,.ts}',
             ],
             //autoLoadEntities: true,
 

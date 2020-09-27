@@ -38,7 +38,7 @@ export class CreditHistory {
     @Column('int', { name: 'userId', nullable: true })
     userId: number | null;
 
-    @Field()
+    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.creditHistories,

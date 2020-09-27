@@ -55,7 +55,7 @@ export class CompanyMeta {
     @Column('varchar', { name: 'type', nullable: true, length: 255 })
     type: string | null;
 
-    @Field()
+    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.companyMetas,
