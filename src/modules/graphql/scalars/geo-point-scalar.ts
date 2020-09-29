@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 import { Scalar, CustomScalar } from '@nestjs/graphql';
 import { Kind } from 'graphql';
-import { IGeoPoint } from '../../../commom/interfaces/IGeoPoint';
-import { GeoPoint } from '../../graphql/scalars/GeoPoint';
+import { IGeoPoint } from '../../../common/interfaces/IGeoPoint';
+import { GeoPoint } from '../types/geo-point';
 
 @Scalar('GeoPoint', () => GeoPoint)
 export class GeoPointScalar implements CustomScalar<number[], IGeoPoint> {

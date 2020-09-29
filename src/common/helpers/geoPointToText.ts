@@ -1,4 +1,3 @@
-import { GoneException } from '@nestjs/common';
 import { IGeoPoint } from '../interfaces/IGeoPoint';
 
 export function geoPointToText(geoPoint: IGeoPoint): string {

@@ -1,7 +1,7 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { geoPointToText } from 'src/commom/helpers/geoPointToText';
-import { textToGeoPoint } from 'src/commom/helpers/textoToGeoPoint';
-import { GeoPoint } from '../graphql/scalars/GeoPoint';
+import { geoPointToText } from 'src/common/helpers/geoPointToText';
+import { textToGeoPoint } from 'src/common/helpers/textoToGeoPoint';
+import { GeoPoint } from '../graphql/types/geo-point';
 
 import {
     Column,

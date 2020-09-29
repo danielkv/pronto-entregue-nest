@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DateScalar } from './date-scalar';
+import { FilterHelper } from './filter.helper';
 
-describe('DateScalar', () => {
-    let provider: DateScalar;
+describe('Filter', () => {
+    let provider: FilterHelper;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [DateScalar],
+            providers: [FilterHelper],
         }).compile();
 
-        provider = module.get<DateScalar>(DateScalar);
+        provider = module.get<FilterHelper>(FilterHelper);
     });
 
     it('should be defined', () => {
