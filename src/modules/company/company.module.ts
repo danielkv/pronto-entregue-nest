@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CompanyService } from './company.service';
+import { CompanyService } from './services/company.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { CompanyMeta } from './entities/company.meta.entity';

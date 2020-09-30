@@ -1,4 +1,4 @@
-import { IGeoPoint } from '../../common/interfaces/IGeoPoint';
+import { IGeoPoint } from '../interfaces/IGeoPoint';
 
 export class GeoPoint implements IGeoPoint {
     type: string;

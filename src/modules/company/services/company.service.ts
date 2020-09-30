@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Company } from './entities/company.entity';
+import { Company } from '../entities/company.entity';
 import { Repository } from 'typeorm';
-import { PageInfo } from '../graphql/types/page-info';
-import { FilterHelper } from '../common/helpers/filter.helper';
-import { FilterSearch } from './helpers/filter.search';
+import { PageInfo } from '../../common/types/page-info';
+import { FilterHelper } from '../../common/helpers/filter.helper';
+import { FilterSearch } from '../helpers/filter.search';
 
 @Injectable()
 export class CompanyService {
