@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IGeoPoint } from 'src/modules/common/interfaces/IGeoPoint';
+import { IGeoPoint } from '../interfaces/IGeoPoint';
 
 @Injectable()
 export class GeoPointHelper {

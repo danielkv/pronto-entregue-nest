@@ -1,24 +1,28 @@
 import { Args, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
-import { CompanyService } from '../services/company.service';
+import { ListCompanyService } from '../services/list-companies.service';
 import { ListCompanies } from '../types/list-companies';
 
-import { GraphQLJSONObject } from 'graphql-type-json';
 import { PageInfo } from '../../common/types/page-info';
+import { CompanyFilter } from '../types/company-filter';
+import { CountCompaniesService } from '../services/count-companies.service';
 
 @Resolver()
 export class CompanyResolver {
-    constructor(private companyService: CompanyService) {}
+    constructor(
+        private listCompanyService: ListCompanyService,
+        private countCompanyService: CountCompaniesService,
+    ) {}
 
     @Query(() => ListCompanies)
     async listCompanies(
-        @Args('filter', { type: () => GraphQLJSONObject, nullable: true })
+        @Args('filter', { type: () => CompanyFilter, nullable: true })
         filter?,
         @Args('pagination', { type: () => PageInfo, nullable: true })
         pagination?,
     ): Promise<ListCompanies> {
-        const items = await this.companyService.getCompanies(filter, pagination);
-        const countItems = await this.companyService.countCompanies(filter);
+        const items = await this.listCompanyService.execute(filter, pagination);
+        const countItems = await this.countCompanyService.execute(filter);
 
         return {
             items,

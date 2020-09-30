@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IFilter } from 'src/modules/common/interfaces/IFilter';
+import { IFilter } from '../../common/interfaces/IFilter';
 import { SelectQueryBuilder } from 'typeorm';
 
 @Injectable()

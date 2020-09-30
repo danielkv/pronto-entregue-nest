@@ -5,16 +5,17 @@ import { Repository } from 'typeorm';
 import { PageInfo } from '../../common/types/page-info';
 import { FilterHelper } from '../../common/helpers/filter.helper';
 import { FilterSearch } from '../helpers/filter.search';
+import { CompanyFilter } from '../types/company-filter';
 
 @Injectable()
-export class CompanyService {
+export class ListCompanyService {
     constructor(
         @InjectRepository(Company)
         private companyRepository: Repository<Company>,
-        private filterHelper: FilterHelper<Company, any>,
+        private filterHelper: FilterHelper<Company, CompanyFilter>,
     ) {}
 
-    async getCompanies(filter?: any, pagination?: PageInfo): Promise<Company[]> {
+    async execute(filter?: CompanyFilter, pagination?: PageInfo): Promise<Company[]> {
         let query = this.companyRepository.createQueryBuilder('company');
 
         // pagination
@@ -29,13 +30,5 @@ export class CompanyService {
         query = this.filterHelper.apply(query, filter, [new FilterSearch()]);
 
         return await query.getMany();
-    }
-
-    countCompanies(filter?: any): Promise<number> {
-        let query = this.companyRepository.createQueryBuilder('company');
-
-        query = this.filterHelper.apply(query, filter, [new FilterSearch()]);
-
-        return query.getCount();
     }
 }
