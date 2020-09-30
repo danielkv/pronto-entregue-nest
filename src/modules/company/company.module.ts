@@ -8,6 +8,7 @@ import { CompanySection } from './entities/company.type.entity';
 import { CompanyUser } from './entities/company.user.entity';
 import { CompanyResolver } from './resolvers/company.resolver';
 import { FilterSearch } from './helpers/filter.search';
+import { ListCompanies } from './types/list-companies';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { FilterSearch } from './helpers/filter.search';
             CompanySection,
             CompanyUser,
         ]),
+        ListCompanies,
     ],
     providers: [CompanyService, CompanyResolver, FilterSearch],
 })
