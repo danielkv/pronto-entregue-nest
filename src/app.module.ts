@@ -18,6 +18,7 @@ import { Connection } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
 import { GraphqlModule } from './modules/graphql/graphql.module';
+import { CommonModule } from './modules/common/common.module';
 
 @Module({
     imports: [
@@ -36,6 +37,7 @@ import { GraphqlModule } from './modules/graphql/graphql.module';
         RatingModule,
         AreaModule,
         GraphqlModule,
+        CommonModule,
     ],
     controllers: [AppController],
     providers: [AppService],

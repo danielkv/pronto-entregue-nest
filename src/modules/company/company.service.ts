@@ -3,14 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { Repository } from 'typeorm';
 import { PageInfo } from '../graphql/types/page-info';
-import { FilterHelper } from './helpers/filter.helper';
+import { FilterHelper } from '../common/helpers/filter.helper';
+import { FilterSearch } from './helpers/filter.search';
 
 @Injectable()
 export class CompanyService {
     constructor(
         @InjectRepository(Company)
         private companyRepository: Repository<Company>,
-        private filterHelper: FilterHelper,
+        private filterHelper: FilterHelper<Company, any>,
     ) {}
 
     async getCompanies(filter?: any, pagination?: PageInfo): Promise<Company[]> {
@@ -25,18 +26,7 @@ export class CompanyService {
             if (take) query.take(take);
         }
 
-        query = this.filterHelper.apply(query, filter);
-
-        // apply filters
-        if (filter?.search) {
-            query
-                .where('company.name LIKE :search', {
-                    search: `%${filter.search}%`,
-                })
-                .orWhere('company.displayName LIKE :search', {
-                    search: `%${filter.search}%`,
-                });
-        }
+        query = this.filterHelper.apply(query, filter, [new FilterSearch()]);
 
         return await query.getMany();
     }
@@ -44,7 +34,7 @@ export class CompanyService {
     countCompanies(filter?: any): Promise<number> {
         let query = this.companyRepository.createQueryBuilder('company');
 
-        query = this.filterHelper.apply(query, filter);
+        query = this.filterHelper.apply(query, filter, [new FilterSearch()]);
 
         return query.getCount();
     }

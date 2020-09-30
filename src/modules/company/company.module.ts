@@ -7,7 +7,7 @@ import { CompanyPaymentMethod } from './entities/company.payment.method.entity';
 import { CompanySection } from './entities/company.type.entity';
 import { CompanyUser } from './entities/company.user.entity';
 import { CompanyResolver } from './resolvers/company.resolver';
-import { FilterHelper } from './helpers/filter.helper';
+import { FilterSearch } from './helpers/filter.search';
 
 @Module({
     imports: [
@@ -19,6 +19,6 @@ import { FilterHelper } from './helpers/filter.helper';
             CompanyUser,
         ]),
     ],
-    providers: [CompanyService, CompanyResolver, FilterHelper],
+    providers: [CompanyService, CompanyResolver, FilterSearch],
 })
 export class CompanyModule {}

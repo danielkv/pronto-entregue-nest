@@ -1,17 +1,12 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { geoPointToText } from 'src/common/helpers/geoPointToText';
-import { textToGeoPoint } from 'src/common/helpers/textoToGeoPoint';
 import { GeoPoint } from '../graphql/types/geo-point';
 
-import {
-    Column,
-    Entity,
-    ManyToMany,
-    OneToMany,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from '../company/entities/company.entity';
 import { User } from '../user/user.entity';
+import { GeoPointHelper } from '../common/helpers/geo-point-helper';
+
+const geoPointHelper = new GeoPointHelper();
 
 @ObjectType()
 @Entity('addresses')
@@ -55,7 +50,7 @@ export class Address {
     @Field(() => GeoPoint)
     @Column('point', {
         name: 'location',
-        transformer: { to: geoPointToText, from: textToGeoPoint },
+        transformer: { to: geoPointHelper.geoPointToText, from: geoPointHelper.textToGeoPoint },
     })
     location: GeoPoint;
 

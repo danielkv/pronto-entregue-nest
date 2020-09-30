@@ -1,15 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FilterHelper } from './filter.helper';
+import { Company } from '../entities/company.entity';
+import { FilterSearch } from './filter.search';
 
 describe('Filter', () => {
-    let provider: FilterHelper;
+    let provider: FilterSearch<Company>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [FilterHelper],
+            providers: [FilterSearch],
         }).compile();
 
-        provider = module.get<FilterHelper>(FilterHelper);
+        provider = module.get<FilterSearch<Company>>(FilterSearch);
     });
 
     it('should be defined', () => {

@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { Scalar, CustomScalar } from '@nestjs/graphql';
 import { Kind } from 'graphql';
-import { IGeoPoint } from '../../../common/interfaces/IGeoPoint';
+import { IGeoPoint } from '../../common/interfaces/IGeoPoint';
 import { GeoPoint } from '../types/geo-point';
 
 @Scalar('GeoPoint', () => GeoPoint)
@@ -9,11 +9,7 @@ export class GeoPointScalar implements CustomScalar<number[], IGeoPoint> {
     description = 'Date custom scalar type';
 
     parseValue(coordinates: number[]): IGeoPoint {
-        if (
-            !_.isArray(coordinates) ||
-            !_.isNumber(coordinates[0]) ||
-            !_.isNumber(coordinates[1])
-        )
+        if (!_.isArray(coordinates) || !_.isNumber(coordinates[0]) || !_.isNumber(coordinates[1]))
             throw new Error('GeoPoint inválido');
 
         return {
@@ -37,10 +33,7 @@ export class GeoPointScalar implements CustomScalar<number[], IGeoPoint> {
 
     parseLiteral(ast): IGeoPoint {
         if (ast.kind !== Kind.LIST) throw new Error('GeoPoint Inválido');
-        const coordinates = [
-            Number(ast.values[0].value),
-            Number(ast.values[1].value),
-        ];
+        const coordinates = [Number(ast.values[0].value), Number(ast.values[1].value)];
 
         return this.parseValue(coordinates);
     }
