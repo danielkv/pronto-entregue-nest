@@ -15,10 +15,13 @@ export class CountCompaniesService {
     ) {}
 
     execute(filter?: CompanyFilter): Promise<number> {
-        let query = this.companyRepository.createQueryBuilder('company');
+        // create query
+        const query = this.companyRepository.createQueryBuilder('company');
 
-        query = this.filterHelper.apply(query, filter, [new FilterSearch()]);
+        // apply filters
+        this.filterHelper.apply(query, filter, [new FilterSearch()]);
 
+        // return count items
         return query.getCount();
     }
 }

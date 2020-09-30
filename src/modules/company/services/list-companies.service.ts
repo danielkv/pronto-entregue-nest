@@ -6,6 +6,7 @@ import { PageInfo } from '../../common/types/page-info';
 import { FilterHelper } from '../../common/helpers/filter.helper';
 import { FilterSearch } from '../helpers/filter.search';
 import { CompanyFilter } from '../types/company-filter';
+import { PaginationHelper } from 'src/modules/common/helpers/pagination.helper';
 
 @Injectable()
 export class ListCompanyService {
@@ -13,22 +14,21 @@ export class ListCompanyService {
         @InjectRepository(Company)
         private companyRepository: Repository<Company>,
         private filterHelper: FilterHelper<Company, CompanyFilter>,
+        private paginationHelper: PaginationHelper<Company>,
     ) {}
 
     async execute(filter?: CompanyFilter, pagination?: PageInfo): Promise<Company[]> {
-        let query = this.companyRepository.createQueryBuilder('company');
+        const query = this.companyRepository.createQueryBuilder('company');
 
-        // pagination
-        if (pagination) {
-            const { skip, page, take } = pagination;
+        // query.select();
 
-            if (!skip || page) query.skip(skip || page * take);
+        // apply pagination
+        this.paginationHelper.apply(query, pagination);
 
-            if (take) query.take(take);
-        }
+        //apply filters
+        this.filterHelper.apply(query, filter, [new FilterSearch()]);
 
-        query = this.filterHelper.apply(query, filter, [new FilterSearch()]);
-
+        // get results
         return await query.getMany();
     }
 }
