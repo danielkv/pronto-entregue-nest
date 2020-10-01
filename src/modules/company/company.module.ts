@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ListCompanyService } from './services/list-companies.service';
+import { ListCompaniesService } from './services/list-companies.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Company } from './entities/company.entity';
 import { CompanyMeta } from './entities/company.meta.entity';
@@ -17,6 +17,8 @@ import { CompanyFilterHelper } from './helpers/company-filter-helper';
 import { CompanyBaseSelection } from './helpers/company-base-selection';
 import { SelectAreas } from './helpers/select.areas';
 
+import { GetCompanyService } from './services/get-company.service';
+
 @Module({
     imports: [
         TypeOrmModule.forFeature([
@@ -31,7 +33,7 @@ import { SelectAreas } from './helpers/select.areas';
     providers: [
         CompanyResolver,
 
-        ListCompanyService,
+        ListCompaniesService,
         CountCompaniesService,
 
         CompanyMapper,
@@ -43,6 +45,7 @@ import { SelectAreas } from './helpers/select.areas';
         CompanyBaseSelection,
         SelectAreas,
         SelectUserLocation,
+        GetCompanyService,
     ],
 })
 export class CompanyModule {}

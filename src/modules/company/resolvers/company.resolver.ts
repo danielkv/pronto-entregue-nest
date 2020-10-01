@@ -1,18 +1,21 @@
-import { Args, Query } from '@nestjs/graphql';
+import { Args, ID, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
-import { ListCompanyService } from '../services/list-companies.service';
+import { ListCompaniesService } from '../services/list-companies.service';
 import { ListCompanies } from '../types/list-companies';
 
 import { PageInfo } from '../../common/types/page-info';
 import { CompanyFilter } from '../types/company-filter';
 import { CountCompaniesService } from '../services/count-companies.service';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { Company } from '../entities/company.entity';
+import { GetCompanyService } from '../services/get-company.service';
 
 @Resolver()
 export class CompanyResolver {
     constructor(
-        private listCompanyService: ListCompanyService,
+        private listCompaniesService: ListCompaniesService,
         private countCompanyService: CountCompaniesService,
+        private getCompanyService: GetCompanyService,
     ) {}
 
     @Query(() => ListCompanies)
@@ -24,7 +27,7 @@ export class CompanyResolver {
         @Args('pagination', { type: () => PageInfo, nullable: true })
         pagination?,
     ): Promise<ListCompanies> {
-        const items = await this.listCompanyService.execute(filter, userLocation, pagination);
+        const items = await this.listCompaniesService.execute(filter, userLocation, pagination);
         const countItems = await this.countCompanyService.execute(filter, userLocation);
 
         return {
@@ -34,9 +37,15 @@ export class CompanyResolver {
         };
     }
 
+    @Query(() => Company)
+    company(
+        @Args('companyId', { type: () => ID }) companyId: number,
+        @Args('userLocation', { type: () => GeoPoint, nullable: true })
+        userLocation?,
+    ): Promise<Company> {
+        return this.getCompanyService.execute(companyId, userLocation);
+    }
+
     // ordersStatusQty
-    // countCompanies
-    // companies
-    // company
     // companyConfig
 }

@@ -13,7 +13,7 @@ import { CompanyBaseSelection } from '../helpers/company-base-selection';
 import { SelectAreas } from '../helpers/select.areas';
 
 @Injectable()
-export class ListCompanyService {
+export class ListCompaniesService {
     constructor(
         @InjectRepository(Company)
         private companyRepository: Repository<Company>,
