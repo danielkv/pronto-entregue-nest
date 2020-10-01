@@ -1,12 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from './company.entity';
 
 @ObjectType()
@@ -58,7 +51,7 @@ export class CompanyMeta {
     @Field(() => Company)
     @ManyToOne(
         () => Company,
-        companies => companies.companyMetas,
+        companies => companies.metas,
         {
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',

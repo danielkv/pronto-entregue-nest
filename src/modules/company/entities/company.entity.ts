@@ -21,7 +21,7 @@ import { ViewArea } from '../../area/view.area.entity';
 import { PaymentMethod } from '../../payment/payment.method.entity';
 import { Coupon } from '../../coupon/coupon.entity';
 
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 @Index('companyTypeId', ['companyTypeId'], {})
@@ -115,7 +115,7 @@ export class Company {
         () => CompanyMeta,
         companyMetas => companyMetas.company,
     )
-    companyMetas: CompanyMeta[];
+    metas: CompanyMeta[];
 
     @Field(() => [PaymentMethod])
     @OneToMany(
@@ -172,4 +172,19 @@ export class Company {
         viewAreas => viewAreas.company,
     )
     viewAreas: ViewArea[];
+
+    @Field()
+    isOpen?: boolean;
+
+    @Field({ nullable: true })
+    nextOpen?: Date;
+
+    @Field({ nullable: true })
+    nextClose?: Date;
+
+    @Field({ nullable: true })
+    allowBuyClosed?: string;
+
+    @Field(() => Float, { nullable: true })
+    distance?: number;
 }

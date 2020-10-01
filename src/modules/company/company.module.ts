@@ -10,6 +10,10 @@ import { CompanyResolver } from './resolvers/company.resolver';
 import { FilterSearch } from './helpers/filter.search';
 import { ListCompanies } from './types/list-companies';
 import { CountCompaniesService } from './services/count-companies.service';
+import { SelectionHelper } from './helpers/company-selection';
+import { CompanyMapper } from './helpers/company-mapper';
+import { FilterLocation } from './helpers/filter.location';
+import { CompanyFilterHelper } from './helpers/company-filter-helper';
 
 @Module({
     imports: [
@@ -22,6 +26,15 @@ import { CountCompaniesService } from './services/count-companies.service';
         ]),
         ListCompanies,
     ],
-    providers: [ListCompanyService, CompanyResolver, FilterSearch, CountCompaniesService],
+    providers: [
+        ListCompanyService,
+        CompanyResolver,
+        CountCompaniesService,
+        SelectionHelper,
+        CompanyMapper,
+        FilterSearch,
+        FilterLocation,
+        CompanyFilterHelper,
+    ],
 })
 export class CompanyModule {}

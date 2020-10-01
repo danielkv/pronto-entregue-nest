@@ -6,6 +6,7 @@ import { ListCompanies } from '../types/list-companies';
 import { PageInfo } from '../../common/types/page-info';
 import { CompanyFilter } from '../types/company-filter';
 import { CountCompaniesService } from '../services/count-companies.service';
+import { GeoPoint } from 'src/modules/common/types/geo-point';
 
 @Resolver()
 export class CompanyResolver {
@@ -18,10 +19,13 @@ export class CompanyResolver {
     async listCompanies(
         @Args('filter', { type: () => CompanyFilter, nullable: true })
         filter?,
+        @Args('userLocation', { type: () => GeoPoint, nullable: true })
+        userLocation?,
         @Args('pagination', { type: () => PageInfo, nullable: true })
         pagination?,
     ): Promise<ListCompanies> {
-        const items = await this.listCompanyService.execute(filter, pagination);
+        console.log(userLocation);
+        const items = await this.listCompanyService.execute(filter, pagination, userLocation);
         const countItems = await this.countCompanyService.execute(filter);
 
         return {
