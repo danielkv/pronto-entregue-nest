@@ -24,9 +24,8 @@ export class CompanyResolver {
         @Args('pagination', { type: () => PageInfo, nullable: true })
         pagination?,
     ): Promise<ListCompanies> {
-        console.log(userLocation);
-        const items = await this.listCompanyService.execute(filter, pagination, userLocation);
-        const countItems = await this.countCompanyService.execute(filter);
+        const items = await this.listCompanyService.execute(filter, userLocation, pagination);
+        const countItems = await this.countCompanyService.execute(filter, userLocation);
 
         return {
             items,

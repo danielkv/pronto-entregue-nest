@@ -10,10 +10,12 @@ import { CompanyResolver } from './resolvers/company.resolver';
 import { FilterSearch } from './helpers/filter.search';
 import { ListCompanies } from './types/list-companies';
 import { CountCompaniesService } from './services/count-companies.service';
-import { SelectionHelper } from './helpers/company-selection';
+import { SelectUserLocation } from './helpers/select.user.location';
 import { CompanyMapper } from './helpers/company-mapper';
 import { FilterLocation } from './helpers/filter.location';
 import { CompanyFilterHelper } from './helpers/company-filter-helper';
+import { CompanyBaseSelection } from './helpers/company-base-selection';
+import { SelectAreas } from './helpers/select.areas';
 
 @Module({
     imports: [
@@ -27,14 +29,20 @@ import { CompanyFilterHelper } from './helpers/company-filter-helper';
         ListCompanies,
     ],
     providers: [
-        ListCompanyService,
         CompanyResolver,
+
+        ListCompanyService,
         CountCompaniesService,
-        SelectionHelper,
+
         CompanyMapper,
+
+        CompanyFilterHelper,
         FilterSearch,
         FilterLocation,
-        CompanyFilterHelper,
+
+        CompanyBaseSelection,
+        SelectAreas,
+        SelectUserLocation,
     ],
 })
 export class CompanyModule {}

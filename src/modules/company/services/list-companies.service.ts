@@ -5,10 +5,12 @@ import { Repository } from 'typeorm';
 import { PageInfo } from '../../common/types/page-info';
 import { CompanyFilter } from '../types/company-filter';
 import { PaginationHelper } from 'src/modules/common/helpers/pagination.helper';
-import { SelectionHelper } from '../helpers/company-selection';
+import { SelectUserLocation } from '../helpers/select.user.location';
 import { CompanyMapper } from '../helpers/company-mapper';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { CompanyFilterHelper } from '../helpers/company-filter-helper';
+import { CompanyBaseSelection } from '../helpers/company-base-selection';
+import { SelectAreas } from '../helpers/select.areas';
 
 @Injectable()
 export class ListCompanyService {
@@ -16,7 +18,9 @@ export class ListCompanyService {
         @InjectRepository(Company)
         private companyRepository: Repository<Company>,
         private companyMapper: CompanyMapper,
-        private selectionHelper: SelectionHelper,
+        private companyBaseSelection: CompanyBaseSelection,
+        private selectUserLocation: SelectUserLocation,
+        private selectAreas: SelectAreas,
         private paginationHelper: PaginationHelper<Company>,
 
         private companyFilterHelper: CompanyFilterHelper,
@@ -24,13 +28,19 @@ export class ListCompanyService {
 
     async execute(
         filter?: CompanyFilter,
-        pagination?: PageInfo,
         userLocation?: GeoPoint,
+        pagination?: PageInfo,
     ): Promise<Company[]> {
         const query = this.companyRepository.createQueryBuilder('company');
 
+        // apply base selection
+        this.companyBaseSelection.apply(query);
+
         // apply selection
-        this.selectionHelper.apply(query, userLocation);
+        this.selectUserLocation.apply(query, userLocation);
+
+        // apply areas selection
+        this.selectAreas.apply(query, userLocation);
 
         // apply filters
         this.companyFilterHelper.apply(query, filter);
