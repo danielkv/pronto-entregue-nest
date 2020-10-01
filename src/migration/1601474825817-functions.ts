@@ -146,8 +146,8 @@ export class functions1601474825817 implements MigrationInterface {
 					 \
 				RETURN @nextOpenHourFrom; \
 			END",
-		);
-		
+        );
+
         queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
         queryRunner.query(
             "CREATE FUNCTION `COMPANY_NEXT_CLOSE_DATE`(businessHours JSON) RETURNS datetime \
@@ -200,6 +200,5 @@ export class functions1601474825817 implements MigrationInterface {
         queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_IS_OPEN`');
         queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_OPEN_DATE`');
         queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
-    }
     }
 }
