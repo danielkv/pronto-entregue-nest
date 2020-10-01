@@ -146,6 +146,50 @@ export class functions1601474825817 implements MigrationInterface {
 					 \
 				RETURN @nextOpenHourFrom; \
 			END",
+		);
+		
+        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
+        queryRunner.query(
+            "CREATE FUNCTION `COMPANY_NEXT_CLOSE_DATE`(businessHours JSON) RETURNS datetime \
+			BEGIN \
+				DECLARE fromDate DATETIME; \
+				DECLARE toDate DATETIME; \
+				DECLARE nextBusinessDayFrom DATETIME; \
+				DECLARE nextBusinessDayTo DATETIME; \
+				 \
+				SET @day = NOW(); \
+				SET @isOpen = COMPANY_IS_OPEN(businessHours); \
+				 \
+				IF !@isOpen THEN RETURN NULL; END IF; \
+				 \
+				SET @businessDay = COMPANY_BUSINESS_DAY(businessHours, @day); \
+				SET @count = 0; \
+				 \
+				SET fromDate = JSON_UNQUOTE(JSON_EXTRACT(@businessDay, CONCAT('$[', @count, '].from'))); \
+				SET toDate = JSON_UNQUOTE(JSON_EXTRACT(@businessDay, CONCAT('$[', @count, '].to'))); \
+				 \
+				WHILE @count < 2 AND !(@day BETWEEN fromDate AND toDate) DO \
+					SET fromDate = JSON_UNQUOTE(JSON_EXTRACT(@businessDay, CONCAT('$[', @count, '].from'))); \
+					SET toDate = JSON_UNQUOTE(JSON_EXTRACT(@businessDay, CONCAT('$[', @count, '].to'))); \
+					SET @count = @count +1; \
+				END WHILE; \
+					 \
+				SET @lastMinute = CONCAT(DATE(@day), ' 23:59:00'); \
+				 \
+				IF (TIMESTAMPDIFF(MINUTE, toDate, @lastMinute) = 0) THEN \
+					SET @nextDay = DATE_ADD(@day, INTERVAL 1 DAY); \
+					SET @nextBusinessDayJSON = COMPANY_BUSINESS_DAY(businessHours, @nextDay); \
+					SET nextBusinessDayFrom = JSON_UNQUOTE(JSON_EXTRACT(@nextBusinessDayJSON, CONCAT('$[0].from'))); \
+					SET nextBusinessDayTo = JSON_UNQUOTE(JSON_EXTRACT(@nextBusinessDayJSON, CONCAT('$[0].to'))); \
+					 \
+					IF (nextBusinessDayFrom AND nextBusinessDayTo) THEN \
+						SET @firstMinute = CONCAT(DATE(@nextDay), ' 00:00:00'); \
+						IF (TIMESTAMPDIFF(MINUTE, nextBusinessDayFrom, @firstMinute) = 0) THEN SET toDate = nextBusinessDayTo; END IF; \
+					END IF; \
+				END IF; \
+			 \
+				RETURN toDate; \
+			END",
         );
     }
 
@@ -155,5 +199,7 @@ export class functions1601474825817 implements MigrationInterface {
         queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_BUSINESS_DAY`');
         queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_IS_OPEN`');
         queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_OPEN_DATE`');
+        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
+    }
     }
 }
