@@ -14,13 +14,17 @@ export class GetCompanyConfigService {
     async execute(companyId: number, keys: string[]): Promise<CompanyConfig> {
         const query = await this.companyMetaRepository.createQueryBuilder('meta');
 
-        query.where('companyId = :companyId', { companyId });
+        query.where('meta.companyId = :companyId', { companyId });
 
-        query.andWhere('key IN (:...keys)', { keys });
+        query.andWhere('meta.key IN (:...keys)', { keys });
 
         const metas = await query.getMany();
 
-        return this.transform(metas);
+        const configs = this.transform(metas);
+
+        console.log(configs);
+
+        return configs;
     }
 
     transform(metas: CompanyMeta[]) {

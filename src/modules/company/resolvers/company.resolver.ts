@@ -9,7 +9,6 @@ import { CountCompaniesService } from '../services/count-companies.service';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
-import { keys } from 'lodash';
 import { GetCompanyConfigService } from '../services/get-company-config.service';
 import { CompanyConfig } from '../types/company-config';
 
@@ -51,13 +50,9 @@ export class CompanyResolver {
     }
 
     @Query(() => CompanyConfig)
-    companyConfig(
-        @Args('companyId', { type: () => ID }) companyId: number,
-        @Args('keys', { type: () => [String] }) keys: string[],
-    ) {
-        return this.getCompanyConfigService.execute(companyId, keys);
+    companyConfig(@Args('companyId', { type: () => ID }) companyId: number) {
+        return companyId;
     }
 
     // ordersStatusQty
-    // companyConfig
 }

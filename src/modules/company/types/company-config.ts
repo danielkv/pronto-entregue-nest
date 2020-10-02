@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsNumber, IsString } from 'class-validator';
 
 @ObjectType()
 export class CompanyConfig {
@@ -36,7 +36,7 @@ export class CompanyConfig {
     allowBuyClosed: boolean;
 
     @Field(() => Int)
-    @IsNumber()
+    @IsInt()
     allowBuyClosedTimeBefore: number;
 
     @Field()

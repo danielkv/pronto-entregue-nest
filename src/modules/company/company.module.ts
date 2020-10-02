@@ -18,6 +18,7 @@ import { CompanyBaseSelection } from './helpers/company-base-selection';
 import { SelectAreas } from './helpers/select.areas';
 import { GetCompanyConfigService } from './services/get-company-config.service';
 import { GetCompanyService } from './services/get-company.service';
+import { CompanyConfigResolver } from './resolvers/company.config.resolver';
 
 @Module({
     imports: [
@@ -32,6 +33,7 @@ import { GetCompanyService } from './services/get-company.service';
     ],
     providers: [
         CompanyResolver,
+        CompanyConfigResolver,
 
         ListCompaniesService,
         CountCompaniesService,
