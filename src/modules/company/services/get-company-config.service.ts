@@ -10,9 +10,16 @@ export class GetCompanyConfigService {
         private configTransformHelper: ConfigTransformHelper<CompanyConfig>,
     ) {}
 
-    async execute(companyId: number, keys: string[]): Promise<CompanyConfig> {
-        const metas = await this.getCompanyMetaService.execute(companyId, keys);
+    async execute(companyId: number[], keys: string[]): Promise<CompanyConfig>;
+    async execute(companyId: number, keys: string[]): Promise<CompanyConfig>;
+    async execute(companyId: any, keys: string[]): Promise<CompanyConfig> {
+        // check companyId type
+        const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
 
+        // load metas
+        const metas = await this.getCompanyMetaService.execute(companyIds, keys);
+
+        // transform configs
         const configs = this.configTransformHelper.apply(metas, CompanyConfig);
 
         return configs;

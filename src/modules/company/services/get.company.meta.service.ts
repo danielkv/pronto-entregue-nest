@@ -9,13 +9,19 @@ export class GetCompanyMetaService {
         @InjectRepository(CompanyMeta) private companyMetaRepository: Repository<CompanyMeta>,
     ) {}
 
-    execute(companyId: number, keys: string[]): Promise<CompanyMeta[]> {
+    execute(companyId: number[], keys: string[]): Promise<CompanyMeta[]>;
+    execute(companyId: number, keys: string[]): Promise<CompanyMeta[]>;
+    execute(companyId: any, keys: string[]): Promise<CompanyMeta[]> {
         const query = this.companyMetaRepository.createQueryBuilder('meta');
 
-        query.where('meta.companyId = :companyId', { companyId });
+        // check companyId type
+        const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
 
+        // add filters
+        query.where('meta.companyId IN (:...companyIds)', { companyIds });
         query.andWhere('meta.key IN (:...keys)', { keys });
 
+        // return values
         return query.getMany();
     }
 }

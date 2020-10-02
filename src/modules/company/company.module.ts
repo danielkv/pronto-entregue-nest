@@ -20,6 +20,10 @@ import { GetCompanyConfigService } from './services/get-company-config.service';
 import { GetCompanyService } from './services/get-company.service';
 import { GetCompanyMetaService } from './services/get.company.meta.service';
 import { CompanyResolver } from './resolvers/company.resolver';
+import { CompanyConfigLoader } from './loaders/company.config.loader';
+
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { DataLoaderInterceptor } from 'nestjs-dataloader';
 
 @Module({
     imports: [
@@ -51,6 +55,11 @@ import { CompanyResolver } from './resolvers/company.resolver';
         GetCompanyConfigService,
         GetCompanyMetaService,
         CompanyResolver,
+        CompanyConfigLoader,
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: DataLoaderInterceptor,
+        },
     ],
 })
 export class CompanyModule {}

@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CompanyModule } from './modules/company/company.module';
 import { AddressModule } from './modules/address/address.module';
 import { CategoryModule } from './modules/category/category.module';
@@ -39,8 +37,7 @@ import { CommonModule } from './modules/common/common.module';
         GraphqlModule,
         CommonModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
+    providers: [],
 })
 export class AppModule {
     constructor(private connection: Connection) {}
