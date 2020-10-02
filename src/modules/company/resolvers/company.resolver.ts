@@ -1,4 +1,4 @@
-import { Args, ID, Query } from '@nestjs/graphql';
+import { Args, ID, Info, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { ListCompaniesService } from '../services/list-companies.service';
 import { ListCompanies } from '../types/list-companies';
@@ -50,8 +50,9 @@ export class CompanyResolver {
     }
 
     @Query(() => CompanyConfig)
-    companyConfig(@Args('companyId', { type: () => ID }) companyId: number) {
-        return companyId;
+    companyConfig(@Args('companyId', { type: () => ID }) companyId: number, @Info() info) {
+        const keys = info.fieldNodes[0].selectionSet.selections.map(f => f.name.value);
+        return this.getCompanyConfigService.execute(companyId, keys);
     }
 
     // ordersStatusQty

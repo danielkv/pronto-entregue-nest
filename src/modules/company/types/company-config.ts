@@ -1,45 +1,45 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, IsInt, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsString } from 'class-validator';
 
 @ObjectType()
 export class CompanyConfig {
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     phone: string;
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     document: string;
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     contact: string;
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     email: string;
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     deliveryTime: string;
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     notificationSound: string;
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     deliveryType: string;
 
-    @Field()
-    @IsBoolean()
-    allowBuyClosed: boolean;
+    @Field({ nullable: true })
+    @IsString()
+    allowBuyClosed: string;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     @IsInt()
     allowBuyClosedTimeBefore: number;
 
-    @Field()
+    @Field({ nullable: true })
     @IsBoolean()
     deliveryHoursEnabled: boolean;
 }

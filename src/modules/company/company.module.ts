@@ -18,7 +18,7 @@ import { CompanyBaseSelection } from './helpers/company-base-selection';
 import { SelectAreas } from './helpers/select.areas';
 import { GetCompanyConfigService } from './services/get-company-config.service';
 import { GetCompanyService } from './services/get-company.service';
-import { CompanyConfigResolver } from './resolvers/company.config.resolver';
+import { GetCompanyMetaService } from './services/get.company.meta.service';
 
 @Module({
     imports: [
@@ -33,7 +33,6 @@ import { CompanyConfigResolver } from './resolvers/company.config.resolver';
     ],
     providers: [
         CompanyResolver,
-        CompanyConfigResolver,
 
         ListCompaniesService,
         CountCompaniesService,
@@ -49,6 +48,7 @@ import { CompanyConfigResolver } from './resolvers/company.config.resolver';
         SelectUserLocation,
         GetCompanyService,
         GetCompanyConfigService,
+        GetCompanyMetaService,
     ],
 })
 export class CompanyModule {}
