@@ -11,12 +11,12 @@ import { OrderModule } from './modules/order/order.module';
 import { UserModule } from './modules/user/user.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
-import { AreaModule } from './modules/area/area.module';
 import { Connection } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
 import { GraphqlModule } from './modules/graphql/graphql.module';
 import { CommonModule } from './modules/common/common.module';
+import { PickupModule } from './modules/pickup/pickup.module';
 
 @Module({
     imports: [
@@ -33,9 +33,9 @@ import { CommonModule } from './modules/common/common.module';
         UserModule,
         PaymentModule,
         RatingModule,
-        AreaModule,
         GraphqlModule,
         CommonModule,
+        PickupModule,
     ],
     providers: [],
 })

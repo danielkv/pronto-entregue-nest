@@ -13,11 +13,11 @@ import { Address } from '../../address/address.entity';
 import { CompanyMeta } from './company.meta.entity';
 import { CompanyPaymentMethod } from './company.payment.method.entity';
 import { CompanyUser } from './company.user.entity';
-import { DeliveryArea } from '../../area/delivery.area.entity';
+import { DeliveryArea } from '../../delivery/entities/delivery.area.entity';
 import { Order } from '../../order/order.entity';
 import { Product } from '../../product/product.entity';
 import { Rating } from '../../rating/rating.entity';
-import { ViewArea } from '../../area/view.area.entity';
+import { ViewArea } from '../../pickup/entities/view.area.entity';
 import { PaymentMethod } from '../../payment/payment.method.entity';
 import { Coupon } from '../../coupon/coupon.entity';
 

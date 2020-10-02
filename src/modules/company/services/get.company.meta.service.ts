@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CompanyMeta } from '../entities/company.meta.entity';
+import { ICompanyConfigKeys } from '../types/company-config';
 
 @Injectable()
 export class GetCompanyMetaService {
@@ -9,9 +10,9 @@ export class GetCompanyMetaService {
         @InjectRepository(CompanyMeta) private companyMetaRepository: Repository<CompanyMeta>,
     ) {}
 
-    execute(companyId: number[], keys: string[]): Promise<CompanyMeta[]>;
-    execute(companyId: number, keys: string[]): Promise<CompanyMeta[]>;
-    execute(companyId: any, keys: string[]): Promise<CompanyMeta[]> {
+    execute(companyId: number[], keys: ICompanyConfigKeys[]): Promise<CompanyMeta[]>;
+    execute(companyId: number, keys: ICompanyConfigKeys[]): Promise<CompanyMeta[]>;
+    execute(companyId: any, keys: ICompanyConfigKeys[]): Promise<CompanyMeta[]> {
         const query = this.companyMetaRepository.createQueryBuilder('meta');
 
         // check companyId type

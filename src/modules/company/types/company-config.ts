@@ -1,6 +1,19 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsString } from 'class-validator';
 
+export enum ICompanyConfigKeys {
+    PHONE = 'phone',
+    DOCUMENT = 'document',
+    CONTACT = 'contact',
+    EMAIL = 'email',
+    DELIVERY_TIME = 'deliveryTime',
+    NOTIFICATION_SOUND = 'notificationSound',
+    DELIVERY_TYPE = 'deliveryType',
+    ALLOW_BUY_CLOSED = 'allowBuyClosed',
+    ALLOW_BUY_CLOSED_TIME_BEFORE = 'allowBuyClosedTimeBefore',
+    DELIVERY_HOURS_ENABLED = 'deliveryHoursEnabled',
+}
+
 @ObjectType()
 export class CompanyConfig {
     @Field({ nullable: true })

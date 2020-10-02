@@ -24,6 +24,8 @@ import { CompanyConfigLoader } from './loaders/company.config.loader';
 
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from 'nestjs-dataloader';
+import { CompanyFilter } from './types/company-filter';
+import { CompanyConfig } from './types/company-config';
 
 @Module({
     imports: [
@@ -35,6 +37,8 @@ import { DataLoaderInterceptor } from 'nestjs-dataloader';
             CompanyUser,
         ]),
         ListCompanies,
+        CompanyFilter,
+        CompanyConfig,
     ],
     providers: [
         QueryCompanyResolver,

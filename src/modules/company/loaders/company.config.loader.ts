@@ -3,10 +3,11 @@ import * as DataLoader from 'dataloader';
 import { NestDataLoader } from 'nestjs-dataloader';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { GetCompanyMetaService } from '../services/get.company.meta.service';
+import { ICompanyConfigKeys } from '../types/company-config';
 
 export interface ICompanyConfigLoader {
     companyId: number;
-    keys: string[];
+    keys: ICompanyConfigKeys[];
 }
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigTransformHelper } from '../../common/helpers/config.transform.helper';
-import { CompanyConfig } from '../types/company-config';
+import { CompanyConfig, ICompanyConfigKeys } from '../types/company-config';
 import { GetCompanyMetaService } from './get.company.meta.service';
 
 @Injectable()
@@ -10,9 +10,9 @@ export class GetCompanyConfigService {
         private configTransformHelper: ConfigTransformHelper<CompanyConfig>,
     ) {}
 
-    async execute(companyId: number[], keys: string[]): Promise<CompanyConfig>;
-    async execute(companyId: number, keys: string[]): Promise<CompanyConfig>;
-    async execute(companyId: any, keys: string[]): Promise<CompanyConfig> {
+    async execute(companyId: number[], keys: ICompanyConfigKeys[]): Promise<CompanyConfig>;
+    async execute(companyId: number, keys: ICompanyConfigKeys[]): Promise<CompanyConfig>;
+    async execute(companyId: any, keys: ICompanyConfigKeys[]): Promise<CompanyConfig> {
         // check companyId type
         const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
 

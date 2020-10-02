@@ -1,19 +1,11 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Company } from '../company/entities/company.entity';
-//import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Company } from '../../company/entities/company.entity';
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})
-@Entity('delivery_areas')
-export class DeliveryArea {
+@Entity('view_areas')
+export class ViewArea {
     @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
@@ -22,17 +14,13 @@ export class DeliveryArea {
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field() //GeoPointScalar
-    @Column('point', { name: 'center', nullable: true })
-    center: string | null;
+    @Field()
+    @Column('point', { name: 'center' })
+    center: string;
 
     @Field(() => Float)
-    @Column('float', { name: 'radius', nullable: true, precision: 12 })
-    radius: number | null;
-
-    @Field(() => Float)
-    @Column('float', { name: 'price', nullable: true, precision: 12 })
-    price: number | null;
+    @Column('float', { name: 'radius', precision: 12 })
+    radius: number;
 
     @Field()
     @Column('datetime', { name: 'createdAt' })
@@ -57,7 +45,7 @@ export class DeliveryArea {
     @Field(() => Company)
     @ManyToOne(
         () => Company,
-        company => company.deliveryAreas,
+        company => company.viewAreas,
         {
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',

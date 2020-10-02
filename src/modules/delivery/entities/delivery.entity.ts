@@ -1,21 +1,7 @@
-import {
-    Field,
-    Float,
-    ID,
-    Int,
-    ObjectType,
-    registerEnumType,
-} from '@nestjs/graphql';
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Order } from '../order/order.entity';
-import { User } from '../user/user.entity';
+import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from '../../order/order.entity';
+import { User } from '../../user/user.entity';
 //import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
 
 export enum DeliverStatus {
