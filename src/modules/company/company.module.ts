@@ -16,7 +16,7 @@ import { FilterLocation } from './helpers/filter.location';
 import { CompanyFilterHelper } from './helpers/company-filter-helper';
 import { CompanyBaseSelection } from './helpers/company-base-selection';
 import { SelectAreas } from './helpers/select.areas';
-
+import { GetCompanyConfigService } from './services/get-company-config.service';
 import { GetCompanyService } from './services/get-company.service';
 
 @Module({
@@ -46,6 +46,7 @@ import { GetCompanyService } from './services/get-company.service';
         SelectAreas,
         SelectUserLocation,
         GetCompanyService,
+        GetCompanyConfigService,
     ],
 })
 export class CompanyModule {}

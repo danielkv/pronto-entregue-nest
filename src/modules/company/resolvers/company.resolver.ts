@@ -9,6 +9,9 @@ import { CountCompaniesService } from '../services/count-companies.service';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
+import { keys } from 'lodash';
+import { GetCompanyConfigService } from '../services/get-company-config.service';
+import { CompanyConfig } from '../types/company-config';
 
 @Resolver()
 export class CompanyResolver {
@@ -16,6 +19,7 @@ export class CompanyResolver {
         private listCompaniesService: ListCompaniesService,
         private countCompanyService: CountCompaniesService,
         private getCompanyService: GetCompanyService,
+        private getCompanyConfigService: GetCompanyConfigService,
     ) {}
 
     @Query(() => ListCompanies)
@@ -44,6 +48,14 @@ export class CompanyResolver {
         userLocation?,
     ): Promise<Company> {
         return this.getCompanyService.execute(companyId, userLocation);
+    }
+
+    @Query(() => CompanyConfig)
+    companyConfig(
+        @Args('companyId', { type: () => ID }) companyId: number,
+        @Args('keys', { type: () => [String] }) keys: string[],
+    ) {
+        return this.getCompanyConfigService.execute(companyId, keys);
     }
 
     // ordersStatusQty
