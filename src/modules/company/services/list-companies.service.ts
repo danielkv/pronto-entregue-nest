@@ -8,7 +8,7 @@ import { PaginationHelper } from 'src/modules/common/helpers/pagination.helper';
 import { SelectUserLocation } from '../helpers/select.user.location';
 import { CompanyMapper } from '../helpers/company-mapper';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { CompanyFilterHelper } from '../helpers/company-filter-helper';
+import { CompanyFilterHelper } from '../helpers/company.filter.helper';
 import { CompanyBaseSelection } from '../helpers/company-base-selection';
 import { SelectAreas } from '../helpers/select.areas';
 

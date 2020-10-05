@@ -13,7 +13,7 @@ import { CountCompaniesService } from './services/count-companies.service';
 import { SelectUserLocation } from './helpers/select.user.location';
 import { CompanyMapper } from './helpers/company-mapper';
 import { FilterLocation } from './helpers/filter.location';
-import { CompanyFilterHelper } from './helpers/company-filter-helper';
+import { CompanyFilterHelper } from './helpers/company.filter.helper';
 import { CompanyBaseSelection } from './helpers/company-base-selection';
 import { SelectAreas } from './helpers/select.areas';
 import { GetCompanyConfigService } from './services/get-company-config.service';

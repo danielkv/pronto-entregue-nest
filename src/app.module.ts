@@ -17,6 +17,7 @@ import { configService } from './config/config.service';
 import { GraphqlModule } from './modules/graphql/graphql.module';
 import { CommonModule } from './modules/common/common.module';
 import { PickupModule } from './modules/pickup/pickup.module';
+import { DeliveryAreaModule } from './modules/delivery-area/delivery-area.module';
 
 @Module({
     imports: [
@@ -36,6 +37,7 @@ import { PickupModule } from './modules/pickup/pickup.module';
         GraphqlModule,
         CommonModule,
         PickupModule,
+        DeliveryAreaModule,
     ],
     providers: [],
 })
