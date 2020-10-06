@@ -10,7 +10,7 @@ export class DeliveryAreaActiveFilter implements IFilter<DeliveryArea, DeliveryA
         query: SelectQueryBuilder<DeliveryArea>,
         filter?: DeliveryAreaFilter,
     ): SelectQueryBuilder<DeliveryArea> {
-        if (!filter?.onlyActive === false) return query;
+        if (filter?.onlyActive === false) return query;
 
         // apply filter
         query.andWhere('deliveryArea.active');
