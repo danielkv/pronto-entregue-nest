@@ -5,7 +5,7 @@ import { DeliveryAreaFilterHelper } from './helpers/delivery.area.filter.helper'
 import { DeliveryAreaCompaniesFilter } from './filters/delivery.area.companies.filter';
 import { DeliveryAreaLocationFilter } from './filters/delivery.area.location.filter';
 import { GetDeliveryAreaService } from './services/get-delivery-area.service';
-import { DeliveryAreaFilter } from './types/delivery.area.filter';
+import { DeliveryAreaFilter } from './dtos/delivery.area.filter';
 import { ListDeliveryAreasService } from './services/list-delivery-areas.service';
 import { DeliveryAreaResolver } from './resolvers/delivery-area.resolver';
 import { CountDeliveryAreasService } from './services/count-delivery-areas.service';

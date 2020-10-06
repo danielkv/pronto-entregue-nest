@@ -3,8 +3,8 @@ import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe'
 import { PageInfo } from 'src/modules/common/types/page-info';
 import { CountDeliveryAreasService } from '../services/count-delivery-areas.service';
 import { ListDeliveryAreasService } from '../services/list-delivery-areas.service';
-import { DeliveryAreaList } from '../types/delivery-area-list';
-import { DeliveryAreaFilter } from '../types/delivery.area.filter';
+import { DeliveryAreaList } from '../dtos/delivery-area-list';
+import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
 
 @Resolver()
 export class DeliveryAreaResolver {

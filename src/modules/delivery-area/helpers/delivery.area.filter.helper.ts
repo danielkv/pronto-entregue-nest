@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { FilterHelper } from 'src/modules/common/helpers/filter.helper';
 import { IFilterHelper } from 'src/modules/common/interfaces/IFilterHelper';
 import { DeliveryArea } from '../entities/delivery.area.entity';
-import { DeliveryAreaFilter } from '../types/delivery.area.filter';
+import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
 import { DeliveryAreaCompaniesFilter } from '../filters/delivery.area.companies.filter';
 import { DeliveryAreaLocationFilter } from '../filters/delivery.area.location.filter';
 import { DeliveryAreaActiveFilter } from '../filters/delivery.area.active.filter';

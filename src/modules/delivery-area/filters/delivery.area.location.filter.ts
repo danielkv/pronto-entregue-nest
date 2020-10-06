@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { SelectQueryBuilder } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
-import { DeliveryAreaFilter } from '../types/delivery.area.filter';
+import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
 
 @Injectable()
 export class DeliveryAreaLocationFilter implements IFilter<DeliveryArea, DeliveryAreaFilter> {

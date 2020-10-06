@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 import { DeliveryAreaFilterHelper } from '../helpers/delivery.area.filter.helper';
-import { DeliveryAreaFilter } from '../types/delivery.area.filter';
+import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
 
 @Injectable()
 export class CountDeliveryAreasService {
