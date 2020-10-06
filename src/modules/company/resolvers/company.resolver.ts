@@ -2,6 +2,7 @@ import { Info, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import DataLoader from 'dataloader';
 import { Loader } from 'nestjs-dataloader';
 import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transform.helper';
+import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 import { Company } from '../entities/company.entity';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { CompanyConfigLoader, ICompanyConfigLoader } from '../loaders/company.config.loader';
@@ -14,17 +15,14 @@ export class CompanyResolver {
     @ResolveField(() => CompanyConfig)
     async config(
         @Parent() company: Company,
-        @Info() info,
+        @Info(ExtractFieldsPipe) fields,
         @Loader(CompanyConfigLoader.name)
         companyConfigLoader: DataLoader<ICompanyConfigLoader, CompanyMeta[]>,
     ): Promise<CompanyConfig> {
         const companyId = company.id;
 
-        // map keys
-        const keys = info.fieldNodes[0].selectionSet.selections.map(f => f.name.value);
-
         // batch load configs
-        const configMetas = await companyConfigLoader.load({ companyId, keys });
+        const configMetas = await companyConfigLoader.load({ companyId, keys: fields });
 
         return this.configTransformHelper.apply(configMetas, CompanyConfig);
     }

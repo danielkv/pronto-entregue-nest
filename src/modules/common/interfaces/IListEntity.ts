@@ -1,7 +1,7 @@
 import { IPageInfo } from './IPageInfo';
 
 export interface IListEntity<Entity> {
-    items: Entity[];
-    countItems: number;
+    items?: Entity[];
+    countItems?: number;
     pageInfo?: IPageInfo;
 }
