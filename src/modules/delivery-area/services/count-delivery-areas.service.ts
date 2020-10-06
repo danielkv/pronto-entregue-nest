@@ -12,7 +12,7 @@ export class CountDeliveryAreasService {
         private deliveryAreaFilterHelper: DeliveryAreaFilterHelper,
     ) {}
 
-    execute(filter: DeliveryAreaFilter): Promise<number> {
+    execute(filter?: DeliveryAreaFilter): Promise<number> {
         // create query builder
         const query = this.deliveryAreaRepository.createQueryBuilder('deliveryArea');
 

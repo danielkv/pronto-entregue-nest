@@ -15,10 +15,10 @@ export class DeliveryAreaResolver {
 
     @Query(() => DeliveryAreaList)
     async listDelvieryAreas(
+        @Info(ExtractFieldsPipe) fields: string[],
         @Args('filter', { type: () => DeliveryAreaFilter, nullable: true })
-        filter: DeliveryAreaFilter,
-        @Info(ExtractFieldsPipe) fields,
-        @Args('pagination', { type: () => PageInfo, nullable: true }) pagination: PageInfo,
+        filter?: DeliveryAreaFilter,
+        @Args('pagination', { type: () => PageInfo, nullable: true }) pagination?: PageInfo,
     ): Promise<DeliveryAreaList> {
         const list: DeliveryAreaList = { pageInfo: pagination };
 

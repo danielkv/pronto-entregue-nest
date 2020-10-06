@@ -1,7 +1,10 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
+import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from '../../company/entities/company.entity';
-//import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
+
+const geoPointHelper = new GeoPointHelper();
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})
@@ -15,16 +18,24 @@ export class DeliveryArea {
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field() //GeoPointScalar
-    @Column('point', { name: 'center', nullable: true })
-    center: string | null;
+    @Field(() => GeoPoint, { nullable: true }) //
+    @Column('point', {
+        name: 'center',
+        nullable: true,
+        transformer: { to: geoPointHelper.geoPointToText, from: geoPointHelper.textToGeoPoint },
+    })
+    center: GeoPoint;
 
     @Field(() => Float)
     @Column('float', { name: 'radius', nullable: true, precision: 12 })
     radius: number | null;
 
     @Field(() => Float)
-    @Column('float', { name: 'price', nullable: true, precision: 12 })
+    @Column('float', {
+        name: 'price',
+        nullable: true,
+        precision: 12,
+    })
     price: number | null;
 
     @Field()
