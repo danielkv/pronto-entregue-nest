@@ -7,7 +7,7 @@ import { DeliveryArea } from '../entities/delivery.area.entity';
 import { DeliveryAreaFilter } from '../types/delivery.area.filter';
 
 @Injectable()
-export class DeliveryAreaFilterCompanies implements IFilter<DeliveryArea, DeliveryAreaFilter> {
+export class DeliveryAreaCompaniesFilter implements IFilter<DeliveryArea, DeliveryAreaFilter> {
     apply(
         query: SelectQueryBuilder<DeliveryArea>,
         filter?: DeliveryAreaFilter,

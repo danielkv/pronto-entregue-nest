@@ -8,4 +8,7 @@ export class DeliveryAreaFilter {
 
     @Field(() => GeoPoint, { nullable: true })
     location?: GeoPoint;
+
+    @Field({ nullable: true })
+    onlyActive?: boolean;
 }
