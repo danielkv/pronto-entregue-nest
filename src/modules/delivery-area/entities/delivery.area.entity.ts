@@ -26,7 +26,7 @@ export class DeliveryArea {
     })
     center: GeoPoint;
 
-    @Field(() => Float)
+    @Field(() => Float, { nullable: true })
     @Column('float', { name: 'radius', nullable: true, precision: 12 })
     radius: number | null;
 
