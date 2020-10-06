@@ -7,7 +7,11 @@ export class GeoPointHelper {
      * Converts GeoPoint to string
      * @param geoPoint Object GeoPoint
      */
-    geoPointToText(geoPoint: IGeoPoint): string {
+    geoPointToText(geoPoint: null): null;
+    geoPointToText(geoPoint: IGeoPoint): string;
+    geoPointToText(geoPoint: any): string | null {
+        if (!geoPoint) return null;
+
         const type = geoPoint.type.toUpperCase();
 
         return `${type}(${geoPoint.coordinates[0]} ${geoPoint.coordinates[1]})`;
@@ -17,7 +21,11 @@ export class GeoPointHelper {
      * Converts string to GeoPoint
      * @param geoPointString
      */
-    textToGeoPoint(geoPointString: string): IGeoPoint {
+    textToGeoPoint(geoPointString: null): null;
+    textToGeoPoint(geoPointString: string): IGeoPoint;
+    textToGeoPoint(geoPointString: any): IGeoPoint | null {
+        if (!geoPointString) return null;
+
         const geoPointRegExp = /(\S+)\((.+)\s(.+)\)/;
 
         const test = geoPointString.match(geoPointRegExp);
