@@ -7,4 +7,10 @@ export class CompanyFilter {
 
     @Field({ nullable: true })
     location?: boolean;
+
+    @Field({ nullable: true })
+    onlyActive?: boolean;
+
+    @Field({ nullable: true })
+    onlyPublished?: boolean;
 }

@@ -4,7 +4,7 @@ import { SelectQueryBuilder } from 'typeorm';
 import { Company } from '../entities/company.entity';
 
 @Injectable()
-export class SelectAreas {
+export class CompanyAreasSelection {
     apply(query: SelectQueryBuilder<Company>, location: GeoPoint): SelectQueryBuilder<Company> {
         if (!location) return query;
 

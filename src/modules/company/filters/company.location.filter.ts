@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { Company } from '../entities/company.entity';
 
 @Injectable()
-export class FilterLocation implements IFilter<Company, CompanyFilter> {
+export class CompanyLocationFilter implements IFilter<Company, CompanyFilter> {
     apply(query: SelectQueryBuilder<Company>, filter?: CompanyFilter): SelectQueryBuilder<Company> {
         if (_.isEmpty(filter) || !filter?.location) return query;
 

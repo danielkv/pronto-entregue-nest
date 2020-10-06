@@ -3,18 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Repository } from 'typeorm';
 import { Company } from '../entities/company.entity';
-import { CompanyBaseSelection } from '../helpers/company-base-selection';
+import { CompanyBaseSelection } from '../helpers/company.base.selection';
 import { CompanyMapper } from '../helpers/company-mapper';
-import { SelectAreas } from '../helpers/select.areas';
-import { SelectUserLocation } from '../helpers/select.user.location';
+import { CompanyAreasSelection } from '../helpers/company.areas.selection';
+import { CompanyUserLocationSelection } from '../helpers/company.user.location.selection';
 
 @Injectable()
 export class GetCompanyService {
     constructor(
         @InjectRepository(Company) private companyRepository: Repository<Company>,
         private companyBaseSelection: CompanyBaseSelection,
-        private selectUserLocation: SelectUserLocation,
-        private selectAreas: SelectAreas,
+        private selectUserLocation: CompanyUserLocationSelection,
+        private selectAreas: CompanyAreasSelection,
         private companyMapper: CompanyMapper,
     ) {}
 

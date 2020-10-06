@@ -5,12 +5,12 @@ import { Repository } from 'typeorm';
 import { PageInfo } from '../../common/types/page-info';
 import { CompanyFilter } from '../types/company.filter';
 import { PaginationHelper } from 'src/modules/common/helpers/pagination.helper';
-import { SelectUserLocation } from '../helpers/select.user.location';
+import { CompanyUserLocationSelection } from '../helpers/company.user.location.selection';
 import { CompanyMapper } from '../helpers/company-mapper';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { CompanyFilterHelper } from '../helpers/company.filter.helper';
-import { CompanyBaseSelection } from '../helpers/company-base-selection';
-import { SelectAreas } from '../helpers/select.areas';
+import { CompanyBaseSelection } from '../helpers/company.base.selection';
+import { CompanyAreasSelection } from '../helpers/company.areas.selection';
 
 @Injectable()
 export class ListCompaniesService {
@@ -19,8 +19,8 @@ export class ListCompaniesService {
         private companyRepository: Repository<Company>,
         private companyMapper: CompanyMapper,
         private companyBaseSelection: CompanyBaseSelection,
-        private selectUserLocation: SelectUserLocation,
-        private selectAreas: SelectAreas,
+        private selectUserLocation: CompanyUserLocationSelection,
+        private selectAreas: CompanyAreasSelection,
         private paginationHelper: PaginationHelper<Company>,
 
         private companyFilterHelper: CompanyFilterHelper,

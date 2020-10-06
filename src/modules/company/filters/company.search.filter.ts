@@ -5,7 +5,7 @@ import { Company } from '../entities/company.entity';
 import { CompanyFilter } from '../types/company.filter';
 
 @Injectable()
-export class FilterSearch implements IFilter<Company, CompanyFilter> {
+export class CompanySearchFilter implements IFilter<Company, CompanyFilter> {
     apply(query: SelectQueryBuilder<Company>, filter?: any): SelectQueryBuilder<Company> {
         if (!filter?.search) return query;
 

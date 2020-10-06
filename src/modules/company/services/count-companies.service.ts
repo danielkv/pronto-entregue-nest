@@ -5,14 +5,14 @@ import { Company } from '../entities/company.entity';
 import { CompanyFilter } from '../types/company.filter';
 import { CompanyFilterHelper } from '../helpers/company.filter.helper';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { SelectAreas } from '../helpers/select.areas';
+import { CompanyAreasSelection } from '../helpers/company.areas.selection';
 
 @Injectable()
 export class CountCompaniesService {
     constructor(
         @InjectRepository(Company)
         private companyRepository: Repository<Company>,
-        private selectAreas: SelectAreas,
+        private selectAreas: CompanyAreasSelection,
         private companyFilterHelper: CompanyFilterHelper,
     ) {}
 
