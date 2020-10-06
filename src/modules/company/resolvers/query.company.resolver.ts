@@ -53,10 +53,10 @@ export class QueryCompanyResolver {
     }
 
     @Query(() => CompanyConfig)
-    companyConfig(@Args('companyId', { type: () => ID }) companyId: number, @Info() info) {
-        // map keys
-        const keys = info.fieldNodes[0].selectionSet.selections.map(f => f.name.value);
-
+    companyConfig(
+        @Args('companyId', { type: () => ID }) companyId: number,
+        @Info(ExtractFieldsPipe) keys,
+    ) {
         // return config
         return this.getCompanyConfigService.execute(companyId, keys);
     }
