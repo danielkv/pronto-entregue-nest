@@ -22,7 +22,7 @@ import { PaymentMethod } from '../../payment/payment.method.entity';
 import { Coupon } from '../../coupon/coupon.entity';
 
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { CompanyConfig } from '../types/company-config';
+import { CompanyConfig } from '../types/company.config';
 
 @ObjectType()
 @Index('companyTypeId', ['companyTypeId'], {})

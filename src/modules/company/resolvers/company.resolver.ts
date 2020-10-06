@@ -6,7 +6,7 @@ import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe'
 import { Company } from '../entities/company.entity';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { CompanyConfigLoader, ICompanyConfigLoader } from '../loaders/company.config.loader';
-import { CompanyConfig } from '../types/company-config';
+import { CompanyConfig } from '../types/company.config';
 
 @Resolver(() => Company)
 export class CompanyResolver {

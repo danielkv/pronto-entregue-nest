@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Company } from '../entities/company.entity';
-import { CompanyFilter } from '../types/company-filter';
+import { CompanyFilter } from '../types/company.filter';
 import { CompanyFilterHelper } from '../helpers/company.filter.helper';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { SelectAreas } from '../helpers/select.areas';

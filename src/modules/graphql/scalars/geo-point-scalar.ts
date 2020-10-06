@@ -19,6 +19,7 @@ export class GeoPointScalar implements CustomScalar<number[], IGeoPoint> {
     }
 
     serialize(point: IGeoPoint): number[] {
+        console.log(point);
         if (
             typeof point !== 'object' ||
             point.type !== 'Point' ||

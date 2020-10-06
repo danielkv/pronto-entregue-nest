@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigTransformHelper } from '../../common/helpers/config.transform.helper';
-import { CompanyConfig, ICompanyConfigKeys } from '../types/company-config';
+import { CompanyConfig, ICompanyConfigKeys } from '../types/company.config';
 import { GetCompanyMetaService } from './get.company.meta.service';
 
 @Injectable()

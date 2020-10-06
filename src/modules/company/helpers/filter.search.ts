@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { Brackets, SelectQueryBuilder } from 'typeorm';
 import { Company } from '../entities/company.entity';
-import { CompanyFilter } from '../types/company-filter';
+import { CompanyFilter } from '../types/company.filter';
 
 @Injectable()
 export class FilterSearch implements IFilter<Company, CompanyFilter> {

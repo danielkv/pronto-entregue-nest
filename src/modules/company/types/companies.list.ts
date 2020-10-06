@@ -4,12 +4,12 @@ import { PageInfo } from '../../common/types/page-info';
 import { Company } from '../entities/company.entity';
 
 @ObjectType()
-export class ListCompanies implements IListEntity<Company> {
-    @Field(() => [Company])
-    items: Company[];
+export class CompaniesList implements IListEntity<Company> {
+    @Field(() => [Company], { nullable: 'items' })
+    items?: Company[];
 
     @Field(() => Int)
-    countItems: number;
+    countItems?: number;
 
     @Field(() => PageInfo, { nullable: true })
     pageInfo?: PageInfo;
