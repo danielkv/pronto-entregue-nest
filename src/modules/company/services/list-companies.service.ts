@@ -1,29 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from '../entities/company.entity';
-import { Repository } from 'typeorm';
 import { PageInfo } from '../../common/types/page-info';
 import { CompanyFilter } from '../dtos/company.filter';
-import { PaginationHelper } from 'src/modules/common/helpers/pagination.helper';
-import { CompanyUserLocationSelection } from '../helpers/company.user.location.selection';
-import { CompanyMapper } from '../helpers/company-mapper';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { CompanyFilterHelper } from '../helpers/company.filter.helper';
-import { CompanyBaseSelection } from '../helpers/company.base.selection';
-import { CompanyAreasSelection } from '../helpers/company.areas.selection';
+import { CompanyRepository } from '../repositories/company.repository';
 
 @Injectable()
 export class ListCompaniesService {
     constructor(
-        @InjectRepository(Company)
-        private companyRepository: Repository<Company>,
-        private companyMapper: CompanyMapper,
-        private companyBaseSelection: CompanyBaseSelection,
-        private selectUserLocation: CompanyUserLocationSelection,
-        private selectAreas: CompanyAreasSelection,
-        private paginationHelper: PaginationHelper<Company>,
-
-        private companyFilterHelper: CompanyFilterHelper,
+        @InjectRepository(CompanyRepository)
+        private companyRepository: CompanyRepository,
     ) {}
 
     async execute(
@@ -34,25 +21,25 @@ export class ListCompaniesService {
         const query = this.companyRepository.createQueryBuilder('company');
 
         // apply base selection
-        this.companyBaseSelection.apply(query);
+        this.companyRepository.applyBaseSelection(query);
 
-        // apply selection
-        this.selectUserLocation.apply(query, userLocation);
+        // apply user selection
+        this.companyRepository.applyUserLocationSelection(query, userLocation);
 
         // apply areas selection
-        this.selectAreas.apply(query, userLocation);
+        this.companyRepository.applyAreasSelection(query, userLocation);
 
         // apply filters
-        this.companyFilterHelper.apply(query, filter);
+        this.companyRepository.applyFilters(query, filter);
 
         // apply pagination
-        this.paginationHelper.apply(query, pagination);
+        this.companyRepository.applyPagination(query, pagination);
 
         // get data from DB
         const { entities: companies, raw } = await query.getRawAndEntities();
 
         // map raw fields to entities
-        this.companyMapper.apply(companies, raw);
+        this.companyRepository.mapProperties(companies, raw);
 
         // get results
         return companies;

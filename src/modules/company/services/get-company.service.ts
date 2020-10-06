@@ -1,42 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { Repository } from 'typeorm';
 import { Company } from '../entities/company.entity';
-import { CompanyBaseSelection } from '../helpers/company.base.selection';
-import { CompanyMapper } from '../helpers/company-mapper';
-import { CompanyAreasSelection } from '../helpers/company.areas.selection';
-import { CompanyUserLocationSelection } from '../helpers/company.user.location.selection';
+import { CompanyRepository } from '../repositories/company.repository';
 
 @Injectable()
 export class GetCompanyService {
     constructor(
-        @InjectRepository(Company) private companyRepository: Repository<Company>,
-        private companyBaseSelection: CompanyBaseSelection,
-        private selectUserLocation: CompanyUserLocationSelection,
-        private selectAreas: CompanyAreasSelection,
-        private companyMapper: CompanyMapper,
+        @InjectRepository(CompanyRepository) private companyRepository: CompanyRepository,
     ) {}
 
-    async execute(companyId: number, userLocation?: GeoPoint): Promise<Company> {
+    async execute(companyId: number[], userLocation?: GeoPoint): Promise<Company[]>;
+    async execute(companyId: number, userLocation?: GeoPoint): Promise<Company>;
+    async execute(companyId: any, userLocation?: GeoPoint): Promise<Company | Company[]> {
+        const returnType = Array.isArray(companyId) ? 'array' : 'single';
+
         const query = this.companyRepository.createQueryBuilder('company');
 
         // apply base selection
-        this.companyBaseSelection.apply(query);
+        this.companyRepository.applyBaseSelection(query);
 
         // apply selection
-        this.selectUserLocation.apply(query, userLocation);
+        this.companyRepository.applyUserLocationSelection(query, userLocation);
 
         // apply areas selection
-        this.selectAreas.apply(query, userLocation);
+        this.companyRepository.applyAreasSelection(query, userLocation);
 
-        query.where({ id: companyId });
+        // check companyId type
+        const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
+
+        query.where('id IN (:...companyIds)', { companyIds });
         query.limit(1);
 
         const { entities: companies, raw } = await query.getRawAndEntities();
 
-        this.companyMapper.apply(companies, raw);
+        this.companyRepository.mapProperties(companies, raw);
 
-        return companies[0];
+        if (returnType === 'array') return companies;
+        else return companies[0];
     }
 }

@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { Brackets, Repository } from 'typeorm';
+import { Brackets } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
+import { DeliveryAreaRepository } from '../repositories/delivery.area.repository';
 
 @Injectable()
 export class GetDeliveryAreaService {
     constructor(
-        @InjectRepository(DeliveryArea) private deliveryAreaRepository: Repository<DeliveryArea>,
+        @InjectRepository(DeliveryAreaRepository)
+        private deliveryAreaRepository: DeliveryAreaRepository,
     ) {}
 
     execute(companyId: number, location: GeoPoint): Promise<DeliveryArea[]>;

@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { DeliveryArea } from '../entities/delivery.area.entity';
-import { DeliveryAreaFilterHelper } from '../helpers/delivery.area.filter.helper';
 import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
+import { DeliveryAreaRepository } from '../repositories/delivery.area.repository';
 
 @Injectable()
 export class CountDeliveryAreasService {
     constructor(
-        @InjectRepository(DeliveryArea) private deliveryAreaRepository: Repository<DeliveryArea>,
-        private deliveryAreaFilterHelper: DeliveryAreaFilterHelper,
+        @InjectRepository(DeliveryAreaRepository)
+        private deliveryAreaRepository: DeliveryAreaRepository,
     ) {}
 
     execute(filter?: DeliveryAreaFilter): Promise<number> {
@@ -17,7 +15,7 @@ export class CountDeliveryAreasService {
         const query = this.deliveryAreaRepository.createQueryBuilder('deliveryArea');
 
         // apply filters
-        this.deliveryAreaFilterHelper.apply(query, filter);
+        this.deliveryAreaRepository.applyFilters(query, filter);
 
         // get rows
         return query.getCount();
