@@ -8,7 +8,7 @@ import { CompanySection } from './entities/company.type.entity';
 import { CompanyUser } from './entities/company.user.entity';
 import { QueryCompanyResolver } from './resolvers/query.company.resolver';
 import { FilterSearch } from './helpers/filter.search';
-import { ListCompanies } from './types/list-companies';
+import { CompaniesList } from './types/companies.list';
 import { CountCompaniesService } from './services/count-companies.service';
 import { SelectUserLocation } from './helpers/select.user.location';
 import { CompanyMapper } from './helpers/company-mapper';
@@ -24,8 +24,8 @@ import { CompanyConfigLoader } from './loaders/company.config.loader';
 
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from 'nestjs-dataloader';
-import { CompanyFilter } from './types/company-filter';
-import { CompanyConfig } from './types/company-config';
+import { CompanyFilter } from './types/company.filter';
+import { CompanyConfig } from './types/company.config';
 
 @Module({
     imports: [
@@ -36,7 +36,7 @@ import { CompanyConfig } from './types/company-config';
             CompanySection,
             CompanyUser,
         ]),
-        ListCompanies,
+        CompaniesList,
         CompanyFilter,
         CompanyConfig,
     ],
