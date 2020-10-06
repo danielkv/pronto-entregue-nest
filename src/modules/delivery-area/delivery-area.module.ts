@@ -6,6 +6,9 @@ import { DeliveryAreaFilterCompanies } from './helpers/delivery.filter.companies
 import { DeliveryAreaFilterLocation } from './helpers/delivery.filter.location';
 import { GetDeliveryAreaService } from './services/get-delivery-area.service';
 import { DeliveryAreaFilter } from './types/delivery.area.filter';
+import { ListDeliveryAreasService } from './services/list-delivery-areas.service';
+import { DeliveryAreaResolver } from './resolvers/delivery-area.resolver';
+import { CountDeliveryAreasService } from './services/count-delivery-areas.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([DeliveryArea]), DeliveryAreaFilter],
@@ -14,6 +17,9 @@ import { DeliveryAreaFilter } from './types/delivery.area.filter';
         DeliveryAreaFilterHelper,
         DeliveryAreaFilterLocation,
         DeliveryAreaFilterCompanies,
+        ListDeliveryAreasService,
+        CountDeliveryAreasService,
+        DeliveryAreaResolver,
     ],
 })
 export class DeliveryAreaModule {}
