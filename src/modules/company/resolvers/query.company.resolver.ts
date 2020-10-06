@@ -1,16 +1,16 @@
 import { Args, ID, Info, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { ListCompaniesService } from '../services/list-companies.service';
-import { CompaniesList } from '../types/companies.list';
+import { CompaniesList } from '../dtos/companies.list';
 
 import { PageInfo } from '../../common/types/page-info';
-import { CompanyFilter } from '../types/company.filter';
+import { CompanyFilter } from '../dtos/company.filter';
 import { CountCompaniesService } from '../services/count-companies.service';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
 import { GetCompanyConfigService } from '../services/get-company-config.service';
-import { CompanyConfig } from '../types/company.config';
+import { CompanyConfig } from '../dtos/company.config';
 import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 
 @Resolver()

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { Brackets, SelectQueryBuilder } from 'typeorm';
-import { CompanyFilter } from '../types/company.filter';
+import { CompanyFilter } from '../dtos/company.filter';
 import * as _ from 'lodash';
 import { Company } from '../entities/company.entity';
 

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Company } from '../entities/company.entity';
 import { Repository } from 'typeorm';
 import { PageInfo } from '../../common/types/page-info';
-import { CompanyFilter } from '../types/company.filter';
+import { CompanyFilter } from '../dtos/company.filter';
 import { PaginationHelper } from 'src/modules/common/helpers/pagination.helper';
 import { CompanyUserLocationSelection } from '../helpers/company.user.location.selection';
 import { CompanyMapper } from '../helpers/company-mapper';
