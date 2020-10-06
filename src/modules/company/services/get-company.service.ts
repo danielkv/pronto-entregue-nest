@@ -29,7 +29,7 @@ export class GetCompanyService {
         // check companyId type
         const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
 
-        query.where('id IN (:...companyIds)', { companyIds });
+        query.where('company.id IN (:...companyIds)', { companyIds });
         query.limit(1);
 
         const { entities: companies, raw } = await query.getRawAndEntities();

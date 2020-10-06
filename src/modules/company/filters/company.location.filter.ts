@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
-import { Brackets, SelectQueryBuilder } from 'typeorm';
+import { Brackets } from 'typeorm';
 import { CompanyFilter } from '../dtos/company.filter';
 import * as _ from 'lodash';
 import { Company } from '../entities/company.entity';
+import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
 
 @Injectable()
 export class CompanyLocationFilter implements IFilter<Company, CompanyFilter> {
-    apply(query: SelectQueryBuilder<Company>, filter?: CompanyFilter): SelectQueryBuilder<Company> {
+    apply(
+        query: QueryBuilderBase<Company, CompanyFilter>,
+        filter?: CompanyFilter,
+    ): QueryBuilderBase<Company, CompanyFilter> {
         if (_.isEmpty(filter) || !filter?.location) return query;
 
         // checks if tables deliveryArea and viewArea were included

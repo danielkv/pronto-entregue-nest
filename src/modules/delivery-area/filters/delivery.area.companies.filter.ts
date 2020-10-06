@@ -1,18 +1,16 @@
-import * as _ from 'lodash';
-
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
-import { SelectQueryBuilder } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
+import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
 
 @Injectable()
 export class DeliveryAreaCompaniesFilter implements IFilter<DeliveryArea, DeliveryAreaFilter> {
     apply(
-        query: SelectQueryBuilder<DeliveryArea>,
+        query: QueryBuilderBase<DeliveryArea, DeliveryAreaFilter>,
         filter?: DeliveryAreaFilter,
-    ): SelectQueryBuilder<DeliveryArea> {
-        if (_.isEmpty(filter) || !filter?.companyId) return query;
+    ): QueryBuilderBase<DeliveryArea, DeliveryAreaFilter> {
+        if (!filter?.companyId) return query;
 
         const { companyId } = filter;
 

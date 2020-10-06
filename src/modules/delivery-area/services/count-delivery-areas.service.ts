@@ -15,7 +15,7 @@ export class CountDeliveryAreasService {
         const query = this.deliveryAreaRepository.createQueryBuilder('deliveryArea');
 
         // apply filters
-        this.deliveryAreaRepository.applyFilters(query, filter);
+        query.applyFilters(filter);
 
         // get rows
         return query.getCount();

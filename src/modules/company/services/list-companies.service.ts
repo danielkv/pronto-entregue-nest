@@ -30,10 +30,10 @@ export class ListCompaniesService {
         this.companyRepository.applyAreasSelection(query, userLocation);
 
         // apply filters
-        this.companyRepository.applyFilters(query, filter);
+        query.applyFilters(filter);
 
         // apply pagination
-        this.companyRepository.applyPagination(query, pagination);
+        query.applyPagination(pagination);
 
         // get data from DB
         const { entities: companies, raw } = await query.getRawAndEntities();

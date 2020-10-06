@@ -17,10 +17,10 @@ export class ListDeliveryAreasService {
         const query = this.deliveryAreaRepository.createQueryBuilder('deliveryArea');
 
         // apply filters
-        this.deliveryAreaRepository.applyFilters(query, filter);
+        query.applyFilters(filter);
 
         // apply pagination
-        this.deliveryAreaRepository.applyPagination(query, pagination);
+        query.applyPagination(pagination);
 
         // get rows
         const areas = await query.getMany();

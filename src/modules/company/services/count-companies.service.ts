@@ -19,7 +19,7 @@ export class CountCompaniesService {
         this.companyRepository.applyAreasSelection(query, userLocation);
 
         // apply filters
-        this.companyRepository.applyFilters(query, filter);
+        query.applyFilters(filter);
 
         // return count items
         return query.getCount();

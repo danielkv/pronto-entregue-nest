@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
-import { SelectQueryBuilder } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
+import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
 
 @Injectable()
 export class DeliveryAreaActiveFilter implements IFilter<DeliveryArea, DeliveryAreaFilter> {
     apply(
-        query: SelectQueryBuilder<DeliveryArea>,
+        query: QueryBuilderBase<DeliveryArea, DeliveryAreaFilter>,
         filter?: DeliveryAreaFilter,
-    ): SelectQueryBuilder<DeliveryArea> {
+    ): QueryBuilderBase<DeliveryArea, DeliveryAreaFilter> {
         if (filter?.onlyActive === false) return query;
 
         // apply filter
         query.andWhere('deliveryArea.active');
 
+        console.log(query.getSql());
         // return query
         return query;
     }

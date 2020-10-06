@@ -1,5 +1,5 @@
-import { SelectQueryBuilder } from 'typeorm';
+import { QueryBuilderBase } from '../repositories/query.builder.base';
 
 export interface IFilter<T, U> {
-    apply(query: SelectQueryBuilder<T>, filter: U): SelectQueryBuilder<T>;
+    apply(query: QueryBuilderBase<T, U>, filter: U): QueryBuilderBase<T, U>;
 }

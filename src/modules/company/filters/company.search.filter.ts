@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
-import { Brackets, SelectQueryBuilder } from 'typeorm';
+import { Brackets } from 'typeorm';
 import { Company } from '../entities/company.entity';
 import { CompanyFilter } from '../dtos/company.filter';
+import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
 
 @Injectable()
 export class CompanySearchFilter implements IFilter<Company, CompanyFilter> {
-    apply(query: SelectQueryBuilder<Company>, filter?: any): SelectQueryBuilder<Company> {
+    apply(
+        query: QueryBuilderBase<Company, CompanyFilter>,
+        filter?: any,
+    ): QueryBuilderBase<Company, CompanyFilter> {
         if (!filter?.search) return query;
 
         return query.andWhere(
