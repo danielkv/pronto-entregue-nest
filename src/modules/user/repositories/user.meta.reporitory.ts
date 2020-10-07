@@ -3,4 +3,4 @@ import { EntityRepository } from 'typeorm';
 import { UserMeta } from '../entities/user.meta.entity';
 
 @EntityRepository(UserMeta)
-export class UserRepository extends RepositoryBase<UserMeta> {}
+export class UserMetaRepository extends RepositoryBase<UserMeta> {}

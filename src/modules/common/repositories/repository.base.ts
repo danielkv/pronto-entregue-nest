@@ -4,7 +4,7 @@ import { IFilter } from '../interfaces/IFilter';
 import { QueryBuilderBase } from './query.builder.base';
 
 export abstract class RepositoryBase<Entity, EntityFilter = void> extends Repository<Entity> {
-    filters: IFilter<Entity, EntityFilter>[];
+    filters: IFilter<Entity, EntityFilter>[] = [];
 
     createQueryBuilder(
         alias?: string,
