@@ -1,23 +1,9 @@
-import {
-    Column,
-    Entity,
-    JoinTable,
-    ManyToMany,
-    OneToMany,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from '../order/order.entity';
 import { Product } from '../product/product.entity';
-import { User } from '../user/user.entity';
+import { User } from '../user/entities/user.entity';
 import { Company } from '../company/entities/company.entity';
-import {
-    Field,
-    Float,
-    ID,
-    Int,
-    ObjectType,
-    registerEnumType,
-} from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 
 export enum CouponValueType {
     VALUE = 'value',
@@ -68,8 +54,7 @@ export class Coupon {
         type: 'boolean',
         name: 'onlyFirstPurchases',
         nullable: true,
-        comment:
-            'Se verdadeiro, apenas válido apenas para primeira compra de cada usuário',
+        comment: 'Se verdadeiro, apenas válido apenas para primeira compra de cada usuário',
         default: false,
     })
     onlyFirstPurchases: boolean | null;

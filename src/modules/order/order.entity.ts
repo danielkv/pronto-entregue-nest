@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Delivery } from '../delivery/entities/delivery.entity';
 import { OrderProduct } from './order.product.entity';
-import { User } from '../user/user.entity';
+import { User } from '../user/entities/user.entity';
 import { Company } from '../company/entities/company.entity';
 import { PaymentMethod } from '../payment/payment.method.entity';
 import { CreditHistory } from '../credit/credit.history.entity';

@@ -1,14 +1,7 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from './company.entity';
-import { User } from '../../user/user.entity';
-import { Role } from '../../user/role.entity';
+import { User } from '../../user/entities/user.entity';
+import { Role } from '../../user/entities/role.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

@@ -8,16 +8,16 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CompanyUser } from '../company/entities/company.user.entity';
-import { CreditBalance } from '../credit/credit.balance.entity';
-import { CreditHistory } from '../credit/credit.history.entity';
-import { Delivery } from '../delivery/entities/delivery.entity';
-import { Order } from '../order/order.entity';
-import { Rating } from '../rating/rating.entity';
+import { CompanyUser } from '../../company/entities/company.user.entity';
+import { CreditBalance } from '../../credit/credit.balance.entity';
+import { CreditHistory } from '../../credit/credit.history.entity';
+import { Delivery } from '../../delivery/entities/delivery.entity';
+import { Order } from '../../order/order.entity';
+import { Rating } from '../../rating/rating.entity';
 import { UserMeta } from './user.meta.entity';
-import { Coupon } from '../coupon/coupon.entity';
-import { Product } from '../product/product.entity';
-import { Address } from '../address/entities/address.entity';
+import { Coupon } from '../../coupon/coupon.entity';
+import { Product } from '../../product/product.entity';
+import { Address } from '../../address/entities/address.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

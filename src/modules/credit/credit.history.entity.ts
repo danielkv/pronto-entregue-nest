@@ -7,7 +7,7 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity';
+import { User } from '../user/entities/user.entity';
 import { Order } from '../order/order.entity';
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
