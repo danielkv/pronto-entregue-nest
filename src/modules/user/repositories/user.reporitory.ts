@@ -3,9 +3,16 @@ import { PageInfo } from 'src/modules/common/types/page-info';
 import { EntityRepository } from 'typeorm';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
+import { UserCompanyFilter } from '../filters/user.company.filter';
+import { UserIdFilter } from '../filters/user.id.filter';
+import { UserActiveFilter } from '../filters/user.active.filter';
 
 @EntityRepository(User)
 export class UserRepository extends RepositoryBase<User, UserFilterDTO> {
+    constructor() {
+        super();
+        this.setFilters([new UserCompanyFilter(), new UserIdFilter(), new UserActiveFilter()]);
+    }
     /**
      * Returns one or more instances of User
      * @param userId User ID or array with user IDs
