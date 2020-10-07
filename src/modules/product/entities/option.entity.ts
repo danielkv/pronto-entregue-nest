@@ -8,7 +8,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OptionGroup } from './option.group.entity';
-import { OrderOption } from '../order/order.option.entity';
+import { OrderOption } from '../../order/order.option.entity';
 import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

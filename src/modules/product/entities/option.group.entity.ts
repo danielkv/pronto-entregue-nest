@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Option } from './option.entity';
 import { Product } from './product.entity';
-import { OrderOptionGroup } from '../order/order.option.group.entity';
+import { OrderOptionGroup } from '../../order/order.option.group.entity';
 import { Field, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 
 export enum OptionGroupType {

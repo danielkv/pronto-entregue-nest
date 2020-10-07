@@ -8,14 +8,14 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { OrderProduct } from '../order/order.product.entity';
+import { OrderProduct } from '../../order/order.product.entity';
 import { OptionGroup } from './option.group.entity';
-import { Category } from '../category/category.entity';
-import { Company } from '../company/entities/company.entity';
+import { Category } from '../../category/category.entity';
+import { Company } from '../../company/entities/company.entity';
 import { Sale } from './sale.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Coupon } from '../coupon/coupon.entity';
-import { User } from '../user/entities/user.entity';
+import { Coupon } from '../../coupon/coupon.entity';
+import { User } from '../../user/entities/user.entity';
 
 export enum ProductType {
     INLINE = 'inline',

@@ -9,7 +9,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Company } from '../company/entities/company.entity';
-import { Product } from '../product/product.entity';
+import { Product } from '../product/entities/product.entity';
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})
