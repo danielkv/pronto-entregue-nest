@@ -17,7 +17,7 @@ import { Rating } from '../rating/rating.entity';
 import { UserMeta } from './user.meta.entity';
 import { Coupon } from '../coupon/coupon.entity';
 import { Product } from '../product/product.entity';
-import { Address } from '../address/address.entity';
+import { Address } from '../address/entities/address.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

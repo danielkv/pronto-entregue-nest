@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AddressResolver } from './resolvers/address.resolver';
 import { CompanyAddressResolver } from './resolvers/company-address.resolver';
-import { AddressService } from './address.service';
+import { GetAddressService } from './services/get.address.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Address } from './address.entity';
+import { AddressRepository } from './respositories/address.repository';
+import { AddressLoader } from './loaders/address.loader';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Address])],
-    providers: [AddressService, AddressResolver, CompanyAddressResolver],
+    imports: [TypeOrmModule.forFeature([AddressRepository])],
+    providers: [GetAddressService, AddressResolver, CompanyAddressResolver, AddressLoader],
 })
 export class AddressModule {}

@@ -1,10 +1,10 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { GeoPoint } from '../common/types/geo-point';
+import { GeoPoint } from '../../common/types/geo-point';
 
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Company } from '../company/entities/company.entity';
-import { User } from '../user/user.entity';
-import { GeoPointHelper } from '../common/helpers/geo.point.helper';
+import { Company } from '../../company/entities/company.entity';
+import { User } from '../../user/user.entity';
+import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
 
 const geoPointHelper = new GeoPointHelper();
 

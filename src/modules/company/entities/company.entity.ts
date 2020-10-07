@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Category } from '../../category/category.entity';
 import { CompanySection } from './company.type.entity';
-import { Address } from '../../address/address.entity';
+import { Address } from '../../address/entities/address.entity';
 import { CompanyMeta } from './company.meta.entity';
 import { CompanyPaymentMethod } from './company.payment.method.entity';
 import { CompanyUser } from './company.user.entity';

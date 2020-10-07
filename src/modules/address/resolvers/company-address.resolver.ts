@@ -1,14 +1,15 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+
 import { Company } from '../../company/entities/company.entity';
-import { Address } from '../address.entity';
-import { AddressService } from '../address.service';
+import { Address } from '../entities/address.entity';
+import { AddressLoader } from '../loaders/address.loader';
 
 @Resolver(() => Company)
 export class CompanyAddressResolver {
-    constructor(private addressService: AddressService) {}
+    constructor(private addressLoader: AddressLoader) {}
 
     @ResolveField('address', () => Address)
     getAddress(@Parent() company: Company) {
-        return this.addressService.findOne(company.addressId);
+        return this.addressLoader.loader.load(company.addressId);
     }
 }

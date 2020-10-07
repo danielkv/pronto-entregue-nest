@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as DataLoader from 'dataloader';
-import { NestDataLoader } from 'nestjs-dataloader';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { GetCompanyMetaService } from '../services/get.company.meta.service';
 import { ICompanyConfigKeys } from '../dtos/company.config';
+import { DataLoaderBase } from 'src/modules/common/helpers/data.loader.base';
+import { IDataLoaderBase } from 'src/modules/common/helpers/data.loader.interface';
 
 export interface ICompanyConfigLoader {
     companyId: number;
@@ -11,10 +12,13 @@ export interface ICompanyConfigLoader {
 }
 
 @Injectable()
-export class CompanyConfigLoader implements NestDataLoader<ICompanyConfigLoader, CompanyMeta[]> {
-    constructor(private readonly getCompanyMetaService: GetCompanyMetaService) {}
+export class CompanyConfigLoader extends DataLoaderBase<ICompanyConfigLoader, CompanyMeta[]>
+    implements IDataLoaderBase<ICompanyConfigLoader, CompanyMeta[]> {
+    constructor(private readonly getCompanyMetaService: GetCompanyMetaService) {
+        super();
+    }
 
-    generateDataLoader(): DataLoader<ICompanyConfigLoader, CompanyMeta[]> {
+    create() {
         return new DataLoader<ICompanyConfigLoader, CompanyMeta[]>(async keys => {
             const companyIds = keys.map(k => k.companyId);
             const configKeys = keys[0].keys;

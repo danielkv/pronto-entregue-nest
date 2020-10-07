@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AddressService } from '../address.service';
+import { GetAddressService } from '../services/get.address.service';
 import { CompanyAddressResolver } from './company-address.resolver';
 
 describe('CompanyAddressResolver', () => {
@@ -7,7 +7,7 @@ describe('CompanyAddressResolver', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [CompanyAddressResolver, AddressService],
+            providers: [CompanyAddressResolver, GetAddressService],
         }).compile();
 
         resolver = module.get<CompanyAddressResolver>(CompanyAddressResolver);

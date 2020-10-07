@@ -39,7 +39,6 @@
 		"graphql-type-json": "^0.3.2",
 		"lodash": "^4.17.20",
 		"mysql": "^2.18.1",
-		"nestjs-dataloader": "^7.0.1",
 		"reflect-metadata": "^0.1.13",
 		"rimraf": "^3.0.2",
 		"rxjs": "^6.5.4",
