@@ -26,7 +26,7 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
     async get(entityId: number[]): Promise<Entity[]>;
     async get(entityId: any): Promise<Entity | Entity[]> {
         // create query builder
-        const query = this.createQueryBuilder('user');
+        const query = this.createQueryBuilder();
 
         // filter
         query.whereInIds(entityId);
@@ -40,7 +40,7 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
 
     getList(filter: EntityFilterDTO, pagination: PageInfo): Promise<Entity[]> {
         // create query builder
-        const query = this.createQueryBuilder('user');
+        const query = this.createQueryBuilder();
 
         // apply filters
         query.applyFilters(filter);
@@ -54,7 +54,7 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
 
     getCount(filter: EntityFilterDTO): Promise<number> {
         // create query builder
-        const query = this.createQueryBuilder('user');
+        const query = this.createQueryBuilder();
 
         // apply filters
         query.applyFilters(filter);

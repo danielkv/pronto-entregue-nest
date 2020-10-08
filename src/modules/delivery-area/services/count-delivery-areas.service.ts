@@ -1,23 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
-import { DeliveryAreaRepository } from '../repositories/delivery.area.repository';
+import { Inject, Injectable } from '@nestjs/common';
+import { DeliveryAreaFilterDTO } from '../dtos/delivery.area.filter.dto';
+import { IDeliveryAreaRepository } from '../interfaces/delivery-area.repository.interface';
 
 @Injectable()
 export class CountDeliveryAreasService {
     constructor(
-        @InjectRepository(DeliveryAreaRepository)
-        private deliveryAreaRepository: DeliveryAreaRepository,
+        @Inject('IDeliveryAreaRepository')
+        private deliveryAreaRepository: IDeliveryAreaRepository,
     ) {}
 
-    execute(filter?: DeliveryAreaFilter): Promise<number> {
-        // create query builder
-        const query = this.deliveryAreaRepository.createQueryBuilder('deliveryArea');
-
-        // apply filters
-        query.applyFilters(filter);
-
-        // get rows
-        return query.getCount();
+    execute(filter?: DeliveryAreaFilterDTO): Promise<number> {
+        return this.deliveryAreaRepository.getCount(filter);
     }
 }

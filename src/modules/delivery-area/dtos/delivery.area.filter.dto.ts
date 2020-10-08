@@ -2,7 +2,7 @@ import { Field, ID, InputType } from '@nestjs/graphql';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 
 @InputType('DeliveryAreaFilterInput')
-export class DeliveryAreaFilter {
+export class DeliveryAreaFilterDTO {
     @Field(() => [ID], { nullable: true })
     companyId?: number | number[];
 

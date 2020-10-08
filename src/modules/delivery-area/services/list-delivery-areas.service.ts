@@ -1,31 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { PageInfo } from '../../common/types/page-info';
 import { DeliveryArea } from '../entities/delivery.area.entity';
-import { DeliveryAreaFilter } from '../dtos/delivery.area.filter';
-import { DeliveryAreaRepository } from '../repositories/delivery.area.repository';
+import { DeliveryAreaFilterDTO } from '../dtos/delivery.area.filter.dto';
+import { IDeliveryAreaRepository } from '../interfaces/delivery-area.repository.interface';
 
 @Injectable()
 export class ListDeliveryAreasService {
     constructor(
-        @InjectRepository(DeliveryAreaRepository)
-        private deliveryAreaRepository: DeliveryAreaRepository,
+        @Inject('IDeliveryAreaRepository')
+        private deliveryAreaRepository: IDeliveryAreaRepository,
     ) {}
 
-    async execute(filter: DeliveryAreaFilter, pagination: PageInfo): Promise<DeliveryArea[]> {
-        // create query builder
-        const query = this.deliveryAreaRepository.createQueryBuilder('deliveryArea');
-
-        // apply filters
-        query.applyFilters(filter);
-
-        // apply pagination
-        query.applyPagination(pagination);
-
-        // get rows
-        const areas = await query.getMany();
-
-        // return areas
-        return areas;
+    execute(filter: DeliveryAreaFilterDTO, pagination: PageInfo): Promise<DeliveryArea[]> {
+        return this.deliveryAreaRepository.getList(filter, pagination);
     }
 }

@@ -4,7 +4,7 @@ import { PageInfo } from '../../common/types/page-info';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 
 @ObjectType()
-export class DeliveryAreaList implements IListEntity<DeliveryArea> {
+export class DeliveryAreaListDTO implements IListEntity<DeliveryArea> {
     @Field(() => [DeliveryArea], { nullable: 'items' })
     items?: DeliveryArea[];
 
