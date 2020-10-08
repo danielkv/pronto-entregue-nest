@@ -9,7 +9,7 @@ interface IConfig {
 
 @Injectable()
 export class ConfigTransformHelper<Schema> {
-    apply(metas: IConfig[], schema: ClassType<Schema>) {
+    apply(metas: IConfig[], schema: ClassType<Schema>): Schema {
         const configs = metas.reduce((result, { key, value }) => {
             if (!result[key]) result[key] = value;
 
