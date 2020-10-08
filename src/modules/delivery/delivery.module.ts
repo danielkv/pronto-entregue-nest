@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { DeliveryRepository } from './repositories/delivery.repository';
+import { DeliveryRepositoryProvider } from './repositories/delivery.repository';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([DeliveryRepository])],
+    providers: [DeliveryRepositoryProvider],
 })
 export class DeliveryModule {}
