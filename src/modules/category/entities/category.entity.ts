@@ -8,8 +8,8 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Company } from '../company/entities/company.entity';
-import { Product } from '../product/entities/product.entity';
+import { Company } from '../../company/entities/company.entity';
+import { Product } from '../../product/entities/product.entity';
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})

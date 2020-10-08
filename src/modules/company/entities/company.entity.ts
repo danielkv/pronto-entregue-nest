@@ -7,7 +7,7 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Category } from '../../category/category.entity';
+import { Category } from '../../category/entities/category.entity';
 import { CompanySection } from './company.type.entity';
 import { Address } from '../../address/entities/address.entity';
 import { CompanyMeta } from './company.meta.entity';
