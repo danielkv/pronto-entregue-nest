@@ -1,15 +1,18 @@
 import { RepositoryBase } from '../../common/repositories/repository.base';
 import { GeoPoint } from '../../common/types/geo-point';
-import { EntityRepository, SelectQueryBuilder } from 'typeorm';
-import { CompanyFilter } from '../dtos/company.filter';
+import { Connection, EntityRepository, SelectQueryBuilder } from 'typeorm';
+import { CompanyFilterDTO } from '../dtos/company.filter';
 import { Company } from '../entities/company.entity';
 import { CompanyActiveFilter } from '../filters/company.active.filter';
 import { CompanyLocationFilter } from '../filters/company.location.filter';
 import { CompanyPublishedFilter } from '../filters/company.published.filter';
 import { CompanySearchFilter } from '../filters/company.search.filter';
+import { ICompanyRepository } from '../interfaces/company.repository.interface';
+import { FactoryProvider } from '@nestjs/common';
 
 @EntityRepository(Company)
-export class CompanyRepository extends RepositoryBase<Company, CompanyFilter> {
+export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
+    implements ICompanyRepository {
     constructor() {
         super();
 
@@ -108,3 +111,9 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilter> {
         return companies;
     }
 }
+
+export const CompanyRepositoryProvider: FactoryProvider<CompanyRepository> = {
+    provide: 'ICompanyRepository',
+    useFactory: (connection: Connection) => connection.getCustomRepository(CompanyRepository),
+    inject: [Connection],
+};

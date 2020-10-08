@@ -1,14 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
-import { CompanyRepository } from '../repositories/company.repository';
+import { ICompanyRepository } from '../interfaces/company.repository.interface';
 
 @Injectable()
 export class GetCompanyService {
-    constructor(
-        @InjectRepository(CompanyRepository) private companyRepository: CompanyRepository,
-    ) {}
+    constructor(@Inject('ICompanyRepository') private companyRepository: ICompanyRepository) {}
 
     async execute(companyId: number[], userLocation?: GeoPoint): Promise<Company[]>;
     async execute(companyId: number, userLocation?: GeoPoint): Promise<Company>;

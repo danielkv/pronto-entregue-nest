@@ -4,7 +4,7 @@ import { ListCompaniesService } from '../services/list-companies.service';
 import { CompaniesList } from '../dtos/companies.list';
 
 import { PageInfo } from '../../common/types/page-info';
-import { CompanyFilter } from '../dtos/company.filter';
+import { CompanyFilterDTO } from '../dtos/company.filter';
 import { CountCompaniesService } from '../services/count-companies.service';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
@@ -25,7 +25,7 @@ export class QueryCompanyResolver {
     @Query(() => CompaniesList)
     async listCompanies(
         @Info(ExtractFieldsPipe) fields: string[],
-        @Args('filter', { type: () => CompanyFilter, nullable: true })
+        @Args('filter', { type: () => CompanyFilterDTO, nullable: true })
         filter?,
         @Args('userLocation', { type: () => GeoPoint, nullable: true })
         userLocation?,

@@ -1,17 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CompanyFilter } from '../dtos/company.filter';
+import { Inject, Injectable } from '@nestjs/common';
+import { CompanyFilterDTO } from '../dtos/company.filter';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { CompanyRepository } from '../repositories/company.repository';
+import { ICompanyRepository } from '../interfaces/company.repository.interface';
 
 @Injectable()
 export class CountCompaniesService {
     constructor(
-        @InjectRepository(CompanyRepository)
-        private companyRepository: CompanyRepository,
+        @Inject('ICompanyRepository')
+        private companyRepository: ICompanyRepository,
     ) {}
 
-    execute(filter?: CompanyFilter, userLocation?: GeoPoint): Promise<number> {
+    execute(filter?: CompanyFilterDTO, userLocation?: GeoPoint): Promise<number> {
         // create query
         const query = this.companyRepository.createQueryBuilder('company');
 

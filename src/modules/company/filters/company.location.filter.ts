@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { Brackets } from 'typeorm';
-import { CompanyFilter } from '../dtos/company.filter';
+import { CompanyFilterDTO } from '../dtos/company.filter';
 import * as _ from 'lodash';
 import { Company } from '../entities/company.entity';
 import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 
 @Injectable()
-export class CompanyLocationFilter implements IFilter<Company, CompanyFilter> {
+export class CompanyLocationFilter implements IFilter<Company, CompanyFilterDTO> {
     apply(
-        query: QueryBuilderBase<Company, CompanyFilter>,
-        filter?: CompanyFilter,
-    ): QueryBuilderBase<Company, CompanyFilter> {
+        query: QueryBuilderBase<Company, CompanyFilterDTO>,
+        filter?: CompanyFilterDTO,
+    ): QueryBuilderBase<Company, CompanyFilterDTO> {
         if (_.isEmpty(filter) || !filter?.location) return query;
 
         // checks if tables deliveryArea and viewArea were included

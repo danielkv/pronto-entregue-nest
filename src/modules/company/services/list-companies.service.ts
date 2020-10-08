@@ -1,20 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { Company } from '../entities/company.entity';
 import { PageInfo } from '../../common/types/page-info';
-import { CompanyFilter } from '../dtos/company.filter';
+import { CompanyFilterDTO } from '../dtos/company.filter';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { CompanyRepository } from '../repositories/company.repository';
+import { ICompanyRepository } from '../interfaces/company.repository.interface';
 
 @Injectable()
 export class ListCompaniesService {
     constructor(
-        @InjectRepository(CompanyRepository)
-        private companyRepository: CompanyRepository,
+        @Inject('ICompanyRepository')
+        private companyRepository: ICompanyRepository,
     ) {}
 
     async execute(
-        filter?: CompanyFilter,
+        filter?: CompanyFilterDTO,
         userLocation?: GeoPoint,
         pagination?: PageInfo,
     ): Promise<Company[]> {
