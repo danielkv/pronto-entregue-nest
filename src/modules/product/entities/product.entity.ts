@@ -106,11 +106,9 @@ export class Product {
     @Column('datetime', { name: 'updatedAt' })
     updatedAt: Date;
 
-    @Field(() => Int)
     @Column('int', { name: 'categoryId', nullable: true })
     categoryId: number | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'companyId', nullable: true })
     companyId: number | null;
 
