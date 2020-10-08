@@ -1,18 +1,14 @@
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { GeoPointHelper } from 'src/modules/common/helpers/geo.point.helper';
+import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from '../../order/order.entity';
 import { User } from '../../user/entities/user.entity';
-//import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
+import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 
-export enum DeliverStatus {
-    WAITING = 'waiting',
-    WAITING_DELIVERY = 'waitingDelivery',
-    DELIVERING = 'delivering',
-    DELIVERED = 'delivered',
-    CANCELED = 'canceled',
-}
+const geoPointHelper = new GeoPointHelper();
 
-registerEnumType(DeliverStatus, { name: 'DeliverStatus' });
+registerEnumType(DeliveryStatusEnum, { name: 'DeliveryStatusEnum' });
 
 @ObjectType()
 @Index('orderId', ['orderId'], {})
@@ -38,10 +34,10 @@ export class Delivery {
     @Column('enum', {
         name: 'status',
         nullable: true,
-        enum: DeliverStatus,
-        default: DeliverStatus.WAITING_DELIVERY,
+        enum: DeliveryStatusEnum,
+        default: DeliveryStatusEnum.WAITING_DELIVERY,
     })
-    status: DeliverStatus;
+    status: DeliveryStatusEnum;
 
     @Field(() => Float)
     @Column('decimal', {
@@ -120,9 +116,13 @@ export class Delivery {
     })
     referenceAddressFrom: string | null;
 
-    @Field() //GeoPointScalar
-    @Column('point', { name: 'locationAddressFrom', nullable: true })
-    locationAddressFrom: string | null;
+    @Field(() => GeoPoint)
+    @Column('point', {
+        name: 'locationAddressFrom',
+        nullable: true,
+        transformer: { to: geoPointHelper.geoPointToText, from: geoPointHelper.textToGeoPoint },
+    })
+    locationAddressFrom: GeoPoint;
 
     @Field()
     @Column('varchar', { name: 'nameAddressTo', nullable: true, length: 255 })
@@ -172,9 +172,13 @@ export class Delivery {
     })
     referenceAddressTo: string | null;
 
-    @Field() //GeoPointScalar
-    @Column('point', { name: 'locationAddressTo', nullable: true })
-    locationAddressTo: string | null;
+    @Field(() => GeoPoint) //GeoPointScalar
+    @Column('point', {
+        name: 'locationAddressTo',
+        nullable: true,
+        transformer: { to: geoPointHelper.geoPointToText, from: geoPointHelper.textToGeoPoint },
+    })
+    locationAddressTo: GeoPoint;
 
     @Field()
     @Column('datetime', { name: 'createdAt' })
