@@ -1,13 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { PageInfo } from 'src/modules/common/types/page-info';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
-import { UserRepository } from '../repositories/user.reporitory';
+import { IUserRepository } from '../interface/user.repository.interface';
 
 @Injectable()
 export class ListUsersService {
-    constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {}
+    constructor(@Inject('IUserRepository') private userRepository: IUserRepository) {}
 
     execute(filter: UserFilterDTO, pagination: PageInfo): Promise<User[]> {
         return this.userRepository.getList(filter, pagination);

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ProductRepositoryProvider } from './repositories/product.repository';
 
-@Module({})
+@Module({ providers: [ProductRepositoryProvider] })
 export class ProductModule {}
