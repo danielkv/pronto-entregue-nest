@@ -4,7 +4,7 @@ import { Brackets } from 'typeorm';
 import { CompanyFilter } from '../dtos/company.filter';
 import * as _ from 'lodash';
 import { Company } from '../entities/company.entity';
-import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 
 @Injectable()
 export class CompanyLocationFilter implements IFilter<Company, CompanyFilter> {

@@ -3,7 +3,7 @@ import { IFilter } from '../../common/interfaces/IFilter';
 import { Brackets } from 'typeorm';
 import { Company } from '../entities/company.entity';
 import { CompanyFilter } from '../dtos/company.filter';
-import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 
 @Injectable()
 export class CompanySearchFilter implements IFilter<Company, CompanyFilter> {
