@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CompanySectionRepositoryProvider } from './repositories/company-section.repository';
 
-@Module({})
+@Module({ providers: [CompanySectionRepositoryProvider] })
 export class CompanySectionModule {}
