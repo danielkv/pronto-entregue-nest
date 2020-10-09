@@ -3,25 +3,25 @@ import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transfo
 import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 import { Company } from '../entities/company.entity';
 import { CompanyConfigLoader } from '../loaders/company.config.loader';
-import { CompanyConfig } from '../dtos/company.config';
+import { CompanyConfigDTO } from '../dtos/company.config';
 
 @Resolver(() => Company)
 export class CompanyResolver {
     constructor(
-        private configTransformHelper: ConfigTransformHelper<CompanyConfig>,
+        private configTransformHelper: ConfigTransformHelper<CompanyConfigDTO>,
         private companyConfigLoader: CompanyConfigLoader,
     ) {}
 
-    @ResolveField(() => CompanyConfig)
+    @ResolveField(() => CompanyConfigDTO)
     async config(
         @Parent() company: Company,
         @Info(ExtractFieldsPipe) fields,
-    ): Promise<CompanyConfig> {
+    ): Promise<CompanyConfigDTO> {
         const companyId = company.id;
 
         // batch load configs
         const configMetas = await this.companyConfigLoader.loader.load({ companyId, keys: fields });
 
-        return this.configTransformHelper.apply(configMetas, CompanyConfig);
+        return this.configTransformHelper.apply(configMetas, CompanyConfigDTO);
     }
 }

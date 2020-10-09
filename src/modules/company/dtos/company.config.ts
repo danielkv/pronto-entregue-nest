@@ -15,7 +15,7 @@ export enum ICompanyConfigKeys {
 }
 
 @ObjectType()
-export class CompanyConfig {
+export class CompanyConfigDTO {
     @Field({ nullable: true })
     @IsString()
     phone: string;

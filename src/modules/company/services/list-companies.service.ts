@@ -14,33 +14,9 @@ export class ListCompaniesService {
 
     async execute(
         filter?: CompanyFilterDTO,
-        userLocation?: GeoPoint,
         pagination?: PageInfo,
+        userLocation?: GeoPoint,
     ): Promise<Company[]> {
-        const query = this.companyRepository.createQueryBuilder('company');
-
-        // apply base selection
-        this.companyRepository.applyBaseSelection(query);
-
-        // apply user selection
-        this.companyRepository.applyUserLocationSelection(query, userLocation);
-
-        // apply areas selection
-        this.companyRepository.applyAreasSelection(query, userLocation);
-
-        // apply filters
-        query.applyFilters(filter);
-
-        // apply pagination
-        query.applyPagination(pagination);
-
-        // get data from DB
-        const { entities: companies, raw } = await query.getRawAndEntities();
-
-        // map raw fields to entities
-        this.companyRepository.mapProperties(companies, raw);
-
-        // get results
-        return companies;
+        return this.companyRepository.getList(filter, pagination, userLocation);
     }
 }

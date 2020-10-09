@@ -43,7 +43,7 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
         return Array.isArray(entityId) ? users : users[0];
     }
 
-    getList(filter: EntityFilterDTO, pagination: PageInfo): Promise<Entity[]> {
+    public getList(filter: EntityFilterDTO, pagination: PageInfo): Promise<Entity[]> {
         // create query builder
         const query = this.createQueryBuilder(this.tablename);
 

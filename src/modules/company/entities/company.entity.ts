@@ -22,7 +22,7 @@ import { PaymentMethod } from '../../payment/payment.method.entity';
 import { Coupon } from '../../coupon/coupon.entity';
 
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { CompanyConfig } from '../dtos/company.config';
+import { CompanyConfigDTO } from '../dtos/company.config';
 
 @ObjectType()
 @Index('companyTypeId', ['companyTypeId'], {})
@@ -189,6 +189,6 @@ export class Company {
     @Field(() => Float, { nullable: true })
     distance?: number;
 
-    @Field(() => CompanyConfig)
-    config: CompanyConfig;
+    @Field(() => CompanyConfigDTO)
+    config: CompanyConfigDTO;
 }

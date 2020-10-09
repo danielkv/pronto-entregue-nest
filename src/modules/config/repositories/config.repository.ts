@@ -25,7 +25,7 @@ export class ConfigRepository extends RepositoryBase<Config> implements IConfigR
         const query = this.createQueryBuilder('config');
 
         // add filter
-        query.where('config.key = :key', { keys: key });
+        query.where('config.key = :key', { key });
 
         const meta = await query.getOne();
 

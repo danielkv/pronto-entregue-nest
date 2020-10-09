@@ -9,6 +9,7 @@ import { CompanyPublishedFilter } from '../filters/company.published.filter';
 import { CompanySearchFilter } from '../filters/company.search.filter';
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
 import { FactoryProvider } from '@nestjs/common';
+import { PageInfo } from 'src/modules/common/types/page-info';
 
 @EntityRepository(Company)
 export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
@@ -24,6 +25,81 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
             new CompanyPublishedFilter(),
             new CompanyActiveFilter(),
         ]);
+    }
+
+    async getList(
+        filter?: CompanyFilterDTO,
+        pagination?: PageInfo,
+        userLocation?: GeoPoint,
+    ): Promise<Company[]> {
+        const query = this.createQueryBuilder('company');
+
+        // apply base selection
+        this.applyBaseSelection(query);
+
+        // apply user selection
+        this.applyUserLocationSelection(query, userLocation);
+
+        // apply areas selection
+        this.applyAreasSelection(query, userLocation);
+
+        // apply filters
+        query.applyFilters(filter);
+
+        // apply pagination
+        query.applyPagination(pagination);
+
+        // get data from DB
+        const { entities: companies, raw } = await query.getRawAndEntities();
+
+        // map raw fields to entities
+        this.mapProperties(companies, raw);
+
+        // get results
+        return companies;
+    }
+
+    async get(companyId: number, userLocation?: GeoPoint): Promise<Company>;
+    async get(companyId: number[], userLocation?: GeoPoint): Promise<Company[]>;
+    async get(companyId: any, userLocation?: GeoPoint): Promise<Company | Company[]> {
+        const returnType = Array.isArray(companyId) ? 'array' : 'single';
+
+        const query = this.createQueryBuilder('company');
+
+        // apply base selection
+        this.applyBaseSelection(query);
+
+        // apply selection
+        this.applyUserLocationSelection(query, userLocation);
+
+        // apply areas selection
+        this.applyAreasSelection(query, userLocation);
+
+        // check companyId type
+        const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
+
+        query.where('company.id IN (:...companyIds)', { companyIds });
+        query.limit(1);
+
+        const { entities: companies, raw } = await query.getRawAndEntities();
+        this.mapProperties(companies, raw);
+
+        if (returnType === 'array') return companies;
+        else return companies[0];
+    }
+
+    getCount(filter?: CompanyFilterDTO, userLocation?: GeoPoint): Promise<number> {
+        // create query
+        const query = this.createQueryBuilder('company');
+
+        // apply areas selection
+        this.applyAreasSelection(query, userLocation);
+
+        // apply filters
+        query.applyFilters(filter);
+
+        // return count items
+        return query.getCount();
     }
 
     applyBaseSelection(query: SelectQueryBuilder<Company>): SelectQueryBuilder<Company> {

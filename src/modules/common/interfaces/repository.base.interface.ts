@@ -28,7 +28,6 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
      */
     get(entityId: number): Promise<Entity>;
     get(entityId: number[]): Promise<Entity[]>;
-    get(entityId: any): Promise<Entity | Entity[]>;
 
     /**
      * Returns array of Users filtered and paginated
@@ -36,12 +35,12 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
      * @param filter filter
      * @param pagination pagination
      */
-    getList(filter: EntityFilterDTO, pagination: PageInfo): Promise<Entity[]>;
+    getList(filter?: EntityFilterDTO, pagination?: PageInfo): Promise<Entity[]>;
 
     /**
      * Count filtered users
      *
      * @param filter filter
      */
-    getCount(filter: EntityFilterDTO): Promise<number>;
+    getCount(filter?: EntityFilterDTO): Promise<number>;
 }

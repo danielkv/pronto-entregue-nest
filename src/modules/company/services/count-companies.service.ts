@@ -11,16 +11,6 @@ export class CountCompaniesService {
     ) {}
 
     execute(filter?: CompanyFilterDTO, userLocation?: GeoPoint): Promise<number> {
-        // create query
-        const query = this.companyRepository.createQueryBuilder('company');
-
-        // apply areas selection
-        this.companyRepository.applyAreasSelection(query, userLocation);
-
-        // apply filters
-        query.applyFilters(filter);
-
-        // return count items
-        return query.getCount();
+        return this.companyRepository.getCount(filter, userLocation);
     }
 }

@@ -10,7 +10,7 @@ import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
 import { GetCompanyConfigService } from '../services/get-company-config.service';
-import { CompanyConfig } from '../dtos/company.config';
+import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config';
 import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 
 @Resolver()
@@ -28,14 +28,14 @@ export class QueryCompanyResolver {
         @Args('filter', { type: () => CompanyFilterDTO, nullable: true })
         filter?,
         @Args('userLocation', { type: () => GeoPoint, nullable: true })
-        userLocation?,
+        userLocation?: GeoPoint,
         @Args('pagination', { type: () => PageInfo, nullable: true })
-        pagination?,
+        pagination?: PageInfo,
     ): Promise<CompaniesList> {
         const list: CompaniesList = { pageInfo: pagination };
 
         if (fields.includes('items'))
-            list.items = await this.listCompaniesService.execute(filter, userLocation, pagination);
+            list.items = await this.listCompaniesService.execute(filter, pagination, userLocation);
 
         if (fields.includes('countItems'))
             list.countItems = await this.countCompanyService.execute(filter, userLocation);
@@ -47,15 +47,15 @@ export class QueryCompanyResolver {
     company(
         @Args('companyId', { type: () => ID }) companyId: number,
         @Args('userLocation', { type: () => GeoPoint, nullable: true })
-        userLocation?,
+        userLocation?: GeoPoint,
     ): Promise<Company> {
         return this.getCompanyService.execute(companyId, userLocation);
     }
 
-    @Query(() => CompanyConfig)
+    @Query(() => CompanyConfigDTO)
     companyConfig(
         @Args('companyId', { type: () => ID }) companyId: number,
-        @Info(ExtractFieldsPipe) keys,
+        @Info(ExtractFieldsPipe) keys: ICompanyConfigKeys[],
     ) {
         // return config
         return this.getCompanyConfigService.execute(companyId, keys);

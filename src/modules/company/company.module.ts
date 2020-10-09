@@ -10,13 +10,13 @@ import { CompanyResolver } from './resolvers/company.resolver';
 import { CompanyConfigLoader } from './loaders/company.config.loader';
 
 import { CompanyFilterDTO } from './dtos/company.filter';
-import { CompanyConfig } from './dtos/company.config';
+import { CompanyConfigDTO } from './dtos/company.config';
 
 import { CompanyRepositoryProvider } from './repositories/company.repository';
 import { CompanyMetaRepositoryProvider } from './repositories/company-meta.repository';
 
 @Module({
-    imports: [CompaniesList, CompanyFilterDTO, CompanyConfig],
+    imports: [CompaniesList, CompanyFilterDTO, CompanyConfigDTO],
     providers: [
         // resolvers
         QueryCompanyResolver,
