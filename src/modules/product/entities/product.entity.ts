@@ -14,7 +14,7 @@ import { Category } from '../../category/entities/category.entity';
 import { Company } from '../../company/entities/company.entity';
 import { Sale } from './sale.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Coupon } from '../../coupon/coupon.entity';
+import { Coupon } from '../../coupon/entities/coupon.entity';
 import { User } from '../../user/entities/user.entity';
 
 export enum ProductType {

@@ -19,7 +19,7 @@ import { Product } from '../../product/entities/product.entity';
 import { Rating } from '../../rating/rating.entity';
 import { ViewArea } from '../../pickup/entities/view.area.entity';
 import { PaymentMethod } from '../../payment/payment.method.entity';
-import { Coupon } from '../../coupon/coupon.entity';
+import { Coupon } from '../../coupon/entities/coupon.entity';
 
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import { CompanyConfigDTO } from '../dtos/company.config.dto';

@@ -15,7 +15,7 @@ import { Delivery } from '../../delivery/entities/delivery.entity';
 import { Order } from '../../order/order.entity';
 import { Rating } from '../../rating/rating.entity';
 import { UserMeta } from './user.meta.entity';
-import { Coupon } from '../../coupon/coupon.entity';
+import { Coupon } from '../../coupon/entities/coupon.entity';
 import { Product } from '../../product/entities/product.entity';
 import { Address } from '../../address/entities/address.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
