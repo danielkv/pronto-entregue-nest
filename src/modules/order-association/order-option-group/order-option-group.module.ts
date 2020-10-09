@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { OrderOptionGroupRepositoryProvider } from './repository/order-option-group.repository';
 
-@Module({})
+@Module({ providers: [OrderOptionGroupRepositoryProvider] })
 export class OrderOptionGroupModule {}
