@@ -1,11 +1,11 @@
 import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
-import { Connection, EntityRepository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
 import { UserCompanyFilter } from '../filters/user.company.filter';
 import { UserIdFilter } from '../filters/user.id.filter';
 import { UserActiveFilter } from '../filters/user.active.filter';
-import { FactoryProvider } from '@nestjs/common';
+import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
 
 @EntityRepository(User)
 export class UserRepository extends RepositoryBase<User, UserFilterDTO> {
@@ -15,8 +15,4 @@ export class UserRepository extends RepositoryBase<User, UserFilterDTO> {
     }
 }
 
-export const UserRepositoryProvider: FactoryProvider<UserRepository> = {
-    provide: 'IUserRepository',
-    useFactory: (connection: Connection) => connection.getCustomRepository(UserRepository),
-    inject: [Connection],
-};
+export const UserRepositoryProvider = new RepositoryProviderFactory('IUserRepository', UserRepository).create();

@@ -1,13 +1,13 @@
 import { RepositoryBase } from '../../common/repositories/repository.base';
-import { Brackets, Connection, EntityRepository } from 'typeorm';
+import { Brackets, EntityRepository } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 import { DeliveryAreaFilterDTO } from '../dtos/delivery.area.filter.dto';
 import { DeliveryAreaLocationFilter } from '../filters/delivery.area.location.filter';
 import { DeliveryAreaCompaniesFilter } from '../filters/delivery.area.companies.filter';
 import { DeliveryAreaActiveFilter } from '../filters/delivery.area.active.filter';
-import { FactoryProvider } from '@nestjs/common';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { IDeliveryAreaRepository } from '../interfaces/delivery-area.repository.interface';
+import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
 
 @EntityRepository(DeliveryArea)
 export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea, DeliveryAreaFilterDTO>
@@ -62,8 +62,4 @@ export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea, Deliver
     }
 }
 
-export const DeliveryAreaRepositoryProvider: FactoryProvider<DeliveryAreaRepository> = {
-    provide: 'IDeliveryAreaRepository',
-    useFactory: (connection: Connection) => connection.getCustomRepository(DeliveryAreaRepository),
-    inject: [Connection],
-};
+export const DeliveryAreaRepositoryProvider = new RepositoryProviderFactory('IDeliveryAreaRepository', DeliveryAreaRepository).create();

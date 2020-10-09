@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigRepository } from './repositories/config.repository';
+import { ConfigRepositoryProvider } from './repositories/config.repository';
 import { QueryConfigResolver } from './resolvers/query.config.resolver';
 import { GetConfigService } from './services/get.config.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ConfigRepository])],
-    providers: [GetConfigService, QueryConfigResolver],
+	providers: [
+		//services
+		GetConfigService,
+		QueryConfigResolver, 
+
+		// repositories
+		ConfigRepositoryProvider
+	],
 })
 export class ConfigModule {}

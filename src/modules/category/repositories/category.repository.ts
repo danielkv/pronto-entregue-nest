@@ -1,12 +1,12 @@
 import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
-import { Connection, EntityRepository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { CategoryFilterDTO } from '../dtos/category.filter.dto';
 import { Category } from '../entities/category.entity';
 import { CategoryActiveFilter } from '../filters/category.active.filter';
 import { CategoryCompanyFilter } from '../filters/category.company.filter';
 import { CategorySearchFilter } from '../filters/category.search.filter';
 import { CategoryIdFilter } from '../filters/category.id.filter';
-import { FactoryProvider } from '@nestjs/common';
+import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
 
 @EntityRepository(Category)
 export class CategoryRepository extends RepositoryBase<Category, CategoryFilterDTO> {
@@ -22,8 +22,4 @@ export class CategoryRepository extends RepositoryBase<Category, CategoryFilterD
     }
 }
 
-export const CategoryRepositoryProvider: FactoryProvider<CategoryRepository> = {
-    provide: 'ICategoryRepository',
-    useFactory: (connection: Connection) => connection.getCustomRepository(CategoryRepository),
-    inject: [Connection],
-};
+export const CategoryRepositoryProvider = new RepositoryProviderFactory('ICategoryRepository', CategoryRepository).create();

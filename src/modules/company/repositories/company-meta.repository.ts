@@ -1,10 +1,10 @@
 import { RepositoryBase } from '../../common/repositories/repository.base';
-import { Connection, EntityRepository } from 'typeorm';
-import { FactoryProvider } from '@nestjs/common';
+import { EntityRepository } from 'typeorm';
 import { ICompanyMetaRepository } from '../interfaces/company-meta.repository.interface';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
 import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transform.helper';
+import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
 
 @EntityRepository(CompanyMeta)
 export class CompanyMetaRepository extends RepositoryBase<CompanyMeta>
@@ -53,8 +53,4 @@ export class CompanyMetaRepository extends RepositoryBase<CompanyMeta>
     }
 }
 
-export const CompanyMetaRepositoryProvider: FactoryProvider<CompanyMetaRepository> = {
-    provide: 'ICompanyMetaRepository',
-    useFactory: (connection: Connection) => connection.getCustomRepository(CompanyMetaRepository),
-    inject: [Connection],
-};
+export const CompanyMetaRepositoryProvider = new RepositoryProviderFactory('ICompanyMetaRepository', CompanyMetaRepository).create()

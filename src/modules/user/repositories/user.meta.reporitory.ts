@@ -1,13 +1,9 @@
-import { FactoryProvider } from '@nestjs/common';
+import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
 import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
-import { Connection, EntityRepository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { UserMeta } from '../entities/user.meta.entity';
 
 @EntityRepository(UserMeta)
 export class UserMetaRepository extends RepositoryBase<UserMeta> {}
 
-export const ProductRepositoryProvider: FactoryProvider<UserMetaRepository> = {
-    provide: 'IProductRepository',
-    useFactory: (connection: Connection) => connection.getCustomRepository(UserMetaRepository),
-    inject: [Connection],
-};
+export const ProductRepositoryProvider = new RepositoryProviderFactory('IProductRepository', UserMetaRepository).create();
