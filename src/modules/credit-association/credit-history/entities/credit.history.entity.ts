@@ -1,11 +1,13 @@
 import {
     Column,
+    CreateDateColumn,
     Entity,
     Index,
     JoinColumn,
     ManyToOne,
     OneToOne,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../../user/entities/user.entity';
 import { Order } from '../../../order-association/order/entities/order.entity';
@@ -28,11 +30,11 @@ export class CreditHistory {
     history: string | null;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'userId', nullable: true })

@@ -1,4 +1,13 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { Company } from './company.entity';
 import { User } from '../../../user/entities/user.entity';
 import { Role } from '../../../user/entities/role.entity';
@@ -26,11 +35,11 @@ export class CompanyUser {
     active: boolean | null;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'companyId', nullable: true })

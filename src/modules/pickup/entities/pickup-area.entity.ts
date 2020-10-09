@@ -1,5 +1,14 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { Company } from '../../company-association/company/entities/company.entity';
 
 @ObjectType()
@@ -23,11 +32,11 @@ export class PickUpArea {
     radius: number;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'companyId', nullable: true })

@@ -1,5 +1,6 @@
 import {
     Column,
+    CreateDateColumn,
     Entity,
     Index,
     JoinTable,
@@ -7,6 +8,7 @@ import {
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
 import { CompanyUser } from '../../company-association/company/entities/company.user.entity';
 import { CreditBalance } from '../../credit-association/credit-balance/entities/credit.balance.entity';
@@ -76,11 +78,11 @@ export class User {
     role: string;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Field(() => [CompanyUser])

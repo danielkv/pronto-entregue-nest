@@ -1,4 +1,13 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { Company } from './company.entity';
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
@@ -21,11 +30,11 @@ export class CompanyPaymentMethod {
     settings: string | null;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'companyId', nullable: true })

@@ -1,11 +1,13 @@
 import {
     Column,
+    CreateDateColumn,
     Entity,
     Index,
     JoinColumn,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
 import { OrderOptionGroup } from '../../order-option-group/entities/order.option.group.entity';
 import { Product } from '../../../product/entities/product.entity';
@@ -43,11 +45,11 @@ export class OrderProduct {
     message: string | null;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'orderId', nullable: true })

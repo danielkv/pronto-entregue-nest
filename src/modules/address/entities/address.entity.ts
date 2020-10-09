@@ -1,7 +1,15 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { GeoPoint } from '../../common/types/geo-point';
 
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToMany,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { Company } from '../../company-association/company/entities/company.entity';
 import { User } from '../../user/entities/user.entity';
 import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
@@ -55,11 +63,11 @@ export class Address {
     location: GeoPoint;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Field()

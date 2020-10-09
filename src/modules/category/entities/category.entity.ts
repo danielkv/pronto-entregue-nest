@@ -1,12 +1,14 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import {
     Column,
+    CreateDateColumn,
     Entity,
     Index,
     JoinColumn,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
 import { Company } from '../../company-association/company/entities/company.entity';
 import { Product } from '../../product/entities/product.entity';
@@ -45,11 +47,11 @@ export class Category {
     order: number;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'companyId', nullable: true })

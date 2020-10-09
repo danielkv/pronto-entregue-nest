@@ -1,7 +1,16 @@
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
 import { GeoPoint } from '../../common/types/geo-point';
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { Order } from '../../order-association/order/entities/order.entity';
 import { User } from '../../user/entities/user.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
@@ -181,11 +190,11 @@ export class Delivery {
     locationAddressTo: GeoPoint;
 
     @Field()
-    @Column('datetime', { name: 'createdAt' })
+    @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
     @Field()
-    @Column('datetime', { name: 'updatedAt' })
+    @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'orderId', nullable: true })
