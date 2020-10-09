@@ -13,16 +13,16 @@ export class CompanySearchFilter implements IFilter<Company, CompanyFilterDTO> {
     ): QueryBuilderBase<Company, CompanyFilterDTO> {
         if (!filter?.search) return query;
 
-        return query.andWhere(
-            new Brackets(qb =>
-                qb
-                    .where('company.name LIKE :search', {
-                        search: `%${filter.search}%`,
-                    })
-                    .orWhere('company.displayName LIKE :search', {
-                        search: `%${filter.search}%`,
-                    }),
-            ),
-        );
+        return query
+            .andWhere(
+                new Brackets(qb =>
+                    qb
+                        .where('company.name LIKE :search')
+                        .orWhere('company.displayName LIKE :search'),
+                ),
+            )
+            .setParameters({
+                search: `%${filter.search}%`,
+            });
     }
 }
