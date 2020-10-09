@@ -4,6 +4,8 @@ import { PageInfo } from '../types/page-info';
 import { IFilter } from './IFilter';
 
 export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
+    filters: IFilter<Entity, EntityFilterDTO>[];
+
     createQueryBuilder(
         alias?: string,
         queryRunner?: QueryRunner,
@@ -14,6 +16,11 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
      * @param filters Filter to be applied
      */
     setFilters(filters: IFilter<Entity, EntityFilterDTO>[]): void;
+
+    /**
+     * Set name of table name will be auto created (used to apply filters)
+     */
+    setQueryBuilderTableName(name: string): void;
 
     /**
      * Returns one or more instances of Entity
