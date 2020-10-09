@@ -17,7 +17,7 @@ import { DeliveryArea } from '../../../delivery-area/entities/delivery.area.enti
 import { Order } from '../../../order-association/order/entities/order.entity';
 import { Product } from '../../../product/entities/product.entity';
 import { Rating } from '../../../rating/entities/rating.entity';
-import { ViewArea } from '../../../pickup/entities/view.area.entity';
+import { PickUpArea } from '../../../pickup/entities/pickup-area.entity';
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 
@@ -166,12 +166,12 @@ export class Company {
     )
     ratings: Rating[];
 
-    @Field(() => [ViewArea])
+    @Field(() => [PickUpArea])
     @OneToMany(
-        () => ViewArea,
+        () => PickUpArea,
         viewAreas => viewAreas.company,
     )
-    viewAreas: ViewArea[];
+    viewAreas: PickUpArea[];
 
     @Field()
     isOpen?: boolean;

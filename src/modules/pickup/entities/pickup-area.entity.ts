@@ -5,7 +5,7 @@ import { Company } from '../../company-association/company/entities/company.enti
 @ObjectType()
 @Index('companyId', ['companyId'], {})
 @Entity('view_areas')
-export class ViewArea {
+export class PickUpArea {
     @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
