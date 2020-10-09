@@ -1,4 +1,4 @@
-import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
+import { RepositoryBase } from '../../common/repositories/repository.base';
 import { EntityRepository } from 'typeorm';
 import { CategoryFilterDTO } from '../dtos/category.filter.dto';
 import { Category } from '../entities/category.entity';
@@ -6,7 +6,7 @@ import { CategoryActiveFilter } from '../filters/category.active.filter';
 import { CategoryCompanyFilter } from '../filters/category.company.filter';
 import { CategorySearchFilter } from '../filters/category.search.filter';
 import { CategoryIdFilter } from '../filters/category.id.filter';
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
+import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
 
 @EntityRepository(Category)
 export class CategoryRepository extends RepositoryBase<Category, CategoryFilterDTO> {
@@ -22,4 +22,7 @@ export class CategoryRepository extends RepositoryBase<Category, CategoryFilterD
     }
 }
 
-export const CategoryRepositoryProvider = new RepositoryProviderFactory('ICategoryRepository', CategoryRepository).create();
+export const CategoryRepositoryProvider = new RepositoryProviderFactory(
+    'ICategoryRepository',
+    CategoryRepository,
+).create();

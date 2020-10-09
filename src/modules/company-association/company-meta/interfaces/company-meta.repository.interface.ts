@@ -1,4 +1,4 @@
-import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.interface';
+import { IRepositoryBase } from '../../../common/interfaces/repository.base.interface';
 import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
 import { CompanyMeta } from '../entities/company.meta.entity';
 

@@ -1,6 +1,6 @@
 import { Args, Info, Query, Resolver } from '@nestjs/graphql';
-import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
-import { PageInfo } from 'src/modules/common/types/page-info';
+import { ExtractFieldsPipe } from '../../common/pipes/extract-fields.pipe';
+import { PageInfo } from '../../common/types/page-info';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { ListUsersDTO } from '../dtos/user.list.dto';
 import { CountUsersService } from '../services/count.users.service';

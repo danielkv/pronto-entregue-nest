@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPoint } from '../../common/types/geo-point';
 import { PickUpArea } from '../entities/pickup-area.entity';
 import { IPickUpAreaRepository } from '../interfaces/pickup-area.repository.interface';
 

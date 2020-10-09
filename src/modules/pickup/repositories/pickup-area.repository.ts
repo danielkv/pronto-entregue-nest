@@ -4,9 +4,9 @@ import { PickUpAreaFilterDTO } from '../dtos/pickup-area.filter.dto';
 import { PickUpAreaLocationFilter } from '../filters/pickup-area.location.filter';
 import { PickUpAreaCompaniesFilter } from '../filters/pickup-area.companies.filter';
 import { PickUpAreaActiveFilter } from '../filters/pickup-area.active.filter';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPoint } from '../../common/types/geo-point';
 import { IPickUpAreaRepository } from '../interfaces/pickup-area.repository.interface';
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
+import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
 import { PickUpArea } from '../entities/pickup-area.entity';
 
 @EntityRepository(PickUpArea)

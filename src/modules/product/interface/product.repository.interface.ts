@@ -1,4 +1,4 @@
-import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.interface';
+import { IRepositoryBase } from '../../common/interfaces/repository.base.interface';
 import { ProductFilterDTO } from '../dtos/product.filter.dto';
 import { Product } from '../entities/product.entity';
 

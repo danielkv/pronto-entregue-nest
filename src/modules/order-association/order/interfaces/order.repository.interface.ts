@@ -1,5 +1,5 @@
-import { IRepositoryBase } from "src/modules/common/interfaces/repository.base.interface";
-import { OrderFilterDTO } from "../dtos/order.filter.dto";
-import { Order } from "../entities/order.entity";
+import { IRepositoryBase } from '../../../common/interfaces/repository.base.interface';
+import { OrderFilterDTO } from '../dtos/order.filter.dto';
+import { Order } from '../entities/order.entity';
 
 export interface IOrderRepository extends IRepositoryBase<Order, OrderFilterDTO> {}

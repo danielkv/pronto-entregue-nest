@@ -1,6 +1,6 @@
-import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.interface';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { DeliveryFilterDTO } from 'src/modules/delivery/dtos/delivery.filter.dto';
+import { IRepositoryBase } from '../../common/interfaces/repository.base.interface';
+import { GeoPoint } from '../../common/types/geo-point';
+import { DeliveryFilterDTO } from '../../delivery/dtos/delivery.filter.dto';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 
 export interface IDeliveryAreaRepository extends IRepositoryBase<DeliveryArea, DeliveryFilterDTO> {

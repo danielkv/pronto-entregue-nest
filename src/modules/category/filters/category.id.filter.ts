@@ -1,4 +1,4 @@
-import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { CategoryFilterDTO } from '../dtos/category.filter.dto';
 import { Category } from '../entities/category.entity';

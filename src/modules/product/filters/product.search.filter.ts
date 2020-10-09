@@ -1,4 +1,4 @@
-import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 import { Brackets } from 'typeorm';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { ProductFilterDTO } from '../dtos/product.filter.dto';

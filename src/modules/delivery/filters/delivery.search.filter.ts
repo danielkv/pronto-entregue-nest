@@ -1,6 +1,6 @@
 import { IFilter } from '../../common/interfaces/IFilter';
 import { Brackets } from 'typeorm';
-import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 import { Delivery } from '../entities/delivery.entity';
 import { DeliveryFilterDTO } from '../dtos/delivery.filter.dto';
 

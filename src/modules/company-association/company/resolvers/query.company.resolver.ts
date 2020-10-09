@@ -6,10 +6,10 @@ import { CompaniesListDTO } from '../dtos/companies.list.dto';
 import { PageInfo } from '../../../common/types/page-info';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { CountCompaniesService } from '../services/count-companies.service';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPoint } from '../../../common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
-import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
+import { ExtractFieldsPipe } from '../../../common/pipes/extract-fields.pipe';
 
 @Resolver()
 export class QueryCompanyResolver {

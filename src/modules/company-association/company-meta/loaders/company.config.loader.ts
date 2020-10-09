@@ -3,8 +3,8 @@ import * as DataLoader from 'dataloader';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { GetCompanyMetaService } from '../services/get.company.meta.service';
 import { ICompanyConfigKeys } from '../dtos/company.config.dto';
-import { DataLoaderBase } from 'src/modules/common/helpers/data.loader.base';
-import { IDataLoaderBase } from 'src/modules/common/helpers/data.loader.interface';
+import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
+import { IDataLoaderBase } from '../../../common/helpers/data.loader.interface';
 
 export interface ICompanyConfigLoader {
     companyId: number;

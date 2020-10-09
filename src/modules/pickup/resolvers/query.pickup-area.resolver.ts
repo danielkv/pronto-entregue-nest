@@ -1,6 +1,6 @@
 import { Args, Info, Query, Resolver } from '@nestjs/graphql';
-import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
-import { PageInfo } from 'src/modules/common/types/page-info';
+import { ExtractFieldsPipe } from '../../common/pipes/extract-fields.pipe';
+import { PageInfo } from '../../common/types/page-info';
 import { CountPickUpAreasService } from '../services/count-pickup-areas.service';
 import { ListPickUpAreasService } from '../services/list-pickup-areas.service';
 import { PickUpAreaListDTO } from '../dtos/pickup-area.list.dto';

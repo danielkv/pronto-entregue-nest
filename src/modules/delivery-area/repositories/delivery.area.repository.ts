@@ -5,9 +5,9 @@ import { DeliveryAreaFilterDTO } from '../dtos/delivery.area.filter.dto';
 import { DeliveryAreaLocationFilter } from '../filters/delivery.area.location.filter';
 import { DeliveryAreaCompaniesFilter } from '../filters/delivery.area.companies.filter';
 import { DeliveryAreaActiveFilter } from '../filters/delivery.area.active.filter';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPoint } from '../../common/types/geo-point';
 import { IDeliveryAreaRepository } from '../interfaces/delivery-area.repository.interface';
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
+import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
 
 @EntityRepository(DeliveryArea)
 export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea, DeliveryAreaFilterDTO>
@@ -62,4 +62,7 @@ export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea, Deliver
     }
 }
 
-export const DeliveryAreaRepositoryProvider = new RepositoryProviderFactory('IDeliveryAreaRepository', DeliveryAreaRepository).create();
+export const DeliveryAreaRepositoryProvider = new RepositoryProviderFactory(
+    'IDeliveryAreaRepository',
+    DeliveryAreaRepository,
+).create();

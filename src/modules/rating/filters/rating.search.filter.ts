@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Brackets } from 'typeorm';
-import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 import { Rating } from '../entities/rating.entity';
 import { RatingFilterDTO } from '../dtos/rating.filters.dto';
-import { IFilter } from 'src/modules/common/interfaces/IFilter';
+import { IFilter } from '../../common/interfaces/IFilter';
 
 @Injectable()
 export class RatingSearchFilter implements IFilter<Rating, RatingFilterDTO> {

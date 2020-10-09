@@ -1,5 +1,5 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPoint } from '../../common/types/geo-point';
 
 @InputType('DeliveryAreaFilterInput')
 export class DeliveryAreaFilterDTO {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { PickUpAreaFilterDTO } from '../dtos/pickup-area.filter.dto';
-import { QueryBuilderBase } from 'src/modules/common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 import { PickUpArea } from '../entities/pickup-area.entity';
 
 @Injectable()

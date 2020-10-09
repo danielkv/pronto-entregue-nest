@@ -1,6 +1,6 @@
 import { Info, Query, Resolver } from '@nestjs/graphql';
-import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transform.helper';
-import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
+import { ConfigTransformHelper } from '../../common/helpers/config.transform.helper';
+import { ExtractFieldsPipe } from '../../common/pipes/extract-fields.pipe';
 import { ConfigDTO, IConfigKeys } from '../dtos/config.dto';
 import { GetConfigService } from '../services/get.config.service';
 

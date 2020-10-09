@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { PageInfo } from 'src/modules/common/types/page-info';
+import { PageInfo } from '../../common/types/page-info';
 import { IListEntity } from '../../common/interfaces/IListEntity';
 import { User } from '../entities/user.entity';
 

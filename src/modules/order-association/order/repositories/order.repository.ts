@@ -1,4 +1,4 @@
-import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
+import { RepositoryBase } from '../../../common/repositories/repository.base';
 import { EntityRepository } from 'typeorm';
 import { OrderFilterDTO } from '../dtos/order.filter.dto';
 import { Order } from '../entities/order.entity';

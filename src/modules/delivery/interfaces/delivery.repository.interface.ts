@@ -1,4 +1,4 @@
-import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.interface';
+import { IRepositoryBase } from '../../common/interfaces/repository.base.interface';
 import { DeliveryFilterDTO } from '../dtos/delivery.filter.dto';
 import { Delivery } from '../entities/delivery.entity';
 

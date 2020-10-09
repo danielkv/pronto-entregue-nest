@@ -1,5 +1,5 @@
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
-import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
+import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
+import { RepositoryBase } from '../../../common/repositories/repository.base';
 import { EntityRepository } from 'typeorm';
 import { OrderProduct } from '../../order/interfaces/order.product.entity';
 import { IOrderProductRepository } from '../interfaces/order-product.repository.interface';

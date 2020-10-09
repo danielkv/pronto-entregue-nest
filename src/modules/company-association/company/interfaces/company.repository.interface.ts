@@ -1,6 +1,6 @@
-import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.interface';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { PageInfo } from 'src/modules/common/types/page-info';
+import { IRepositoryBase } from '../../../common/interfaces/repository.base.interface';
+import { GeoPoint } from '../../../common/types/geo-point';
+import { PageInfo } from '../../../common/types/page-info';
 import { SelectQueryBuilder } from 'typeorm';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { Company } from '../entities/company.entity';

@@ -1,6 +1,6 @@
-import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transform.helper';
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
-import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
+import { ConfigTransformHelper } from '../../common/helpers/config.transform.helper';
+import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
+import { RepositoryBase } from '../../common/repositories/repository.base';
 import { EntityRepository } from 'typeorm';
 import { ConfigDTO, IConfigKeys } from '../dtos/config.dto';
 import { Config } from '../entities/config.entity';
@@ -36,4 +36,7 @@ export class ConfigRepository extends RepositoryBase<Config> implements IConfigR
     }
 }
 
-export const ConfigRepositoryProvider = new RepositoryProviderFactory('IConfigRepository', ConfigRepository).create()
+export const ConfigRepositoryProvider = new RepositoryProviderFactory(
+    'IConfigRepository',
+    ConfigRepository,
+).create();

@@ -8,8 +8,8 @@ import { CompanyLocationFilter } from '../filters/company.location.filter';
 import { CompanyPublishedFilter } from '../filters/company.published.filter';
 import { CompanySearchFilter } from '../filters/company.search.filter';
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
-import { PageInfo } from 'src/modules/common/types/page-info';
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
+import { PageInfo } from '../../../common/types/page-info';
+import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
 
 @EntityRepository(Company)
 export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>

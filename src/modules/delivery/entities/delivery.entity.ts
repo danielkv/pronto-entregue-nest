@@ -1,6 +1,6 @@
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { GeoPointHelper } from 'src/modules/common/helpers/geo.point.helper';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
+import { GeoPoint } from '../../common/types/geo-point';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from '../../order-association/order/entities/order.entity';
 import { User } from '../../user/entities/user.entity';

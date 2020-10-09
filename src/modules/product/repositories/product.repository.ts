@@ -1,4 +1,4 @@
-import { RepositoryBase } from 'src/modules/common/repositories/repository.base';
+import { RepositoryBase } from '../../common/repositories/repository.base';
 import { EntityRepository } from 'typeorm';
 import { ProductFilterDTO } from '../dtos/product.filter.dto';
 import { Product } from '../entities/product.entity';
@@ -8,7 +8,7 @@ import { ProductCompanyFilter } from '../filters/product.company.filter';
 import { ProductCategoryFilter } from '../filters/product.category.filter';
 import { ProductSearchFilter } from '../filters/product.search.filter';
 import { IProductRepository } from '../interface/product.repository.interface';
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
+import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
 
 @EntityRepository(Product)
 export class ProductRepository extends RepositoryBase<Product, ProductFilterDTO>
@@ -25,4 +25,7 @@ export class ProductRepository extends RepositoryBase<Product, ProductFilterDTO>
     }
 }
 
-export const ProductRepositoryProvider = new RepositoryProviderFactory('IProductRepository', ProductRepository).create();
+export const ProductRepositoryProvider = new RepositoryProviderFactory(
+    'IProductRepository',
+    ProductRepository,
+).create();

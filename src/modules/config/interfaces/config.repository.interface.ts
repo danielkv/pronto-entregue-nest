@@ -1,4 +1,4 @@
-import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.interface';
+import { IRepositoryBase } from '../../common/interfaces/repository.base.interface';
 import { ConfigDTO, IConfigKeys } from '../dtos/config.dto';
 import { Config } from '../entities/config.entity';
 

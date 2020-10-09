@@ -3,8 +3,8 @@ import { EntityRepository } from 'typeorm';
 import { ICompanyMetaRepository } from '../interfaces/company-meta.repository.interface';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
-import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transform.helper';
-import { RepositoryProviderFactory } from 'src/modules/common/helpers/repository-provider.factory';
+import { ConfigTransformHelper } from '../../../common/helpers/config.transform.helper';
+import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
 
 @EntityRepository(CompanyMeta)
 export class CompanyMetaRepository extends RepositoryBase<CompanyMeta>

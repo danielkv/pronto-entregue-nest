@@ -19,8 +19,8 @@ import { Rating } from '../../../rating/entities/rating.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { OrderStatusEnum } from '../enums/order.status.enum';
 import { OrderTypeEnum } from '../enums/order.type.enum';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { GeoPointHelper } from 'src/modules/common/helpers/geo.point.helper';
+import { GeoPoint } from '../../../common/types/geo-point';
+import { GeoPointHelper } from '../../../common/helpers/geo.point.helper';
 
 const geoPointHelper = new GeoPointHelper();
 

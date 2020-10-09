@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPoint } from '../../../common/types/geo-point';
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
 
 @Injectable()

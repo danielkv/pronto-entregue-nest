@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPoint } from '../../../common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
 

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PageInfo } from 'src/modules/common/types/page-info';
+import { PageInfo } from '../../common/types/page-info';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
 import { IUserRepository } from '../interface/user.repository.interface';
