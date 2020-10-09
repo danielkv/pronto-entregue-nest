@@ -1,16 +1,16 @@
 import { Args, ID, Info, Query } from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { ListCompaniesService } from '../services/list-companies.service';
-import { CompaniesList } from '../dtos/companies.list';
+import { CompaniesListDTO } from '../dtos/companies.list.dto';
 
 import { PageInfo } from '../../common/types/page-info';
-import { CompanyFilterDTO } from '../dtos/company.filter';
+import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { CountCompaniesService } from '../services/count-companies.service';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
 import { GetCompanyConfigService } from '../services/get-company-config.service';
-import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config';
+import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
 import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 
 @Resolver()
@@ -22,7 +22,7 @@ export class QueryCompanyResolver {
         private getCompanyConfigService: GetCompanyConfigService,
     ) {}
 
-    @Query(() => CompaniesList)
+    @Query(() => CompaniesListDTO)
     async listCompanies(
         @Info(ExtractFieldsPipe) fields: string[],
         @Args('filter', { type: () => CompanyFilterDTO, nullable: true })
@@ -31,8 +31,8 @@ export class QueryCompanyResolver {
         userLocation?: GeoPoint,
         @Args('pagination', { type: () => PageInfo, nullable: true })
         pagination?: PageInfo,
-    ): Promise<CompaniesList> {
-        const list: CompaniesList = { pageInfo: pagination };
+    ): Promise<CompaniesListDTO> {
+        const list: CompaniesListDTO = { pageInfo: pagination };
 
         if (fields.includes('items'))
             list.items = await this.listCompaniesService.execute(filter, pagination, userLocation);

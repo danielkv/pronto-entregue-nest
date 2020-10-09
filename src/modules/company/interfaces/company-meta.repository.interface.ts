@@ -1,5 +1,5 @@
 import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.interface';
-import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config';
+import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
 import { CompanyMeta } from '../entities/company.meta.entity';
 
 export interface ICompanyMetaRepository extends IRepositoryBase<CompanyMeta> {

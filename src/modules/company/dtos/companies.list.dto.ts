@@ -4,7 +4,7 @@ import { PageInfo } from '../../common/types/page-info';
 import { Company } from '../entities/company.entity';
 
 @ObjectType()
-export class CompaniesList implements IListEntity<Company> {
+export class CompaniesListDTO implements IListEntity<Company> {
     @Field(() => [Company], { nullable: 'items' })
     items?: Company[];
 

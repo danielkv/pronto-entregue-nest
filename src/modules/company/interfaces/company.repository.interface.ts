@@ -2,7 +2,7 @@ import { IRepositoryBase } from 'src/modules/common/interfaces/repository.base.i
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { PageInfo } from 'src/modules/common/types/page-info';
 import { SelectQueryBuilder } from 'typeorm';
-import { CompanyFilterDTO } from '../dtos/company.filter';
+import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { Company } from '../entities/company.entity';
 
 export interface ICompanyRepository

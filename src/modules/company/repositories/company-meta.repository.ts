@@ -3,7 +3,7 @@ import { Connection, EntityRepository } from 'typeorm';
 import { FactoryProvider } from '@nestjs/common';
 import { ICompanyMetaRepository } from '../interfaces/company-meta.repository.interface';
 import { CompanyMeta } from '../entities/company.meta.entity';
-import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config';
+import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
 import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transform.helper';
 
 @EntityRepository(CompanyMeta)

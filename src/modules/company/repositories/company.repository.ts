@@ -1,7 +1,7 @@
 import { RepositoryBase } from '../../common/repositories/repository.base';
 import { GeoPoint } from '../../common/types/geo-point';
 import { Connection, EntityRepository, SelectQueryBuilder } from 'typeorm';
-import { CompanyFilterDTO } from '../dtos/company.filter';
+import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { Company } from '../entities/company.entity';
 import { CompanyActiveFilter } from '../filters/company.active.filter';
 import { CompanyLocationFilter } from '../filters/company.location.filter';

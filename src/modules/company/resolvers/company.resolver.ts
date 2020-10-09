@@ -3,7 +3,7 @@ import { ConfigTransformHelper } from 'src/modules/common/helpers/config.transfo
 import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 import { Company } from '../entities/company.entity';
 import { CompanyConfigLoader } from '../loaders/company.config.loader';
-import { CompanyConfigDTO } from '../dtos/company.config';
+import { CompanyConfigDTO } from '../dtos/company.config.dto';
 
 @Resolver(() => Company)
 export class CompanyResolver {
