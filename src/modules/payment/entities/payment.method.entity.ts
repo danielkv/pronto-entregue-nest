@@ -1,21 +1,12 @@
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CompanyPaymentMethod } from '../company-association/company/entities/company.payment.method.entity';
-import { Order } from '../order-association/order/entities/order.entity';
+import { CompanyPaymentMethod } from '../../company-association/company/entities/company.payment.method.entity';
+import { Order } from '../../order-association/order/entities/order.entity';
+import { PaymentMethodFeeTypeEnum } from '../enums/payment-method-fee-type.enum';
+import { PaymentMethodTypeEnum } from '../enums/payment-method-type.enum';
 
-export enum PaymentMethodType {
-    MONEY = 'money',
-    DELIVERY = 'delivery',
-    ONLINE = 'app',
-}
-
-export enum PaymentMethodFeeType {
-    VALUE = 'value',
-    PERCENTAGE = 'pct',
-}
-
-registerEnumType(PaymentMethodType, { name: 'PaymentMethodType' });
-registerEnumType(PaymentMethodFeeType, { name: 'PaymentMethodFeeType' });
+registerEnumType(PaymentMethodTypeEnum, { name: 'PaymentMethodTypeEnum' });
+registerEnumType(PaymentMethodFeeTypeEnum, { name: 'PaymentMethodFeeTypeEnum' });
 
 @ObjectType()
 @Entity('payment_methods')
@@ -24,13 +15,13 @@ export class PaymentMethod {
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field(() => PaymentMethodType)
+    @Field(() => PaymentMethodTypeEnum)
     @Column('enum', {
         name: 'type',
-        enum: PaymentMethodType,
-        default: PaymentMethodType.DELIVERY,
+        enum: PaymentMethodTypeEnum,
+        default: PaymentMethodTypeEnum.DELIVERY,
     })
-    type: PaymentMethodType;
+    type: PaymentMethodTypeEnum;
 
     @Field()
     @Column('varchar', { name: 'displayName', nullable: true, length: 255 })
@@ -53,13 +44,13 @@ export class PaymentMethod {
     })
     fee: number;
 
-    @Field(() => PaymentMethodFeeType)
+    @Field(() => PaymentMethodFeeTypeEnum)
     @Column('enum', {
         name: 'feeType',
-        enum: PaymentMethodFeeType,
-        default: PaymentMethodFeeType.PERCENTAGE,
+        enum: PaymentMethodFeeTypeEnum,
+        default: PaymentMethodFeeTypeEnum.PERCENTAGE,
     })
-    feeType: PaymentMethodFeeType;
+    feeType: PaymentMethodFeeTypeEnum;
 
     @Column({ type: 'boolean', name: 'active', default: true })
     active: boolean;

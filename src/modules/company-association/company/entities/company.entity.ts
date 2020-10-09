@@ -18,7 +18,7 @@ import { Order } from '../../../order-association/order/entities/order.entity';
 import { Product } from '../../../product/entities/product.entity';
 import { Rating } from '../../../rating/rating.entity';
 import { ViewArea } from '../../../pickup/entities/view.area.entity';
-import { PaymentMethod } from '../../../payment/payment.method.entity';
+import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
