@@ -5,6 +5,7 @@ import {
     JoinColumn,
     ManyToOne,
     OneToMany,
+    OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Delivery } from '../../../delivery/entities/delivery.entity';
@@ -228,10 +229,10 @@ export class Order {
     @JoinColumn([{ name: 'paymentMethodId', referencedColumnName: 'id' }])
     paymentMethod: PaymentMethod;
 
-    @Field(() => CreditHistory)
-    @ManyToOne(
+    @Field(() => CreditHistory, { nullable: true })
+    @OneToOne(
         () => CreditHistory,
-        creditHistory => creditHistory.orders,
+        creditHistory => creditHistory.order,
         {
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',

@@ -4,7 +4,7 @@ import {
     Index,
     JoinColumn,
     ManyToOne,
-    OneToMany,
+    OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../../../user/entities/user.entity';
@@ -50,10 +50,10 @@ export class CreditHistory {
     @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
     user: User;
 
-    @Field(() => [Order], { nullable: true })
-    @OneToMany(
+    @Field(() => Order, { nullable: true })
+    @OneToOne(
         () => Order,
         orders => orders.creditHistory,
     )
-    orders: Order[];
+    order: Order;
 }
