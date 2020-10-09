@@ -12,7 +12,7 @@ import { CompanyUser } from '../../company/entities/company.user.entity';
 import { CreditBalance } from '../../credit/credit.balance.entity';
 import { CreditHistory } from '../../credit/credit.history.entity';
 import { Delivery } from '../../delivery/entities/delivery.entity';
-import { Order } from '../../order/entities/order.entity';
+import { Order } from '../../order-association/order/entities/order.entity';
 import { Rating } from '../../rating/rating.entity';
 import { UserMeta } from './user.meta.entity';
 import { Coupon } from '../../coupon/entities/coupon.entity';

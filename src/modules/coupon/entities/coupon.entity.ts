@@ -1,5 +1,5 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Order } from '../../order/entities/order.entity';
+import { Order } from '../../order-association/order/entities/order.entity';
 import { Product } from '../../product/entities/product.entity';
 import { User } from '../../user/entities/user.entity';
 import { Company } from '../../company/entities/company.entity';

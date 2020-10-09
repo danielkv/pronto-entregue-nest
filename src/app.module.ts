@@ -7,7 +7,6 @@ import { CouponModule } from './modules/coupon/coupon.module';
 import { CreditModule } from './modules/credit/credit.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
 import { ProductModule } from './modules/product/product.module';
-import { OrderModule } from './modules/order/order.module';
 import { UserModule } from './modules/user/user.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
@@ -18,6 +17,7 @@ import { GraphqlModule } from './modules/graphql/graphql.module';
 import { CommonModule } from './modules/common/common.module';
 import { PickupModule } from './modules/pickup/pickup.module';
 import { DeliveryAreaModule } from './modules/delivery-area/delivery-area.module';
+import { OrderAssociationModule } from './modules/order-association/order-association.module';
 
 @Module({
     imports: [
@@ -30,7 +30,6 @@ import { DeliveryAreaModule } from './modules/delivery-area/delivery-area.module
         CreditModule,
         DeliveryModule,
         ProductModule,
-        OrderModule,
         UserModule,
         PaymentModule,
         RatingModule,
@@ -38,6 +37,7 @@ import { DeliveryAreaModule } from './modules/delivery-area/delivery-area.module
         CommonModule,
         PickupModule,
         DeliveryAreaModule,
+        OrderAssociationModule,
     ],
     providers: [],
 })

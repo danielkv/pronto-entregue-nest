@@ -7,14 +7,14 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Delivery } from '../../delivery/entities/delivery.entity';
-import { OrderProduct } from './order.product.entity';
-import { User } from '../../user/entities/user.entity';
-import { Company } from '../../company/entities/company.entity';
-import { PaymentMethod } from '../../payment/payment.method.entity';
-import { CreditHistory } from '../../credit/credit.history.entity';
-import { Coupon } from '../../coupon/entities/coupon.entity';
-import { Rating } from '../../rating/rating.entity';
+import { Delivery } from '../../../delivery/entities/delivery.entity';
+import { OrderProduct } from '../interfaces/order.product.entity';
+import { User } from '../../../user/entities/user.entity';
+import { Company } from '../../../company/entities/company.entity';
+import { PaymentMethod } from '../../../payment/payment.method.entity';
+import { CreditHistory } from '../../../credit/credit.history.entity';
+import { Coupon } from '../../../coupon/entities/coupon.entity';
+import { Rating } from '../../../rating/rating.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { OrderStatusEnum } from '../enums/order.status.enum';
 import { OrderTypeEnum } from '../enums/order.type.enum';
