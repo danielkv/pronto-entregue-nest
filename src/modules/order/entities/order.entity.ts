@@ -16,27 +16,15 @@ import { CreditHistory } from '../../credit/credit.history.entity';
 import { Coupon } from '../../coupon/entities/coupon.entity';
 import { Rating } from '../../rating/rating.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-//import { GeoPointScalar } from '../common/scalars/geo-point-scalar';
+import { OrderStatusEnum } from '../enums/order.status.enum';
+import { OrderTypeEnum } from '../enums/order.type.enum';
+import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { GeoPointHelper } from 'src/modules/common/helpers/geo.point.helper';
 
-export enum OrderStatus {
-    WAITING = 'waiting',
-    SCHEDULED = 'scheduled',
-    PREPARING = 'preparing',
-    WAITING_PICK_UP = 'waitingPickUp',
-    WAITING_DELIVERY = 'waitingDelivery',
-    DELIVERING = 'delivering',
-    DELIVERED = 'delivered',
-    CANCELED = 'canceled',
-}
+const geoPointHelper = new GeoPointHelper();
 
-export enum OrderType {
-    TAKEOUT = 'takeout',
-    DELIVERY = 'delivery',
-    PE_DELIVERY = 'peDelivery',
-}
-
-registerEnumType(OrderStatus, { name: 'OrderStatus' });
-registerEnumType(OrderType, { name: 'OrderType' });
+registerEnumType(OrderStatusEnum, { name: 'OrderStatusEnum' });
+registerEnumType(OrderTypeEnum, { name: 'OrderTypeEnum' });
 
 @ObjectType()
 @Index('userId', ['userId'], {})
@@ -72,13 +60,13 @@ export class Order {
     @Column('int', { name: 'deliveryTime', default: 0 })
     deliveryTime: number;
 
-    @Field(() => OrderType)
+    @Field(() => OrderTypeEnum)
     @Column('enum', {
         name: 'type',
-        enum: OrderType,
-        default: OrderType.DELIVERY,
+        enum: OrderTypeEnum,
+        default: OrderTypeEnum.DELIVERY,
     })
-    type: OrderType;
+    type: OrderTypeEnum;
 
     @Field(() => Float)
     @Column('decimal', {
@@ -98,14 +86,14 @@ export class Order {
     })
     discount: number | null;
 
-    @Field(() => OrderStatus)
+    @Field(() => OrderStatusEnum)
     @Column('enum', {
         name: 'status',
         nullable: true,
-        enum: OrderStatus,
-        default: OrderStatus.WAITING,
+        enum: OrderStatusEnum,
+        default: OrderStatusEnum.WAITING,
     })
-    status: OrderStatus;
+    status: OrderStatusEnum;
 
     @Field()
     @Column('text', { name: 'message', nullable: true })
@@ -155,9 +143,13 @@ export class Order {
     @Column('varchar', { name: 'stateAddress', nullable: true, length: 255 })
     stateAddress: string | null;
 
-    @Field() //GeoPointScalar
-    @Column('point', { name: 'locationAddress', nullable: true })
-    locationAddress: string | null;
+    @Field(() => GeoPoint)
+    @Column('point', {
+        name: 'locationAddress',
+        nullable: true,
+        transformer: { to: geoPointHelper.geoPointToText, from: geoPointHelper.textToGeoPoint },
+    })
+    locationAddress: GeoPoint;
 
     @Field()
     @Column('datetime', { name: 'createdAt' })
