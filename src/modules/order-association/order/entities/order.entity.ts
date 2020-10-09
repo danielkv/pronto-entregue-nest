@@ -12,7 +12,7 @@ import { OrderProduct } from '../interfaces/order.product.entity';
 import { User } from '../../../user/entities/user.entity';
 import { Company } from '../../../company-association/company/entities/company.entity';
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
-import { CreditHistory } from '../../../credit/credit.history.entity';
+import { CreditHistory } from '../../../credit-association/credit-history/entities/credit.history.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { Rating } from '../../../rating/rating.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';

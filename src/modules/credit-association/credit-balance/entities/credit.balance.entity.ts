@@ -1,6 +1,6 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../user/entities/user.entity';
+import { User } from '../../../user/entities/user.entity';
 
 @ObjectType()
 @Index('userId', ['userId'], {})

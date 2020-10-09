@@ -9,8 +9,8 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CompanyUser } from '../../company-association/company/entities/company.user.entity';
-import { CreditBalance } from '../../credit/credit.balance.entity';
-import { CreditHistory } from '../../credit/credit.history.entity';
+import { CreditBalance } from '../../credit-association/credit-balance/entities/credit.balance.entity';
+import { CreditHistory } from '../../credit-association/credit-history/entities/credit.history.entity';
 import { Delivery } from '../../delivery/entities/delivery.entity';
 import { Order } from '../../order-association/order/entities/order.entity';
 import { Rating } from '../../rating/rating.entity';
