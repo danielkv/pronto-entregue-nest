@@ -8,7 +8,7 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Company } from '../../company/entities/company.entity';
+import { Company } from '../../company-association/company/entities/company.entity';
 import { Product } from '../../product/entities/product.entity';
 
 @ObjectType()

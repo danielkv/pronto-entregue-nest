@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CompanyModule } from './modules/company/company.module';
 import { AddressModule } from './modules/address/address.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ConfigModule } from './modules/config/config.module';
@@ -18,11 +17,12 @@ import { CommonModule } from './modules/common/common.module';
 import { PickupModule } from './modules/pickup/pickup.module';
 import { DeliveryAreaModule } from './modules/delivery-area/delivery-area.module';
 import { OrderAssociationModule } from './modules/order-association/order-association.module';
+import { CompanyAssociationModule } from './modules/company-association/company-association.module';
 
 @Module({
     imports: [
         TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
-        CompanyModule,
+        CompanyAssociationModule,
         AddressModule,
         CategoryModule,
         ConfigModule,
@@ -38,6 +38,7 @@ import { OrderAssociationModule } from './modules/order-association/order-associ
         PickupModule,
         DeliveryAreaModule,
         OrderAssociationModule,
+        CompanyAssociationModule,
     ],
     providers: [],
 })

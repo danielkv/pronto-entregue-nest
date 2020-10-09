@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { ICompanyConfigKeys } from '../dtos/company.config.dto';
-import { ICompanyMetaRepository } from '../interfaces/company-meta.repository.interface';
+import { ICompanyMetaRepository } from '../../company-meta/interfaces/company-meta.repository.interface';
 
 @Injectable()
 export class GetCompanyMetaService {

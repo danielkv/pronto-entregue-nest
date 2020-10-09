@@ -1,5 +1,5 @@
-import { RepositoryBase } from '../../common/repositories/repository.base';
-import { GeoPoint } from '../../common/types/geo-point';
+import { RepositoryBase } from '../../../common/repositories/repository.base';
+import { GeoPoint } from '../../../common/types/geo-point';
 import { EntityRepository, SelectQueryBuilder } from 'typeorm';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { Company } from '../entities/company.entity';
@@ -190,4 +190,7 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
     }
 }
 
-export const CompanyRepositoryProvider = new RepositoryProviderFactory('ICompanyRepository', CompanyRepository).create()
+export const CompanyRepositoryProvider = new RepositoryProviderFactory(
+    'ICompanyRepository',
+    CompanyRepository,
+).create();

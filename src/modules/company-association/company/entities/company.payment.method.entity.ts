@@ -1,13 +1,6 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Company } from './company.entity';
-import { PaymentMethod } from '../../payment/payment.method.entity';
+import { PaymentMethod } from '../../../payment/payment.method.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

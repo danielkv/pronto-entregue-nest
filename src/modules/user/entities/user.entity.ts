@@ -8,7 +8,7 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CompanyUser } from '../../company/entities/company.user.entity';
+import { CompanyUser } from '../../company-association/company/entities/company.user.entity';
 import { CreditBalance } from '../../credit/credit.balance.entity';
 import { CreditHistory } from '../../credit/credit.history.entity';
 import { Delivery } from '../../delivery/entities/delivery.entity';

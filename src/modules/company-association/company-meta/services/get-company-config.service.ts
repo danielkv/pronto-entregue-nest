@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigTransformHelper } from '../../common/helpers/config.transform.helper';
+import { ConfigTransformHelper } from '../../../common/helpers/config.transform.helper';
 import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
 import { GetCompanyMetaService } from './get.company.meta.service';
 

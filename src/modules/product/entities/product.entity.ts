@@ -11,7 +11,7 @@ import {
 import { OrderProduct } from '../../order-association/order/interfaces/order.product.entity';
 import { OptionGroup } from './option.group.entity';
 import { Category } from '../../category/entities/category.entity';
-import { Company } from '../../company/entities/company.entity';
+import { Company } from '../../company-association/company/entities/company.entity';
 import { Sale } from './sale.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Coupon } from '../../coupon/entities/coupon.entity';

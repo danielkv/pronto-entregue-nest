@@ -2,7 +2,7 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { GeoPoint } from '../../common/types/geo-point';
 
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Company } from '../../company/entities/company.entity';
+import { Company } from '../../company-association/company/entities/company.entity';
 import { User } from '../../user/entities/user.entity';
 import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
 

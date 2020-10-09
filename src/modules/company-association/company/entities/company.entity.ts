@@ -7,22 +7,21 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Category } from '../../category/entities/category.entity';
+import { Category } from '../../../category/entities/category.entity';
 import { CompanySection } from './company.type.entity';
-import { Address } from '../../address/entities/address.entity';
-import { CompanyMeta } from './company.meta.entity';
+import { Address } from '../../../address/entities/address.entity';
+import { CompanyMeta } from '../../company-meta/entities/company.meta.entity';
 import { CompanyPaymentMethod } from './company.payment.method.entity';
 import { CompanyUser } from './company.user.entity';
-import { DeliveryArea } from '../../delivery-area/entities/delivery.area.entity';
-import { Order } from '../../order-association/order/entities/order.entity';
-import { Product } from '../../product/entities/product.entity';
-import { Rating } from '../../rating/rating.entity';
-import { ViewArea } from '../../pickup/entities/view.area.entity';
-import { PaymentMethod } from '../../payment/payment.method.entity';
-import { Coupon } from '../../coupon/entities/coupon.entity';
+import { DeliveryArea } from '../../../delivery-area/entities/delivery.area.entity';
+import { Order } from '../../../order-association/order/entities/order.entity';
+import { Product } from '../../../product/entities/product.entity';
+import { Rating } from '../../../rating/rating.entity';
+import { ViewArea } from '../../../pickup/entities/view.area.entity';
+import { PaymentMethod } from '../../../payment/payment.method.entity';
+import { Coupon } from '../../../coupon/entities/coupon.entity';
 
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { CompanyConfigDTO } from '../dtos/company.config.dto';
 
 @ObjectType()
 @Index('companyTypeId', ['companyTypeId'], {})
@@ -188,7 +187,4 @@ export class Company {
 
     @Field(() => Float, { nullable: true })
     distance?: number;
-
-    @Field(() => CompanyConfigDTO)
-    config: CompanyConfigDTO;
 }

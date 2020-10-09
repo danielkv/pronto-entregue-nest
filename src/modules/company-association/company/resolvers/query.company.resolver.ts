@@ -3,14 +3,12 @@ import { Resolver } from '@nestjs/graphql';
 import { ListCompaniesService } from '../services/list-companies.service';
 import { CompaniesListDTO } from '../dtos/companies.list.dto';
 
-import { PageInfo } from '../../common/types/page-info';
+import { PageInfo } from '../../../common/types/page-info';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { CountCompaniesService } from '../services/count-companies.service';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
-import { GetCompanyConfigService } from '../services/get-company-config.service';
-import { CompanyConfigDTO, ICompanyConfigKeys } from '../dtos/company.config.dto';
 import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 
 @Resolver()
@@ -19,14 +17,13 @@ export class QueryCompanyResolver {
         private listCompaniesService: ListCompaniesService,
         private countCompanyService: CountCompaniesService,
         private getCompanyService: GetCompanyService,
-        private getCompanyConfigService: GetCompanyConfigService,
     ) {}
 
     @Query(() => CompaniesListDTO)
     async listCompanies(
         @Info(ExtractFieldsPipe) fields: string[],
         @Args('filter', { type: () => CompanyFilterDTO, nullable: true })
-        filter?,
+        filter?: CompanyFilterDTO,
         @Args('userLocation', { type: () => GeoPoint, nullable: true })
         userLocation?: GeoPoint,
         @Args('pagination', { type: () => PageInfo, nullable: true })
@@ -50,15 +47,6 @@ export class QueryCompanyResolver {
         userLocation?: GeoPoint,
     ): Promise<Company> {
         return this.getCompanyService.execute(companyId, userLocation);
-    }
-
-    @Query(() => CompanyConfigDTO)
-    companyConfig(
-        @Args('companyId', { type: () => ID }) companyId: number,
-        @Info(ExtractFieldsPipe) keys: ICompanyConfigKeys[],
-    ) {
-        // return config
-        return this.getCompanyConfigService.execute(companyId, keys);
     }
 
     // ordersStatusQty

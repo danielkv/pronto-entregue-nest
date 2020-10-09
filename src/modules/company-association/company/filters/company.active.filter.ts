@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { IFilter } from '../../common/interfaces/IFilter';
+import { IFilter } from '../../../common/interfaces/IFilter';
 import { Company } from '../entities/company.entity';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
-import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../../common/repositories/query.builder.base';
 
 @Injectable()
 export class CompanyActiveFilter implements IFilter<Company, CompanyFilterDTO> {

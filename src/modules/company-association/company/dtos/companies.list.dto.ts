@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { IListEntity } from '../../common/interfaces/IListEntity';
-import { PageInfo } from '../../common/types/page-info';
+import { IListEntity } from '../../../common/interfaces/IListEntity';
+import { PageInfo } from '../../../common/types/page-info';
 import { Company } from '../entities/company.entity';
 
 @ObjectType()

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { IFilter } from '../../common/interfaces/IFilter';
+import { IFilter } from '../../../common/interfaces/IFilter';
 import { Brackets } from 'typeorm';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import * as _ from 'lodash';
 import { Company } from '../entities/company.entity';
-import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
+import { QueryBuilderBase } from '../../../common/repositories/query.builder.base';
 
 @Injectable()
 export class CompanyLocationFilter implements IFilter<Company, CompanyFilterDTO> {

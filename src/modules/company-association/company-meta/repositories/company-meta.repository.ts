@@ -1,4 +1,4 @@
-import { RepositoryBase } from '../../common/repositories/repository.base';
+import { RepositoryBase } from '../../../common/repositories/repository.base';
 import { EntityRepository } from 'typeorm';
 import { ICompanyMetaRepository } from '../interfaces/company-meta.repository.interface';
 import { CompanyMeta } from '../entities/company.meta.entity';
@@ -53,4 +53,7 @@ export class CompanyMetaRepository extends RepositoryBase<CompanyMeta>
     }
 }
 
-export const CompanyMetaRepositoryProvider = new RepositoryProviderFactory('ICompanyMetaRepository', CompanyMetaRepository).create()
+export const CompanyMetaRepositoryProvider = new RepositoryProviderFactory(
+    'ICompanyMetaRepository',
+    CompanyMetaRepository,
+).create();
