@@ -16,6 +16,8 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
     constructor() {
         super();
 
+        this.setQueryBuilderTableName('company');
+
         this.setFilters([
             new CompanyLocationFilter(),
             new CompanySearchFilter(),

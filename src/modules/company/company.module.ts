@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ListCompaniesService } from './services/list-companies.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { CompanyMeta } from './entities/company.meta.entity';
 import { QueryCompanyResolver } from './resolvers/query.company.resolver';
 import { CompaniesList } from './dtos/companies.list';
 import { CountCompaniesService } from './services/count-companies.service';
@@ -15,14 +13,10 @@ import { CompanyFilterDTO } from './dtos/company.filter';
 import { CompanyConfig } from './dtos/company.config';
 
 import { CompanyRepositoryProvider } from './repositories/company.repository';
+import { CompanyMetaRepositoryProvider } from './repositories/company-meta.repository';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([CompanyMeta]),
-        CompaniesList,
-        CompanyFilterDTO,
-        CompanyConfig,
-    ],
+    imports: [CompaniesList, CompanyFilterDTO, CompanyConfig],
     providers: [
         // resolvers
         QueryCompanyResolver,
@@ -38,6 +32,7 @@ import { CompanyRepositoryProvider } from './repositories/company.repository';
         CompanyConfigLoader,
 
         CompanyRepositoryProvider,
+        CompanyMetaRepositoryProvider,
     ],
 })
 export class CompanyModule {}

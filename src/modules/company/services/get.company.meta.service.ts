@@ -1,13 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { CompanyMeta } from '../entities/company.meta.entity';
 import { ICompanyConfigKeys } from '../dtos/company.config';
+import { ICompanyMetaRepository } from '../interfaces/company-meta.repository.interface';
 
 @Injectable()
 export class GetCompanyMetaService {
     constructor(
-        @InjectRepository(CompanyMeta) private companyMetaRepository: Repository<CompanyMeta>,
+        @Inject('ICompanyMetaRepository') private companyMetaRepository: ICompanyMetaRepository,
     ) {}
 
     execute(companyId: number[], keys: ICompanyConfigKeys[]): Promise<CompanyMeta[]>;
