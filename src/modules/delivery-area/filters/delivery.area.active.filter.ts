@@ -15,7 +15,6 @@ export class DeliveryAreaActiveFilter implements IFilter<DeliveryArea, DeliveryA
         // apply filter
         query.andWhere('DeliveryArea.active');
 
-        console.log(query.getSql());
         // return query
         return query;
     }

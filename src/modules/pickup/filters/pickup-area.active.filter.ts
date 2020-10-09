@@ -15,7 +15,6 @@ export class PickUpAreaActiveFilter implements IFilter<PickUpArea, PickUpAreaFil
         // apply filter
         query.andWhere('PickUpArea.active');
 
-        console.log(query.getSql());
         // return query
         return query;
     }

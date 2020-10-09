@@ -19,8 +19,6 @@ export class CompanyResolver {
     ): Promise<CompanyConfigDTO> {
         const companyId = company.id;
 
-        console.log(companyId);
-
         // batch load configs
         const configMetas = await this.companyConfigLoader.loader.load({ companyId, keys: fields });
 
