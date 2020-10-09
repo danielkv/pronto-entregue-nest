@@ -1,8 +1,16 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Company } from '../company-association/company/entities/company.entity';
-import { Order } from '../order-association/order/entities/order.entity';
-import { User } from '../user/entities/user.entity';
+import {
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Company } from '../../company-association/company/entities/company.entity';
+import { Order } from '../../order-association/order/entities/order.entity';
+import { User } from '../../user/entities/user.entity';
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})
@@ -39,15 +47,12 @@ export class Rating {
     @Column('datetime', { name: 'updatedAt' })
     updatedAt: Date;
 
-    @Field(() => Int)
     @Column('int', { name: 'companyId', nullable: true })
     companyId: number | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'orderId', nullable: true })
     orderId: number | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'userId', nullable: true })
     userId: number | null;
 
@@ -64,9 +69,9 @@ export class Rating {
     company: Company;
 
     @Field(() => Order)
-    @ManyToOne(
+    @OneToOne(
         () => Order,
-        orders => orders.ratings,
+        orders => orders.rating,
         {
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',

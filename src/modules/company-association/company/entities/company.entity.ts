@@ -16,7 +16,7 @@ import { CompanyUser } from './company.user.entity';
 import { DeliveryArea } from '../../../delivery-area/entities/delivery.area.entity';
 import { Order } from '../../../order-association/order/entities/order.entity';
 import { Product } from '../../../product/entities/product.entity';
-import { Rating } from '../../../rating/rating.entity';
+import { Rating } from '../../../rating/entities/rating.entity';
 import { ViewArea } from '../../../pickup/entities/view.area.entity';
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';

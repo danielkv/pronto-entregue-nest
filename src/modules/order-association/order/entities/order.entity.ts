@@ -15,7 +15,7 @@ import { Company } from '../../../company-association/company/entities/company.e
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { CreditHistory } from '../../../credit-association/credit-history/entities/credit.history.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
-import { Rating } from '../../../rating/rating.entity';
+import { Rating } from '../../../rating/entities/rating.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { OrderStatusEnum } from '../enums/order.status.enum';
 import { OrderTypeEnum } from '../enums/order.type.enum';
@@ -253,10 +253,10 @@ export class Order {
     @JoinColumn([{ name: 'couponId', referencedColumnName: 'id' }])
     coupon: Coupon;
 
-    @Field(() => [Rating])
-    @OneToMany(
+    @Field(() => Rating)
+    @OneToOne(
         () => Rating,
         ratings => ratings.order,
     )
-    ratings: Rating[];
+    rating: Rating;
 }
