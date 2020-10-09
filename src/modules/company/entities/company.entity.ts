@@ -14,7 +14,7 @@ import { CompanyMeta } from './company.meta.entity';
 import { CompanyPaymentMethod } from './company.payment.method.entity';
 import { CompanyUser } from './company.user.entity';
 import { DeliveryArea } from '../../delivery-area/entities/delivery.area.entity';
-import { Order } from '../../order/order.entity';
+import { Order } from '../../order/entities/order.entity';
 import { Product } from '../../product/entities/product.entity';
 import { Rating } from '../../rating/rating.entity';
 import { ViewArea } from '../../pickup/entities/view.area.entity';

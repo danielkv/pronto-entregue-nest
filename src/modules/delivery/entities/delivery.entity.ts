@@ -2,7 +2,7 @@ import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/gra
 import { GeoPointHelper } from 'src/modules/common/helpers/geo.point.helper';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Order } from '../../order/order.entity';
+import { Order } from '../../order/entities/order.entity';
 import { User } from '../../user/entities/user.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 

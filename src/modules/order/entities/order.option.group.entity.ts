@@ -8,7 +8,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OrderProduct } from './order.product.entity';
-import { OptionGroup } from '../product/entities/option.group.entity';
+import { OptionGroup } from '../../product/entities/option.group.entity';
 import { OrderOption } from './order.option.entity';
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 

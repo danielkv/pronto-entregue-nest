@@ -8,7 +8,7 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { OrderProduct } from '../../order/order.product.entity';
+import { OrderProduct } from '../../order/entities/order.product.entity';
 import { OptionGroup } from './option.group.entity';
 import { Category } from '../../category/entities/category.entity';
 import { Company } from '../../company/entities/company.entity';

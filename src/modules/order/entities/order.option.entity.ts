@@ -1,6 +1,6 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderOptionGroup } from './order.option.group.entity';
-import { Option } from '../product/entities/option.entity';
+import { Option } from '../../product/entities/option.entity';
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

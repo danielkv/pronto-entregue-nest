@@ -8,7 +8,7 @@ import {
 } from '@nestjs/graphql';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CompanyPaymentMethod } from '../company/entities/company.payment.method.entity';
-import { Order } from '../order/order.entity';
+import { Order } from '../order/entities/order.entity';
 
 export enum PaymentMethodType {
     MONEY = 'money',
