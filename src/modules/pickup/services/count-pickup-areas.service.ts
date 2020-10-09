@@ -6,10 +6,10 @@ import { IPickUpAreaRepository } from '../interfaces/pickup-area.repository.inte
 export class CountPickUpAreasService {
     constructor(
         @Inject('IPickUpAreaRepository')
-        private deliveryAreaRepository: IPickUpAreaRepository,
+        private pickUpAreaRepository: IPickUpAreaRepository,
     ) {}
 
     execute(filter?: PickUpAreaFilterDTO): Promise<number> {
-        return this.deliveryAreaRepository.getCount(filter);
+        return this.pickUpAreaRepository.getCount(filter);
     }
 }

@@ -7,14 +7,14 @@ import { PickUpAreaListDTO } from '../dtos/pickup-area.list.dto';
 import { PickUpAreaFilterDTO } from '../dtos/pickup-area.filter.dto';
 
 @Resolver()
-export class PickUpAreaResolver {
+export class QueryPickUpAreaResolver {
     constructor(
         private listPickUpAreaService: ListPickUpAreasService,
         private countPickUpAreaService: CountPickUpAreasService,
     ) {}
 
     @Query(() => PickUpAreaListDTO)
-    async listDelvieryAreas(
+    async listPickupAreas(
         @Info(ExtractFieldsPipe) fields: string[],
         @Args('filter', { type: () => PickUpAreaFilterDTO, nullable: true })
         filter?: PickUpAreaFilterDTO,

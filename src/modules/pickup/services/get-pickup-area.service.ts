@@ -7,12 +7,12 @@ import { IPickUpAreaRepository } from '../interfaces/pickup-area.repository.inte
 export class GetPickUpAreaService {
     constructor(
         @Inject('IPickUpAreaRepository')
-        private deliveryAreaRepository: IPickUpAreaRepository,
+        private pickUpAreaRepository: IPickUpAreaRepository,
     ) {}
 
     execute(companyId: number, location: GeoPoint): Promise<PickUpArea[]>;
     execute(companyId: number[], location: GeoPoint[]): Promise<PickUpArea[]>;
     execute(companyId: any, location: any): Promise<PickUpArea[]> {
-        return this.deliveryAreaRepository.filterCompanyAndLocation(companyId, location);
+        return this.pickUpAreaRepository.filterCompanyAndLocation(companyId, location);
     }
 }

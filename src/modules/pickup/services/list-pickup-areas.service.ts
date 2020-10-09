@@ -8,10 +8,10 @@ import { IPickUpAreaRepository } from '../interfaces/pickup-area.repository.inte
 export class ListPickUpAreasService {
     constructor(
         @Inject('IPickUpAreaRepository')
-        private deliveryAreaRepository: IPickUpAreaRepository,
+        private pickUpAreaRepository: IPickUpAreaRepository,
     ) {}
 
     execute(filter: PickUpAreaFilterDTO, pagination: PageInfo): Promise<PickUpArea[]> {
-        return this.deliveryAreaRepository.getList(filter, pagination);
+        return this.pickUpAreaRepository.getList(filter, pagination);
     }
 }
