@@ -85,7 +85,6 @@ export class User {
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
-    @Field(() => [CompanyUser])
     @OneToMany(
         () => CompanyUser,
         companyUsers => companyUsers.user,

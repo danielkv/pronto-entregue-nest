@@ -11,9 +11,7 @@ import {
 import { Company } from './company.entity';
 import { User } from '../../../user/entities/user.entity';
 import { Role } from '../../../user/entities/role.entity';
-import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-@ObjectType()
 @Index('company_users_userId_companyId_unique', ['companyId', 'userId'], {
     unique: true,
 })
@@ -21,11 +19,9 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 @Index('roleId', ['roleId'], {})
 @Entity('company_users')
 export class CompanyUser {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
     id: number;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'active',
@@ -34,11 +30,9 @@ export class CompanyUser {
     })
     active: boolean | null;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
@@ -51,7 +45,6 @@ export class CompanyUser {
     @Column('int', { name: 'roleId', nullable: true })
     roleId: number | null;
 
-    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.companyUsers,
@@ -63,7 +56,6 @@ export class CompanyUser {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.companyUsers,
@@ -75,7 +67,6 @@ export class CompanyUser {
     @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
     user: User;
 
-    @Field(() => Role)
     @ManyToOne(
         () => Role,
         roles => roles.companyUsers,
