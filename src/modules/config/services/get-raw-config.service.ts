@@ -4,10 +4,12 @@ import { Config } from '../entities/config.entity';
 import { IConfigRepository } from '../interfaces/config.repository.interface';
 
 @Injectable()
-export class GetConfigService {
+export class GetRawConfigService {
     constructor(@Inject('IConfigRepository') private configRepository: IConfigRepository) {}
 
-    async execute(keys: IConfigKeys[]): Promise<Config[]> {
-        return this.configRepository.getMany(keys);
+    async execute(keys: IConfigKeys): Promise<Config>;
+    async execute(keys: IConfigKeys[]): Promise<Config[]>;
+    async execute(keys: any): Promise<Config | Config[]> {
+        return this.configRepository.get(keys);
     }
 }
