@@ -7,4 +7,8 @@ export abstract class DataLoaderBase<KeyType, ReturnType> {
     constructor() {
         this.loader = this.create();
     }
+
+    remap(keys: KeyType[], results: ReturnType[], typeKey = 'id'): ReturnType[] | null {
+        return keys.map(key => results.find(res => res[typeKey] === key) || null);
+    }
 }

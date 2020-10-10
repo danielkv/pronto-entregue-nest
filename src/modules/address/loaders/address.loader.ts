@@ -6,8 +6,7 @@ import { Address } from '../entities/address.entity';
 import { GetAddressService } from '../services/get.address.service';
 
 @Injectable()
-export class AddressLoader extends DataLoaderBase<number, Address>
-    implements IDataLoaderBase<number, Address> {
+export class AddressLoader extends DataLoaderBase<number, Address> implements IDataLoaderBase<number, Address> {
     constructor(private readonly getAddressService: GetAddressService) {
         super();
     }
@@ -16,7 +15,7 @@ export class AddressLoader extends DataLoaderBase<number, Address>
         return new DataLoader<number, Address>(async keys => {
             const addresses = await this.getAddressService.execute([...keys]);
 
-            return keys.map(k => addresses.find(a => a.id === k) || null);
+            return this.remap([...keys], addresses);
         });
     }
 }

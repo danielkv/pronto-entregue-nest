@@ -1,12 +1,5 @@
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    OneToMany,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CompanyPaymentMethod } from '../../company-association/company/entities/company.payment.method.entity';
 import { Order } from '../../order-association/order/entities/order.entity';
 import { PaymentMethodFeeTypeEnum } from '../enums/payment-method-fee-type.enum';
@@ -70,7 +63,6 @@ export class PaymentMethod {
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
-    @Field(() => [CompanyPaymentMethod])
     @OneToMany(
         () => CompanyPaymentMethod,
         companyPaymentMethods => companyPaymentMethods.paymentMethod,
