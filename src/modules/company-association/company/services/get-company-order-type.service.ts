@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { DeliveryArea } from 'src/modules/delivery-area/entities/delivery.area.entity';
 import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
-import { PickUpArea } from 'src/modules/pickup/entities/pickup-area.entity';
+import { Company } from '../entities/company.entity';
 
 @Injectable()
 export class GetCompanyOrderTypeService {
-    execute(deliveryAreas: DeliveryArea[], pickUpAreas: PickUpArea[]): OrderTypeEnum[] {
+    execute({ deliveryAreas, pickUpAreas }: Company): OrderTypeEnum[] {
         const orderTypes: OrderTypeEnum[] = [];
 
         if (deliveryAreas.filter(deliveryArea => deliveryArea.type === OrderTypeEnum.DELIVERY).length)

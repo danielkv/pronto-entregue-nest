@@ -15,6 +15,6 @@ export class CompanyResolver {
     ): OrderTypeEnum[] {
         if (!userLocation) throw new Error('Localização do usuário não definida');
 
-        return this.getCompanyOrderTypeService.execute(company.deliveryAreas, company.pickUpAreas);
+        return this.getCompanyOrderTypeService.execute(company);
     }
 }
