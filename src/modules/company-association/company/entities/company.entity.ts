@@ -149,9 +149,9 @@ export class Company {
     //@Field(() => [PickUpArea], { nullable: 'items' })
     @OneToMany(
         () => PickUpArea,
-        viewAreas => viewAreas.company,
+        pickUpArea => pickUpArea.company,
     )
-    viewAreas: PickUpArea[];
+    pickUpAreas: PickUpArea[];
 
     @Field(() => [Order], { nullable: 'items' })
     @OneToMany(

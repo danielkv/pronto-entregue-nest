@@ -12,6 +12,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Company } from '../../company-association/company/entities/company.entity';
+import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
 
 const geoPointHelper = new GeoPointHelper();
 
@@ -79,6 +80,6 @@ export class DeliveryArea {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field()
-    type: string;
+    @Field(() => OrderTypeEnum)
+    type: OrderTypeEnum;
 }

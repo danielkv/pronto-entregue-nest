@@ -54,7 +54,7 @@ export class PickUpArea {
     @Field(() => Company)
     @ManyToOne(
         () => Company,
-        company => company.viewAreas,
+        company => company.pickUpAreas,
         {
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',

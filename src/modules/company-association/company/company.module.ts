@@ -9,6 +9,7 @@ import { CompanyFilterDTO } from './dtos/company.filter.dto';
 import { CompanyRepositoryProvider } from './repositories/company.repository';
 import { GetCompanyService } from './services/get-company.service';
 import { CompanyResolver } from './resolvers/company.resolver';
+import { GetCompanyOrderTypeService } from './services/get-company-order-type.service';
 
 @Module({
     imports: [CompaniesListDTO, CompanyFilterDTO],
@@ -18,6 +19,7 @@ import { CompanyResolver } from './resolvers/company.resolver';
         QueryCompanyResolver,
 
         // services
+        GetCompanyOrderTypeService,
         ListCompaniesService,
         CountCompaniesService,
         GetCompanyService,

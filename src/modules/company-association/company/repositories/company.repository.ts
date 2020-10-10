@@ -12,8 +12,7 @@ import { PageInfo } from '../../../common/types/page-info';
 import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
 
 @EntityRepository(Company)
-export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
-    implements ICompanyRepository {
+export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO> implements ICompanyRepository {
     constructor() {
         super();
 
@@ -27,11 +26,7 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         ]);
     }
 
-    async getList(
-        filter?: CompanyFilterDTO,
-        pagination?: PageInfo,
-        userLocation?: GeoPoint,
-    ): Promise<Company[]> {
+    async getList(filter?: CompanyFilterDTO, pagination?: PageInfo, userLocation?: GeoPoint): Promise<Company[]> {
         const query = this.createQueryBuilder('company');
 
         // apply base selection
@@ -115,19 +110,13 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         ]);
 
         // order by (open | allowBuyClosed)
-        query.orderBy(
-            'isOpen OR (allowBuyClosed IS NOT NULL AND allowBuyClosed <> "false")',
-            'DESC',
-        );
+        query.orderBy('isOpen OR (allowBuyClosed IS NOT NULL AND allowBuyClosed <> "false")', 'DESC');
 
         // return query
         return query;
     }
 
-    applyUserLocationSelection(
-        query: SelectQueryBuilder<Company>,
-        location?: GeoPoint,
-    ): SelectQueryBuilder<Company> {
+    applyUserLocationSelection(query: SelectQueryBuilder<Company>, location?: GeoPoint): SelectQueryBuilder<Company> {
         if (!location) return query;
 
         // join address
@@ -146,10 +135,7 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         return query;
     }
 
-    applyAreasSelection(
-        query: SelectQueryBuilder<Company>,
-        location: GeoPoint,
-    ): SelectQueryBuilder<Company> {
+    applyAreasSelection(query: SelectQueryBuilder<Company>, location: GeoPoint): SelectQueryBuilder<Company> {
         if (!location) return query;
 
         // define user point text
@@ -159,14 +145,14 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         query.leftJoinAndSelect(
             'company.deliveryAreas',
             'deliveryArea',
-            `ST_Distance_Sphere(${userPoint}, deliveryArea.center) <= deliveryArea.radius`,
+            `ST_Distance_Sphere(${userPoint}, deliveryArea.center) <= deliveryArea.radius AND deliveryArea.active`,
         );
 
-        // join viewAreas
+        // join pickUpArea
         query.leftJoinAndSelect(
-            'company.viewAreas',
-            'viewArea',
-            `ST_Distance_Sphere(${userPoint}, viewArea.center) <= viewArea.radius`,
+            'company.pickUpAreas',
+            'pickUpArea',
+            `ST_Distance_Sphere(${userPoint}, pickUpArea.center) <= pickUpArea.radius AND pickUpArea.active`,
         );
 
         return query;
