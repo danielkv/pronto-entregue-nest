@@ -81,7 +81,7 @@ export class Company {
     @Column('int', { name: 'addressId', nullable: true })
     addressId: number | null;
 
-    @Field(() => [Category])
+    @Field(() => [Category], { nullable: 'items' })
     @OneToMany(
         () => Category,
         categories => categories.company,
@@ -112,68 +112,67 @@ export class Company {
     @JoinColumn([{ name: 'addressId', referencedColumnName: 'id' }])
     address: Address;
 
-    @Field(() => [CompanyMeta])
     @OneToMany(
         () => CompanyMeta,
         companyMetas => companyMetas.company,
     )
     metas: CompanyMeta[];
 
-    @Field(() => [PaymentMethod])
+    @Field(() => [PaymentMethod], { nullable: 'items' })
     @OneToMany(
         () => CompanyPaymentMethod,
         companyPaymentMethods => companyPaymentMethods.company,
     )
     companyPaymentMethods: CompanyPaymentMethod[];
 
-    @Field(() => [CompanyUser])
+    @Field(() => [CompanyUser], { nullable: 'items' })
     @OneToMany(
         () => CompanyUser,
         companyUsers => companyUsers.company,
     )
     companyUsers: CompanyUser[];
 
-    @Field(() => [Coupon])
+    @Field(() => [Coupon], { nullable: 'items' })
     @OneToMany(
         () => Coupon,
         coupon => coupon.companies,
     )
     coupons: Coupon[];
 
-    @Field(() => [DeliveryArea])
+    //@Field(() => [DeliveryArea], { nullable: 'items' })
     @OneToMany(
         () => DeliveryArea,
         deliveryAreas => deliveryAreas.company,
     )
     deliveryAreas: DeliveryArea[];
 
-    @Field(() => [Order])
+    //@Field(() => [PickUpArea], { nullable: 'items' })
+    @OneToMany(
+        () => PickUpArea,
+        viewAreas => viewAreas.company,
+    )
+    viewAreas: PickUpArea[];
+
+    @Field(() => [Order], { nullable: 'items' })
     @OneToMany(
         () => Order,
         orders => orders.company,
     )
     orders: Order[];
 
-    @Field(() => [Product])
+    @Field(() => [Product], { nullable: 'items' })
     @OneToMany(
         () => Product,
         products => products.company,
     )
     products: Product[];
 
-    @Field(() => [Rating])
+    @Field(() => [Rating], { nullable: 'items' })
     @OneToMany(
         () => Rating,
         ratings => ratings.company,
     )
     ratings: Rating[];
-
-    @Field(() => [PickUpArea])
-    @OneToMany(
-        () => PickUpArea,
-        viewAreas => viewAreas.company,
-    )
-    viewAreas: PickUpArea[];
 
     @Field()
     isOpen?: boolean;

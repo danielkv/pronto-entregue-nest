@@ -6,7 +6,7 @@ import { CompanyConfigLoader } from '../loaders/company.config.loader';
 import { CompanyConfigDTO } from '../dtos/company.config.dto';
 
 @Resolver(() => Company)
-export class CompanyResolver {
+export class ConfigCompanyResolver {
     constructor(
         private configTransformHelper: ConfigTransformHelper<CompanyConfigDTO>,
         private companyConfigLoader: CompanyConfigLoader,

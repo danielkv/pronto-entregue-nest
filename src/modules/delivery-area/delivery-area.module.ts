@@ -5,12 +5,14 @@ import { ListDeliveryAreasService } from './services/list-delivery-areas.service
 import { DeliveryAreaResolver } from './resolvers/delivery-area.resolver';
 import { CountDeliveryAreasService } from './services/count-delivery-areas.service';
 import { DeliveryAreaRepositoryProvider } from './repositories/delivery.area.repository';
+import { CompanyDeliveryAreaResolver } from './resolvers/company-delivery.resolver';
 
 @Module({
     imports: [DeliveryAreaFilterDTO],
     providers: [
         // resolvers
         DeliveryAreaResolver,
+        CompanyDeliveryAreaResolver,
 
         // services
         GetDeliveryAreaService,

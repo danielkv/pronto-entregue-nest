@@ -1,5 +1,5 @@
 export enum OrderTypeEnum {
-    TAKEOUT = 'takeout',
+    PICK_UP = 'takeout',
     DELIVERY = 'delivery',
     PE_DELIVERY = 'peDelivery',
 }

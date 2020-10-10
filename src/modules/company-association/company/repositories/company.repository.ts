@@ -79,7 +79,7 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
 
         query.where('company.id IN (:...companyIds)', { companyIds });
-        query.limit(1);
+        //query.limit(1);
 
         const { entities: companies, raw } = await query.getRawAndEntities();
         this.mapProperties(companies, raw);
