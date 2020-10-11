@@ -16,7 +16,7 @@ export class CompanyLocationFilter implements IFilter<Company, CompanyFilterDTO>
 
         // checks if tables deliveryArea and viewArea were included
         const sql = query.getSql();
-        if (!sql.includes('deliveryArea') || !sql.includes('deliveryArea'))
+        if (!sql.includes('deliveryArea') || !sql.includes('pickUpArea'))
             throw new Error('Não foi possível encontrar a localização do usuário');
 
         // apply filter
@@ -26,7 +26,7 @@ export class CompanyLocationFilter implements IFilter<Company, CompanyFilterDTO>
                     // filter deliveryAreas
                     .where('deliveryArea.id IS NOT NULL')
                     // OR filter viewAreas
-                    .orWhere('viewArea.id IS NOT NULL'),
+                    .orWhere('pickUpArea.id IS NOT NULL'),
             ),
         );
 

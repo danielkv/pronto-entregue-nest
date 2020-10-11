@@ -7,10 +7,7 @@ import { PageInfo } from '../types/page-info';
 export class QueryBuilderBase<Entity, EntityFilter> extends SelectQueryBuilder<Entity> {
     query: SelectQueryBuilder<Entity>;
 
-    constructor(
-        query: SelectQueryBuilder<Entity>,
-        private filters: IFilter<Entity, EntityFilter>[],
-    ) {
+    constructor(query: SelectQueryBuilder<Entity>, private filters: IFilter<Entity, EntityFilter>[]) {
         super(query);
 
         this.query = query;

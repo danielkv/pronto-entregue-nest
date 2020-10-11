@@ -10,6 +10,10 @@ import { CompanyRepositoryProvider } from './repositories/company.repository';
 import { GetCompanyService } from './services/get-company.service';
 import { CompanyResolver } from './resolvers/company.resolver';
 import { GetCompanyOrderTypeService } from './services/get-company-order-type.service';
+import { CompanyLocationFilter } from './filters/company.location.filter';
+import { CompanyActiveFilter } from './filters/company.active.filter';
+import { CompanyPublishedFilter } from './filters/company.published.filter';
+import { CompanySearchFilter } from './filters/company.search.filter';
 
 @Module({
     imports: [CompaniesListDTO, CompanyFilterDTO],
@@ -24,8 +28,15 @@ import { GetCompanyOrderTypeService } from './services/get-company-order-type.se
         CountCompaniesService,
         GetCompanyService,
 
+        // filters
+        CompanyLocationFilter,
+        CompanyActiveFilter,
+        CompanyPublishedFilter,
+        CompanySearchFilter,
+
         // repositories
         CompanyRepositoryProvider,
     ],
+    exports: [CompanyRepositoryProvider, CompanyLocationFilter],
 })
 export class CompanyModule {}

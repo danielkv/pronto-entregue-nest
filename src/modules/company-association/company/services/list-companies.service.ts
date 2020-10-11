@@ -12,11 +12,7 @@ export class ListCompaniesService {
         private companyRepository: ICompanyRepository,
     ) {}
 
-    async execute(
-        filter?: CompanyFilterDTO,
-        pagination?: PageInfo,
-        userLocation?: GeoPoint,
-    ): Promise<Company[]> {
+    async execute(filter?: CompanyFilterDTO, pagination?: PageInfo, userLocation?: GeoPoint): Promise<Company[]> {
         return this.companyRepository.getList(filter, pagination, userLocation);
     }
 }
