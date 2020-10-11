@@ -4,13 +4,15 @@ import {
     Entity,
     Index,
     JoinColumn,
+    JoinTable,
+    ManyToMany,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../../../category/entities/category.entity';
-import { CompanySection } from './company.type.entity';
+import { CompanySection } from '../../company-section/entities/company.type.entity';
 import { Address } from '../../../address/entities/address.entity';
 import { CompanyMeta } from '../../company-meta/entities/company.meta.entity';
 import { CompanyPaymentMethod } from './company.payment.method.entity';
@@ -87,17 +89,21 @@ export class Company {
     )
     categories: Category[];
 
-    @Field(() => CompanySection)
-    @ManyToOne(
+    @Field(() => [CompanySection])
+    @ManyToMany(
         () => CompanySection,
         companyTypes => companyTypes.companies,
         {
-            onDelete: 'SET NULL',
+            onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
         },
     )
-    @JoinColumn([{ name: 'companyTypeId', referencedColumnName: 'id' }])
-    companyType: CompanySection;
+    @JoinTable({
+        name: 'companies_to_sections',
+        joinColumn: { name: 'companyId' },
+        inverseJoinColumn: { name: 'companySectionId' },
+    })
+    sections: CompanySection[];
 
     @Field(() => Address, { nullable: true })
     @ManyToOne(

@@ -1,13 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    OneToMany,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-} from 'typeorm';
-import { Company } from './company.entity';
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Company } from '../../company/entities/company.entity';
 
 @ObjectType()
 @Entity('company_types')
@@ -46,9 +39,9 @@ export class CompanySection {
     updatedAt: Date;
 
     @Field(() => [Company])
-    @OneToMany(
+    @ManyToMany(
         () => Company,
-        companies => companies.companyType,
+        companies => companies.sections,
     )
     companies: Company[];
 }

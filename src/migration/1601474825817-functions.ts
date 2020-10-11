@@ -2,8 +2,10 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class functions1601474825817 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED`');
-        queryRunner.query(
+        await queryRunner.query('SET GLOBAL log_bin_trust_function_creators = 1');
+
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED`');
+        await queryRunner.query(
             "CREATE FUNCTION `COMPANY_ALLOW_BUY_CLOSED`(allowBuyClosed TEXT, allowBuyClosedTimeBefore INT, businessHours JSON) RETURNS text CHARSET latin1 \
 			BEGIN \
 				DECLARE now DATETIME DEFAULT NOW(); \
@@ -21,8 +23,8 @@ export class functions1601474825817 implements MigrationInterface {
 			END",
         );
 
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED_BY_ID`');
-        queryRunner.query(
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED_BY_ID`');
+        await queryRunner.query(
             "CREATE FUNCTION `COMPANY_ALLOW_BUY_CLOSED_BY_ID`(companyId int) RETURNS text CHARSET latin1 \
 			BEGIN \
 				DECLARE allowBuyClosed TEXT; \
@@ -37,8 +39,8 @@ export class functions1601474825817 implements MigrationInterface {
 			END",
         );
 
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_BUSINESS_DAY`');
-        queryRunner.query(
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_BUSINESS_DAY`');
+        await queryRunner.query(
             "CREATE FUNCTION `COMPANY_BUSINESS_DAY`(businessHours JSON, datetime DATETIME) RETURNS text CHARSET utf8mb4 \
 			BEGIN \
 				DECLARE count INT DEFAULT 0; \
@@ -82,8 +84,8 @@ export class functions1601474825817 implements MigrationInterface {
 			END",
         );
 
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_IS_OPEN`');
-        queryRunner.query(
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_IS_OPEN`');
+        await queryRunner.query(
             "CREATE FUNCTION `COMPANY_IS_OPEN`(columnName TEXT) RETURNS tinyint(1) \
 			BEGIN \
 				DECLARE count INT DEFAULT 0; \
@@ -105,8 +107,8 @@ export class functions1601474825817 implements MigrationInterface {
 			END",
         );
 
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_OPEN_DATE`');
-        queryRunner.query(
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_OPEN_DATE`');
+        await queryRunner.query(
             "CREATE FUNCTION `COMPANY_NEXT_OPEN_DATE`(businessHours json, fromDay DATETIME) RETURNS datetime \
 			BEGIN \
 				DECLARE businessDay TEXT; \
@@ -148,8 +150,8 @@ export class functions1601474825817 implements MigrationInterface {
 			END",
         );
 
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
-        queryRunner.query(
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
+        await queryRunner.query(
             "CREATE FUNCTION `COMPANY_NEXT_CLOSE_DATE`(businessHours JSON) RETURNS datetime \
 			BEGIN \
 				DECLARE fromDate DATETIME; \
@@ -194,11 +196,11 @@ export class functions1601474825817 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED`');
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED_BY_ID`');
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_BUSINESS_DAY`');
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_IS_OPEN`');
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_OPEN_DATE`');
-        queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED`');
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_ALLOW_BUY_CLOSED_BY_ID`');
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_BUSINESS_DAY`');
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_IS_OPEN`');
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_OPEN_DATE`');
+        await queryRunner.query('DROP FUNCTION IF EXISTS `COMPANY_NEXT_CLOSE_DATE`');
     }
 }
