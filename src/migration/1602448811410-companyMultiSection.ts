@@ -1,15 +1,21 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class companyMultiSection1602439027598 implements MigrationInterface {
-    name = 'companyMultiSection1602439027598';
+export class companyMultiSection1602448811410 implements MigrationInterface {
+    name = 'companyMultiSection1602448811410';
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        const res = await queryRunner.query('SELECT id, companyTypeId FROM companies');
+
+        const insertRows = res.map(row => ({ companyId: row.id, companySectionId: row.companyTypeId }));
+
         await queryRunner.query('ALTER TABLE `companies` DROP FOREIGN KEY `FK_342cb27f23e38be60cce2035b10`');
         await queryRunner.query('DROP INDEX `IDX_38bce3ebd84aa545a418c6b6e9` ON `ratings`');
         await queryRunner.query('DROP INDEX `IDX_cbeaba1d3093f972e9b89fe504` ON `orders`');
+        await queryRunner.query('DROP INDEX `companyTypeId` ON `companies`');
         await queryRunner.query(
             'CREATE TABLE `companies_to_sections` (`companyId` int NOT NULL, `companySectionId` int NOT NULL, INDEX `IDX_6c39ee483e3b06f7169a993986` (`companyId`), INDEX `IDX_62ae83e65b25f7edc28236fe6a` (`companySectionId`), PRIMARY KEY (`companyId`, `companySectionId`)) ENGINE=InnoDB',
         );
+        await queryRunner.query('ALTER TABLE `companies` DROP COLUMN `companyTypeId`');
         await queryRunner.query('ALTER TABLE `order_options` CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT');
         await queryRunner.query('ALTER TABLE `order_option_groups` DROP FOREIGN KEY `FK_2d35f9d488137f53f6c0c76a9b1`');
         await queryRunner.query(
@@ -35,6 +41,13 @@ export class companyMultiSection1602439027598 implements MigrationInterface {
         await queryRunner.query(
             'ALTER TABLE `companies_to_sections` ADD CONSTRAINT `FK_62ae83e65b25f7edc28236fe6a5` FOREIGN KEY (`companySectionId`) REFERENCES `company_types`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION',
         );
+
+        await queryRunner.connection
+            .createQueryBuilder()
+            .insert()
+            .into('companies_to_sections')
+            .values(insertRows)
+            .execute();
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
@@ -71,9 +84,11 @@ export class companyMultiSection1602439027598 implements MigrationInterface {
         await queryRunner.query(
             'ALTER TABLE `order_options` CHANGE `id` `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT',
         );
+        await queryRunner.query('ALTER TABLE `companies` ADD `companyTypeId` int NULL');
         await queryRunner.query('DROP INDEX `IDX_62ae83e65b25f7edc28236fe6a` ON `companies_to_sections`');
         await queryRunner.query('DROP INDEX `IDX_6c39ee483e3b06f7169a993986` ON `companies_to_sections`');
         await queryRunner.query('DROP TABLE `companies_to_sections`');
+        await queryRunner.query('CREATE INDEX `companyTypeId` ON `companies` (`companyTypeId`)');
         await queryRunner.query('CREATE UNIQUE INDEX `IDX_cbeaba1d3093f972e9b89fe504` ON `orders` (`creditHistoryId`)');
         await queryRunner.query('CREATE UNIQUE INDEX `IDX_38bce3ebd84aa545a418c6b6e9` ON `ratings` (`orderId`)');
         await queryRunner.query(

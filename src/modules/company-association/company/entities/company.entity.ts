@@ -27,7 +27,6 @@ import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-@Index('companyTypeId', ['companyTypeId'], {})
 @Index('addressId', ['addressId'], {})
 @Entity('companies')
 export class Company {
@@ -75,9 +74,6 @@ export class Company {
     @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
-
-    @Column('int', { name: 'companyTypeId', nullable: true })
-    companyTypeId: number | null;
 
     @Column('int', { name: 'addressId', nullable: true })
     addressId: number | null;
