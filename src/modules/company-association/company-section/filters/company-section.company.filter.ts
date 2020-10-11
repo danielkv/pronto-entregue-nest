@@ -13,9 +13,9 @@ export class CompanySectionCompanyFilter implements IFilter<CompanySection, Comp
         if (!filter?.companyId) return query;
 
         const companyIds = !Array.isArray(filter.companyId) ? [filter.companyId] : filter.companyId;
-        console.log(companyIds);
+
         return query
-            .leftJoin('companySection.companies', 'company')
+            .leftJoinAndSelect('companySection.companies', 'company')
             .andWhere('company.id IN (:...companyIds)')
             .setParameters({ companyIds });
     }
