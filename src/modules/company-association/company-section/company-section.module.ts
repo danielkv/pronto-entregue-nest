@@ -9,12 +9,16 @@ import { CompanySectionRepositoryProvider } from './repositories/company-section
 import { CompanySectionResolver } from './resolvers/company-section.resolver';
 import { QueryCompanySectionResolver } from './resolvers/query-company-section.resolver';
 import { ListCompanySectionsService } from './services/list-company-sections.service';
+import { CompanySectionsListDTO } from './dtos/company-sections.list.dto';
+import { CompanySectionFilterDTO } from './dtos/company-section.filter.dto';
+import { CountCompanySectionsService } from './services/count-company-sections.service';
 
 @Module({
-    imports: [CompanyModule],
+    imports: [CompanySectionsListDTO, CompanySectionFilterDTO, CompanyModule],
     providers: [
         // services
         ListCompanySectionsService,
+        CountCompanySectionsService,
 
         // loaders
         CompanySectionLoader,
