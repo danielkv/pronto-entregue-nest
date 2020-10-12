@@ -15,6 +15,6 @@ export class ListOrderProductsService {
     execute(filter?: OrderProductFilterDTO, pagination?: PageInfo): Promise<OrderProduct[]> {
         this.orderProductRepository.setFilters([this.orderProductOrderFilter]);
 
-        return this.orderProductRepository.getList(filter, pagination);
+        return this.orderProductRepository.getList({ filter, pagination });
     }
 }

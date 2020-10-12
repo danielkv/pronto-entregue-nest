@@ -1,5 +1,6 @@
 import { QueryRunner, Repository } from 'typeorm';
 import { IFilter } from '../interfaces/IFilter';
+import { IRepositoryBaseGetList } from '../interfaces/IRepositoryBaseGetList';
 import { IRepositoryBase } from '../interfaces/repository.base.interface';
 import { PageInfo } from '../types/page-info';
 
@@ -10,10 +11,7 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
     protected tablename: string | null = null;
     filters: IFilter<Entity, EntityFilterDTO>[] = [];
 
-    createQueryBuilder(
-        alias?: string,
-        queryRunner?: QueryRunner,
-    ): QueryBuilderBase<Entity, EntityFilterDTO> {
+    createQueryBuilder(alias?: string, queryRunner?: QueryRunner): QueryBuilderBase<Entity, EntityFilterDTO> {
         const query = super.createQueryBuilder(alias, queryRunner);
 
         return new QueryBuilderBase<Entity, EntityFilterDTO>(query, this.filters);
@@ -43,15 +41,17 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
         return Array.isArray(entityId) ? users : users[0];
     }
 
-    public getList(filter: EntityFilterDTO, pagination: PageInfo): Promise<Entity[]> {
+    public getList(options?: IRepositoryBaseGetList<EntityFilterDTO>): Promise<Entity[]> {
         // create query builder
         const query = this.createQueryBuilder(this.tablename);
 
         // apply filters
-        query.applyFilters(filter);
+        if (options.filter) query.applyFilters(options.filter);
 
         // apply pagination
-        query.applyPagination(pagination);
+        if (options.pagination) query.applyPagination(options.pagination);
+
+        if (options.orderBy) query.orderBy(options.orderBy);
 
         // return results
         return query.getMany();

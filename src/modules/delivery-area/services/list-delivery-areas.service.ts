@@ -12,6 +12,6 @@ export class ListDeliveryAreasService {
     ) {}
 
     execute(filter: DeliveryAreaFilterDTO, pagination: PageInfo): Promise<DeliveryArea[]> {
-        return this.deliveryAreaRepository.getList(filter, pagination);
+        return this.deliveryAreaRepository.getList({ filter, pagination });
     }
 }

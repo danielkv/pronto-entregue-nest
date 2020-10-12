@@ -9,6 +9,6 @@ export class ListPaymentMethodsService {
     constructor(@Inject('IPaymentMethodRepository') private paymentMethodRepository: IPaymentMethodRepository) {}
 
     execute(filter?: PaymentMethodFilterDTO, pagination?: PageInfo): Promise<PaymentMethod[]> {
-        return this.paymentMethodRepository.getList(filter, pagination);
+        return this.paymentMethodRepository.getList({ filter, pagination });
     }
 }

@@ -29,6 +29,6 @@ export class ListOrdersService {
             this.orderUserFilter,
         ]);
 
-        return this.orderRepository.getList(filter, pagination);
+        return this.orderRepository.getList({ filter, pagination });
     }
 }

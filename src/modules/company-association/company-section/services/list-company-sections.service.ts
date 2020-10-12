@@ -26,6 +26,6 @@ export class ListCompanySectionsService {
             this.companySectionLocationFilter,
         ]);
 
-        return this.companySectionRepository.getList(filter, pagination);
+        return this.companySectionRepository.getList({ filter, pagination });
     }
 }

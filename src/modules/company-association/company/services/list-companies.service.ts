@@ -13,6 +13,6 @@ export class ListCompaniesService {
     ) {}
 
     async execute(filter?: CompanyFilterDTO, pagination?: PageInfo, userLocation?: GeoPoint): Promise<Company[]> {
-        return this.companyRepository.getList(filter, pagination, userLocation);
+        return this.companyRepository.getList({ filter, pagination, userLocation });
     }
 }

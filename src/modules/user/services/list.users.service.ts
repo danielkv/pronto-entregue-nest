@@ -9,6 +9,6 @@ export class ListUsersService {
     constructor(@Inject('IUserRepository') private userRepository: IUserRepository) {}
 
     execute(filter: UserFilterDTO, pagination: PageInfo): Promise<User[]> {
-        return this.userRepository.getList(filter, pagination);
+        return this.userRepository.getList({ filter, pagination });
     }
 }

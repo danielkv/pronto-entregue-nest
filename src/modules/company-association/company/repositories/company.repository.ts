@@ -10,6 +10,7 @@ import { CompanySearchFilter } from '../filters/company.search.filter';
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
 import { PageInfo } from '../../../common/types/page-info';
 import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
+import { ICompanyRepositoryGetList } from '../interfaces/company-options.repository.interface';
 
 @EntityRepository(Company)
 export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO> implements ICompanyRepository {
@@ -26,23 +27,23 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         ]);
     }
 
-    async getList(filter?: CompanyFilterDTO, pagination?: PageInfo, userLocation?: GeoPoint): Promise<Company[]> {
+    async getList(options: ICompanyRepositoryGetList): Promise<Company[]> {
         const query = this.createQueryBuilder('company');
 
         // apply base selection
         this.applyBaseSelection(query);
 
         // apply user selection
-        this.applyUserLocationSelection(query, userLocation);
+        this.applyUserLocationSelection(query, options?.userLocation);
 
         // apply areas selection
-        this.applyAreasSelection(query, userLocation);
+        this.applyAreasSelection(query, options?.userLocation);
 
         // apply filters
-        query.applyFilters(filter);
+        query.applyFilters(options?.filter);
 
         // apply pagination
-        query.applyPagination(pagination);
+        query.applyPagination(options?.pagination);
 
         // get data from DB
         const { entities: companies, raw } = await query.getRawAndEntities();

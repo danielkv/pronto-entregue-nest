@@ -2,14 +2,12 @@ import { QueryRunner } from 'typeorm';
 import { QueryBuilderBase } from '../repositories/query.builder.base';
 import { PageInfo } from '../types/page-info';
 import { IFilter } from './IFilter';
+import { IRepositoryBaseGetList } from './IRepositoryBaseGetList';
 
 export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
     filters: IFilter<Entity, EntityFilterDTO>[];
 
-    createQueryBuilder(
-        alias?: string,
-        queryRunner?: QueryRunner,
-    ): QueryBuilderBase<Entity, EntityFilterDTO>;
+    createQueryBuilder(alias?: string, queryRunner?: QueryRunner): QueryBuilderBase<Entity, EntityFilterDTO>;
 
     /**
      * Set filters that will be applied to query
@@ -32,10 +30,9 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
     /**
      * Returns array of Users filtered and paginated
      *
-     * @param filter filter
-     * @param pagination pagination
+     * @param options
      */
-    getList(filter?: EntityFilterDTO, pagination?: PageInfo): Promise<Entity[]>;
+    getList(options?: IRepositoryBaseGetList<EntityFilterDTO>): Promise<Entity[]>;
 
     /**
      * Count filtered users

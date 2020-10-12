@@ -12,6 +12,6 @@ export class ListPickUpAreasService {
     ) {}
 
     execute(filter: PickUpAreaFilterDTO, pagination: PageInfo): Promise<PickUpArea[]> {
-        return this.pickUpAreaRepository.getList(filter, pagination);
+        return this.pickUpAreaRepository.getList({ filter, pagination });
     }
 }
