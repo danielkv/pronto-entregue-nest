@@ -3,7 +3,7 @@ import { IListEntity } from '../../../common/interfaces/IListEntity';
 import { PageInfo } from '../../../common/types/page-info';
 import { Company } from '../entities/company.entity';
 
-@ObjectType()
+@ObjectType('CompanyList')
 export class CompaniesListDTO implements IListEntity<Company> {
     @Field(() => [Company], { nullable: 'items' })
     items?: Company[];

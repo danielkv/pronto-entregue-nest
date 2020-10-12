@@ -14,6 +14,8 @@ export class OrderCompanyFilter implements IFilter<Order, OrderFilterDTO> {
 
         const companyIds = !Array.isArray(filter.companyId) ? [filter.companyId] : filter.companyId;
 
+        if (!companyIds.length) return query;
+
         return query.andWhere('order.companyIds IN (:...companyIds)').setParameters({
             companyIds,
         });

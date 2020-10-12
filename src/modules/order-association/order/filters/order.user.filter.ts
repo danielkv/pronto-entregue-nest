@@ -14,6 +14,8 @@ export class OrderUserFilter implements IFilter<Order, OrderFilterDTO> {
 
         const userIds = !Array.isArray(filter.userId) ? [filter.userId] : filter.userId;
 
+        if (!userIds.length) return query;
+
         return query.andWhere('order.userIds IN (:...userIds)').setParameters({
             userIds,
         });

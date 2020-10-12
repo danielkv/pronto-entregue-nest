@@ -98,23 +98,23 @@ export class Order {
     })
     status: OrderStatusEnum;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('text', { name: 'message', nullable: true })
     message: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'nameAddress', nullable: true, length: 255 })
     nameAddress: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'streetAddress', nullable: true, length: 255 })
     streetAddress: string | null;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     @Column('int', { name: 'numberAddress', nullable: true })
     numberAddress: number | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', {
         name: 'complementAddress',
         nullable: true,
@@ -122,7 +122,7 @@ export class Order {
     })
     complementAddress: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', {
         name: 'referenceAddress',
         nullable: true,
@@ -130,23 +130,23 @@ export class Order {
     })
     referenceAddress: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'districtAddress', nullable: true, length: 255 })
     districtAddress: string | null;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     @Column('int', { name: 'zipcodeAddress', nullable: true })
     zipcodeAddress: number | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'cityAddress', nullable: true, length: 255 })
     cityAddress: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'stateAddress', nullable: true, length: 255 })
     stateAddress: string | null;
 
-    @Field(() => GeoPoint)
+    @Field(() => GeoPoint, { nullable: true })
     @Column('point', {
         name: 'locationAddress',
         nullable: true,
@@ -181,21 +181,18 @@ export class Order {
     @Column('datetime', { name: 'scheduledTo', nullable: true })
     scheduledTo: Date | null;
 
-    @Field(() => [Delivery])
     @OneToMany(
         () => Delivery,
         deliveries => deliveries.order,
     )
     deliveries: Delivery[];
 
-    @Field(() => [OrderProduct])
     @OneToMany(
         () => OrderProduct,
         orderProducts => orderProducts.order,
     )
     orderProducts: OrderProduct[];
 
-    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.orders,
@@ -207,7 +204,6 @@ export class Order {
     @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
     user: User;
 
-    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.orders,
@@ -219,7 +215,6 @@ export class Order {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field(() => PaymentMethod)
     @ManyToOne(
         () => PaymentMethod,
         paymentMethods => paymentMethods.orders,
@@ -231,7 +226,6 @@ export class Order {
     @JoinColumn([{ name: 'paymentMethodId', referencedColumnName: 'id' }])
     paymentMethod: PaymentMethod;
 
-    @Field(() => CreditHistory, { nullable: true })
     @OneToOne(
         () => CreditHistory,
         creditHistory => creditHistory.order,
@@ -243,7 +237,6 @@ export class Order {
     @JoinColumn([{ name: 'creditHistoryId', referencedColumnName: 'id' }])
     creditHistory: CreditHistory;
 
-    @Field(() => Coupon)
     @ManyToOne(
         () => Coupon,
         coupons => coupons.orders,
@@ -255,7 +248,6 @@ export class Order {
     @JoinColumn([{ name: 'couponId', referencedColumnName: 'id' }])
     coupon: Coupon;
 
-    @Field(() => Rating)
     @OneToOne(
         () => Rating,
         ratings => ratings.order,

@@ -1,12 +1,12 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { IListEntity } from '../../../common/interfaces/IListEntity';
 import { PageInfo } from '../../../common/types/page-info';
-import { CompanySection } from '../entities/company.type.entity';
+import { Order } from '../entities/order.entity';
 
-@ObjectType('CompanySectionList')
-export class CompanySectionsListDTO implements IListEntity<CompanySection> {
-    @Field(() => [CompanySection], { nullable: 'items' })
-    items?: CompanySection[];
+@ObjectType('OrderList')
+export class OrdersListDTO implements IListEntity<Order> {
+    @Field(() => [Order], { nullable: 'items' })
+    items?: Order[];
 
     @Field(() => Int)
     countItems?: number;

@@ -10,7 +10,7 @@ export class OrderStatusFilter implements IFilter<Order, OrderFilterDTO> {
         query: QueryBuilderBase<Order, OrderFilterDTO>,
         filter?: OrderFilterDTO,
     ): QueryBuilderBase<Order, OrderFilterDTO> {
-        if (!filter?.status) return query;
+        if (!filter?.status?.length) return query;
 
         return query.andWhere('order.status IN (:...status)').setParameters({
             status: filter.status,

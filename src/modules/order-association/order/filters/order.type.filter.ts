@@ -10,7 +10,7 @@ export class OrderTypeFilter implements IFilter<Order, OrderFilterDTO> {
         query: QueryBuilderBase<Order, OrderFilterDTO>,
         filter?: OrderFilterDTO,
     ): QueryBuilderBase<Order, OrderFilterDTO> {
-        if (!filter?.type) return query;
+        if (!filter?.type?.length) return query;
 
         return query.andWhere('order.type IN (:...type)').setParameters({
             type: filter.type,

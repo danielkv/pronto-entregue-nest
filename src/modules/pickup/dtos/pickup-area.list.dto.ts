@@ -3,7 +3,7 @@ import { IListEntity } from '../../common/interfaces/IListEntity';
 import { PageInfo } from '../../common/types/page-info';
 import { PickUpArea } from '../entities/pickup-area.entity';
 
-@ObjectType()
+@ObjectType('PickUpAreaList')
 export class PickUpAreaListDTO implements IListEntity<PickUpArea> {
     @Field(() => [PickUpArea], { nullable: 'items' })
     items?: PickUpArea[];

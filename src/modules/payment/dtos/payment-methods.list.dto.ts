@@ -3,7 +3,7 @@ import { IListEntity } from 'src/modules/common/interfaces/IListEntity';
 import { PageInfo } from 'src/modules/common/types/page-info';
 import { PaymentMethod } from '../entities/payment.method.entity';
 
-@ObjectType()
+@ObjectType('PaymentMethodList')
 export class PaymentMethodsList implements IListEntity<PaymentMethod> {
     @Field(() => [PaymentMethod], { nullable: 'items' })
     items?: PaymentMethod[];
