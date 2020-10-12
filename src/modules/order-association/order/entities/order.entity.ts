@@ -102,19 +102,15 @@ export class Order {
     @Column('text', { name: 'message', nullable: true })
     message: string | null;
 
-    @Field({ nullable: true })
     @Column('varchar', { name: 'nameAddress', nullable: true, length: 255 })
     nameAddress: string | null;
 
-    @Field({ nullable: true })
     @Column('varchar', { name: 'streetAddress', nullable: true, length: 255 })
     streetAddress: string | null;
 
-    @Field(() => Int, { nullable: true })
     @Column('int', { name: 'numberAddress', nullable: true })
     numberAddress: number | null;
 
-    @Field({ nullable: true })
     @Column('varchar', {
         name: 'complementAddress',
         nullable: true,
@@ -122,7 +118,6 @@ export class Order {
     })
     complementAddress: string | null;
 
-    @Field({ nullable: true })
     @Column('varchar', {
         name: 'referenceAddress',
         nullable: true,
@@ -130,23 +125,18 @@ export class Order {
     })
     referenceAddress: string | null;
 
-    @Field({ nullable: true })
     @Column('varchar', { name: 'districtAddress', nullable: true, length: 255 })
     districtAddress: string | null;
 
-    @Field(() => Int, { nullable: true })
     @Column('int', { name: 'zipcodeAddress', nullable: true })
     zipcodeAddress: number | null;
 
-    @Field({ nullable: true })
     @Column('varchar', { name: 'cityAddress', nullable: true, length: 255 })
     cityAddress: string | null;
 
-    @Field({ nullable: true })
     @Column('varchar', { name: 'stateAddress', nullable: true, length: 255 })
     stateAddress: string | null;
 
-    @Field(() => GeoPoint, { nullable: true })
     @Column('point', {
         name: 'locationAddress',
         nullable: true,

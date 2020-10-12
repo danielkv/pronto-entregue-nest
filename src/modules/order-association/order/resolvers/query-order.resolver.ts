@@ -1,14 +1,20 @@
-import { Args, Info, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Info, Query, Resolver } from '@nestjs/graphql';
 import { ExtractFieldsPipe } from 'src/modules/common/pipes/extract-fields.pipe';
 import { PageInfo } from 'src/modules/common/types/page-info';
 import { OrderFilterDTO } from '../dtos/order.filter.dto';
 import { OrdersListDTO } from '../dtos/orders.list.dto';
+import { Order } from '../entities/order.entity';
 import { CountOrdersService } from '../services/count-orders.service';
+import { GetOrderService } from '../services/get-order.service';
 import { ListOrdersService } from '../services/list-orders.service';
 
 @Resolver()
 export class QueryOrderResolver {
-    constructor(private countOrdersService: CountOrdersService, private listOrdersService: ListOrdersService) {}
+    constructor(
+        private countOrdersService: CountOrdersService,
+        private listOrdersService: ListOrdersService,
+        private getOrderService: GetOrderService,
+    ) {}
 
     @Query(() => OrdersListDTO)
     async listOrders(
@@ -25,5 +31,10 @@ export class QueryOrderResolver {
         if (fields.includes('countItems')) list.countItems = await this.countOrdersService.execute(filter);
 
         return list;
+    }
+
+    @Query(() => Order)
+    order(@Args('orderId', { type: () => ID }) orderId: number): Promise<Order> {
+        return this.getOrderService.execute(orderId);
     }
 }

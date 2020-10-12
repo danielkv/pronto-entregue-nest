@@ -21,7 +21,7 @@ const geoPointHelper = new GeoPointHelper();
 export class Address {
     @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
-    id: number;
+    id?: number;
 
     @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
@@ -63,26 +63,26 @@ export class Address {
     location: GeoPoint;
 
     @Field()
+    @Column('varchar', { name: 'reference', nullable: true, length: 255 })
+    reference: string | null;
+
+    @Field()
     @CreateDateColumn({ name: 'createdAt' })
-    createdAt: Date;
+    createdAt?: Date;
 
     @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
-    updatedAt: Date;
-
-    @Field()
-    @Column('varchar', { name: 'reference', nullable: true, length: 255 })
-    reference: string | null;
+    updatedAt?: Date;
 
     @OneToMany(
         () => Company,
         companies => companies.address,
     )
-    companies: Company[];
+    companies?: Company[];
 
     @ManyToMany(
         () => User,
         user => user.addresses,
     )
-    users: User[];
+    users?: User[];
 }

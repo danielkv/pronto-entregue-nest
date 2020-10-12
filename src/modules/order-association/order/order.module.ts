@@ -10,6 +10,8 @@ import { OrderStatusFilter } from './filters/order.status.filter';
 import { OrderTypeFilter } from './filters/order.type.filter';
 import { OrderUserFilter } from './filters/order.user.filter';
 import { QueryOrderResolver } from './resolvers/query-order.resolver';
+import { OrderResolver } from './resolvers/order.resolver';
+import { GetOrderService } from './services/get-order.service';
 
 @Module({
     imports: [OrderFilterDTO, OrdersListDTO],
@@ -22,11 +24,13 @@ import { QueryOrderResolver } from './resolvers/query-order.resolver';
         OrderUserFilter,
 
         // services
+        GetOrderService,
         ListOrdersService,
         CountOrdersService,
 
         // resolvers
         QueryOrderResolver,
+        OrderResolver,
 
         // repositories
         OrderRepositoryProvider,
