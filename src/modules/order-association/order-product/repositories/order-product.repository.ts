@@ -3,9 +3,10 @@ import { RepositoryBase } from '../../../common/repositories/repository.base';
 import { EntityRepository } from 'typeorm';
 import { OrderProduct } from '../../order/interfaces/order.product.entity';
 import { IOrderProductRepository } from '../interfaces/order-product.repository.interface';
+import { OrderProductFilterDTO } from '../dtos/order-product.filter.dto';
 
 @EntityRepository(OrderProduct)
-export class OrderProductRepository extends RepositoryBase<OrderProduct>
+export class OrderProductRepository extends RepositoryBase<OrderProduct, OrderProductFilterDTO>
     implements IOrderProductRepository {
     constructor() {
         super();
@@ -15,6 +16,6 @@ export class OrderProductRepository extends RepositoryBase<OrderProduct>
 }
 
 export const OrderProductRepositoryProvider = new RepositoryProviderFactory(
-    'OrderProductRepository',
+    'IOrderProductRepository',
     OrderProductRepository,
 ).create();
