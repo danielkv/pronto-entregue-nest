@@ -7,20 +7,11 @@ import { OrderFilterDTO } from '../dtos/order.filter.dto';
 
 @Injectable()
 export class OrderSearchFilter implements IFilter<Order, OrderFilterDTO> {
-    apply(
-        query: QueryBuilderBase<Order, OrderFilterDTO>,
-        filter?: any,
-    ): QueryBuilderBase<Order, OrderFilterDTO> {
+    apply(query: QueryBuilderBase<Order, OrderFilterDTO>, filter?: any): QueryBuilderBase<Order, OrderFilterDTO> {
         if (!filter?.search) return query;
 
-        return query
-            .andWhere(
-                new Brackets(qb =>
-                    qb.where('order.message LIKE :search').orWhere('order.message LIKE :search'),
-                ),
-            )
-            .setParameters({
-                search: `%${filter.search}%`,
-            });
+        return query.andWhere(new Brackets(qb => qb.where('order.message LIKE :search'))).setParameters({
+            search: `%${filter.search}%`,
+        });
     }
 }

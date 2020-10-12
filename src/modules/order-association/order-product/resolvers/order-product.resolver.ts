@@ -1,15 +1,16 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { Order } from '../../order/entities/order.entity';
+import { Product } from 'src/modules/product/entities/product.entity';
 import { OrderProduct } from '../../order/interfaces/order.product.entity';
-import { OrderProductLoader } from '../loaders/order-product.loader';
+import { OrderProductRelatedLoader } from '../loaders/order-product-related.loader';
 
-@Resolver(() => Order)
+@Resolver(() => OrderProduct)
 export class OrderProductResolver {
-    constructor(private orderProductLoader: OrderProductLoader) {}
-    @ResolveField(() => [OrderProduct])
-    products(@Parent() order: Order): Promise<OrderProduct[]> {
-        const orderId = order.id;
+    constructor(private orderProductRelatedLoader: OrderProductRelatedLoader) {}
 
-        return this.orderProductLoader.loader.load(orderId);
+    @ResolveField(() => Product)
+    productRelated(@Parent() orderProduct: OrderProduct): Promise<Product> {
+        const productRelatedId = orderProduct.productRelatedId;
+
+        return this.orderProductRelatedLoader.loader.load(productRelatedId);
     }
 }
