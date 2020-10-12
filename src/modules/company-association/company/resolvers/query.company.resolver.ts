@@ -10,6 +10,7 @@ import { GeoPoint } from '../../../common/types/geo-point';
 import { Company } from '../entities/company.entity';
 import { GetCompanyService } from '../services/get-company.service';
 import { ExtractFieldsPipe } from '../../../common/pipes/extract-fields.pipe';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 @Resolver()
 export class QueryCompanyResolver {
@@ -41,12 +42,15 @@ export class QueryCompanyResolver {
     }
 
     @Query(() => Company)
-    company(
+    async company(
         @Args('companyId', { type: () => ID }) companyId: number,
         @Args('userLocation', { type: () => GeoPoint, nullable: true })
         userLocation?: GeoPoint,
     ): Promise<Company> {
-        return this.getCompanyService.execute(companyId, userLocation);
+        const company = await this.getCompanyService.execute(companyId, userLocation);
+        if (!company) throw new HttpException('Empresa não encontrada', HttpStatus.NOT_FOUND);
+
+        return company;
     }
 
     // ordersStatusQty
