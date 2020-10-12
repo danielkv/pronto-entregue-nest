@@ -132,41 +132,36 @@ export class Company {
     companyUsers: CompanyUser[];
 
     @Field(() => [Coupon], { nullable: 'items' })
-    @OneToMany(
+    @ManyToMany(
         () => Coupon,
         coupon => coupon.companies,
     )
     coupons: Coupon[];
 
-    //@Field(() => [DeliveryArea], { nullable: 'items' })
     @OneToMany(
         () => DeliveryArea,
         deliveryAreas => deliveryAreas.company,
     )
     deliveryAreas: DeliveryArea[];
 
-    //@Field(() => [PickUpArea], { nullable: 'items' })
     @OneToMany(
         () => PickUpArea,
         pickUpArea => pickUpArea.company,
     )
     pickUpAreas: PickUpArea[];
 
-    @Field(() => [Order], { nullable: 'items' })
     @OneToMany(
         () => Order,
         orders => orders.company,
     )
     orders: Order[];
 
-    @Field(() => [Product], { nullable: 'items' })
     @OneToMany(
         () => Product,
         products => products.company,
     )
     products: Product[];
 
-    @Field(() => [Rating], { nullable: 'items' })
     @OneToMany(
         () => Rating,
         ratings => ratings.company,

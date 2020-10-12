@@ -94,7 +94,7 @@ export class Coupon {
         comment: 'Porcentagem do cupom que será pago pelo estabelecimento',
         precision: 10,
         scale: 2,
-        default: 100,
+        default: '100.00',
     })
     taxable: number | null;
 
@@ -112,7 +112,7 @@ export class Coupon {
         nullable: true,
         precision: 10,
         scale: 2,
-        default: 0,
+        default: '0.00',
     })
     minValue: number | null;
 
@@ -122,7 +122,7 @@ export class Coupon {
         nullable: true,
         precision: 10,
         scale: 2,
-        default: 0,
+        default: '0.00',
     })
     maxValue: number | null;
 

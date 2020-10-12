@@ -40,7 +40,7 @@ export class PaymentMethod {
         name: 'fee',
         precision: 10,
         scale: 2,
-        default: 0,
+        default: '0.00',
     })
     fee: number;
 
