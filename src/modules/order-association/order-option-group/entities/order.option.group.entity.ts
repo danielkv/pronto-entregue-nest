@@ -9,7 +9,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { OrderProduct } from '../../order/interfaces/order.product.entity';
+import { OrderProduct } from '../../order-product/entities/order.product.entity';
 import { OptionGroup } from '../../../product/entities/option.group.entity';
 import { OrderOption } from '../../order-option/entities/order.option.entity';
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';

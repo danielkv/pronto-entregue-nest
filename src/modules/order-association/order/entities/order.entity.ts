@@ -11,7 +11,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Delivery } from '../../../delivery/entities/delivery.entity';
-import { OrderProduct } from '../interfaces/order.product.entity';
+import { OrderProduct } from '../../order-product/entities/order.product.entity';
 import { User } from '../../../user/entities/user.entity';
 import { Company } from '../../../company-association/company/entities/company.entity';
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';

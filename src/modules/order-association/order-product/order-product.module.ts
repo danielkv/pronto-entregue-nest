@@ -3,10 +3,8 @@ import { ProductModule } from 'src/modules/product/product.module';
 import { OrderProductFilterDTO } from './dtos/order-product.filter.dto';
 import { OrderProductOrderFilter } from './filters/order-product.order.filter';
 import { OrderProductRelatedLoader } from './loaders/order-product-related.loader';
-import { OrderProductLoader } from './loaders/order-product.loader';
 import { OrderProductRepositoryProvider } from './repositories/order-product.repository';
-import { OrderOrderProductResolver } from './resolvers/order-order-product.resolver';
-import { OrderProductResolver } from './resolvers/order-product.resolver';
+import { OrderProductRelatedResolver } from './resolvers/order-product-related.resolver';
 import { ListOrderProductsService } from './services/list-order-products.service';
 
 @Module({
@@ -16,18 +14,17 @@ import { ListOrderProductsService } from './services/list-order-products.service
         ListOrderProductsService,
 
         // loaders
-        OrderProductLoader,
         OrderProductRelatedLoader,
 
         // filters
         OrderProductOrderFilter,
 
         // resolvers
-        OrderProductResolver,
-        OrderOrderProductResolver,
+        OrderProductRelatedResolver,
 
         // repositories
         OrderProductRepositoryProvider,
     ],
+    exports: [ListOrderProductsService],
 })
 export class OrderProductModule {}

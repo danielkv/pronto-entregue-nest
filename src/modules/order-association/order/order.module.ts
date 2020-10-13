@@ -12,9 +12,12 @@ import { OrderUserFilter } from './filters/order.user.filter';
 import { QueryOrderResolver } from './resolvers/query-order.resolver';
 import { OrderResolver } from './resolvers/order.resolver';
 import { GetOrderService } from './services/get-order.service';
+import { OrderProductLoader } from './loaders/order-product.loader';
+import { OrderProductModule } from '../order-product/order-product.module';
+import { OrderProductResolver } from './resolvers/order-product.resolver';
 
 @Module({
-    imports: [OrderFilterDTO, OrdersListDTO],
+    imports: [OrderFilterDTO, OrdersListDTO, OrderProductModule],
     providers: [
         // filters
         OrderCompanyFilter,
@@ -22,6 +25,9 @@ import { GetOrderService } from './services/get-order.service';
         OrderStatusFilter,
         OrderTypeFilter,
         OrderUserFilter,
+
+        // loaders
+        OrderProductLoader,
 
         // services
         GetOrderService,
@@ -31,6 +37,7 @@ import { GetOrderService } from './services/get-order.service';
         // resolvers
         QueryOrderResolver,
         OrderResolver,
+        OrderProductResolver,
 
         // repositories
         OrderRepositoryProvider,

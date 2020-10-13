@@ -10,7 +10,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { OrderProduct } from '../../order-association/order/interfaces/order.product.entity';
+import { OrderProduct } from '../../order-association/order-product/entities/order.product.entity';
 import { OptionGroup } from './option.group.entity';
 import { Category } from '../../category/entities/category.entity';
 import { Company } from '../../company-association/company/entities/company.entity';
@@ -114,7 +114,7 @@ export class Product {
     @Column('int', { name: 'companyId', nullable: true })
     companyId: number | null;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     @Column('int', { name: 'minDeliveryTime', nullable: true })
     minDeliveryTime: number | null;
 
@@ -127,35 +127,30 @@ export class Product {
     })
     scheduleEnabled: boolean | null;
 
-    @Field(() => [Coupon])
     @ManyToMany(
         () => Coupon,
         coupon => coupon.products,
     )
     coupons: Coupon[];
 
-    @Field(() => [User])
     @ManyToMany(
         () => User,
         user => user.favoriteProducts,
     )
     favoritedBy: User[];
 
-    @Field(() => [OptionGroup])
     @OneToMany(
         () => OptionGroup,
         optionsGroups => optionsGroups.product,
     )
     optionsGroups: OptionGroup[];
 
-    @Field(() => [OrderProduct])
     @OneToMany(
         () => OrderProduct,
         orderProducts => orderProducts.productRelated,
     )
     orderProducts: OrderProduct[];
 
-    @Field(() => Product)
     @ManyToOne(
         () => Category,
         categories => categories.products,
@@ -167,7 +162,6 @@ export class Product {
     @JoinColumn([{ name: 'categoryId', referencedColumnName: 'id' }])
     category: Category;
 
-    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.products,
@@ -179,7 +173,6 @@ export class Product {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field(() => [Sale])
     @OneToMany(
         () => Sale,
         sales => sales.product,

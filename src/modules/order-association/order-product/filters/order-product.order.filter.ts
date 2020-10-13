@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IFilter } from '../../../common/interfaces/IFilter';
 import { QueryBuilderBase } from '../../../common/repositories/query.builder.base';
-import { OrderProduct } from '../../order/interfaces/order.product.entity';
+import { OrderProduct } from '../entities/order.product.entity';
 import { OrderProductFilterDTO } from '../dtos/order-product.filter.dto';
 
 @Injectable()
