@@ -78,7 +78,6 @@ export class Company {
     @Column('int', { name: 'addressId', nullable: true })
     addressId: number | null;
 
-    @Field(() => [Category], { nullable: 'items' })
     @OneToMany(
         () => Category,
         categories => categories.company,

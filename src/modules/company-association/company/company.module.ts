@@ -14,13 +14,20 @@ import { CompanyLocationFilter } from './filters/company.location.filter';
 import { CompanyActiveFilter } from './filters/company.active.filter';
 import { CompanyPublishedFilter } from './filters/company.published.filter';
 import { CompanySearchFilter } from './filters/company.search.filter';
+import { CategoryModule } from 'src/modules/category/category.module';
+import { CompanyCategoriesLoader } from './loaders/company-categories.loader';
+import { CompanyCategoriesResolver } from './resolvers/company-categories.resolver';
 
 @Module({
-    imports: [CompaniesListDTO, CompanyFilterDTO],
+    imports: [CompaniesListDTO, CompanyFilterDTO, CategoryModule],
     providers: [
         // resolvers
         CompanyResolver,
         QueryCompanyResolver,
+        CompanyCategoriesResolver,
+
+        // loaders
+        CompanyCategoriesLoader,
 
         // services
         GetCompanyOrderTypeService,

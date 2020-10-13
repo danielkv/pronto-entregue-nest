@@ -5,7 +5,12 @@ import { Category } from '../entities/category.entity';
 import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
 
 @EntityRepository(Category)
-export class CategoryRepository extends RepositoryBase<Category, CategoryFilterDTO> {}
+export class CategoryRepository extends RepositoryBase<Category, CategoryFilterDTO> {
+    constructor() {
+        super();
+        this.setQueryBuilderTableName('category');
+    }
+}
 
 export const CategoryRepositoryProvider = new RepositoryProviderFactory(
     'ICategoryRepository',

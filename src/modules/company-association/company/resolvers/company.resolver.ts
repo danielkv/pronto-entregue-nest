@@ -8,6 +8,7 @@ import { GetCompanyOrderTypeService } from '../services/get-company-order-type.s
 @Resolver(() => Company)
 export class CompanyResolver {
     constructor(private getCompanyOrderTypeService: GetCompanyOrderTypeService) {}
+
     @ResolveField(() => [OrderTypeEnum])
     orderType(
         @Parent() company: Company,
