@@ -17,7 +17,7 @@ export class DeliveryAreaCompaniesFilter implements IFilter<DeliveryArea, Delive
         // check companyId type
         const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
 
-        query.andWhere('DeliveryArea.companyId IN (:...companyIds)', { companyIds });
+        query.andWhere('deliveryArea.companyId IN (:...companyIds)', { companyIds });
 
         // return query
         return query;

@@ -23,11 +23,11 @@ export class Address {
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id?: number;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'street', nullable: true, length: 255 })
     street: string | null;
 
@@ -35,7 +35,7 @@ export class Address {
     @Column('int', { name: 'number', nullable: true })
     number: number | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'complement', nullable: true, length: 255 })
     complement: string | null;
 
@@ -62,7 +62,7 @@ export class Address {
     })
     location: GeoPoint;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'reference', nullable: true, length: 255 })
     reference: string | null;
 

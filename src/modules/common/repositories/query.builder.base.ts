@@ -17,16 +17,16 @@ export class QueryBuilderBase<Entity, EntityFilterDTO> extends SelectQueryBuilde
 
     /**
      * Generic pipe function to Apply filters on query builder
-     * @param filterObject Filter coming from frontend
+     * @param filter Filter coming from frontend
      */
     applyFilters(
-        filters: IFilter<Entity, EntityFilterDTO>[],
-        filterObject: EntityFilterDTO,
+        filterHelpers: IFilter<Entity, EntityFilterDTO>[],
+        filter: EntityFilterDTO,
     ): QueryBuilderBase<Entity, EntityFilterDTO> {
-        if (!filters.length) return this;
+        if (!filterHelpers.length) return this;
 
-        filters.forEach(filterInstance => {
-            filterInstance.apply(this, filterObject);
+        filterHelpers.forEach(filterInstance => {
+            filterInstance.apply(this, filter);
         });
 
         return this;

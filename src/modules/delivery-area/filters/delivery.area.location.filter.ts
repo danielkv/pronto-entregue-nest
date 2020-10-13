@@ -16,10 +16,7 @@ export class DeliveryAreaLocationFilter implements IFilter<DeliveryArea, Deliver
 
         const userPoint = `ST_GeomFromText('POINT(${location.coordinates[0]} ${location.coordinates[1]})')`;
 
-        query.andWhere(
-            'ST_Distance_Sphere(:userPoint, deliveryArea.center) <= DeliveryArea.radius',
-            { userPoint },
-        );
+        query.andWhere('ST_Distance_Sphere(:userPoint, deliveryArea.center) <= deliveryArea.radius', { userPoint });
 
         // return query
         return query;

@@ -13,7 +13,7 @@ export class DeliveryAreaActiveFilter implements IFilter<DeliveryArea, DeliveryA
         if (filter?.onlyActive === false) return query;
 
         // apply filter
-        query.andWhere('DeliveryArea.active');
+        query.andWhere('deliveryArea.active');
 
         // return query
         return query;

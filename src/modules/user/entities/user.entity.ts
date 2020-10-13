@@ -34,11 +34,11 @@ export class User {
     @Column('varchar', { name: 'firstName', nullable: true, length: 255 })
     firstName: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('varchar', { name: 'lastName', nullable: true, length: 255 })
     lastName: string | null;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('text', { name: 'image', nullable: true })
     image: string | null;
 
@@ -51,11 +51,9 @@ export class User {
     })
     email: string | null;
 
-    @Field()
     @Column('varchar', { name: 'password', nullable: true, length: 255 })
     password: string | null;
 
-    @Field()
     @Column('varchar', { name: 'salt', nullable: true, length: 255 })
     salt: string | null;
 
@@ -91,35 +89,30 @@ export class User {
     )
     companyUsers: CompanyUser[];
 
-    @Field(() => [Coupon])
     @ManyToMany(
         () => Coupon,
         coupon => coupon.users,
     )
     coupons: Coupon[];
 
-    @Field()
     @OneToOne(
         () => CreditBalance,
         creditBalances => creditBalances.user,
     )
     creditBalance: CreditBalance;
 
-    @Field(() => [CreditHistory])
     @OneToMany(
         () => CreditHistory,
         creditHistory => creditHistory.user,
     )
     creditHistories: CreditHistory[];
 
-    @Field(() => [Delivery])
     @OneToMany(
         () => Delivery,
         deliveries => deliveries.deliveryMan,
     )
     deliveries: Delivery[];
 
-    @Field(() => [Product])
     @ManyToMany(
         () => Product,
         product => product.favoritedBy,
@@ -131,21 +124,18 @@ export class User {
     })
     favoriteProducts: Product[];
 
-    @Field(() => [Order])
     @OneToMany(
         () => Order,
         orders => orders.user,
     )
     orders: Order[];
 
-    @Field(() => [Rating])
     @OneToMany(
         () => Rating,
         ratings => ratings.user,
     )
     ratings: Rating[];
 
-    @Field(() => [Address])
     @ManyToMany(
         () => Address,
         address => address.users,
@@ -157,7 +147,6 @@ export class User {
     })
     addresses: Address[];
 
-    @Field(() => [UserMeta])
     @OneToMany(
         () => UserMeta,
         userMetas => userMetas.user,

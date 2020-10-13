@@ -8,12 +8,19 @@ import { CountUsersService } from './services/count.users.service';
 import { UserActiveFilter } from './filters/user.active.filter';
 import { UserCompanyFilter } from './filters/user.company.filter';
 import { UserIdFilter } from './filters/user.id.filter';
+import { UserAddressesLoader } from './loaders/user-address.loader';
+import { AddressModule } from '../address/address.module';
+import { UserResolver } from './resolvers/user.resolver';
 
 @Module({
-    imports: [UserFilterDTO, UserMetaDTO],
+    imports: [UserFilterDTO, UserMetaDTO, AddressModule],
     providers: [
         // resolvers
         QueryUsersResolver,
+        UserResolver,
+
+        // loaders
+        UserAddressesLoader,
 
         // filters
         UserActiveFilter,
