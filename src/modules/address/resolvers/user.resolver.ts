@@ -2,7 +2,7 @@ import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { Address } from 'src/modules/address/entities/address.entity';
 
-import { User } from '../entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 import { UserAddressesLoader } from '../loaders/user-address.loader';
 
 @Resolver(() => User)
