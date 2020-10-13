@@ -1,19 +1,10 @@
 import { QueryRunner } from 'typeorm';
 import { QueryBuilderBase } from '../repositories/query.builder.base';
-import { PageInfo } from '../types/page-info';
-import { IFilter } from './IFilter';
-import { IRepositoryBaseGetList } from './IRepositoryBaseGetList';
+import { IRepositoryFiltersOptions } from './IRepositoryFiltersOptions';
+import { IRepositoryListOptions } from './IRepositoryListOptions';
 
 export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
-    filters: IFilter<Entity, EntityFilterDTO>[];
-
     createQueryBuilder(alias?: string, queryRunner?: QueryRunner): QueryBuilderBase<Entity, EntityFilterDTO>;
-
-    /**
-     * Set filters that will be applied to query
-     * @param filters Filter to be applied
-     */
-    setFilters(filters: IFilter<Entity, EntityFilterDTO>[]): void;
 
     /**
      * Set name of table name will be auto created (used to apply filters)
@@ -32,12 +23,12 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
      *
      * @param options
      */
-    getList(options?: IRepositoryBaseGetList<EntityFilterDTO>): Promise<Entity[]>;
+    getList(options?: IRepositoryListOptions<Entity, EntityFilterDTO>): Promise<Entity[]>;
 
     /**
      * Count filtered users
      *
      * @param filter filter
      */
-    getCount(filter?: EntityFilterDTO): Promise<number>;
+    getCount(options: IRepositoryFiltersOptions<Entity, EntityFilterDTO>): Promise<number>;
 }

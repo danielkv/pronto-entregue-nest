@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PageInfo } from 'src/modules/common/types/page-info';
+import { IRepositoryFiltersOptions } from 'src/modules/common/interfaces/IRepositoryFiltersOptions';
 import { OrderFilterDTO } from '../dtos/order.filter.dto';
+import { Order } from '../entities/order.entity';
 import { OrderCompanyFilter } from '../filters/order.company.filter';
 import { OrderSearchFilter } from '../filters/order.search.filter';
 import { OrderStatusFilter } from '../filters/order.status.filter';
@@ -20,14 +21,17 @@ export class CountOrdersService {
     ) {}
 
     execute(filter?: OrderFilterDTO): Promise<number> {
-        this.orderRepository.setFilters([
-            this.orderCompanyFilter,
-            this.orderSearchFilter,
-            this.orderStatusFilter,
-            this.orderTypeFilter,
-            this.orderUserFilter,
-        ]);
+        const options: IRepositoryFiltersOptions<Order, OrderFilterDTO> = {
+            filter,
+            filterHelpers: [
+                this.orderCompanyFilter,
+                this.orderSearchFilter,
+                this.orderStatusFilter,
+                this.orderTypeFilter,
+                this.orderUserFilter,
+            ],
+        };
 
-        return this.orderRepository.getCount(filter);
+        return this.orderRepository.getCount(options);
     }
 }

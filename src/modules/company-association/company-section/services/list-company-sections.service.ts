@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { IRepositoryListOptions } from 'src/modules/common/interfaces/IRepositoryListOptions';
 import { PageInfo } from 'src/modules/common/types/page-info';
 import { CompanySectionFilterDTO } from '../dtos/company-section.filter.dto';
 import { CompanySection } from '../entities/company.type.entity';
@@ -19,13 +20,17 @@ export class ListCompanySectionsService {
     ) {}
 
     execute(filter?: CompanySectionFilterDTO, pagination?: PageInfo): Promise<CompanySection[]> {
-        this.companySectionRepository.setFilters([
-            this.companySectionActiveFilter,
-            this.companySectionSearchFilter,
-            this.companySectionCompanyFilter,
-            this.companySectionLocationFilter,
-        ]);
+        const options: IRepositoryListOptions<CompanySection, CompanySectionFilterDTO> = {
+            pagination,
+            filterHelpers: [
+                this.companySectionActiveFilter,
+                this.companySectionSearchFilter,
+                this.companySectionCompanyFilter,
+                this.companySectionLocationFilter,
+            ],
+            filter,
+        };
 
-        return this.companySectionRepository.getList({ filter, pagination });
+        return this.companySectionRepository.getList(options);
     }
 }

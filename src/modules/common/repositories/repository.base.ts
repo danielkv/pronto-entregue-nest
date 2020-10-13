@@ -1,24 +1,18 @@
 import { QueryRunner, Repository } from 'typeorm';
-import { IFilter } from '../interfaces/IFilter';
-import { IRepositoryBaseGetList } from '../interfaces/IRepositoryBaseGetList';
+import { IRepositoryListOptions } from '../interfaces/IRepositoryListOptions';
+import { IRepositoryFiltersOptions } from '../interfaces/IRepositoryFiltersOptions';
 import { IRepositoryBase } from '../interfaces/repository.base.interface';
-import { PageInfo } from '../types/page-info';
 
 import { QueryBuilderBase } from './query.builder.base';
 
 export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Repository<Entity>
     implements IRepositoryBase<Entity, EntityFilterDTO> {
     protected tablename: string | null = null;
-    filters: IFilter<Entity, EntityFilterDTO>[] = [];
 
     createQueryBuilder(alias?: string, queryRunner?: QueryRunner): QueryBuilderBase<Entity, EntityFilterDTO> {
         const query = super.createQueryBuilder(alias, queryRunner);
 
-        return new QueryBuilderBase<Entity, EntityFilterDTO>(query, this.filters);
-    }
-
-    setFilters(filters: IFilter<Entity, EntityFilterDTO>[]): void {
-        this.filters = filters;
+        return new QueryBuilderBase<Entity, EntityFilterDTO>(query);
     }
 
     setQueryBuilderTableName(name: string): void {
@@ -41,12 +35,12 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
         return Array.isArray(entityId) ? users : users[0];
     }
 
-    public getList(options?: IRepositoryBaseGetList<EntityFilterDTO>): Promise<Entity[]> {
+    public getList(options?: IRepositoryListOptions<Entity, EntityFilterDTO>): Promise<Entity[]> {
         // create query builder
         const query = this.createQueryBuilder(this.tablename);
 
         // apply filters
-        if (options.filter) query.applyFilters(options.filter);
+        if (options.filter) query.applyFilters(options.filterHelpers, options.filter);
 
         // apply pagination
         if (options.pagination) query.applyPagination(options.pagination);
@@ -57,12 +51,12 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
         return query.getMany();
     }
 
-    getCount(filter: EntityFilterDTO): Promise<number> {
+    getCount(options: IRepositoryFiltersOptions<Entity, EntityFilterDTO>): Promise<number> {
         // create query builder
         const query = this.createQueryBuilder(this.tablename);
 
         // apply filters
-        query.applyFilters(filter);
+        query.applyFilters(options.filterHelpers, options.filter);
 
         // return count
         return query.getCount();

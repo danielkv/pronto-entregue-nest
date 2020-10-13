@@ -5,7 +5,9 @@ import { UserMetaDTO } from './dtos/user.meta.dto';
 import { ListUsersService } from './services/list.users.service';
 import { QueryUsersResolver } from './resolvers/query.users.resolver';
 import { CountUsersService } from './services/count.users.service';
-import { ProductRepositoryProvider } from '../product/repositories/product.repository';
+import { UserActiveFilter } from './filters/user.active.filter';
+import { UserCompanyFilter } from './filters/user.company.filter';
+import { UserIdFilter } from './filters/user.id.filter';
 
 @Module({
     imports: [UserFilterDTO, UserMetaDTO],
@@ -13,13 +15,17 @@ import { ProductRepositoryProvider } from '../product/repositories/product.repos
         // resolvers
         QueryUsersResolver,
 
+        // filters
+        UserActiveFilter,
+        UserCompanyFilter,
+        UserIdFilter,
+
         // services
         ListUsersService,
         CountUsersService,
 
         // repositories
         UserRepositoryProvider,
-        ProductRepositoryProvider,
     ],
 })
 export class UserModule {}

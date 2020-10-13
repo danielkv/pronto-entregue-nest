@@ -3,16 +3,17 @@ import { GeoPoint } from '../../../common/types/geo-point';
 import { SelectQueryBuilder } from 'typeorm';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { Company } from '../entities/company.entity';
-import { ICompanyRepositoryGetList } from './company-options.repository.interface';
+import { ICompanyRepositoryListOptions } from './company-options.repository.interface';
+import { ICompanyFiltersOptions } from './company-filters-options.interface';
 
 export interface ICompanyRepository
     extends Omit<IRepositoryBase<Company, CompanyFilterDTO>, 'getList' | 'getCount' | 'get'> {
-    getList(options?: ICompanyRepositoryGetList): Promise<Company[]>;
+    getList(options?: ICompanyRepositoryListOptions): Promise<Company[]>;
+
+    getCount(options: ICompanyFiltersOptions): Promise<number>;
 
     get(companyId: number, userLocation?: GeoPoint): Promise<Company>;
     get(companyId: number[], userLocation?: GeoPoint): Promise<Company[]>;
-
-    getCount(filter?: CompanyFilterDTO, userLocation?: GeoPoint): Promise<number>;
 
     applyBaseSelection(query: SelectQueryBuilder<Company>): SelectQueryBuilder<Company>;
 

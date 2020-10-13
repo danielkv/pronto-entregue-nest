@@ -2,7 +2,9 @@ import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 import { IFilter } from '../../common/interfaces/IFilter';
 import { CategoryFilterDTO } from '../dtos/category.filter.dto';
 import { Category } from '../entities/category.entity';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class CategoryCompanyFilter implements IFilter<Category, CategoryFilterDTO> {
     async apply(
         query: QueryBuilderBase<Category, CategoryFilterDTO>,

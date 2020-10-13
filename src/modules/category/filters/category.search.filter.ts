@@ -3,7 +3,9 @@ import { Brackets } from 'typeorm';
 import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
 import { Category } from '../entities/category.entity';
 import { CategoryFilterDTO } from '../dtos/category.filter.dto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class CategorySearchFilter implements IFilter<Category, CategoryFilterDTO> {
     apply(
         query: QueryBuilderBase<Category, CategoryFilterDTO>,

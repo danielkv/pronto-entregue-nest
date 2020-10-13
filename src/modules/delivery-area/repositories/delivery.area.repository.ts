@@ -2,9 +2,6 @@ import { RepositoryBase } from '../../common/repositories/repository.base';
 import { Brackets, EntityRepository } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 import { DeliveryAreaFilterDTO } from '../dtos/delivery.area.filter.dto';
-import { DeliveryAreaLocationFilter } from '../filters/delivery.area.location.filter';
-import { DeliveryAreaCompaniesFilter } from '../filters/delivery.area.companies.filter';
-import { DeliveryAreaActiveFilter } from '../filters/delivery.area.active.filter';
 import { GeoPoint } from '../../common/types/geo-point';
 import { IDeliveryAreaRepository } from '../interfaces/delivery-area.repository.interface';
 import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
@@ -15,11 +12,7 @@ export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea, Deliver
     constructor() {
         super();
 
-        this.setFilters([
-            new DeliveryAreaLocationFilter(),
-            new DeliveryAreaCompaniesFilter(),
-            new DeliveryAreaActiveFilter(),
-        ]);
+        this.setQueryBuilderTableName('deliveryArea');
     }
 
     filterCompanyAndLocation(companyId: number, location: GeoPoint): Promise<DeliveryArea[]>;

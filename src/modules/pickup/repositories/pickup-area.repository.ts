@@ -1,9 +1,6 @@
 import { RepositoryBase } from '../../common/repositories/repository.base';
 import { Brackets, EntityRepository } from 'typeorm';
 import { PickUpAreaFilterDTO } from '../dtos/pickup-area.filter.dto';
-import { PickUpAreaLocationFilter } from '../filters/pickup-area.location.filter';
-import { PickUpAreaCompaniesFilter } from '../filters/pickup-area.companies.filter';
-import { PickUpAreaActiveFilter } from '../filters/pickup-area.active.filter';
 import { GeoPoint } from '../../common/types/geo-point';
 import { IPickUpAreaRepository } from '../interfaces/pickup-area.repository.interface';
 import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
@@ -15,11 +12,7 @@ export class PickUpAreaRepository extends RepositoryBase<PickUpArea, PickUpAreaF
     constructor() {
         super();
 
-        this.setFilters([
-            new PickUpAreaLocationFilter(),
-            new PickUpAreaCompaniesFilter(),
-            new PickUpAreaActiveFilter(),
-        ]);
+        this.setQueryBuilderTableName('pickUpArea');
     }
 
     filterCompanyAndLocation(companyId: number, location: GeoPoint): Promise<PickUpArea[]>;

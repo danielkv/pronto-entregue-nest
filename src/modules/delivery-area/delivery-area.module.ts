@@ -6,13 +6,22 @@ import { DeliveryAreaResolver } from './resolvers/delivery-area.resolver';
 import { CountDeliveryAreasService } from './services/count-delivery-areas.service';
 import { DeliveryAreaRepositoryProvider } from './repositories/delivery.area.repository';
 import { CompanyDeliveryAreaResolver } from './resolvers/company-delivery.resolver';
+import { DeliveryAreaActiveFilter } from './filters/delivery.area.active.filter';
+import { DeliveryAreaCompaniesFilter } from './filters/delivery.area.companies.filter';
+import { DeliveryAreaLocationFilter } from './filters/delivery.area.location.filter';
+import { DeliveryAreaListDTO } from './dtos/delivery-area.list.dto';
 
 @Module({
-    imports: [DeliveryAreaFilterDTO],
+    imports: [DeliveryAreaListDTO, DeliveryAreaFilterDTO],
     providers: [
         // resolvers
         DeliveryAreaResolver,
         CompanyDeliveryAreaResolver,
+
+        // filters
+        DeliveryAreaActiveFilter,
+        DeliveryAreaCompaniesFilter,
+        DeliveryAreaLocationFilter,
 
         // services
         GetDeliveryAreaService,

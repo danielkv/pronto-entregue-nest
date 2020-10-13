@@ -4,10 +4,10 @@ import { SelectQueryBuilder } from 'typeorm';
 import { IFilter } from '../interfaces/IFilter';
 import { PageInfo } from '../types/page-info';
 
-export class QueryBuilderBase<Entity, EntityFilter> extends SelectQueryBuilder<Entity> {
+export class QueryBuilderBase<Entity, EntityFilterDTO> extends SelectQueryBuilder<Entity> {
     query: SelectQueryBuilder<Entity>;
 
-    constructor(query: SelectQueryBuilder<Entity>, private filters: IFilter<Entity, EntityFilter>[]) {
+    constructor(query: SelectQueryBuilder<Entity>) {
         super(query);
 
         this.query = query;
@@ -17,13 +17,16 @@ export class QueryBuilderBase<Entity, EntityFilter> extends SelectQueryBuilder<E
 
     /**
      * Generic pipe function to Apply filters on query builder
-     * @param filter Filter coming from frontend
+     * @param filterObject Filter coming from frontend
      */
-    applyFilters(filter: EntityFilter): QueryBuilderBase<Entity, EntityFilter> {
-        if (!this.filters.length) return this;
+    applyFilters(
+        filters: IFilter<Entity, EntityFilterDTO>[],
+        filterObject: EntityFilterDTO,
+    ): QueryBuilderBase<Entity, EntityFilterDTO> {
+        if (!filters.length) return this;
 
-        this.filters.forEach(filterInstance => {
-            filterInstance.apply(this, filter);
+        filters.forEach(filterInstance => {
+            filterInstance.apply(this, filterObject);
         });
 
         return this;
@@ -34,7 +37,7 @@ export class QueryBuilderBase<Entity, EntityFilter> extends SelectQueryBuilder<E
      * @param query Query from QueryBuilder
      * @param pagination Pagination
      */
-    applyPagination(pagination: PageInfo): QueryBuilderBase<Entity, EntityFilter> {
+    applyPagination(pagination: PageInfo): QueryBuilderBase<Entity, EntityFilterDTO> {
         if (!pagination || _.isEmpty(pagination)) return this;
 
         const { skip, page, take } = pagination;

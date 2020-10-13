@@ -4,15 +4,36 @@ import { PageInfo } from '../../../common/types/page-info';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { GeoPoint } from '../../../common/types/geo-point';
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
+import { ICompanyRepositoryListOptions } from '../interfaces/company-options.repository.interface';
+import { CompanyActiveFilter } from '../filters/company.active.filter';
+import { CompanyLocationFilter } from '../filters/company.location.filter';
+import { CompanyPublishedFilter } from '../filters/company.published.filter';
+import { CompanySearchFilter } from '../filters/company.search.filter';
 
 @Injectable()
 export class ListCompaniesService {
     constructor(
         @Inject('ICompanyRepository')
         private companyRepository: ICompanyRepository,
+        private companyActiveFilter: CompanyActiveFilter,
+        private companyLocationFilter: CompanyLocationFilter,
+        private companyPublishedFilter: CompanyPublishedFilter,
+        private companySearchFilter: CompanySearchFilter,
     ) {}
 
     async execute(filter?: CompanyFilterDTO, pagination?: PageInfo, userLocation?: GeoPoint): Promise<Company[]> {
-        return this.companyRepository.getList({ filter, pagination, userLocation });
+        const options: ICompanyRepositoryListOptions = {
+            pagination,
+            userLocation,
+            filter,
+            filterHelpers: [
+                this.companyActiveFilter,
+                this.companyLocationFilter,
+                this.companyPublishedFilter,
+                this.companySearchFilter,
+            ],
+        };
+
+        return this.companyRepository.getList(options);
     }
 }

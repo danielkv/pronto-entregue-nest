@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PaymentMethodFilterDTO } from './dtos/payment-method.filter.dto';
+import { PaymentMethodCompanyFilter } from './filters/payment-method.company.filter';
+import { PaymentMethodTypeFilter } from './filters/payment-method.type.filter';
 import { CompanyPaymentMethodsLoader } from './loaders/company-payment-methods.loader';
 import { PaymentMethodRepositoryProvider } from './repositories/payment-method.repository';
 import { PaymentMethodCompanyResolver } from './resolvers/payment-method.company.resolver';
@@ -13,6 +15,10 @@ import { ListPaymentMethodsService } from './services/list-payment-methods.servi
         // services
         ListPaymentMethodsService,
         CountPaymentMethodsService,
+
+        // filters
+        PaymentMethodCompanyFilter,
+        PaymentMethodTypeFilter,
 
         // loaders
         CompanyPaymentMethodsLoader,

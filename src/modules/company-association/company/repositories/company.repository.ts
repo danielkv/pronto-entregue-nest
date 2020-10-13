@@ -3,14 +3,10 @@ import { GeoPoint } from '../../../common/types/geo-point';
 import { EntityRepository, SelectQueryBuilder } from 'typeorm';
 import { CompanyFilterDTO } from '../dtos/company.filter.dto';
 import { Company } from '../entities/company.entity';
-import { CompanyActiveFilter } from '../filters/company.active.filter';
-import { CompanyLocationFilter } from '../filters/company.location.filter';
-import { CompanyPublishedFilter } from '../filters/company.published.filter';
-import { CompanySearchFilter } from '../filters/company.search.filter';
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
-import { PageInfo } from '../../../common/types/page-info';
 import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
-import { ICompanyRepositoryGetList } from '../interfaces/company-options.repository.interface';
+import { ICompanyRepositoryListOptions } from '../interfaces/company-options.repository.interface';
+import { ICompanyFiltersOptions } from '../interfaces/company-filters-options.interface';
 
 @EntityRepository(Company)
 export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO> implements ICompanyRepository {
@@ -18,16 +14,9 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         super();
 
         this.setQueryBuilderTableName('company');
-
-        this.setFilters([
-            new CompanyLocationFilter(),
-            new CompanySearchFilter(),
-            new CompanyPublishedFilter(),
-            new CompanyActiveFilter(),
-        ]);
     }
 
-    async getList(options: ICompanyRepositoryGetList): Promise<Company[]> {
+    async getList(options: ICompanyRepositoryListOptions): Promise<Company[]> {
         const query = this.createQueryBuilder('company');
 
         // apply base selection
@@ -40,7 +29,7 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         this.applyAreasSelection(query, options?.userLocation);
 
         // apply filters
-        query.applyFilters(options?.filter);
+        query.applyFilters(options.filterHelpers, options?.filter);
 
         // apply pagination
         query.applyPagination(options?.pagination);
@@ -84,15 +73,15 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         else return companies[0];
     }
 
-    getCount(filter?: CompanyFilterDTO, userLocation?: GeoPoint): Promise<number> {
+    getCount(options: ICompanyFiltersOptions): Promise<number> {
         // create query
         const query = this.createQueryBuilder('company');
 
         // apply areas selection
-        this.applyAreasSelection(query, userLocation);
+        this.applyAreasSelection(query, options.userLocation);
 
         // apply filters
-        query.applyFilters(filter);
+        query.applyFilters(options.filterHelpers, options.filter);
 
         // return count items
         return query.getCount();

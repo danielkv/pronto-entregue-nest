@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { IRepositoryListOptions } from 'src/modules/common/interfaces/IRepositoryListOptions';
 import { PageInfo } from 'src/modules/common/types/page-info';
 import { OrderFilterDTO } from '../dtos/order.filter.dto';
 import { Order } from '../entities/order.entity';
@@ -21,14 +22,18 @@ export class ListOrdersService {
     ) {}
 
     execute(filter?: OrderFilterDTO, pagination?: PageInfo): Promise<Order[]> {
-        this.orderRepository.setFilters([
-            this.orderCompanyFilter,
-            this.orderSearchFilter,
-            this.orderStatusFilter,
-            this.orderTypeFilter,
-            this.orderUserFilter,
-        ]);
+        const options: IRepositoryListOptions<Order, OrderFilterDTO> = {
+            pagination,
+            filter,
+            filterHelpers: [
+                this.orderCompanyFilter,
+                this.orderSearchFilter,
+                this.orderStatusFilter,
+                this.orderTypeFilter,
+                this.orderUserFilter,
+            ],
+        };
 
-        return this.orderRepository.getList({ filter, pagination });
+        return this.orderRepository.getList(options);
     }
 }
