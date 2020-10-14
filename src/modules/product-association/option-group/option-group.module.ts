@@ -7,6 +7,7 @@ import { OptionGroupRemovedFilter } from './filters/option-group.removed.filter'
 import { OptionGroupSearchFilter } from './filters/option-group.search.filter';
 import { GetOptionGroupService } from './services/get-options-groups.service';
 import { OptionGroupRepositoryProvider } from './repositories/option-group.repository';
+import { ListOptionGroupService } from './services/list-options-groups.service';
 
 @Module({
     imports: [OptionGroupFilterDTO],
@@ -20,9 +21,11 @@ import { OptionGroupRepositoryProvider } from './repositories/option-group.repos
 
         // services
         GetOptionGroupService,
+        ListOptionGroupService,
 
         // repositories
         OptionGroupRepositoryProvider,
     ],
+    exports: [ListOptionGroupService],
 })
 export class OptionGroupModule {}

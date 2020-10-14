@@ -7,6 +7,7 @@ import { OptionRemovedFilter } from './filters/option.removed.filter';
 import { OptionSearchFilter } from './filters/option.search.filter';
 import { OptionRepositoryProvider } from './repositories/option.repository';
 import { GetOptionService } from './services/get-option.service';
+import { ListOptionService } from './services/list-options.service';
 
 @Module({
     imports: [OptionFilterDTO],
@@ -20,9 +21,11 @@ import { GetOptionService } from './services/get-option.service';
 
         // services
         GetOptionService,
+        ListOptionService,
 
         // repositories
         OptionRepositoryProvider,
     ],
+    exports: [ListOptionService],
 })
 export class OptionModule {}
