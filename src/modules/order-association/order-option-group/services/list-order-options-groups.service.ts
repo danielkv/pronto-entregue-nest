@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IRepositoryListOptions } from 'src/modules/common/interfaces/IRepositoryListOptions';
 import { PageInfo } from 'src/modules/common/types/page-info';
-import { IOrderProductRepository } from '../../order-product/interfaces/order-product.repository.interface';
 import { OrderOptionGroupFilterDTO } from '../dtos/order-option-group.filter.dto';
 import { OrderOptionGroup } from '../entities/order.option.group.entity';
 import { OrderOptionGroupProductFilter } from '../filters/order-option-group.product.filter';
