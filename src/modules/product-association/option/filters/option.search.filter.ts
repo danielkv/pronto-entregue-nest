@@ -9,7 +9,7 @@ export class OptionSearchFilter implements IFilter<Option, OptionFilterDTO> {
         query: QueryBuilderBase<Option, OptionFilterDTO>,
         filter: OptionFilterDTO,
     ): QueryBuilderBase<Option, OptionFilterDTO> {
-        if (filter?.search) return query;
+        if (!filter?.search) return query;
 
         // apply filter
         query
