@@ -11,7 +11,7 @@ export class ProductIdFilter implements IFilter<Product, ProductFilterDTO> {
         if (!filter?.productId) return query;
 
         // apply filter
-        query.whereInIds(filter.productId);
+        query.andWhereInIds(filter.productId);
 
         //return filter
         return query;

@@ -9,11 +9,11 @@ export class OptionGroupSearchFilter implements IFilter<OptionGroup, OptionGroup
         query: QueryBuilderBase<OptionGroup, OptionGroupFilterDTO>,
         filter: OptionGroupFilterDTO,
     ): QueryBuilderBase<OptionGroup, OptionGroupFilterDTO> {
-        if (filter?.search) return query;
+        if (!filter?.search) return query;
 
         // apply filter
         query
-            .andWhere(new Brackets(qb => qb.where('option.name LIKE :search')))
+            .andWhere(new Brackets(qb => qb.where('optioGroup.name LIKE :search')))
             .setParameters({ search: `%${filter.search}%` });
 
         //return filter

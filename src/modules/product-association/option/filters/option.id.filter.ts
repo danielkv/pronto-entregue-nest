@@ -11,7 +11,7 @@ export class OptionIdFilter implements IFilter<Option, OptionFilterDTO> {
         if (!filter?.optionId) return query;
 
         // apply filter
-        query.whereInIds(filter.optionId);
+        query.andWhereInIds(filter.optionId);
 
         //return filter
         return query;

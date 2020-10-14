@@ -11,7 +11,7 @@ export class SaleIdFilter implements IFilter<Sale, SaleFilterDTO> {
         if (!filter?.saleId) return query;
 
         // apply filter
-        query.whereInIds(filter.saleId);
+        query.andWhereInIds(filter.saleId);
 
         //return filter
         return query;

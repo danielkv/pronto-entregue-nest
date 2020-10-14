@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { OptionGroup } from '../entities/option.group.entity';
-import { IOptionGroupRepository } from '../interface/option-grou.repository.interface';
+import { IOptionGroupRepository } from '../interfaces/option-grou.repository.interface';
 
 @Injectable()
 export class GetOptionGroupService {

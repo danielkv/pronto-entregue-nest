@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Option } from '../entities/option.entity';
-import { IOptionRepository } from '../interface/option.repository.interface';
+import { IOptionRepository } from '../interfaces/option.repository.interface';
 
 @Injectable()
 export class GetOptionService {

@@ -4,14 +4,11 @@ import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
 
 export class UserIdFilter implements IFilter<User, UserFilterDTO> {
-    apply(
-        query: QueryBuilderBase<User, UserFilterDTO>,
-        filter: UserFilterDTO,
-    ): QueryBuilderBase<User, UserFilterDTO> {
+    apply(query: QueryBuilderBase<User, UserFilterDTO>, filter: UserFilterDTO): QueryBuilderBase<User, UserFilterDTO> {
         if (!filter?.userId) return query;
 
         // apply filter
-        query.whereInIds(filter.userId);
+        query.andWhereInIds(filter.userId);
 
         //return filter
         return query;

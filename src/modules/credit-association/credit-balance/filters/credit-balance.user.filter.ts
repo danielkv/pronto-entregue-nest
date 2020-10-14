@@ -11,7 +11,7 @@ export class CreditBalanceUserFilter implements IFilter<CreditBalance, CreditBal
         if (!filter?.userId) return query;
 
         // apply filter
-        query.whereInIds(filter.userId);
+        query.andWhereInIds(filter.userId);
 
         //return filter
         return query;

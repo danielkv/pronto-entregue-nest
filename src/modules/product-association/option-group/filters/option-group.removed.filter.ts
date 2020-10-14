@@ -8,7 +8,7 @@ export class OptionGroupRemovedFilter implements IFilter<OptionGroup, OptionGrou
         query: QueryBuilderBase<OptionGroup, OptionGroupFilterDTO>,
         filter: OptionGroupFilterDTO,
     ): QueryBuilderBase<OptionGroup, OptionGroupFilterDTO> {
-        if (filter?.includeRemoved === false) return query;
+        if (filter?.includeRemoved === true) return query;
 
         // apply filter
         query.andWhere('!optionGroup.removed');

@@ -8,8 +8,8 @@ import { OptionOptionGroupFilter } from '../filters/option.optionGroup.filter';
 import { OptionRemovedFilter } from '../filters/option.removed.filter';
 import { OptionSearchFilter } from '../filters/option.search.filter';
 
-import { IOptionListOptions } from '../interface/option-list-options.interface';
-import { IOptionRepository } from '../interface/option.repository.interface';
+import { IOptionListOptions } from '../interfaces/option-list-options.interface';
+import { IOptionRepository } from '../interfaces/option.repository.interface';
 
 @Injectable()
 export class ListOptionService {

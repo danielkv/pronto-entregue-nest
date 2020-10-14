@@ -7,8 +7,8 @@ import { OptionGroupIdFilter } from '../filters/option-group.id.filter';
 import { OptionGroupProductFilter } from '../filters/option-group.product.filter';
 import { OptionGroupRemovedFilter } from '../filters/option-group.removed.filter';
 import { OptionGroupSearchFilter } from '../filters/option-group.search.filter';
-import { IOptionGroupRepository } from '../interface/option-grou.repository.interface';
-import { IOptionGroupListOptions } from '../interface/option-group-list-options.interface';
+import { IOptionGroupRepository } from '../interfaces/option-grou.repository.interface';
+import { IOptionGroupListOptions } from '../interfaces/option-group-list-options.interface';
 
 @Injectable()
 export class ListOptionGroupService {

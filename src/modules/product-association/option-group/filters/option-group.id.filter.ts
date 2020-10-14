@@ -11,7 +11,7 @@ export class OptionGroupIdFilter implements IFilter<OptionGroup, OptionGroupFilt
         if (!filter?.optionGroupId) return query;
 
         // apply filter
-        query.whereInIds(filter.optionGroupId);
+        query.andWhereInIds(filter.optionGroupId);
 
         //return filter
         return query;
