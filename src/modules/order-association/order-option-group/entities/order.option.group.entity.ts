@@ -58,7 +58,6 @@ export class OrderOptionGroup {
     @Column('int', { name: 'optionsGroupRelatedId', nullable: true })
     optionsGroupRelatedId: number | null;
 
-    @Field(() => OrderProduct)
     @ManyToOne(
         () => OrderProduct,
         orderProducts => orderProducts.orderOptionGroups,
@@ -67,7 +66,6 @@ export class OrderOptionGroup {
     @JoinColumn([{ name: 'orderProductId', referencedColumnName: 'id' }])
     orderProduct: OrderProduct;
 
-    @Field(() => OptionGroup)
     @ManyToOne(
         () => OptionGroup,
         optionsGroups => optionsGroups.orderOptionGroups,
@@ -76,7 +74,6 @@ export class OrderOptionGroup {
     @JoinColumn([{ name: 'optionsGroupRelatedId', referencedColumnName: 'id' }])
     optionsGroupRelated: OptionGroup;
 
-    @Field(() => [OrderOption])
     @OneToMany(
         () => OrderOption,
         orderOptions => orderOptions.orderOptionsGroup,
