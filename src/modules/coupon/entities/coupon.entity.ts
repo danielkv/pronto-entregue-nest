@@ -9,7 +9,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Order } from '../../order-association/order/entities/order.entity';
-import { Product } from '../../product/entities/product.entity';
+import { Product } from '../../product-association/product/entities/product.entity';
 import { User } from '../../user/entities/user.entity';
 import { Company } from '../../company-association/company/entities/company.entity';
 import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';

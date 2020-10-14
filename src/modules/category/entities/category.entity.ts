@@ -11,7 +11,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Company } from '../../company-association/company/entities/company.entity';
-import { Product } from '../../product/entities/product.entity';
+import { Product } from '../../product-association/product/entities/product.entity';
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})

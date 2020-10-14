@@ -1,3 +1,4 @@
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import {
     Column,
     CreateDateColumn,
@@ -9,8 +10,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { OrderOptionGroup } from '../../order-option-group/entities/order.option.group.entity';
-import { Option } from '../../../product/entities/option.entity';
-import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { Option } from '../../../product-association/option/entities/option.entity';
 
 @ObjectType()
 @Index('orderOptionsGroupId', ['orderOptionsGroupId'], {})
@@ -52,7 +52,6 @@ export class OrderOption {
     @Column('int', { name: 'optionRelatedId', nullable: true })
     optionRelatedId: number | null;
 
-    @Field(() => OrderOptionGroup)
     @ManyToOne(
         () => OrderOptionGroup,
         orderOptionGroups => orderOptionGroups.orderOptions,
@@ -61,7 +60,6 @@ export class OrderOption {
     @JoinColumn([{ name: 'orderOptionsGroupId', referencedColumnName: 'id' }])
     orderOptionsGroup: OrderOptionGroup;
 
-    @Field(() => Option)
     @ManyToOne(
         () => Option,
         options => options.orderOptions,

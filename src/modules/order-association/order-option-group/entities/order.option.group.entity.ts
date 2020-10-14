@@ -10,18 +10,10 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { OrderProduct } from '../../order-product/entities/order.product.entity';
-import { OptionGroup } from '../../../product/entities/option.group.entity';
 import { OrderOption } from '../../order-option/entities/order.option.entity';
-import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
-
-export enum OrderOptionGroupPriceType {
-    HIGHER = 'higher',
-    SUM = 'sum',
-}
-
-registerEnumType(OrderOptionGroupPriceType, {
-    name: 'OrderOptionGroupPriceType',
-});
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { OrderOptionGroupPriceType } from '../enums/order-option-group-price-type.enum';
+import { OptionGroup } from 'src/modules/product-association/option-group/entities/option.group.entity';
 
 @ObjectType()
 @Index('orderProductId', ['orderProductId'], {})

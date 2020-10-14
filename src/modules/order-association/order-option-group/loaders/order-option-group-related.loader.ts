@@ -6,7 +6,7 @@ import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
 import { IDataLoaderBase } from '../../../common/helpers/data.loader.interface';
 
 @Injectable()
-export class OrderProductRelatedLoader extends DataLoaderBase<number, Product>
+export class OrderOptionGroupRelatedLoader extends DataLoaderBase<number, Product>
     implements IDataLoaderBase<number, Product> {
     constructor(private readonly getProductsService: GetProductsService) {
         super();

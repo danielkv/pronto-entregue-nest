@@ -4,7 +4,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { ConfigModule } from './modules/config/config.module';
 import { CouponModule } from './modules/coupon/coupon.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
-import { ProductModule } from './modules/product/product.module';
+import { ProductModule } from './modules/product-association/product/product.module';
 import { UserModule } from './modules/user/user.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
@@ -18,6 +18,7 @@ import { DeliveryAreaModule } from './modules/delivery-area/delivery-area.module
 import { OrderAssociationModule } from './modules/order-association/order-association.module';
 import { CompanyAssociationModule } from './modules/company-association/company-association.module';
 import { CreditAssociationModule } from './modules/credit-association/credit-association.module';
+import { ProductAssociationModule } from './modules/product-association/product-association.module';
 
 @Module({
     imports: [
@@ -39,6 +40,7 @@ import { CreditAssociationModule } from './modules/credit-association/credit-ass
         OrderAssociationModule,
         CompanyAssociationModule,
         CreditAssociationModule,
+        ProductAssociationModule,
     ],
     providers: [],
 })

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ProductModule } from 'src/modules/product/product.module';
+import { ProductModule } from 'src/modules/product-association/product/product.module';
 import { OrderOptionGroupModule } from '../order-option-group/order-option-group.module';
 import { OrderProductFilterDTO } from './dtos/order-product.filter.dto';
 import { OrderProductOrderFilter } from './filters/order-product.order.filter';

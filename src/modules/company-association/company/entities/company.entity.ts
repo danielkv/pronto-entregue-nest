@@ -19,7 +19,7 @@ import { CompanyPaymentMethod } from './company.payment.method.entity';
 import { CompanyUser } from './company.user.entity';
 import { DeliveryArea } from '../../../delivery-area/entities/delivery.area.entity';
 import { Order } from '../../../order-association/order/entities/order.entity';
-import { Product } from '../../../product/entities/product.entity';
+import { Product } from '../../../product-association/product/entities/product.entity';
 import { Rating } from '../../../rating/entities/rating.entity';
 import { PickUpArea } from '../../../pickup/entities/pickup-area.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';

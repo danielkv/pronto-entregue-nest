@@ -18,7 +18,7 @@ import { Order } from '../../order-association/order/entities/order.entity';
 import { Rating } from '../../rating/entities/rating.entity';
 import { UserMeta } from './user.meta.entity';
 import { Coupon } from '../../coupon/entities/coupon.entity';
-import { Product } from '../../product/entities/product.entity';
+import { Product } from '../../product-association/product/entities/product.entity';
 import { Address } from '../../address/entities/address.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
