@@ -30,6 +30,6 @@ export class AbstractAddress {
     @Field(() => GeoPoint)
     location: GeoPoint;
 
-    @Field()
+    @Field({ nullable: true })
     reference: string | null;
 }
