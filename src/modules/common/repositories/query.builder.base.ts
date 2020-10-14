@@ -42,9 +42,11 @@ export class QueryBuilderBase<Entity, EntityFilterDTO> extends SelectQueryBuilde
 
         const { skip, page, take } = pagination;
 
-        if (!skip || page) this.query.skip(skip || page * take);
+        if (take) {
+            if (skip ?? page) this.skip(skip ?? page * take);
 
-        if (take) this.query.take(take);
+            this.take(take);
+        }
 
         return this;
     }
