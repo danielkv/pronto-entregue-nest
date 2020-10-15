@@ -32,6 +32,7 @@ export class ListOptionGroupService {
                 this.optionGroupRemovedFilter,
                 this.optionGroupSearchFilter,
             ],
+            orderBy: { 'optionGroup.order': 'ASC' },
         };
 
         return this.optionGroupRepository.getList(options);

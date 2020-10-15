@@ -13,18 +13,12 @@ import {
 import { OrderProduct } from '../../../order-association/order-product/entities/order.product.entity';
 import { Category } from '../../../category/entities/category.entity';
 import { Company } from '../../../company-association/company/entities/company.entity';
-import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { User } from '../../../user/entities/user.entity';
 import { OptionGroup } from '../../option-group/entities/option.group.entity';
 import { Sale } from '../../sale/entities/sale.entity';
-
-export enum ProductType {
-    INLINE = 'inline',
-    PANEL = 'panel',
-}
-
-registerEnumType(ProductType, { name: 'ProductType' });
+import { ProductTypeEnum } from '../enums/product-type.enum';
 
 @ObjectType()
 @Index('categoryId', ['categoryId'], {})
@@ -74,13 +68,13 @@ export class Product {
     @Column('int', { name: 'order', default: 0 })
     order: number;
 
-    @Field(() => ProductType)
+    @Field(() => ProductTypeEnum)
     @Column('enum', {
         name: 'type',
-        enum: ProductType,
-        default: ProductType.INLINE,
+        enum: ProductTypeEnum,
+        default: ProductTypeEnum.INLINE,
     })
-    type: ProductType;
+    type: ProductTypeEnum;
 
     @Field(() => Float)
     @Column('decimal', {

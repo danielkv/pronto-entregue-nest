@@ -11,23 +11,12 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
-import { Field, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Option } from '../../option/entities/option.entity';
 import { Product } from '../../product/entities/product.entity';
 import { OrderOptionGroup } from '../../../order-association/order-option-group/entities/order.option.group.entity';
-
-export enum OptionGroupType {
-    SINGLE = 'single',
-    MULTI = 'multi',
-}
-
-export enum OptionGroupPriceType {
-    HIGHER = 'higher',
-    SUM = 'sum',
-}
-
-registerEnumType(OptionGroupPriceType, { name: 'OptionGroupPriceType' });
-registerEnumType(OptionGroupType, { name: 'OptionGroupType' });
+import { OptionGroupTypeEnum } from '../enums/option-group-type.enum';
+import { OptionGroupPriceTypeEnum } from '../enums/option-group-price-type.enum';
 
 @ObjectType()
 @Index('productId', ['productId'], {})
@@ -42,21 +31,21 @@ export class OptionGroup {
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field(() => OptionGroupType)
+    @Field(() => OptionGroupTypeEnum)
     @Column('enum', {
         name: 'type',
-        enum: OptionGroupType,
-        default: OptionGroupType.SINGLE,
+        enum: OptionGroupTypeEnum,
+        default: OptionGroupTypeEnum.SINGLE,
     })
-    type: OptionGroupType;
+    type: OptionGroupTypeEnum;
 
-    @Field(() => OptionGroupPriceType)
+    @Field(() => OptionGroupPriceTypeEnum)
     @Column('enum', {
         name: 'priceType',
-        enum: OptionGroupPriceType,
-        default: OptionGroupPriceType.HIGHER,
+        enum: OptionGroupPriceTypeEnum,
+        default: OptionGroupPriceTypeEnum.HIGHER,
     })
-    priceType: OptionGroupPriceType;
+    priceType: OptionGroupPriceTypeEnum;
 
     @Field(() => Int)
     @Column('int', { name: 'order', default: 0 })

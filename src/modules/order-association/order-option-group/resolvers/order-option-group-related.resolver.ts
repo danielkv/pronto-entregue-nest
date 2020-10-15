@@ -8,7 +8,7 @@ export class OrderOptionGroupRelatedResolver {
     constructor(private orderOptionGroupRelatedLoader: OrderOptionGroupRelatedLoader) {}
 
     @ResolveField(() => OptionGroup)
-    productRelated(@Parent() orderOptionGroup: OrderOptionGroup) {
+    optionGroupRelated(@Parent() orderOptionGroup: OrderOptionGroup) {
         const optionGroup: OptionGroup['id'] = orderOptionGroup.optionsGroupRelatedId;
 
         return this.orderOptionGroupRelatedLoader.loader.load(optionGroup);
