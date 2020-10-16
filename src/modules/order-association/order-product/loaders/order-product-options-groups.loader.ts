@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as DataLoader from 'dataloader';
 import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
-import { IDataLoaderBase } from '../../../common/helpers/data.loader.interface';
+import { IDataLoaderBase } from '../../../common/interfaces/data.loader.interface';
 import { OrderOptionGroup } from '../../order-option-group/entities/order.option.group.entity';
 import { ListOrderOptionsGroupsService } from '../../order-option-group/services/list-order-options-groups.service';
 

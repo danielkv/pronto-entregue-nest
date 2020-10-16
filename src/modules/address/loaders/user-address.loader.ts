@@ -3,7 +3,7 @@ import * as DataLoader from 'dataloader';
 import { Address } from '../entities/address.entity';
 import { ListAddressesService } from '../services/list-addresses.service';
 import { DataLoaderBase } from '../../common/helpers/data.loader.base';
-import { IDataLoaderBase } from '../../common/helpers/data.loader.interface';
+import { IDataLoaderBase } from '../../common/interfaces/data.loader.interface';
 
 @Injectable()
 export class UserAddressesLoader extends DataLoaderBase<number, Address[]>

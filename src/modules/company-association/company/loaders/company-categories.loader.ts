@@ -3,7 +3,7 @@ import * as DataLoader from 'dataloader';
 import { Category } from 'src/modules/category/entities/category.entity';
 import { ListCategoriesService } from 'src/modules/category/services/list-categories.service';
 import { DataLoaderBase } from 'src/modules/common/helpers/data.loader.base';
-import { IDataLoaderBase } from 'src/modules/common/helpers/data.loader.interface';
+import { IDataLoaderBase } from 'src/modules/common/interfaces/data.loader.interface';
 
 @Injectable()
 export class CompanyCategoriesLoader extends DataLoaderBase<number, Category[]>

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as DataLoader from 'dataloader';
 import { PaymentMethod } from '../entities/payment.method.entity';
 import { DataLoaderBase } from '../../common/helpers/data.loader.base';
-import { IDataLoaderBase } from '../../common/helpers/data.loader.interface';
+import { IDataLoaderBase } from '../../common/interfaces/data.loader.interface';
 import { ListPaymentMethodsService } from '../services/list-payment-methods.service';
 
 @Injectable()

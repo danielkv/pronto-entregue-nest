@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as DataLoader from 'dataloader';
 import { DataLoaderBase } from 'src/modules/common/helpers/data.loader.base';
-import { IDataLoaderBase } from 'src/modules/common/helpers/data.loader.interface';
+import { IDataLoaderBase } from 'src/modules/common/interfaces/data.loader.interface';
 import { CompanySection } from '../entities/company.type.entity';
 import { ListCompanySectionsService } from '../services/list-company-sections.service';
 
