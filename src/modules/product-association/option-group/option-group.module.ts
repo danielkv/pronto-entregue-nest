@@ -8,10 +8,19 @@ import { OptionGroupSearchFilter } from './filters/option-group.search.filter';
 import { GetOptionGroupService } from './services/get-options-groups.service';
 import { OptionGroupRepositoryProvider } from './repositories/option-group.repository';
 import { ListOptionGroupService } from './services/list-options-groups.service';
+import { OptionGroupOptionsResolver } from './resolvers/option-group-options.resolver';
+import { OptionModule } from '../option/option.module';
+import { OptionGroupOptionsLoader } from './loaders/option-group-options.loader';
 
 @Module({
-    imports: [OptionGroupFilterDTO],
+    imports: [OptionGroupFilterDTO, OptionModule],
     providers: [
+        // resolvers
+        OptionGroupOptionsResolver,
+
+        // loaders
+        OptionGroupOptionsLoader,
+
         // filters
         OptionGroupActiveFilter,
         OptionGroupIdFilter,

@@ -9,8 +9,8 @@ export class ProductOptionsGroupsResolver {
 
     @ResolveField(() => [OptionGroup], { nullable: 'items' })
     optionsGroups(@Parent() orderProduct: Product): Promise<OptionGroup[]> {
-        const orderProductId = orderProduct.id;
+        const productId = orderProduct.id;
 
-        return this.productOptionsGroupsLoader.loader.load(orderProductId);
+        return this.productOptionsGroupsLoader.loader.load(productId);
     }
 }
