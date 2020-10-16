@@ -11,6 +11,14 @@ export class UserRepository extends RepositoryBase<User, UserFilterDTO> {
 
         this.setQueryBuilderTableName('user');
     }
+
+    findByEmail(email: string) {
+        const query = this.createQueryBuilder(this.tablename);
+
+        query.where('email = :email').setParameters({ email });
+
+        return query.getOne();
+    }
 }
 
 export const UserRepositoryProvider = new RepositoryProviderFactory('IUserRepository', UserRepository).create();
