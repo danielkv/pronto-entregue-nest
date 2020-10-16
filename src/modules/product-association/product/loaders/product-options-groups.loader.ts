@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import * as DataLoader from 'dataloader';
-import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
+import { IDataLoaderCreate } from '../../../common/interfaces/data-loader-create.interface';
 import { IDataLoaderBase } from '../../../common/interfaces/data.loader.interface';
+import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
 import { OptionGroup } from '../../option-group/entities/option.group.entity';
 import { ListOptionGroupService } from '../../option-group/services/list-options-groups.service';
 
@@ -12,11 +12,13 @@ export class ProductOptionsGroupsLoader extends DataLoaderBase<number, OptionGro
         super();
     }
 
-    create() {
-        return new DataLoader<number, OptionGroup[]>(async keys => {
-            const allGroups = await this.listOptionsGroupsService.execute({ productId: [...keys] });
+    create(): IDataLoaderCreate<number, OptionGroup[]> {
+        return {
+            batchLoadFn: async keys => {
+                const allGroups = await this.listOptionsGroupsService.execute({ productId: [...keys] });
 
-            return keys.map(key => allGroups.filter(group => group.productId === key));
-        });
+                return keys.map(key => allGroups.filter(group => group.productId === key));
+            },
+        };
     }
 }

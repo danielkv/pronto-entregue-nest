@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as DataLoader from 'dataloader';
+import { IDataLoaderCreate } from 'src/modules/common/interfaces/data-loader-create.interface';
 import { Product } from 'src/modules/product-association/product/entities/product.entity';
 import { GetProductsService } from 'src/modules/product-association/product/services/get-products.service';
 import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
@@ -12,11 +12,13 @@ export class OrderProductRelatedLoader extends DataLoaderBase<number, Product>
         super();
     }
 
-    create() {
-        return new DataLoader<number, Product>(async keys => {
-            const allProducts = await this.getProductsService.execute([...keys]);
+    create(): IDataLoaderCreate<number, Product> {
+        return {
+            batchLoadFn: async keys => {
+                const allProducts = await this.getProductsService.execute([...keys]);
 
-            return this.remap([...keys], allProducts);
-        });
+                return this.remap([...keys], allProducts);
+            },
+        };
     }
 }

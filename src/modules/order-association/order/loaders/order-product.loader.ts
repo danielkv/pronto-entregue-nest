@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import * as DataLoader from 'dataloader';
-import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
+import { IDataLoaderCreate } from '../../../common/interfaces/data-loader-create.interface';
 import { IDataLoaderBase } from '../../../common/interfaces/data.loader.interface';
+import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
 import { OrderProduct } from '../../order-product/entities/order.product.entity';
 import { ListOrderProductsService } from '../../order-product/services/list-order-products.service';
 
@@ -12,13 +12,15 @@ export class OrderProductLoader extends DataLoaderBase<number, OrderProduct[]>
         super();
     }
 
-    create() {
-        return new DataLoader<number, OrderProduct[]>(async keys => {
-            const allOrderProducts = await this.listOrderProductsService.execute({ orderId: [...keys] });
+    create(): IDataLoaderCreate<number, OrderProduct[]> {
+        return {
+            batchLoadFn: async keys => {
+                const allOrderProducts = await this.listOrderProductsService.execute({ orderId: [...keys] });
 
-            return keys.map(key => {
-                return allOrderProducts.filter(orderProduct => orderProduct.orderId === key);
-            });
-        });
+                return keys.map(key => {
+                    return allOrderProducts.filter(orderProduct => orderProduct.orderId === key);
+                });
+            },
+        };
     }
 }

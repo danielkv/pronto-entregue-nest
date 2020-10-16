@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as DataLoader from 'dataloader';
+import { IDataLoaderCreate } from 'src/modules/common/interfaces/data-loader-create.interface';
 import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
 import { IDataLoaderBase } from '../../../common/interfaces/data.loader.interface';
 import { Option } from '../../option/entities/option.entity';
@@ -12,11 +12,13 @@ export class OptionGroupOptionsLoader extends DataLoaderBase<number, Option[]>
         super();
     }
 
-    create() {
-        return new DataLoader<number, Option[]>(async keys => {
-            const allGroups = await this.listOptionService.execute({ optionsGroupId: [...keys] });
+    create(): IDataLoaderCreate<number, Option[]> {
+        return {
+            batchLoadFn: async keys => {
+                const allGroups = await this.listOptionService.execute({ optionsGroupId: [...keys] });
 
-            return keys.map(key => allGroups.filter(group => group.optionsGroupId === key));
-        });
+                return keys.map(key => allGroups.filter(group => group.optionsGroupId === key));
+            },
+        };
     }
 }

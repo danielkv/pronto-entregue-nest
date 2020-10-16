@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import * as DataLoader from 'dataloader';
 import { DataLoaderBase } from '../../../common/helpers/data.loader.base';
-import { IDataLoaderBase } from '../../../common/interfaces/data.loader.interface';
 import { ListOptionService } from '../../../product-association/option/services/list-options.service';
 import { Option } from '../../../product-association/option/entities/option.entity';
+import { IDataLoaderCreate } from '../../../common/interfaces/data-loader-create.interface';
+import { IDataLoaderBase } from '../../../common/interfaces/data.loader.interface';
 
 @Injectable()
 export class OrderOptionRelatedLoader extends DataLoaderBase<number, Option>
@@ -12,15 +12,17 @@ export class OrderOptionRelatedLoader extends DataLoaderBase<number, Option>
         super();
     }
 
-    create() {
-        return new DataLoader<number, Option>(async keys => {
-            const allOptions = await this.listOptionService.execute({
-                optionId: [...keys],
-                includeRemoved: true,
-                onlyActive: false,
-            });
+    create(): IDataLoaderCreate<number, Option> {
+        return {
+            batchLoadFn: async keys => {
+                const allOptions = await this.listOptionService.execute({
+                    optionId: [...keys],
+                    includeRemoved: true,
+                    onlyActive: false,
+                });
 
-            return this.remap([...keys], allOptions);
-        });
+                return this.remap([...keys], allOptions);
+            },
+        };
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as DataLoader from 'dataloader';
+import { IDataLoaderCreate } from '../../common/interfaces/data-loader-create.interface';
 import { DataLoaderBase } from '../../common/helpers/data.loader.base';
 import { IDataLoaderBase } from '../../common/interfaces/data.loader.interface';
 import { Address } from '../entities/address.entity';
@@ -11,11 +11,13 @@ export class AddressLoader extends DataLoaderBase<number, Address> implements ID
         super();
     }
 
-    create() {
-        return new DataLoader<number, Address>(async keys => {
-            const addresses = await this.getAddressService.execute([...keys]);
+    create(): IDataLoaderCreate<number, Address> {
+        return {
+            batchLoadFn: async keys => {
+                const addresses = await this.getAddressService.execute([...keys]);
 
-            return this.remap([...keys], addresses);
-        });
+                return this.remap([...keys], addresses);
+            },
+        };
     }
 }
