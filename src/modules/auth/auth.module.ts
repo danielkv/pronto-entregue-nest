@@ -8,6 +8,9 @@ import { ValidateUserService } from './services/validate-user.service';
 import { AuthController } from './controllers/auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt-strategy';
+import { configu } from './acl/roles';
+
+configu();
 
 @Module({
     imports: [

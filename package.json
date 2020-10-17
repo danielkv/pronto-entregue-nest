@@ -40,6 +40,7 @@
 		"graphql-type-json": "^0.3.2",
 		"lodash": "^4.17.20",
 		"mysql": "^2.18.1",
+		"nest-access-control": "^2.0.2",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0",
