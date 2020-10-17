@@ -10,7 +10,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { CompanyUser } from '../../company-association/company/entities/company.user.entity';
+import { CompanyUser } from '../../company-association/company-user/entities/company.user.entity';
 import { CreditBalance } from '../../credit-association/credit-balance/entities/credit.balance.entity';
 import { CreditHistory } from '../../credit-association/credit-history/entities/credit.history.entity';
 import { Delivery } from '../../delivery/entities/delivery.entity';

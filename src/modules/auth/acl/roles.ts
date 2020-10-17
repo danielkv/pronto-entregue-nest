@@ -60,7 +60,3 @@ roles
 roles.grant(AppRoles.REGION_OWNER);
 
 roles.lock();
-
-export const configu = () => {
-    console.log('roles', roles);
-};

@@ -8,20 +8,36 @@ import { ValidateUserService } from './services/validate-user.service';
 import { AuthController } from './controllers/auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt-strategy';
-import { configu } from './acl/roles';
-
-configu();
+import { JwtCompanyStrategy } from './strategies/jwt-company-strategy';
+import { CompanyUserModule } from '../company-association/company-user/company-user.module';
+import { LoginCompanyDTO } from './dtos/login-company.dto';
+import { LoginUserDTO } from './dtos/login-user.dto';
+import { LoginCompanyService } from './services/login-company.service';
 
 @Module({
     imports: [
+        LoginCompanyDTO,
+        LoginUserDTO,
+
         UserModule,
+        CompanyUserModule,
         PassportModule,
         JwtModule.register({
             secret: configService.getValue('ACCESS_TOKEN_SECRET'),
             signOptions: { expiresIn: '60s' },
         }),
     ],
-    providers: [ValidateUserService, LoginUserService, LocalStrategy, JwtStrategy],
+    providers: [
+        // services
+        ValidateUserService,
+        LoginUserService,
+        LoginCompanyService,
+
+        // strategies
+        LocalStrategy,
+        JwtStrategy,
+        JwtCompanyStrategy,
+    ],
     controllers: [AuthController],
 })
 export class AuthModule {}
