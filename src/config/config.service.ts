@@ -6,7 +6,7 @@ import 'dotenv/config';
 class ConfigService {
     constructor(private env: { [k: string]: string | undefined }) {}
 
-    private getValue(key: string, throwOnMissing = true): string {
+    getValue(key: string, throwOnMissing = true): string {
         const value = this.env[key];
         if (typeof value === 'undefined' && throwOnMissing) {
             throw new Error(`config error - missing env.${key}`);

@@ -8,6 +8,7 @@ import { CountUsersService } from './services/count.users.service';
 import { UserActiveFilter } from './filters/user.active.filter';
 import { UserCompanyFilter } from './filters/user.company.filter';
 import { UserIdFilter } from './filters/user.id.filter';
+import { FindUserByEmailService } from './services/find-user-by-email.service';
 
 @Module({
     imports: [UserFilterDTO, UserMetaDTO],
@@ -23,9 +24,11 @@ import { UserIdFilter } from './filters/user.id.filter';
         // services
         ListUsersService,
         CountUsersService,
+        FindUserByEmailService,
 
         // repositories
         UserRepositoryProvider,
     ],
+    exports: [FindUserByEmailService],
 })
 export class UserModule {}

@@ -19,6 +19,7 @@ import { OrderAssociationModule } from './modules/order-association/order-associ
 import { CompanyAssociationModule } from './modules/company-association/company-association.module';
 import { CreditAssociationModule } from './modules/credit-association/credit-association.module';
 import { ProductAssociationModule } from './modules/product-association/product-association.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
     imports: [
@@ -41,6 +42,7 @@ import { ProductAssociationModule } from './modules/product-association/product-
         CompanyAssociationModule,
         CreditAssociationModule,
         ProductAssociationModule,
+        AuthModule,
     ],
     providers: [],
 })
