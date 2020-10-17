@@ -71,9 +71,16 @@ export class User {
         name: 'role',
         comment: 'master | default',
         length: 255,
-        default: 'default',
+        default: 'customer',
     })
     role: string;
+
+    @Field()
+    @Column('boolean', {
+        name: 'isMaster',
+        default: false,
+    })
+    isMaster: boolean;
 
     @Field()
     @CreateDateColumn({ name: 'createdAt' })

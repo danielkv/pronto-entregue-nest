@@ -45,6 +45,13 @@ export class CompanyUser {
     @Column('int', { name: 'roleId', nullable: true })
     roleId: number | null;
 
+    @Column({
+        type: 'json',
+        name: 'permissions',
+        nullable: true,
+    })
+    permissions: string[];
+
     @ManyToOne(
         () => Company,
         companies => companies.companyUsers,
