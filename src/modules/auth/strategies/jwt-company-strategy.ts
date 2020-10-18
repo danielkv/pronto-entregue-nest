@@ -11,10 +11,15 @@ export class JwtCompanyStrategy extends PassportStrategy(Strategy, 'jwt-company'
             jwtFromRequest: ExtractJwt.fromHeader('companyauthorization'),
             ignoreExpiration: true,
             secretOrKey: configService.getValue('ACCESS_TOKEN_SECRET'),
+            passReqToCallback: true,
         });
     }
 
-    validate(payload: CompanyUserTokenPayload): CompanyUserTokenPayload {
-        return { userId: payload.userId, companyId: payload.userId, permissions: payload.permissions };
+    validate(req, payload: CompanyUserTokenPayload): CompanyUserTokenPayload {
+        // populate req.company with payload
+        req.company = { userId: payload.userId, companyId: payload.companyId, roles: payload.roles };
+
+        // return
+        return req.company;
     }
 }

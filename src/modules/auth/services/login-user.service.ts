@@ -12,7 +12,7 @@ export class LoginUserService {
     execute(user: User): LoginUserDTO {
         const permissions = user.isMaster ? [AppRoles.MASTER] : [AppRoles.CUSTOMER];
 
-        const payload: UserTokenPayload = { userId: user.id, email: user.email, permissions };
+        const payload: UserTokenPayload = { userId: user.id, email: user.email, roles: permissions };
         const accessToken = this.jwtService.sign(payload);
 
         return { accessToken };

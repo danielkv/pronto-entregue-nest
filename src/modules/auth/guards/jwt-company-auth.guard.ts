@@ -9,6 +9,13 @@ export class JwtCompanyAuthGuard extends AuthGuard('jwt-company') {
         // for example, call super.logIn(request) to establish a session.
         return super.canActivate(context);
     }
+
+    /*  async logIn(req) {
+		req.compa
+        console.log(req);
+        super.logIn(req);
+    } */
+
     handleRequest(err, companyAccess: CompanyUserTokenPayload, info, ctx) {
         const user = ctx.args[0].user;
 
@@ -16,7 +23,7 @@ export class JwtCompanyAuthGuard extends AuthGuard('jwt-company') {
 
         // You can throw an exception based on either "info" or "err" arguments
 
-        if (companyAccess) user.permissions = [...user.permissions, ...companyAccess.permissions];
+        //if (companyAccess) user.permissions = [...user.permissions, ...companyAccess.permissions];
 
         return user;
     }

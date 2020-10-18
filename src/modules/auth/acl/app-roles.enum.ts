@@ -23,7 +23,7 @@ export enum AppRoles {
     USERS_READ = 'users_read',
     USERS_CREATE = 'users_read_create',
     USERS_CREATE_OWN = 'users_create_own',
-    USERS_EDIT = 'users_read',
+    USERS_EDIT = 'users_edit',
     USERS_EDIT_OWN = 'users_edit_own',
 
     ROLES_READ = 'roles_read',

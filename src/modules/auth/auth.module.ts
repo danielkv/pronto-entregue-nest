@@ -13,6 +13,8 @@ import { CompanyUserModule } from '../company-association/company-user/company-u
 import { LoginCompanyDTO } from './dtos/login-company.dto';
 import { LoginUserDTO } from './dtos/login-user.dto';
 import { LoginCompanyService } from './services/login-company.service';
+import { AccessControlModule } from 'nest-access-control';
+import { roles } from './acl/roles';
 
 @Module({
     imports: [
@@ -26,6 +28,7 @@ import { LoginCompanyService } from './services/login-company.service';
             secret: configService.getValue('ACCESS_TOKEN_SECRET'),
             signOptions: { expiresIn: '60s' },
         }),
+        AccessControlModule.forRoles(roles),
     ],
     providers: [
         // services

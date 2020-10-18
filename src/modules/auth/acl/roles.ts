@@ -34,7 +34,7 @@ roles.grant(AppRoles.USERS_EDIT_OWN).updateOwn(ACLResourcesEnum.USER);
 roles.grant(AppRoles.ROLES_READ).read(ACLResourcesEnum.ROLE);
 roles.grant(AppRoles.ROLES_EDIT).update(ACLResourcesEnum.ROLE);
 
-roles.grant(AppRoles.CUSTOMER);
+roles.grant(AppRoles.CUSTOMER).extend(AppRoles.PRODUCTS_CREATE);
 roles
     .grant(AppRoles.COMPANY_USER)
     .extend([AppRoles.PRODUCTS_READ_OWN, AppRoles.PRODUCTS_CREATE_OWN, AppRoles.PRODUCTS_EDIT_OWN]);
