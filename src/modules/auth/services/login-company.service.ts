@@ -23,11 +23,11 @@ export class LoginCompanyService {
         const payload: CompanyUserTokenPayload = {
             companyId: companyUserConnection.companyId,
             userId: companyUserConnection.userId,
-            roles: companyUserConnection.permissions,
+            permissions: companyUserConnection.permissions,
         };
 
-        const accessToken = this.jwtService.sign(payload);
+        const companyAccessToken = this.jwtService.sign(payload);
 
-        return { accessToken };
+        return { companyAccessToken };
     }
 }

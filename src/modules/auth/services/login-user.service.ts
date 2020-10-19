@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/modules/user/entities/user.entity';
-import { AppRoles } from '../acl/app-roles.enum';
+import { AppRoles } from '../enums/app-roles.enum';
 import { LoginUserDTO } from '../dtos/login-user.dto';
 import { UserTokenPayload } from '../interfaces/user-token-payload.interface';
 
@@ -12,9 +12,10 @@ export class LoginUserService {
     execute(user: User): LoginUserDTO {
         const permissions = user.isMaster ? [AppRoles.MASTER] : [AppRoles.CUSTOMER];
 
-        const payload: UserTokenPayload = { userId: user.id, email: user.email, roles: permissions };
-        const accessToken = this.jwtService.sign(payload);
+        const payload: UserTokenPayload = { userId: user.id, email: user.email, permissions: permissions };
 
-        return { accessToken };
+        const userAccessToken = this.jwtService.sign(payload);
+
+        return { userAccessToken };
     }
 }

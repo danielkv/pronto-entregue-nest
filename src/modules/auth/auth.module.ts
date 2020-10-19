@@ -13,8 +13,8 @@ import { CompanyUserModule } from '../company-association/company-user/company-u
 import { LoginCompanyDTO } from './dtos/login-company.dto';
 import { LoginUserDTO } from './dtos/login-user.dto';
 import { LoginCompanyService } from './services/login-company.service';
-import { AccessControlModule } from 'nest-access-control';
-import { roles } from './acl/roles';
+import { AccessControlProvider } from './acl/acRoles';
+import { ExtractRequestHelper } from './helpers/extract-permissions-scopes.helper';
 
 @Module({
     imports: [
@@ -28,7 +28,6 @@ import { roles } from './acl/roles';
             secret: configService.getValue('ACCESS_TOKEN_SECRET'),
             signOptions: { expiresIn: '60s' },
         }),
-        AccessControlModule.forRoles(roles),
     ],
     providers: [
         // services
@@ -40,6 +39,9 @@ import { roles } from './acl/roles';
         LocalStrategy,
         JwtStrategy,
         JwtCompanyStrategy,
+
+        ExtractRequestHelper,
+        AccessControlProvider,
     ],
     controllers: [AuthController],
 })

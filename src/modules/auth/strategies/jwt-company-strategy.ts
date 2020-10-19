@@ -17,7 +17,7 @@ export class JwtCompanyStrategy extends PassportStrategy(Strategy, 'jwt-company'
 
     validate(req, payload: CompanyUserTokenPayload): CompanyUserTokenPayload {
         // populate req.company with payload
-        req.company = { userId: payload.userId, companyId: payload.companyId, roles: payload.roles };
+        req.company = { userId: payload.userId, companyId: payload.companyId, permissions: payload.permissions };
 
         // return
         return req.company;

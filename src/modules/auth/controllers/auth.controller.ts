@@ -1,14 +1,14 @@
 import { Body, Controller, Get, ParseIntPipe, Post, Request, UseGuards } from '@nestjs/common';
 import { Company } from '../../company-association/company/entities/company.entity';
+import { AclScopes } from '../decorators/acl-scopes.decorator';
+import { UseRoles } from '../decorators/use-roles.decorator';
 import { LoginCompanyDTO } from '../dtos/login-company.dto';
-import { JwtCompanyAuthGuard } from '../guards/jwt-company-auth.guard';
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { ACLResourcesEnum } from '../enums/resources.enum';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
+import { RoleGuard } from '../guards/roles.guard';
+import { IPermissionsScopes, RoleScopeEnum } from '../interfaces/guard-roles.interface';
 import { LoginCompanyService } from '../services/login-company.service';
 import { LoginUserService } from '../services/login-user.service';
-import { ACLResourcesEnum } from '../acl/resources.enum';
-import { PopulateRoles } from '../guards/popolate-roles.guard';
-import { UseRoles } from 'nest-access-control';
 
 @Controller()
 export class AuthController {
@@ -20,7 +20,6 @@ export class AuthController {
         return this.loginUserService.execute(req.user);
     }
 
-    @UseGuards(JwtAuthGuard)
     @Post('select/company')
     async selectCompany(
         @Request() req,
@@ -29,20 +28,19 @@ export class AuthController {
         return this.loginCompanyService.execute(companyId, req?.user?.userId);
     }
 
-    @UseGuards(JwtAuthGuard, JwtCompanyAuthGuard, PopulateRoles)
     @Get('session')
     async getSession(@Request() req) {
         return { user: req.user, company: req.company };
     }
 
-    @UseGuards(JwtAuthGuard, JwtCompanyAuthGuard, PopulateRoles)
+    @UseGuards(RoleGuard)
     @UseRoles({
+        scope: RoleScopeEnum.COMPANY,
         action: 'update',
-        possession: 'any',
         resource: ACLResourcesEnum.USER,
     })
     @Get('test')
-    async testRole() {
-        return { permit: true };
+    async testRole(@AclScopes() scopes: IPermissionsScopes) {
+        return scopes;
     }
 }
