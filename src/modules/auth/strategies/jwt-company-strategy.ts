@@ -9,7 +9,7 @@ export class JwtCompanyStrategy extends PassportStrategy(Strategy, 'jwt-company'
     constructor() {
         super({
             jwtFromRequest: ExtractJwt.fromHeader('companyauthorization'),
-            ignoreExpiration: true,
+            ignoreExpiration: !configService.isProduction(),
             secretOrKey: configService.getValue('ACCESS_TOKEN_SECRET'),
             passReqToCallback: true,
         });

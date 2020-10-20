@@ -7,7 +7,7 @@ import { LoginUserService } from './services/login-user.service';
 import { ValidateUserService } from './services/validate-user.service';
 import { AuthController } from './controllers/auth.controller';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './strategies/jwt-strategy';
+import { JwtStrategy } from './strategies/jwt-user-strategy';
 import { JwtCompanyStrategy } from './strategies/jwt-company-strategy';
 import { CompanyUserModule } from '../company-association/company-user/company-user.module';
 import { LoginCompanyDTO } from './dtos/login-company.dto';
