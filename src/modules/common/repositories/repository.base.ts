@@ -4,6 +4,7 @@ import { IRepositoryFiltersOptions } from '../interfaces/IRepositoryFiltersOptio
 import { IRepositoryBase } from '../interfaces/repository.base.interface';
 
 import { QueryBuilderBase } from './query.builder.base';
+import { NotFoundException } from '@nestjs/common';
 
 export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Repository<Entity>
     implements IRepositoryBase<Entity, EntityFilterDTO> {
@@ -17,6 +18,23 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
 
     setQueryBuilderTableName(name: string): void {
         this.tablename = name;
+    }
+
+    async createNew(data: Entity): Promise<Entity> {
+        await super.insert(data);
+
+        return data;
+    }
+
+    async updateRow(entityId: number, newData: Entity): Promise<Entity> {
+        const oldData = await this.findOne(entityId);
+        if (!oldData) throw new NotFoundException();
+
+        const mergedData = this.merge(oldData, newData);
+
+        await super.save(mergedData);
+
+        return mergedData;
     }
 
     async get(entityId: number): Promise<Entity>;

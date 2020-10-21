@@ -31,4 +31,19 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
      * @param filter filter
      */
     getCount(options: IRepositoryFiltersOptions<Entity, EntityFilterDTO>): Promise<number>;
+
+    /**
+     * Insert new row in entity's repository
+     *
+     * @param data entity data
+     */
+    createNew(data: Entity): Promise<Entity>;
+
+    /**
+     * Update row in entity's repository
+     *
+     * @param entityId entity id
+     * @param data entity data
+     */
+    updateRow(entityId: number, data: Entity): Promise<Entity>;
 }
