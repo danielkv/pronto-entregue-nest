@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import { Company } from '../../company-association/company/entities/company.entity';
 import { Order } from '../../order-association/order/entities/order.entity';
-import { User } from '../../user/entities/user.entity';
+import { User } from '../../user-association/user/entities/user.entity';
 
 @ObjectType()
 @Index('companyId', ['companyId'], {})

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserFilterDTO } from './dtos/user.filter.dto';
 import { UserRepositoryProvider } from './repositories/user.reporitory';
-import { UserMetaDTO } from './dtos/user.meta.dto';
 import { ListUsersService } from './services/list.users.service';
 import { QueryUsersResolver } from './resolvers/query.users.resolver';
 import { CountUsersService } from './services/count.users.service';
@@ -11,7 +10,7 @@ import { UserIdFilter } from './filters/user.id.filter';
 import { FindUserByEmailService } from './services/find-user-by-email.service';
 
 @Module({
-    imports: [UserFilterDTO, UserMetaDTO],
+    imports: [UserFilterDTO],
     providers: [
         // resolvers
         QueryUsersResolver,

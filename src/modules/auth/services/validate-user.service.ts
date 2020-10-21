@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/modules/user/entities/user.entity';
-import { FindUserByEmailService } from 'src/modules/user/services/find-user-by-email.service';
+import { User } from 'src/modules/user-association/user/entities/user.entity';
+import { FindUserByEmailService } from 'src/modules/user-association/user/services/find-user-by-email.service';
 
 @Injectable()
 export class ValidateUserService {

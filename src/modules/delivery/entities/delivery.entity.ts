@@ -12,7 +12,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Order } from '../../order-association/order/entities/order.entity';
-import { User } from '../../user/entities/user.entity';
+import { User } from '../../user-association/user/entities/user.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 
 const geoPointHelper = new GeoPointHelper();

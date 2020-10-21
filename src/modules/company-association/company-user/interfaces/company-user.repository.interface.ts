@@ -1,4 +1,4 @@
-import { User } from 'src/modules/user/entities/user.entity';
+import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { IRepositoryBase } from '../../../common/interfaces/repository.base.interface';
 import { Company } from '../../company/entities/company.entity';
 import { CompanyUserFilterDTO } from '../dtos/company-user.filter.dto';

@@ -11,7 +11,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Company } from '../../company-association/company/entities/company.entity';
-import { User } from '../../user/entities/user.entity';
+import { User } from '../../user-association/user/entities/user.entity';
 import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
 
 const geoPointHelper = new GeoPointHelper();

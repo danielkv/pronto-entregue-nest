@@ -1,5 +1,5 @@
-import { QueryBuilderBase } from '../../common/repositories/query.builder.base';
-import { IFilter } from '../../common/interfaces/IFilter';
+import { QueryBuilderBase } from '../../../common/repositories/query.builder.base';
+import { IFilter } from '../../../common/interfaces/IFilter';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
 

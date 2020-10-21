@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import { Delivery } from '../../../delivery/entities/delivery.entity';
 import { OrderProduct } from '../../order-product/entities/order.product.entity';
-import { User } from '../../../user/entities/user.entity';
+import { User } from '../../../user-association/user/entities/user.entity';
 import { Company } from '../../../company-association/company/entities/company.entity';
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { CreditHistory } from '../../../credit-association/credit-history/entities/credit.history.entity';

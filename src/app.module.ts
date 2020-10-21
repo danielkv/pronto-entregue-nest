@@ -5,7 +5,7 @@ import { ConfigModule } from './modules/config/config.module';
 import { CouponModule } from './modules/coupon/coupon.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
 import { ProductModule } from './modules/product-association/product/product.module';
-import { UserModule } from './modules/user/user.module';
+import { UserModule } from './modules/user-association/user/user.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
 import { Connection } from 'typeorm';
@@ -20,6 +20,7 @@ import { CompanyAssociationModule } from './modules/company-association/company-
 import { CreditAssociationModule } from './modules/credit-association/credit-association.module';
 import { ProductAssociationModule } from './modules/product-association/product-association.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UserAssociationModule } from './modules/user-association/user-association.module';
 
 @Module({
     imports: [
@@ -43,6 +44,7 @@ import { AuthModule } from './modules/auth/auth.module';
         CreditAssociationModule,
         ProductAssociationModule,
         AuthModule,
+        UserAssociationModule,
     ],
     providers: [],
 })

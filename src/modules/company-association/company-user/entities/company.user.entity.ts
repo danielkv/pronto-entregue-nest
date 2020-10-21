@@ -9,8 +9,8 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Company } from '../../company/entities/company.entity';
-import { User } from '../../../user/entities/user.entity';
-import { Role } from '../../../user/entities/role.entity';
+import { User } from '../../../user-association/user/entities/user.entity';
+import { Role } from '../../../user-association/user/entities/role.entity';
 
 @Index('company_users_userId_companyId_unique', ['companyId', 'userId'], {
     unique: true,

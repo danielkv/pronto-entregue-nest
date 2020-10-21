@@ -1,4 +1,4 @@
-import { User } from 'src/modules/user/entities/user.entity';
+import { User } from 'src/modules/user-association/user/entities/user.entity';
 
 export interface UserTokenPayload {
     userId: User['id'];

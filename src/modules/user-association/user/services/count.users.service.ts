@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IRepositoryFiltersOptions } from 'src/modules/common/interfaces/IRepositoryFiltersOptions';
+import { IRepositoryFiltersOptions } from '../../../common/interfaces/IRepositoryFiltersOptions';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
 import { UserActiveFilter } from '../filters/user.active.filter';

@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { PageInfo } from '../../common/types/page-info';
-import { IListEntity } from '../../common/interfaces/IListEntity';
+import { PageInfo } from '../../../common/types/page-info';
+import { IListEntity } from '../../../common/interfaces/IListEntity';
 import { User } from '../entities/user.entity';
 
 @ObjectType('listUsers')

@@ -9,7 +9,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../../../user/entities/user.entity';
+import { User } from '../../../user-association/user/entities/user.entity';
 
 @ObjectType()
 @Index('userId', ['userId'], {})

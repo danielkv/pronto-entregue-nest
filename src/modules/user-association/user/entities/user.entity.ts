@@ -10,16 +10,16 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { CompanyUser } from '../../company-association/company-user/entities/company.user.entity';
-import { CreditBalance } from '../../credit-association/credit-balance/entities/credit.balance.entity';
-import { CreditHistory } from '../../credit-association/credit-history/entities/credit.history.entity';
-import { Delivery } from '../../delivery/entities/delivery.entity';
-import { Order } from '../../order-association/order/entities/order.entity';
-import { Rating } from '../../rating/entities/rating.entity';
-import { UserMeta } from './user.meta.entity';
-import { Coupon } from '../../coupon/entities/coupon.entity';
-import { Product } from '../../product-association/product/entities/product.entity';
-import { Address } from '../../address/entities/address.entity';
+import { CompanyUser } from '../../../company-association/company-user/entities/company.user.entity';
+import { CreditBalance } from '../../../credit-association/credit-balance/entities/credit.balance.entity';
+import { CreditHistory } from '../../../credit-association/credit-history/entities/credit.history.entity';
+import { Delivery } from '../../../delivery/entities/delivery.entity';
+import { Order } from '../../../order-association/order/entities/order.entity';
+import { Rating } from '../../../rating/entities/rating.entity';
+import { UserMeta } from '../../user-meta/entities/user.meta.entity';
+import { Coupon } from '../../../coupon/entities/coupon.entity';
+import { Product } from '../../../product-association/product/entities/product.entity';
+import { Address } from '../../../address/entities/address.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

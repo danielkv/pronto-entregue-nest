@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { configService } from 'src/config/config.service';
-import { UserModule } from '../user/user.module';
+import { UserModule } from '../user-association/user/user.module';
 import { LocalStrategy } from './strategies/local-strategy';
 import { LoginUserService } from './services/login-user.service';
 import { ValidateUserService } from './services/validate-user.service';

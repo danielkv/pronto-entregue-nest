@@ -15,7 +15,7 @@ import { Category } from '../../../category/entities/category.entity';
 import { Company } from '../../../company-association/company/entities/company.entity';
 import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
-import { User } from '../../../user/entities/user.entity';
+import { User } from '../../../user-association/user/entities/user.entity';
 import { OptionGroup } from '../../option-group/entities/option.group.entity';
 import { Sale } from '../../sale/entities/sale.entity';
 import { ProductTypeEnum } from '../enums/product-type.enum';

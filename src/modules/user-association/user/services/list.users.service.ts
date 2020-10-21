@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IRepositoryListOptions } from 'src/modules/common/interfaces/IRepositoryListOptions';
-import { PageInfo } from '../../common/types/page-info';
+import { IRepositoryListOptions } from '../../../common/interfaces/IRepositoryListOptions';
+import { PageInfo } from '../../../common/types/page-info';
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
 import { UserActiveFilter } from '../filters/user.active.filter';
