@@ -5,7 +5,7 @@ import { UseRoles } from '../decorators/use-roles.decorator';
 import { LoginCompanyDTO } from '../dtos/login-company.dto';
 import { ACLResourcesEnum } from '../enums/resources.enum';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
-import { RoleGuard } from '../guards/roles.guard';
+import { ACGuard } from '../guards/ac.guard';
 import { IPermissionsScopes, RoleScopeEnum } from '../interfaces/guard-roles.interface';
 import { LoginCompanyService } from '../services/login-company.service';
 import { LoginUserService } from '../services/login-user.service';
@@ -33,7 +33,7 @@ export class AuthController {
         return { user: req.user, company: req.company };
     }
 
-    @UseGuards(RoleGuard)
+    @UseGuards(ACGuard)
     @UseRoles({
         scope: RoleScopeEnum.COMPANY,
         action: 'update',

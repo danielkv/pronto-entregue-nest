@@ -10,6 +10,7 @@ import { GeoPointScalar } from '../graphql/scalars/geo-point-scalar';
             buildSchemaOptions: {
                 dateScalarMode: 'timestamp',
             },
+            context: ({ req }) => ({ req }),
             autoSchemaFile: resolve(__dirname, 'schema.gql'),
         }),
     ],

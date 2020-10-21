@@ -18,4 +18,5 @@ export interface IRole {
     scope?: RoleScopeEnum;
     resource: ACLResourcesEnum;
     action: 'create' | 'update' | 'delete' | 'read';
+    testOwner?(scopes: IPermissionsScopes, resource: any): boolean;
 }

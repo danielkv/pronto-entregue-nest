@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { configService } from 'src/config/config.service';
 import { UserModule } from '../user/user.module';
@@ -14,8 +14,10 @@ import { LoginCompanyDTO } from './dtos/login-company.dto';
 import { LoginUserDTO } from './dtos/login-user.dto';
 import { LoginCompanyService } from './services/login-company.service';
 import { AccessControlProvider } from './acl/acRoles';
-import { ExtractRequestHelper } from './helpers/extract-permissions-scopes.helper';
+import { ExtractAclScopesHelper } from './helpers/extract-permissions-scopes.helper';
+import { AcCheckService } from './services/validate-roles.service';
 
+@Global()
 @Module({
     imports: [
         LoginCompanyDTO,
@@ -34,15 +36,17 @@ import { ExtractRequestHelper } from './helpers/extract-permissions-scopes.helpe
         ValidateUserService,
         LoginUserService,
         LoginCompanyService,
+        AcCheckService,
 
         // strategies
         LocalStrategy,
         JwtStrategy,
         JwtCompanyStrategy,
 
-        ExtractRequestHelper,
+        ExtractAclScopesHelper,
         AccessControlProvider,
     ],
+    exports: [AccessControlProvider, ExtractAclScopesHelper, AcCheckService],
     controllers: [AuthController],
 })
 export class AuthModule {}

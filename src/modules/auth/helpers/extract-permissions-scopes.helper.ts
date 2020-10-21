@@ -1,23 +1,13 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
+import { Injectable } from '@nestjs/common';
+
 import { IPermissionsScopes } from '../interfaces/guard-roles.interface';
 
 @Injectable()
-export class ExtractRequestHelper {
-    execute(context: ExecutionContext): IPermissionsScopes {
-        const req = this.getRequest(context);
-
+export class ExtractAclScopesHelper {
+    execute(req): IPermissionsScopes {
         return {
             user: req?.user,
             company: req?.company,
         };
-    }
-
-    getRequest(context: ExecutionContext) {
-        if (context.getType<GqlContextType>() === 'graphql') {
-            return GqlExecutionContext.create(context);
-        } else {
-            return context.switchToHttp().getRequest();
-        }
     }
 }
