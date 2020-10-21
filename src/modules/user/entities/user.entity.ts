@@ -54,9 +54,6 @@ export class User {
     @Column('varchar', { name: 'password', nullable: true, length: 255 })
     password: string | null;
 
-    @Column('varchar', { name: 'salt', nullable: true, length: 255 })
-    salt: string | null;
-
     @Field()
     @Column({
         type: 'boolean',

@@ -31,8 +31,8 @@ export class PasswordService {
         const broke = hash.split('$');
 
         return {
-            salt: broke[0],
-            password: broke[1],
+            salt: broke[1],
+            password: broke[2],
         };
     }
 }
