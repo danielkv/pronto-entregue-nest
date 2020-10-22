@@ -1,10 +1,9 @@
-import { DeepPartial, QueryRunner, Repository } from 'typeorm';
+import { QueryRunner, Repository } from 'typeorm';
 import { IRepositoryListOptions } from '../interfaces/IRepositoryListOptions';
 import { IRepositoryFiltersOptions } from '../interfaces/IRepositoryFiltersOptions';
 import { IRepositoryBase } from '../interfaces/repository.base.interface';
 
 import { QueryBuilderBase } from './query.builder.base';
-import { NotFoundException } from '@nestjs/common';
 
 export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Repository<Entity>
     implements IRepositoryBase<Entity, EntityFilterDTO> {
@@ -18,29 +17,6 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
 
     setQueryBuilderTableName(name: string): void {
         this.tablename = name;
-    }
-
-    createNew(data: DeepPartial<Entity>): Promise<Entity> {
-        const entity = super.create(data);
-
-        return super.save(entity);
-    }
-
-    createMany(data: DeepPartial<Entity>[]): Promise<Entity[]> {
-        const entities = super.create(data);
-
-        return super.save(entities);
-    }
-
-    async updateRow(entityId: number, newData: Entity): Promise<Entity> {
-        const oldData = await this.findOne(entityId);
-        if (!oldData) throw new NotFoundException();
-
-        const mergedData = this.merge(oldData, newData);
-
-        await super.save(mergedData);
-
-        return mergedData;
     }
 
     async get(entityId: number): Promise<Entity>;

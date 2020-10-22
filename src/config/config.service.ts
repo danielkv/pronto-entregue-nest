@@ -1,7 +1,7 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join, resolve } from 'path';
 
 import 'dotenv/config';
+import { ConnectionOptions } from 'typeorm';
 
 class ConfigService {
     constructor(private env: { [k: string]: string | undefined }) {}
@@ -29,7 +29,7 @@ class ConfigService {
         return mode === 'production';
     }
 
-    public getTypeOrmConfig(): TypeOrmModuleOptions {
+    public getTypeOrmConfig(): ConnectionOptions {
         return {
             type: 'mysql',
             legacySpatialSupport: false,

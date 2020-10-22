@@ -11,6 +11,7 @@ import { FindUserByEmailService } from './services/find-user-by-email.service';
 import { UserMetaModule } from '../user-meta/user-meta.module';
 import { CreateUserService } from './services/create-user.service';
 import { MutationUsersResolver } from './resolvers/mutation.users.resolver';
+import { UpdateUserService } from './services/update-user.service';
 
 @Module({
     imports: [UserFilterDTO, UserMetaModule],
@@ -29,6 +30,7 @@ import { MutationUsersResolver } from './resolvers/mutation.users.resolver';
         CountUsersService,
         FindUserByEmailService,
         CreateUserService,
+        UpdateUserService,
 
         // repositories
         UserRepositoryProvider,

@@ -20,9 +20,12 @@ export class CreateUserService {
         // hash password
         user.password = await this.passwordService.create(user.password);
 
+        // create user instance
+        const userInstace = this.userRepository.create(user);
+
         // create new user
         // create metas if has metas property
-        const newUser = await this.userRepository.createNew(user);
+        const newUser = await this.userRepository.save(userInstace);
 
         return newUser;
     }
