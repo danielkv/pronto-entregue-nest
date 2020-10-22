@@ -8,12 +8,16 @@ import { UserActiveFilter } from './filters/user.active.filter';
 import { UserCompanyFilter } from './filters/user.company.filter';
 import { UserIdFilter } from './filters/user.id.filter';
 import { FindUserByEmailService } from './services/find-user-by-email.service';
+import { UserMetaModule } from '../user-meta/user-meta.module';
+import { CreateUserService } from './services/create-user.service';
+import { MutationUsersResolver } from './resolvers/mutation.users.resolver';
 
 @Module({
-    imports: [UserFilterDTO],
+    imports: [UserFilterDTO, UserMetaModule],
     providers: [
         // resolvers
         QueryUsersResolver,
+        MutationUsersResolver,
 
         // filters
         UserActiveFilter,
@@ -24,6 +28,7 @@ import { FindUserByEmailService } from './services/find-user-by-email.service';
         ListUsersService,
         CountUsersService,
         FindUserByEmailService,
+        CreateUserService,
 
         // repositories
         UserRepositoryProvider,

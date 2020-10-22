@@ -1,28 +1,29 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { UserMetaInputDTO } from '../../user-meta/dtos/user.meta.input.dto';
 
-@InputType()
+@InputType('UserInput')
 export class UserInputDTO {
-    @Field()
-    firstName: string | null;
+    @Field({ nullable: true })
+    firstName?: string;
 
     @Field({ nullable: true })
-    lastName: string | null;
+    lastName?: string;
 
     @Field({ nullable: true })
-    image: string | null;
+    image?: string;
 
-    @Field()
-    email: string | null;
+    @Field({ nullable: true })
+    email?: string;
 
-    @Field()
-    password: string | null;
+    @Field({ nullable: true })
+    password?: string;
 
-    @Field()
-    active: boolean | null;
+    @Field({ nullable: true })
+    active?: boolean;
 
-    @Field()
-    role: string;
+    @Field({ nullable: true })
+    role?: string;
 
-    @Field()
-    metas: UserMeta[];
+    @Field(() => [UserMetaInputDTO], { nullable: true })
+    metas?: UserMetaInputDTO[];
 }

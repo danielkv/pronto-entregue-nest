@@ -1,4 +1,4 @@
-import { QueryRunner } from 'typeorm';
+import { DeepPartial, FindConditions, FindOneOptions, ObjectID, QueryRunner } from 'typeorm';
 import { QueryBuilderBase } from '../repositories/query.builder.base';
 import { IRepositoryFiltersOptions } from './IRepositoryFiltersOptions';
 import { IRepositoryListOptions } from './IRepositoryListOptions';
@@ -37,7 +37,8 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
      *
      * @param data entity data
      */
-    createNew(data: Entity): Promise<Entity>;
+    createNew(data: DeepPartial<Entity>): Promise<Entity>;
+    createMany(data: DeepPartial<Entity>[]): Promise<Entity[]>;
 
     /**
      * Update row in entity's repository

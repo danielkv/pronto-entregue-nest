@@ -1,4 +1,4 @@
-import { QueryRunner, Repository } from 'typeorm';
+import { DeepPartial, QueryRunner, Repository } from 'typeorm';
 import { IRepositoryListOptions } from '../interfaces/IRepositoryListOptions';
 import { IRepositoryFiltersOptions } from '../interfaces/IRepositoryFiltersOptions';
 import { IRepositoryBase } from '../interfaces/repository.base.interface';
@@ -20,10 +20,16 @@ export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Rep
         this.tablename = name;
     }
 
-    async createNew(data: Entity): Promise<Entity> {
-        await super.insert(data);
+    createNew(data: DeepPartial<Entity>): Promise<Entity> {
+        const entity = super.create(data);
 
-        return data;
+        return super.save(entity);
+    }
+
+    createMany(data: DeepPartial<Entity>[]): Promise<Entity[]> {
+        const entities = super.create(data);
+
+        return super.save(entities);
     }
 
     async updateRow(entityId: number, newData: Entity): Promise<Entity> {
