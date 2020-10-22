@@ -12,6 +12,7 @@ import { UserMetaModule } from '../user-meta/user-meta.module';
 import { CreateUserService } from './services/create-user.service';
 import { MutationUsersResolver } from './resolvers/mutation.users.resolver';
 import { UpdateUserService } from './services/update-user.service';
+import { UserMetasResolver } from './resolvers/user-user-metas.resolver';
 
 @Module({
     imports: [UserFilterDTO, UserMetaModule],
@@ -19,6 +20,7 @@ import { UpdateUserService } from './services/update-user.service';
         // resolvers
         QueryUsersResolver,
         MutationUsersResolver,
+        UserMetasResolver,
 
         // filters
         UserActiveFilter,
