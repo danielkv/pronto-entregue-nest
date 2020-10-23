@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { Args, ID, Mutation, Resolver } from '@nestjs/graphql';
 import { UserInputDTO } from '../dtos/user.input.dto';
 import { User } from '../entities/user.entity';
@@ -16,8 +17,10 @@ export class MutationUsersResolver {
     @Mutation(() => User)
     updateUser(
         @Args('userId', { type: () => ID }) userId: User['id'],
-        @Args('data') data: UserInputDTO,
+        @Args('data', new ValidationPipe({ transform: true, skipMissingProperties: true })) data: UserInputDTO,
     ): Promise<User> {
+        //data.metas = data.metas.map(meta => ({ ...meta, id: Number(meta.id) }));
+        console.log(data);
         return this.updateUserService.execute(userId, data);
     }
 }

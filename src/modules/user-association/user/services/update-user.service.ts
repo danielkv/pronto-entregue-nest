@@ -4,6 +4,7 @@ import { PasswordService } from '../../../common/services/password.service';
 import { UserInputDTO } from '../dtos/user.input.dto';
 
 import { User } from '../entities/user.entity';
+import { IUserRepository } from '../interface/user.repository.interface';
 import { UserRepository } from '../repositories/user.reporitory';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class UpdateUserService {
 
     async execute(userId: User['id'], data: UserInputDTO): Promise<User> {
         return this.transactionHelper.execute<User>(async manager => {
-            const transactionUserRepository = manager.getCustomRepository(UserRepository);
+            const transactionUserRepository: IUserRepository = manager.getCustomRepository(UserRepository);
 
             // check if user exists
             const userInstance = await transactionUserRepository.get(userId);
