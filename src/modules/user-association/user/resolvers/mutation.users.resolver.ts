@@ -19,8 +19,6 @@ export class MutationUsersResolver {
         @Args('userId', { type: () => ID }) userId: User['id'],
         @Args('data', new ValidationPipe({ transform: true, skipMissingProperties: true })) data: UserInputDTO,
     ): Promise<User> {
-        //data.metas = data.metas.map(meta => ({ ...meta, id: Number(meta.id) }));
-        console.log(data);
         return this.updateUserService.execute(userId, data);
     }
 }

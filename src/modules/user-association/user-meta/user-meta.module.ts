@@ -6,6 +6,7 @@ import { UserMetaUserFilter } from './filters/user-meta-user.filter';
 import { UserMetaRepositoryProvider } from './repositories/user.meta.reporitory';
 import { CreateUserMetaService } from './services/create-user-meta.service';
 import { ListUserMetasService } from './services/list-user-metas.service';
+import { SaveUserMetasService } from './services/save-user-metas.service';
 
 @Module({
     imports: [UserMetaDTO, UserMetaInputDTO],
@@ -13,6 +14,7 @@ import { ListUserMetasService } from './services/list-user-metas.service';
         // services
         CreateUserMetaService,
         ListUserMetasService,
+        SaveUserMetasService,
 
         // loaders
         UserMetasLoader,

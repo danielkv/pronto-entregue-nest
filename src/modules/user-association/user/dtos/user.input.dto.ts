@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { Transform, Type } from 'class-transformer';
-import { IsArray, IsBoolean, IsObject, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsBoolean, IsString, ValidateNested } from 'class-validator';
 import { UserMetaInputDTO } from '../../user-meta/dtos/user.meta.input.dto';
 
 @InputType('UserInput')

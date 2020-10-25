@@ -1,5 +1,5 @@
-import { Field, ID, InputType, Int } from '@nestjs/graphql';
-import { IsInt, IsNumber, IsString } from 'class-validator';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { IsNumber, IsString } from 'class-validator';
 import { UserMeta } from '../entities/user.meta.entity';
 
 @InputType('UserMetaInput')

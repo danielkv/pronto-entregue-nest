@@ -154,7 +154,6 @@ export class User {
     @OneToMany(
         () => UserMeta,
         userMetas => userMetas.user,
-        { cascade: ['insert', 'update'] },
     )
     metas: UserMeta[];
 }
