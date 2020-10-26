@@ -5,13 +5,17 @@ import { CategoryCompanyFilter } from './filters/category.company.filter';
 import { CategoryIdFilter } from './filters/category.id.filter';
 import { CategorySearchFilter } from './filters/category.search.filter';
 import { CategoryRepositoryProvider } from './repositories/category.repository';
+import { CreateCategoryService } from './services/create-category.service';
 import { ListCategoriesService } from './services/list-categories.service';
+import { UpdateCategoryService } from './services/update-category.service';
 
 @Module({
     imports: [CategoryFilterDTO],
     providers: [
         // services
         ListCategoriesService,
+        CreateCategoryService,
+        UpdateCategoryService,
 
         // filters
         CategoryActiveFilter,
@@ -22,6 +26,6 @@ import { ListCategoriesService } from './services/list-categories.service';
         //repositories
         CategoryRepositoryProvider,
     ],
-    exports: [ListCategoriesService],
+    exports: [ListCategoriesService, CreateCategoryService, UpdateCategoryService],
 })
 export class CategoryModule {}

@@ -7,6 +7,7 @@ import { ICompanyRepository } from '../interfaces/company.repository.interface';
 import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
 import { ICompanyRepositoryListOptions } from '../interfaces/company-options.repository.interface';
 import { ICompanyFiltersOptions } from '../interfaces/company-filters-options.interface';
+import { Category } from 'src/modules/category/entities/category.entity';
 
 @EntityRepository(Company)
 export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO> implements ICompanyRepository {
@@ -14,6 +15,32 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         super();
 
         this.setQueryBuilderTableName('company');
+    }
+
+    addCategory(companyId: Company['id'], categoryId: Category['id']) {
+        const query = this.manager
+            .createQueryBuilder(Category, 'category')
+            .update()
+            .set({
+                companyId,
+            })
+            .whereInIds(categoryId);
+
+        return query.execute();
+    }
+
+    removeCategory(companyId: Company['id'], categoryId: Category['id']) {
+        const query = this.manager
+            .createQueryBuilder(Category, 'category')
+            .delete()
+            .where('companyId = :companyId')
+            .andWhere('categoryId = :categoryId')
+            .setParameters({
+                companyId,
+                categoryId,
+            });
+
+        return query.execute();
     }
 
     async getList(options: ICompanyRepositoryListOptions): Promise<Company[]> {
