@@ -5,7 +5,7 @@ import { GeoPoint } from '../../common/types/geo-point';
 @InputType('AddressInput')
 export class AddressDTO {
     @IsInt()
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     id?: number;
 
     @IsString()
