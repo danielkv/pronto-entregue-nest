@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
+import { NestEventEmitter } from 'nest-event';
+import { IMainEvents } from 'src/main-event-emitter/main-events.interface';
 import { TransactionHelper } from 'src/modules/common/helpers/transactionHelper';
 import { PasswordService } from '../../../common/services/password.service';
 import { IUserMetaRepository } from '../../user-meta/interfaces/user-meta.repository.interface';
@@ -8,6 +9,7 @@ import { SaveUserMetasService } from '../../user-meta/services/save-user-metas.s
 import { UserInputDTO } from '../dtos/user.input.dto';
 
 import { User } from '../entities/user.entity';
+import { IUpdateUserInterface } from '../interface/update-user-event.interface';
 import { IUserRepository } from '../interface/user.repository.interface';
 import { UserRepository } from '../repositories/user.reporitory';
 
@@ -16,7 +18,7 @@ export class UpdateUserService {
     constructor(
         private passwordService: PasswordService,
         private transactionHelper: TransactionHelper,
-        private moduleRef: ModuleRef,
+        private eventEmitter: NestEventEmitter,
     ) {}
 
     async execute(userId: User['id'], data: UserInputDTO): Promise<User> {
@@ -50,6 +52,12 @@ export class UpdateUserService {
 
             // update in db
             const updated = await transactionUserRepository.save(mergedInstance);
+
+            // events
+            const event: IUpdateUserInterface = {
+                user: updated,
+            };
+            this.eventEmitter.strictEmitter<IMainEvents>().emit('updateUser', event);
 
             // return value
             return updated;

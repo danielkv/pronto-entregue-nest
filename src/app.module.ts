@@ -21,6 +21,7 @@ import { CreditAssociationModule } from './modules/credit-association/credit-ass
 import { ProductAssociationModule } from './modules/product-association/product-association.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserAssociationModule } from './modules/user-association/user-association.module';
+import { NestEventModule } from 'nest-event';
 
 @Module({
     imports: [
@@ -45,6 +46,7 @@ import { UserAssociationModule } from './modules/user-association/user-associati
         ProductAssociationModule,
         AuthModule,
         UserAssociationModule,
+        NestEventModule,
     ],
     providers: [],
 })
