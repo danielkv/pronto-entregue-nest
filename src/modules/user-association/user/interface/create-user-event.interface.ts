@@ -1,5 +1,5 @@
 import { User } from '../entities/user.entity';
 
-export interface ICreateUserInterface {
+export interface ICreateUserEvent {
     user: User;
 }

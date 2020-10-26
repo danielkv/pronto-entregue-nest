@@ -1,5 +1,5 @@
 import { User } from '../entities/user.entity';
 
-export interface IUpdateUserInterface {
+export interface IUpdateUserEvent {
     user: User;
 }

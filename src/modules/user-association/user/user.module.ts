@@ -13,9 +13,10 @@ import { CreateUserService } from './services/create-user.service';
 import { MutationUsersResolver } from './resolvers/mutation.users.resolver';
 import { UpdateUserService } from './services/update-user.service';
 import { UserMetasResolver } from './resolvers/user-user-metas.resolver';
+import { AddressModule } from 'src/modules/address/address.module';
 
 @Module({
-    imports: [UserFilterDTO, UserMetaModule],
+    imports: [UserFilterDTO, UserMetaModule, AddressModule],
     providers: [
         // resolvers
         QueryUsersResolver,

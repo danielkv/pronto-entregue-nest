@@ -9,7 +9,7 @@ import { SaveUserMetasService } from '../../user-meta/services/save-user-metas.s
 import { UserInputDTO } from '../dtos/user.input.dto';
 
 import { User } from '../entities/user.entity';
-import { IUpdateUserInterface } from '../interface/update-user-event.interface';
+import { IUpdateUserEvent } from '../interface/update-user-event.interface';
 import { IUserRepository } from '../interface/user.repository.interface';
 import { UserRepository } from '../repositories/user.reporitory';
 
@@ -54,7 +54,7 @@ export class UpdateUserService {
             const updated = await transactionUserRepository.save(mergedInstance);
 
             // events
-            const event: IUpdateUserInterface = {
+            const event: IUpdateUserEvent = {
                 user: updated,
             };
             this.eventEmitter.strictEmitter<IMainEvents>().emit('updateUser', event);
