@@ -8,6 +8,8 @@ import { AddressUserFilter } from './filters/address.user.filter';
 import { ListAddressesService } from './services/list-addresses.service';
 import { UserAddressesLoader } from './loaders/user-address.loader';
 import { UserResolver } from './resolvers/user.resolver';
+import { CreateAddressService } from './services/create-address.service';
+import { UpdateAddressService } from './services/update-address.service';
 
 @Module({
     providers: [
@@ -26,9 +28,12 @@ import { UserResolver } from './resolvers/user.resolver';
         // services
         GetAddressService,
         ListAddressesService,
+        CreateAddressService,
+        UpdateAddressService,
 
         // repositories
         AddressRepositoryProvider,
     ],
+    exports: [CreateAddressService, UpdateAddressService, ListAddressesService],
 })
 export class AddressModule {}
