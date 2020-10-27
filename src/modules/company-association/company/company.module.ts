@@ -17,6 +17,8 @@ import { CompanySearchFilter } from './filters/company.search.filter';
 import { CategoryModule } from 'src/modules/category/category.module';
 import { CompanyCategoriesLoader } from './loaders/company-categories.loader';
 import { CompanyCategoriesResolver } from './resolvers/company-categories.resolver';
+import { UpdateCompanyService } from './services/update-company.service';
+import { CreateCompanyService } from './services/create-company.service';
 
 @Module({
     imports: [CompaniesListDTO, CompanyFilterDTO, CategoryModule],
@@ -34,6 +36,8 @@ import { CompanyCategoriesResolver } from './resolvers/company-categories.resolv
         ListCompaniesService,
         CountCompaniesService,
         GetCompanyService,
+        CreateCompanyService,
+        UpdateCompanyService,
 
         // filters
         CompanyLocationFilter,

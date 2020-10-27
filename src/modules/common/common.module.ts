@@ -6,6 +6,7 @@ import { AddressHelper } from './helpers/address.helper';
 import { GetRequestHelper } from './helpers/get-request.helper';
 import { PasswordService } from './services/password.service';
 import { TransactionHelper } from './helpers/transactionHelper';
+import { ConfigToMetaService } from './services/config-to-meta.service';
 
 @Global()
 @Module({
@@ -20,7 +21,15 @@ import { TransactionHelper } from './helpers/transactionHelper';
 
         // services
         PasswordService,
+        ConfigToMetaService,
     ],
-    exports: [ConfigTransformHelper, AddressHelper, GetRequestHelper, PasswordService, TransactionHelper],
+    exports: [
+        ConfigTransformHelper,
+        AddressHelper,
+        GetRequestHelper,
+        PasswordService,
+        TransactionHelper,
+        ConfigToMetaService,
+    ],
 })
 export class CommonModule {}

@@ -6,6 +6,7 @@ import { ConfigCompanyResolver } from './resolvers/company.resolver';
 import { QueryCompanyMetaResolver } from './resolvers/query.company-meta.resolver';
 import { GetCompanyConfigService } from './services/get-company-config.service';
 import { GetCompanyMetaService } from './services/get.company.meta.service';
+import { SaveCompanyMetasService } from './services/save-company-metas.service';
 
 @Module({
     imports: [CompanyConfigDTO],
@@ -13,6 +14,7 @@ import { GetCompanyMetaService } from './services/get.company.meta.service';
         // services
         GetCompanyConfigService,
         GetCompanyMetaService,
+        SaveCompanyMetasService,
 
         // loaders
         CompanyConfigLoader,
@@ -24,5 +26,6 @@ import { GetCompanyMetaService } from './services/get.company.meta.service';
         // repositories
         CompanyMetaRepositoryProvider,
     ],
+    exports: [SaveCompanyMetasService],
 })
 export class CompanyMetaModule {}

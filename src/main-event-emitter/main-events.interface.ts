@@ -1,10 +1,12 @@
-import { ICreateAddressEvent } from 'src/modules/address/interfaces/create-address-event.interface';
-import { IUpdateAddressEvent } from 'src/modules/address/interfaces/update-address-event.interface';
-import { ICreateCategoryEvent } from 'src/modules/category/interfaces/create-category-event.interface';
-import { IUpdateCategoryEvent } from 'src/modules/category/interfaces/update-category-event.interface';
-import { IAddUserAddressEvent } from 'src/modules/user-association/user/interface/add-user-address-event.interface';
-import { IUpdateUserAddressEvent } from 'src/modules/user-association/user/interface/update-user-address-event.interface';
-import { IUpdateUserEvent } from 'src/modules/user-association/user/interface/update-user-event.interface';
+import { ICreateAddressEvent } from '../modules/address/interfaces/create-address-event.interface';
+import { IUpdateAddressEvent } from '../modules/address/interfaces/update-address-event.interface';
+import { ICreateCategoryEvent } from '../modules/category/interfaces/create-category-event.interface';
+import { IUpdateCategoryEvent } from '../modules/category/interfaces/update-category-event.interface';
+import { ICreateCompanyEvent } from '../modules/company-association/company/interfaces/create-company-event.interface';
+import { IUpdateCompanyEvent } from '../modules/company-association/company/interfaces/update-company-event.interface';
+import { IAddUserAddressEvent } from '../modules/user-association/user/interface/add-user-address-event.interface';
+import { IUpdateUserAddressEvent } from '../modules/user-association/user/interface/update-user-address-event.interface';
+import { IUpdateUserEvent } from '../modules/user-association/user/interface/update-user-event.interface';
 import { ICreateUserEvent } from '../modules/user-association/user/interface/create-user-event.interface';
 
 export interface IMainEvents {
@@ -23,6 +25,10 @@ export interface IMainEvents {
     // category
     createCategory(event: ICreateCategoryEvent): void;
     updateCategory(event: IUpdateCategoryEvent): void;
+
+    // company category
+    createCompany(event: ICreateCompanyEvent): void;
+    updateCompany(event: IUpdateCompanyEvent): void;
 
     // company category
     createCompanyCategory(event: ICreateCategoryEvent): void;

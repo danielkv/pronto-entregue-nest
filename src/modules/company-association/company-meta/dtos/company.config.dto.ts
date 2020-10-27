@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsString } from 'class-validator';
 
 export enum ICompanyConfigKeys {
@@ -14,7 +14,8 @@ export enum ICompanyConfigKeys {
     DELIVERY_HOURS_ENABLED = 'deliveryHoursEnabled',
 }
 
-@ObjectType()
+@InputType('CompanyConfigInput')
+@ObjectType('CompanyConfig')
 export class CompanyConfigDTO {
     @Field({ nullable: true })
     @IsString()
