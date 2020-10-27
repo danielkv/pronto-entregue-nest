@@ -1,7 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { NestEventEmitter } from 'nest-event';
 import { IMainEvents } from 'src/main-event-emitter/main-events.interface';
+import { AddressDTO } from 'src/modules/address/dtos/address.dto';
+import { Address } from 'src/modules/address/entities/address.entity';
+import { IAddressRepository } from 'src/modules/address/interfaces/address.repository.interface';
+import { AddressRepository } from 'src/modules/address/respositories/address.repository';
+import { UpdateAddressService } from 'src/modules/address/services/update-address.service';
 import { TransactionHelper } from 'src/modules/common/helpers/transactionHelper';
+import { EntityManager } from 'typeorm';
+import { CompanyMetaDTO } from '../../company-meta/dtos/company-meta.dto';
+import { CompanyMeta } from '../../company-meta/entities/company.meta.entity';
 import { ICompanyMetaRepository } from '../../company-meta/interfaces/company-meta.repository.interface';
 import { CompanyMetaRepository } from '../../company-meta/repositories/company-meta.repository';
 import { SaveCompanyMetasService } from '../../company-meta/services/save-company-metas.service';
@@ -33,14 +41,10 @@ export class UpdateCompanyService {
             const updatedCompany = await companyRepository.save(mergedCompany);
 
             // check if there are metas to save
-            if (company?.metas?.length) {
-                // get transaction repository and save
-                const companyMetaRepository: ICompanyMetaRepository = manager.getCustomRepository(
-                    CompanyMetaRepository,
-                );
-                const saveCompanyMetasService = new SaveCompanyMetasService(companyMetaRepository);
-                await saveCompanyMetasService.execute(company.metas);
-            }
+            if (company?.metas?.length) this.saveCompanyMetas(manager, company.metas);
+
+            // address
+            this.updateCompanyAddress(manager, company.address);
 
             return updatedCompany;
         });
@@ -53,5 +57,27 @@ export class UpdateCompanyService {
 
         // return company
         return updated;
+    }
+
+    private updateCompanyAddress(manager: EntityManager, address: AddressDTO): Promise<Address> {
+        // get transaction repository and save
+        const addressRepository: IAddressRepository = manager.getCustomRepository(AddressRepository);
+
+        // create service instance
+        const updateAddressService = new UpdateAddressService(addressRepository, this.eventEmitter);
+
+        // return
+        return updateAddressService.execute(address.id, address);
+    }
+
+    private saveCompanyMetas(manager: EntityManager, metas: CompanyMetaDTO[]): Promise<CompanyMeta[]> {
+        // get transaction repository and save
+        const companyMetaRepository: ICompanyMetaRepository = manager.getCustomRepository(CompanyMetaRepository);
+
+        // create service instance
+        const saveCompanyMetasService = new SaveCompanyMetasService(companyMetaRepository);
+
+        // return
+        return saveCompanyMetasService.execute(metas);
     }
 }
