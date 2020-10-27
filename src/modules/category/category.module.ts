@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CompanyModule } from '../company-association/company/company.module';
 import { CategoryFilterDTO } from './dtos/category.filter.dto';
 import { CategoryActiveFilter } from './filters/category.active.filter';
 import { CategoryCompanyFilter } from './filters/category.company.filter';
@@ -10,7 +11,7 @@ import { ListCategoriesService } from './services/list-categories.service';
 import { UpdateCategoryService } from './services/update-category.service';
 
 @Module({
-    imports: [CategoryFilterDTO],
+    imports: [CategoryFilterDTO, CompanyModule],
     providers: [
         // services
         ListCategoriesService,
