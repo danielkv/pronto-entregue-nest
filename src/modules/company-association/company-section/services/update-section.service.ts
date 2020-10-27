@@ -7,7 +7,7 @@ import { ICompanySectionRepository } from '../interfaces/company-section.reposit
 import { IUpdateCompanySectionEvent } from '../interfaces/update-company-section-event.interface';
 
 @Injectable()
-export class CreateSectionService {
+export class UpdateSectionService {
     constructor(
         @Inject('ICompanySectionRepository') private companySectionRepository: ICompanySectionRepository,
         private eventEmitter: NestEventEmitter,

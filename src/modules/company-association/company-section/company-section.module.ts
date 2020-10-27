@@ -12,6 +12,8 @@ import { ListCompanySectionsService } from './services/list-company-sections.ser
 import { CompanySectionsListDTO } from './dtos/company-sections.list.dto';
 import { CompanySectionFilterDTO } from './dtos/company-section.filter.dto';
 import { CountCompanySectionsService } from './services/count-company-sections.service';
+import { CreateSectionService } from './services/create-section.service';
+import { UpdateSectionService } from './services/update-section.service';
 
 @Module({
     imports: [CompanySectionsListDTO, CompanySectionFilterDTO, CompanyModule],
@@ -19,6 +21,8 @@ import { CountCompanySectionsService } from './services/count-company-sections.s
         // services
         ListCompanySectionsService,
         CountCompanySectionsService,
+        CreateSectionService,
+        UpdateSectionService,
 
         // loaders
         CompanySectionLoader,
