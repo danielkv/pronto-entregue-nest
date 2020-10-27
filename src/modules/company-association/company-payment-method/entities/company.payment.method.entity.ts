@@ -8,16 +8,12 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { Company } from './company.entity';
+import { Company } from '../../company/entities/company.entity';
 import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-@Index(
-    'company_payment_methods_paymentMethodId_companyId_unique',
-    ['companyId', 'paymentMethodId'],
-    { unique: true },
-)
+@Index('company_payment_methods_paymentMethodId_companyId_unique', ['companyId', 'paymentMethodId'], { unique: true })
 @Index('paymentMethodId', ['paymentMethodId'], {})
 @Entity('company_payment_methods')
 export class CompanyPaymentMethod {
@@ -25,7 +21,7 @@ export class CompanyPaymentMethod {
     @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
     id: number;
 
-    @Field()
+    @Field({ nullable: true })
     @Column('text', { name: 'settings', nullable: true })
     settings: string | null;
 
@@ -43,7 +39,6 @@ export class CompanyPaymentMethod {
     @Column('int', { name: 'paymentMethodId', nullable: true })
     paymentMethodId: number | null;
 
-    @Field(() => Company)
     @ManyToOne(
         () => Company,
         companies => companies.companyPaymentMethods,
@@ -55,7 +50,6 @@ export class CompanyPaymentMethod {
     @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
     company: Company;
 
-    @Field(() => PaymentMethod)
     @ManyToOne(
         () => PaymentMethod,
         paymentMethods => paymentMethods.companyPaymentMethods,

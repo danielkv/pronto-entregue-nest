@@ -15,7 +15,7 @@ import { Category } from '../../../category/entities/category.entity';
 import { CompanySection } from '../../company-section/entities/company.type.entity';
 import { Address } from '../../../address/entities/address.entity';
 import { CompanyMeta } from '../../company-meta/entities/company.meta.entity';
-import { CompanyPaymentMethod } from './company.payment.method.entity';
+import { CompanyPaymentMethod } from '../../company-payment-method/entities/company.payment.method.entity';
 import { CompanyUser } from '../../company-user/entities/company.user.entity';
 import { DeliveryArea } from '../../../delivery-area/entities/delivery.area.entity';
 import { Order } from '../../../order-association/order/entities/order.entity';

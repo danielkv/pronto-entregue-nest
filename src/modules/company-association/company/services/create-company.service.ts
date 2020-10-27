@@ -14,7 +14,7 @@ import { ICompanyMetaRepository } from '../../company-meta/interfaces/company-me
 import { CompanyMetaRepository } from '../../company-meta/repositories/company-meta.repository';
 import { SaveCompanyMetasService } from '../../company-meta/services/save-company-metas.service';
 
-import { CompanyDTO } from '../entities/company.dto';
+import { CompanyDTO } from '../dtos/company.dto';
 import { Company } from '../entities/company.entity';
 
 import { ICompanyRepository } from '../interfaces/company.repository.interface';
