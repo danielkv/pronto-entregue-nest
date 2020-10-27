@@ -30,5 +30,6 @@ import { ListPaymentMethodsService } from './services/list-payment-methods.servi
         // repositoris
         PaymentMethodRepositoryProvider,
     ],
+    exports: [PaymentMethodRepositoryProvider],
 })
 export class PaymentModule {}
