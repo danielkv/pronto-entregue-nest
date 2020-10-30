@@ -10,8 +10,10 @@ import { IUpdateUserEvent } from '../modules/user-association/user/interface/upd
 import { ICreateUserEvent } from '../modules/user-association/user/interface/create-user-event.interface';
 import { ICreateCompanySectionEvent } from '../modules/company-association/company-section/interfaces/create-company-section-event.interface';
 import { IUpdateCompanySectionEvent } from '../modules/company-association/company-section/interfaces/update-company-section-event.interface';
-import { ICreateCouponEvent } from 'src/modules/coupon/interfaces/create-coupon-event.interface';
-import { IUpdateCouponEvent } from 'src/modules/coupon/interfaces/update-coupon-event.interface';
+import { ICreateCouponEvent } from '../modules/coupon/interfaces/create-coupon-event.interface';
+import { IUpdateCouponEvent } from '../modules/coupon/interfaces/update-coupon-event.interface';
+import { ICreateCreditHistoryEvent } from '../modules/credit-association/credit-history/interfaces/create-credit-history-event.interface';
+import { IUpdateCreditBalanceEvent } from '../modules/credit-association/credit-balance/interfaces/update-credit-balance-event.interface';
 
 export interface IMainEvents {
     // user
@@ -41,4 +43,10 @@ export interface IMainEvents {
     // coupon
     createCoupon(event: ICreateCouponEvent): void;
     updateCoupon(event: IUpdateCouponEvent): void;
+
+    // creditHistory
+    createCreditHistory(event: ICreateCreditHistoryEvent): void;
+
+    // creditBalance
+    updateCreditBalance(event: IUpdateCreditBalanceEvent): void;
 }
