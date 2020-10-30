@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ListCompaniesService } from './services/list-companies.service';
 import { QueryCompanyResolver } from './resolvers/query.company.resolver';
 import { CompaniesListDTO } from './dtos/companies.list.dto';
@@ -17,9 +17,10 @@ import { CompanyCategoriesLoader } from './loaders/company-categories.loader';
 import { CompanyCategoriesResolver } from './resolvers/company-categories.resolver';
 import { UpdateCompanyService } from './services/update-company.service';
 import { CreateCompanyService } from './services/create-company.service';
+import { CompanyIdFilter } from './filters/company.id.filter';
 
 @Module({
-    imports: [CompaniesListDTO, CompanyFilterDTO, CategoryModule],
+    imports: [CompaniesListDTO, CompanyFilterDTO, forwardRef(() => CategoryModule)],
     providers: [
         // resolvers
         CompanyResolver,
@@ -42,10 +43,11 @@ import { CreateCompanyService } from './services/create-company.service';
         CompanyActiveFilter,
         CompanyPublishedFilter,
         CompanySearchFilter,
+        CompanyIdFilter,
 
         // repositories
         CompanyRepositoryProvider,
     ],
-    exports: [CompanyRepositoryProvider, CompanyLocationFilter],
+    exports: [CompanyRepositoryProvider, CompanyLocationFilter, GetCompanyService],
 })
 export class CompanyModule {}

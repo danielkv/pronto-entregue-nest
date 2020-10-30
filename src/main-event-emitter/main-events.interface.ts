@@ -10,6 +10,8 @@ import { IUpdateUserEvent } from '../modules/user-association/user/interface/upd
 import { ICreateUserEvent } from '../modules/user-association/user/interface/create-user-event.interface';
 import { ICreateCompanySectionEvent } from '../modules/company-association/company-section/interfaces/create-company-section-event.interface';
 import { IUpdateCompanySectionEvent } from '../modules/company-association/company-section/interfaces/update-company-section-event.interface';
+import { ICreateCouponEvent } from 'src/modules/coupon/interfaces/create-coupon-event.interface';
+import { IUpdateCouponEvent } from 'src/modules/coupon/interfaces/update-coupon-event.interface';
 
 export interface IMainEvents {
     // user
@@ -35,4 +37,8 @@ export interface IMainEvents {
     // section
     createSection(event: ICreateCompanySectionEvent): void;
     updateSection(event: IUpdateCompanySectionEvent): void;
+
+    // coupon
+    createCoupon(event: ICreateCouponEvent): void;
+    updateCoupon(event: IUpdateCouponEvent): void;
 }

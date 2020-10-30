@@ -149,10 +149,10 @@ export class Coupon {
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
-    @Field(() => [Company])
     @ManyToMany(
         () => Company,
         company => company.coupons,
+        { cascade: true },
     )
     @JoinTable({
         name: 'coupon_companies',
@@ -161,10 +161,10 @@ export class Coupon {
     })
     companies: Company[];
 
-    @Field(() => [Product])
     @ManyToMany(
         () => Product,
         product => product.coupons,
+        { cascade: true },
     )
     @JoinTable({
         name: 'coupon_products',
@@ -173,10 +173,10 @@ export class Coupon {
     })
     products: Product[];
 
-    @Field(() => [User])
     @ManyToMany(
         () => User,
         user => user.coupons,
+        { cascade: true },
     )
     @JoinTable({
         name: 'coupon_users',
@@ -185,7 +185,6 @@ export class Coupon {
     })
     users: User[];
 
-    @Field(() => [Order])
     @OneToMany(
         () => Order,
         orders => orders.coupon,
