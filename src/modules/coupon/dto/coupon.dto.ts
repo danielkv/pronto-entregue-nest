@@ -6,8 +6,8 @@ import { CouponValueType } from '../enums/coupon-valye-type.enum';
 
 @InputType('CouponInput')
 export class CouponDTO {
-    @Field(() => ID)
-    id: number;
+    @Field(() => ID, { nullable: true })
+    id?: number;
 
     @Field()
     name: string;
@@ -60,18 +60,12 @@ export class CouponDTO {
     @Field()
     freeDelivery: boolean;
 
-    @Field()
-    createdAt: Date;
-
-    @Field()
-    updatedAt: Date;
-
-    @Field(() => [Int])
+    @Field(() => [Int], { nullable: 'items' })
     companies: Company['id'][];
 
-    @Field(() => [Int])
+    @Field(() => [Int], { nullable: 'items' })
     products: Product['id'][];
 
-    @Field(() => [Int])
+    @Field(() => [Int], { nullable: 'items' })
     users: User['id'][];
 }
