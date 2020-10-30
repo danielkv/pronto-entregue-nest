@@ -17,7 +17,7 @@ export class ListUsersService {
         private userActiveFilter: UserActiveFilter,
     ) {}
 
-    execute(filter: UserFilterDTO, pagination: PageInfo): Promise<User[]> {
+    execute(filter: UserFilterDTO, pagination?: PageInfo): Promise<User[]> {
         const options: IRepositoryListOptions<User, UserFilterDTO> = {
             pagination,
             filter,
