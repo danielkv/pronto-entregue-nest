@@ -9,6 +9,7 @@ import { CompanyActiveFilter } from '../filters/company.active.filter';
 import { CompanyLocationFilter } from '../filters/company.location.filter';
 import { CompanyPublishedFilter } from '../filters/company.published.filter';
 import { CompanySearchFilter } from '../filters/company.search.filter';
+import { CompanyIdFilter } from '../filters/company.id.filter';
 
 @Injectable()
 export class ListCompaniesService {
@@ -19,6 +20,7 @@ export class ListCompaniesService {
         private companyLocationFilter: CompanyLocationFilter,
         private companyPublishedFilter: CompanyPublishedFilter,
         private companySearchFilter: CompanySearchFilter,
+        private companyIdFilter: CompanyIdFilter,
     ) {}
 
     async execute(filter?: CompanyFilterDTO, pagination?: PageInfo, userLocation?: GeoPoint): Promise<Company[]> {
@@ -31,6 +33,7 @@ export class ListCompaniesService {
                 this.companyLocationFilter,
                 this.companyPublishedFilter,
                 this.companySearchFilter,
+                this.companyIdFilter,
             ],
         };
 

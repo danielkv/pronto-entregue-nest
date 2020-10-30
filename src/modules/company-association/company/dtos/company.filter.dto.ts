@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, ID, InputType } from '@nestjs/graphql';
 
 @InputType('CompanyFilterInput')
 export class CompanyFilterDTO {
@@ -7,6 +7,9 @@ export class CompanyFilterDTO {
 
     @Field({ nullable: true })
     location?: boolean;
+
+    @Field(() => [ID], { nullable: true })
+    companyId?: number | number[];
 
     @Field({ nullable: true })
     onlyActive?: boolean;

@@ -7,6 +7,7 @@ import { CompanyActiveFilter } from '../filters/company.active.filter';
 import { CompanyLocationFilter } from '../filters/company.location.filter';
 import { CompanyPublishedFilter } from '../filters/company.published.filter';
 import { CompanySearchFilter } from '../filters/company.search.filter';
+import { CompanyIdFilter } from '../filters/company.id.filter';
 
 @Injectable()
 export class CountCompaniesService {
@@ -17,6 +18,7 @@ export class CountCompaniesService {
         private companyLocationFilter: CompanyLocationFilter,
         private companyPublishedFilter: CompanyPublishedFilter,
         private companySearchFilter: CompanySearchFilter,
+        private companyIdFilter: CompanyIdFilter,
     ) {}
 
     execute(filter?: CompanyFilterDTO, userLocation?: GeoPoint): Promise<number> {
@@ -28,6 +30,7 @@ export class CountCompaniesService {
                 this.companyLocationFilter,
                 this.companyPublishedFilter,
                 this.companySearchFilter,
+                this.companyIdFilter,
             ],
         };
         return this.companyRepository.getCount(options);
