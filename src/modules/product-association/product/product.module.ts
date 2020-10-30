@@ -10,6 +10,8 @@ import { ProductOptionsGroupsLoader } from './loaders/product-options-groups.loa
 import { ProductRepositoryProvider } from './repositories/product.repository';
 import { ProductOptionsGroupsResolver } from './resolvers/product-options-groups.resolver';
 import { QueryProductResolver } from './resolvers/query-product.resolver';
+import { CountProductsService } from './services/count-products.service';
+import { ListProductsService } from './services/list-products.service';
 import { GetProductsService } from './services/get-products.service';
 
 @Module({
@@ -17,6 +19,8 @@ import { GetProductsService } from './services/get-products.service';
     providers: [
         // services
         GetProductsService,
+        ListProductsService,
+        CountProductsService,
 
         // resolvers
         ProductOptionsGroupsResolver,
