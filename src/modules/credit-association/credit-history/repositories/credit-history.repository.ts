@@ -4,6 +4,7 @@ import { EntityRepository } from 'typeorm';
 import { CreditHistoryFilterDTO } from '../dtos/credit-history.filters.dto';
 import { CreditHistory } from '../entities/credit.history.entity';
 import { ICreditHistoryRepository } from '../interfaces/credit-history.interface';
+import { User } from 'src/modules/user-association/user/entities/user.entity';
 
 @EntityRepository(CreditHistory)
 export class CreditHistoryRepository extends RepositoryBase<CreditHistory, CreditHistoryFilterDTO>
@@ -12,6 +13,14 @@ export class CreditHistoryRepository extends RepositoryBase<CreditHistory, Credi
         super();
 
         this.setQueryBuilderTableName('creditHistory');
+    }
+
+    getByUserId(userId: User['id']): Promise<CreditHistory[]> {
+        const query = this.createQueryBuilder(this.tablename);
+
+        query.where('userId = :userId').setParameters({ userId });
+
+        return query.getMany();
     }
 }
 

@@ -24,6 +24,18 @@ export class CreditBalanceRepository extends RepositoryBase<CreditBalance, Credi
 
         return balanceInstance.value;
     }
+
+    updateByUserId(userId: User['id'], value: number): Promise<any> {
+        const query = this.createQueryBuilder(this.tablename);
+
+        query
+            .update()
+            .set({ value })
+            .where('userId = :userId')
+            .setParameters({ userId });
+
+        return query.execute();
+    }
 }
 
 export const CreditBalanceRepositoryProvider = new RepositoryProviderFactory(

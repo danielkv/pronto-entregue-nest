@@ -10,8 +10,12 @@ export class CreditHistoryUserFilter implements IFilter<CreditHistory, CreditHis
     ): QueryBuilderBase<CreditHistory, CreditHistoryFilterDTO> {
         if (!filter?.userId) return query;
 
+        // check filter type
+        const userIds = !Array.isArray(filter.userId) ? [filter.userId] : filter.userId;
+        if (!userIds.length) return query;
+
         // apply filter
-        query.andWhereInIds(filter.userId);
+        query.where('userId IN (:...userIds)').setParameters({ userIds });
 
         //return filter
         return query;
