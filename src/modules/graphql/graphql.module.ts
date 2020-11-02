@@ -12,6 +12,10 @@ import { GeoPointScalar } from '../graphql/scalars/geo-point-scalar';
             },
             context: ({ req }) => ({ req }),
             autoSchemaFile: resolve(__dirname, 'schema.gql'),
+            uploads: {
+                maxFileSize: 20000000, // 20 MB
+                maxFiles: 5,
+            },
         }),
     ],
     providers: [GeoPointScalar, DateScalar],

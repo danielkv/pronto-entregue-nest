@@ -3,9 +3,11 @@ import { ProductTypeEnum } from '../enums/product-type.enum';
 import { IsBoolean, IsInt, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { OptionGroupDTO } from '../../option-group/dtos/option.group.dto';
 import { Type } from 'class-transformer';
+import { FileUpload } from 'graphql-upload';
+import { Upload } from 'src/modules/graphql/scalars/upload.scalar';
 
 @InputType('ProductInput')
-export class Product {
+export class ProductDTO {
     @IsOptional()
     @IsInt()
     @Field(() => Int)
@@ -26,6 +28,10 @@ export class Product {
     @IsString()
     @Field()
     image: string;
+
+    @IsOptional()
+    @Field(() => Upload)
+    file?: FileUpload;
 
     @IsBoolean()
     @Field()

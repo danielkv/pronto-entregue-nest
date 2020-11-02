@@ -13,9 +13,10 @@ import { QueryProductResolver } from './resolvers/query-product.resolver';
 import { CountProductsService } from './services/count-products.service';
 import { ListProductsService } from './services/list-products.service';
 import { GetProductsService } from './services/get-products.service';
+import { ProductDTO } from './dtos/product.dto';
 
 @Module({
-    imports: [ProductFilterDTO, OptionGroupModule],
+    imports: [ProductFilterDTO, OptionGroupModule, ProductDTO],
     providers: [
         // services
         GetProductsService,
