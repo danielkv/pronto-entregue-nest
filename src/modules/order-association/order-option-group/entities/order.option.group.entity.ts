@@ -69,6 +69,7 @@ export class OrderOptionGroup {
     @OneToMany(
         () => OrderOption,
         orderOptions => orderOptions.orderOptionsGroup,
+        { cascade: true },
     )
     orderOptions: OrderOption[];
 }

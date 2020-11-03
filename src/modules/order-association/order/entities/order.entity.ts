@@ -18,16 +18,13 @@ import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { CreditHistory } from '../../../credit-association/credit-history/entities/credit.history.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { Rating } from '../../../rating/entities/rating.entity';
-import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { OrderStatusEnum } from '../enums/order.status.enum';
 import { OrderTypeEnum } from '../enums/order.type.enum';
 import { GeoPoint } from '../../../common/types/geo-point';
 import { GeoPointHelper } from '../../../common/helpers/geo.point.helper';
 
 const geoPointHelper = new GeoPointHelper();
-
-registerEnumType(OrderStatusEnum, { name: 'OrderStatusEnum' });
-registerEnumType(OrderTypeEnum, { name: 'OrderTypeEnum' });
 
 @ObjectType()
 @Index('userId', ['userId'], {})
@@ -180,6 +177,7 @@ export class Order {
     @OneToMany(
         () => OrderProduct,
         orderProducts => orderProducts.order,
+        { cascade: true },
     )
     orderProducts: OrderProduct[];
 

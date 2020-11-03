@@ -16,6 +16,8 @@ import { ICreateCreditHistoryEvent } from '../modules/credit-association/credit-
 import { IUpdateCreditBalanceEvent } from '../modules/credit-association/credit-balance/interfaces/update-credit-balance-event.interface';
 import { ICreateProductEvent } from 'src/modules/product-association/product/interface/create-product-event.interface';
 import { IUpdateProductEvent } from 'src/modules/product-association/product/interface/update-product-event.interface';
+import { ICreateOrderEvent } from 'src/modules/order-association/order/interfaces/create-order-event.interface';
+import { IUpdateOrderEvent } from 'src/modules/order-association/order/interfaces/update-order-event.interface';
 
 export interface IMainEvents {
     // user
@@ -55,4 +57,8 @@ export interface IMainEvents {
     // product
     createProduct(event: ICreateProductEvent): void;
     updateProduct(event: IUpdateProductEvent): void;
+
+    // order
+    createOrder(event: ICreateOrderEvent): void;
+    updateOrder(event: IUpdateOrderEvent): void;
 }
