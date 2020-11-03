@@ -33,6 +33,7 @@ export class ListOptionService {
                 this.optionRemovedFilter,
                 this.optionSearchFilter,
             ],
+            orderBy: { 'option.order': 'ASC' },
         };
 
         return this.optionRepository.getList(options);

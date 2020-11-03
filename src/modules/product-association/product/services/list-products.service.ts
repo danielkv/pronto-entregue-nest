@@ -35,6 +35,7 @@ export class ListProductsService {
                 this.productIdFilter,
                 this.productSearchFilter,
             ],
+            orderBy: { 'product.order': 'ASC' },
         };
 
         return this.productRepository.getList(options);
