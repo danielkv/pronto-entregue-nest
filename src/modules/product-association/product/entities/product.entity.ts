@@ -136,6 +136,7 @@ export class Product {
     @OneToMany(
         () => OptionGroup,
         optionsGroups => optionsGroups.product,
+        { cascade: true },
     )
     optionsGroups: OptionGroup[];
 

@@ -14,6 +14,8 @@ import { ICreateCouponEvent } from '../modules/coupon/interfaces/create-coupon-e
 import { IUpdateCouponEvent } from '../modules/coupon/interfaces/update-coupon-event.interface';
 import { ICreateCreditHistoryEvent } from '../modules/credit-association/credit-history/interfaces/create-credit-history-event.interface';
 import { IUpdateCreditBalanceEvent } from '../modules/credit-association/credit-balance/interfaces/update-credit-balance-event.interface';
+import { ICreateProductEvent } from 'src/modules/product-association/product/interface/create-product-event.interface';
+import { IUpdateProductEvent } from 'src/modules/product-association/product/interface/update-product-event.interface';
 
 export interface IMainEvents {
     // user
@@ -49,4 +51,8 @@ export interface IMainEvents {
 
     // creditBalance
     updateCreditBalance(event: IUpdateCreditBalanceEvent): void;
+
+    // product
+    createProduct(event: ICreateProductEvent): void;
+    updateProduct(event: IUpdateProductEvent): void;
 }

@@ -11,6 +11,7 @@ import { ListOptionGroupService } from './services/list-options-groups.service';
 import { OptionGroupOptionsResolver } from './resolvers/option-group-options.resolver';
 import { OptionModule } from '../option/option.module';
 import { OptionGroupOptionsLoader } from './loaders/option-group-options.loader';
+import { SaveOptionsGroupsService } from './services/save-options-groups.service';
 
 @Module({
     imports: [OptionGroupFilterDTO, OptionModule],
@@ -31,10 +32,11 @@ import { OptionGroupOptionsLoader } from './loaders/option-group-options.loader'
         // services
         GetOptionGroupService,
         ListOptionGroupService,
+        SaveOptionsGroupsService,
 
         // repositories
         OptionGroupRepositoryProvider,
     ],
-    exports: [ListOptionGroupService],
+    exports: [ListOptionGroupService, SaveOptionsGroupsService],
 })
 export class OptionGroupModule {}

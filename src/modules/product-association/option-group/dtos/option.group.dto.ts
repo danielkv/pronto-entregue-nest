@@ -52,12 +52,4 @@ export class OptionGroupDTO {
     @Type(() => OptionDTO)
     @Field(() => [OptionDTO])
     options: OptionDTO[];
-
-    @IsInt()
-    @Field(() => Int)
-    groupRestrainedId: number;
-
-    @IsInt()
-    @Field(() => Int)
-    restrainedBy: number;
 }

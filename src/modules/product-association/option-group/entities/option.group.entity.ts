@@ -89,6 +89,7 @@ export class OptionGroup {
     @OneToMany(
         () => Option,
         options => options.optionsGroup,
+        { cascade: true },
     )
     options: Option[];
 
