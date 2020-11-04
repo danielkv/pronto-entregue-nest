@@ -13,7 +13,7 @@ export class AcCheckService {
         return rolesToCheck.every(role => this.checkPermission(role, permissionScopes));
     }
 
-    checkPermission(role: IRole, permissionScopes) {
+    checkPermission(role: IRole, permissionScopes: IPermissionsScopes) {
         const permissions = this.getPermissionsFromScope(permissionScopes, role.scope);
 
         if (!permissions.length) return false;
