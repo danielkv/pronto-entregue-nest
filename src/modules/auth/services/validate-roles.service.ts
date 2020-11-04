@@ -5,7 +5,7 @@ import { IPermissionsScopes, IRole, RoleScopeEnum } from '../interfaces/guard-ro
 
 @Injectable()
 export class AcCheckService {
-    constructor(@Inject('AccessControl') private acessControl: AccessControl) {}
+    constructor(@Inject('AccessControl') private accessControl: AccessControl) {}
 
     execute(roles: IRole | IRole[], permissionScopes: IPermissionsScopes): boolean {
         const rolesToCheck = Array.isArray(roles) ? roles : [roles];
@@ -18,7 +18,7 @@ export class AcCheckService {
 
         if (!permissions.length) return false;
 
-        const hasPermission = this.acessControl.permission({
+        const hasPermission = this.accessControl.permission({
             role: permissions,
             action: role.action,
             resource: role.resource,
