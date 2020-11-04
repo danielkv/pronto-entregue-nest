@@ -19,6 +19,8 @@ import { IUpdateProductEvent } from 'src/modules/product-association/product/int
 import { ICreateOrderEvent } from 'src/modules/order-association/order/interfaces/create-order-event.interface';
 import { IUpdateOrderEvent } from 'src/modules/order-association/order/interfaces/update-order-event.interface';
 import { IChangeOrderStatusEvent } from 'src/modules/order-association/order/interfaces/change-order-status-event.interface';
+import { ICreateRatingEvent } from 'src/modules/rating/interfaces/create-rating-event.interface';
+import { IUpdateRatingEvent } from 'src/modules/rating/interfaces/update-rating-event.interface';
 
 export interface IMainEvents {
     // user
@@ -63,4 +65,8 @@ export interface IMainEvents {
     createOrder(event: ICreateOrderEvent): void;
     updateOrder(event: IUpdateOrderEvent): void;
     changeOrderStatus(event: IChangeOrderStatusEvent): void;
+
+    // rating
+    createRating(event: ICreateRatingEvent): void;
+    updateRating(event: IUpdateRatingEvent): void;
 }

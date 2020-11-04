@@ -17,7 +17,7 @@ export class CreateOrderService {
         // create instance
         const orderInstance = this.orderRepository.create(order);
 
-        // save
+        // save order, products, groups, options
         const created = await this.orderRepository.save(orderInstance);
 
         // events
