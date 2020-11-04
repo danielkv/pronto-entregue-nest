@@ -20,6 +20,9 @@ export enum AppRoles {
     ORDERS_EDIT = 'orders_edit',
     ORDERS_EDIT_OWN = 'orders_edit_own',
 
+    ORDERS_STATUS_CHANGE = 'orders_status_change',
+    ORDERS_STATUS_CHANGE_OWN = 'orders_status_change_own',
+
     USERS_READ = 'users_read',
     USERS_CREATE = 'users_read_create',
     USERS_CREATE_OWN = 'users_create_own',

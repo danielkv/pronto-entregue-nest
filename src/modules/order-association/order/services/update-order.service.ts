@@ -18,6 +18,9 @@ export class UpdateOrderService {
         const oldOrder = await this.orderRepository.get(orderId);
         if (!oldOrder) throw new NotFoundException('Pedido não existe');
 
+        // forbid change status
+        if (order.status) delete order.status;
+
         // merge new data
         const mergedOrder = this.orderRepository.merge(oldOrder, order);
 

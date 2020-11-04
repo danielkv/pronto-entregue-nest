@@ -31,6 +31,9 @@ ac.grant(AppRoles.ORDERS_CREATE_OWN).createOwn(ACLResourcesEnum.ORDER);
 ac.grant(AppRoles.ORDERS_EDIT).update(ACLResourcesEnum.ORDER);
 ac.grant(AppRoles.ORDERS_EDIT_OWN).updateOwn(ACLResourcesEnum.ORDER);
 
+ac.grant(AppRoles.ORDERS_STATUS_CHANGE).update(ACLResourcesEnum.ORDER);
+ac.grant(AppRoles.ORDERS_STATUS_CHANGE_OWN).updateOwn(ACLResourcesEnum.ORDER);
+
 ac.grant(AppRoles.USERS_READ).read(ACLResourcesEnum.USER);
 ac.grant(AppRoles.USERS_CREATE).create(ACLResourcesEnum.USER);
 ac.grant(AppRoles.USERS_CREATE_OWN).createOwn(ACLResourcesEnum.USER);
@@ -57,6 +60,8 @@ ac.grant(AppRoles.MASTER).extend([
     AppRoles.ORDERS_READ,
     AppRoles.ORDERS_CREATE,
     AppRoles.ORDERS_EDIT,
+    AppRoles.ORDERS_STATUS_CHANGE,
+    AppRoles.ORDERS_STATUS_CHANGE_OWN,
     AppRoles.USERS_READ,
     AppRoles.USERS_CREATE,
     AppRoles.USERS_EDIT,

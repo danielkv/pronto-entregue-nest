@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { AccessControl, IQueryInfo } from 'accesscontrol';
+import { AccessControl } from 'accesscontrol';
 
 import { IPermissionsScopes, IRole, RoleScopeEnum } from '../interfaces/guard-roles.interface';
 
