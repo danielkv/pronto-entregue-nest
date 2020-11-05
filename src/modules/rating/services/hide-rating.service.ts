@@ -1,39 +1,35 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { NestEventEmitter } from 'nest-event';
 import { IMainEvents } from 'src/main-event-emitter/main-events.interface';
-import { RatingDTO } from '../dtos/rating.dto';
 import { Rating } from '../entities/rating.entity';
+import { IHideShowRatingEvent } from '../interfaces/hide-show-rating-event.interface';
 import { IRatingRepository } from '../interfaces/rating.interface';
-import { IUpdateRatingEvent } from '../interfaces/update-rating-event.interface';
 
 @Injectable()
-export class UpdateRatingService {
+export class HideRatingService {
     constructor(
         @Inject('IRatingRepository') private ratingRepository: IRatingRepository,
         private eventEmitter: NestEventEmitter,
     ) {}
 
-    async execute(ratingId: Rating['id'], rating: RatingDTO): Promise<Rating> {
+    async execute(ratingId: Rating['id']): Promise<Rating> {
         // check if rating exists
         const oldRating = await this.ratingRepository.get(ratingId);
         if (!oldRating) throw new NotFoundException('Avaliação não existe');
 
-        // can't update hidden property
-        delete rating.hidden;
-
         // merge new data
-        const mergedRating = this.ratingRepository.merge(oldRating, rating);
+        const mergedRating = this.ratingRepository.merge(oldRating, { hidden: true });
 
-        // save
-        const updated = await this.ratingRepository.save(mergedRating);
+        // hide
+        await this.ratingRepository.hide(ratingId);
 
         // events
-        const event: IUpdateRatingEvent = {
-            rating: updated,
+        const event: IHideShowRatingEvent = {
+            rating: mergedRating,
         };
-        this.eventEmitter.strictEmitter<IMainEvents>().emit('updateRating', event);
+        this.eventEmitter.strictEmitter<IMainEvents>().emit('hideShowRating', event);
 
         // return
-        return updated;
+        return mergedRating;
     }
 }

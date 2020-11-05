@@ -12,6 +12,28 @@ export class RatingRepository extends RepositoryBase<Rating, RatingFilterDTO> im
 
         this.setQueryBuilderTableName('rating');
     }
+
+    hide(ratingId: Rating['id']): Promise<any> {
+        const query = this.createQueryBuilder(this.tablename);
+
+        query
+            .update()
+            .set({ hidden: true })
+            .whereInIds(ratingId);
+
+        return query.execute();
+    }
+
+    show(ratingId: Rating['id']): Promise<any> {
+        const query = this.createQueryBuilder(this.tablename);
+
+        query
+            .update()
+            .set({ hidden: false })
+            .whereInIds(ratingId);
+
+        return query.execute();
+    }
 }
 
 export const RatingRepositoryProvider = new RepositoryProviderFactory('IRatingRepository', RatingRepository).create();
