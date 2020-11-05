@@ -14,14 +14,18 @@ import { ICreateCouponEvent } from '../modules/coupon/interfaces/create-coupon-e
 import { IUpdateCouponEvent } from '../modules/coupon/interfaces/update-coupon-event.interface';
 import { ICreateCreditHistoryEvent } from '../modules/credit-association/credit-history/interfaces/create-credit-history-event.interface';
 import { IUpdateCreditBalanceEvent } from '../modules/credit-association/credit-balance/interfaces/update-credit-balance-event.interface';
-import { ICreateProductEvent } from 'src/modules/product-association/product/interface/create-product-event.interface';
-import { IUpdateProductEvent } from 'src/modules/product-association/product/interface/update-product-event.interface';
-import { ICreateOrderEvent } from 'src/modules/order-association/order/interfaces/create-order-event.interface';
-import { IUpdateOrderEvent } from 'src/modules/order-association/order/interfaces/update-order-event.interface';
-import { IChangeOrderStatusEvent } from 'src/modules/order-association/order/interfaces/change-order-status-event.interface';
-import { ICreateRatingEvent } from 'src/modules/rating/interfaces/create-rating-event.interface';
-import { IUpdateRatingEvent } from 'src/modules/rating/interfaces/update-rating-event.interface';
-import { IHideShowRatingEvent } from 'src/modules/rating/interfaces/hide-show-rating-event.interface';
+import { ICreateProductEvent } from '../modules/product-association/product/interface/create-product-event.interface';
+import { IUpdateProductEvent } from '../modules/product-association/product/interface/update-product-event.interface';
+import { ICreateOrderEvent } from '../modules/order-association/order/interfaces/create-order-event.interface';
+import { IUpdateOrderEvent } from '../modules/order-association/order/interfaces/update-order-event.interface';
+import { IChangeOrderStatusEvent } from '../modules/order-association/order/interfaces/change-order-status-event.interface';
+import { ICreateRatingEvent } from '../modules/rating/interfaces/create-rating-event.interface';
+import { IUpdateRatingEvent } from '../modules/rating/interfaces/update-rating-event.interface';
+import { IHideShowRatingEvent } from '../modules/rating/interfaces/hide-show-rating-event.interface';
+import { ICreateDeliveryEvent } from '../modules/delivery/interfaces/create-delivery-event.interface';
+import { IUpdateDeliveryEvent } from '../modules/delivery/interfaces/update-delivery-event.interface';
+import { ISetDeliveryManEvent } from '../modules/delivery/interfaces/set-delivery-man-event.interface';
+import { IChangeDeliveryStatusEvent } from 'src/modules/delivery/interfaces/change-delivery-status-event.interface';
 
 export interface IMainEvents {
     // user
@@ -71,4 +75,10 @@ export interface IMainEvents {
     createRating(event: ICreateRatingEvent): void;
     updateRating(event: IUpdateRatingEvent): void;
     hideShowRating(event: IHideShowRatingEvent): void;
+
+    // delivery
+    createDelivery(event: ICreateDeliveryEvent): void;
+    updateDelivery(event: IUpdateDeliveryEvent): void;
+    setDeliveryMan(event: ISetDeliveryManEvent): void;
+    changeDeliveryStatus(event: IChangeDeliveryStatusEvent): void;
 }

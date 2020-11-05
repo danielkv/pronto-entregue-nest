@@ -1,4 +1,4 @@
-import { Field, Float, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
 import { GeoPoint } from '../../common/types/geo-point';
 import {
@@ -14,10 +14,9 @@ import {
 import { Order } from '../../order-association/order/entities/order.entity';
 import { User } from '../../user-association/user/entities/user.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
+import { DeliverySizesEnum } from '../enums/delivery-sizes.enum';
 
 const geoPointHelper = new GeoPointHelper();
-
-registerEnumType(DeliveryStatusEnum, { name: 'DeliveryStatusEnum' });
 
 @ObjectType()
 @Index('orderId', ['orderId'], {})
@@ -32,13 +31,14 @@ export class Delivery {
     @Column('varchar', { name: 'description', nullable: true, length: 255 })
     description: string | null;
 
+    @Field()
     @Column('enum', {
         name: 'size',
         nullable: true,
-        enum: ['small', 'medium', 'large'],
-        default: 'medium',
+        enum: DeliverySizesEnum,
+        default: DeliverySizesEnum.MEDIUM,
     })
-    size: 'small' | 'medium' | 'large' | null;
+    size: DeliverySizesEnum;
 
     @Column('enum', {
         name: 'status',
