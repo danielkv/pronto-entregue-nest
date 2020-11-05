@@ -15,6 +15,8 @@ import { UpdateUserService } from './services/update-user.service';
 import { UserMetasResolver } from './resolvers/user-user-metas.resolver';
 import { AddressModule } from 'src/modules/address/address.module';
 import { GetUserService } from './services/get.user.service';
+import { UserLoader } from './loaders/user.loader';
+import { UserMetasLoader } from './loaders/user-metas.loader';
 
 @Module({
     imports: [UserFilterDTO, UserMetaModule, AddressModule],
@@ -23,6 +25,10 @@ import { GetUserService } from './services/get.user.service';
         QueryUsersResolver,
         MutationUsersResolver,
         UserMetasResolver,
+
+        // loaders
+        UserLoader,
+        UserMetasLoader,
 
         // filters
         UserActiveFilter,
@@ -40,6 +46,6 @@ import { GetUserService } from './services/get.user.service';
         // repositories
         UserRepositoryProvider,
     ],
-    exports: [FindUserByEmailService, GetUserService],
+    exports: [FindUserByEmailService, GetUserService, UserLoader],
 })
 export class UserModule {}

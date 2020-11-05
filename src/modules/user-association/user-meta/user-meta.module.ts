@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { UserMetasLoader } from '../user/loaders/user-metas.loader';
 import { UserMetaDTO } from './dtos/user.meta.dto';
 import { UserMetaInputDTO } from './dtos/user.meta.input.dto';
 import { UserMetaUserFilter } from './filters/user-meta-user.filter';
@@ -16,15 +15,12 @@ import { SaveUserMetasService } from './services/save-user-metas.service';
         ListUserMetasService,
         SaveUserMetasService,
 
-        // loaders
-        UserMetasLoader,
-
         // filters
         UserMetaUserFilter,
 
         // repositories
         UserMetaRepositoryProvider,
     ],
-    exports: [UserMetasLoader],
+    exports: [ListUserMetasService],
 })
 export class UserMetaModule {}
