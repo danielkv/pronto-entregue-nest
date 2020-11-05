@@ -17,6 +17,7 @@ import { OrderProductModule } from '../order-product/order-product.module';
 import { OrderProductResolver } from './resolvers/order-product.resolver';
 import { UpdateOrderService } from './services/update-order.service';
 import { CreateOrderService } from './services/create-order.service';
+import { OrderLoader } from './loaders/order.loader';
 
 @Module({
     imports: [OrderFilterDTO, OrdersListDTO, OrderProductModule],
@@ -30,6 +31,7 @@ import { CreateOrderService } from './services/create-order.service';
 
         // loaders
         OrderProductLoader,
+        OrderLoader,
 
         // services
         GetOrderService,
