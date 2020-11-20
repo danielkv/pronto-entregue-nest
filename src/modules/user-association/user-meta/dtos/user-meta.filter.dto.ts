@@ -4,4 +4,7 @@ import { Field, ID, InputType } from '@nestjs/graphql';
 export class UserMetaFilterDTO {
     @Field(() => [ID], { nullable: true })
     userId?: number | number[];
+
+    @Field({ nullable: true })
+    key?: string;
 }

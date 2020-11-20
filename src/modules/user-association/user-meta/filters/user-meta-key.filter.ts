@@ -3,19 +3,15 @@ import { IFilter } from '../../../common/interfaces/IFilter';
 import { UserMeta } from '../entities/user.meta.entity';
 import { UserMetaFilterDTO } from '../dtos/user-meta.filter.dto';
 
-export class UserMetaUserFilter implements IFilter<UserMeta, UserMetaFilterDTO> {
+export class UserMetaKeyFilter implements IFilter<UserMeta, UserMetaFilterDTO> {
     apply(
         query: QueryBuilderBase<UserMeta, UserMetaFilterDTO>,
         filter: UserMetaFilterDTO,
     ): QueryBuilderBase<UserMeta, UserMetaFilterDTO> {
-        if (!filter?.userId) return query;
-
-        // check filter type
-        const userIds = !Array.isArray(filter.userId) ? [filter.userId] : filter.userId;
-        if (!userIds.length) return query;
+        if (!filter?.key) return query;
 
         // apply filter
-        query.andWhere('userMeta.userId IN (:...userIds)').setParameters({ userIds });
+        query.andWhere('userMeta.key = :key').setParameters({ key: filter.key });
 
         //return filter
         return query;
