@@ -1,4 +1,5 @@
-import { DeepPartial, QueryRunner } from 'typeorm';
+import { DeepPartial, FindConditions, ObjectID, QueryRunner, UpdateResult } from 'typeorm';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { QueryBuilderBase } from '../repositories/query.builder.base';
 import { IRepositoryFiltersOptions } from './IRepositoryFiltersOptions';
 import { IRepositoryListOptions } from './IRepositoryListOptions';
@@ -59,4 +60,15 @@ export interface IRepositoryBase<Entity, EntityFilterDTO = void> {
      * Merges multiple entities (or entity-like objects) into a given entity.
      */
     merge(mergeIntoEntity: Entity, ...entityLikes: DeepPartial<Entity>[]): Entity;
+
+    /**
+     * Updates entity partially. Entity can be found by a given conditions.
+     * Unlike save method executes a primitive operation without cascades, relations and other operations included.
+     * Executes fast and efficient UPDATE query.
+     * Does not check if entity exist in the database.
+     */
+    update(
+        criteria: string | string[] | number | number[],
+        partialEntity: QueryDeepPartialEntity<Entity>,
+    ): Promise<UpdateResult>;
 }
