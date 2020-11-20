@@ -1,4 +1,4 @@
 export enum NotificationTokenTypeEnum {
-    mobile = 'notification_tokens',
-    browser = 'notification_desktop_tokens',
+    MOBILE = 'notification_tokens',
+    BROWSER = 'notification_desktop_tokens',
 }

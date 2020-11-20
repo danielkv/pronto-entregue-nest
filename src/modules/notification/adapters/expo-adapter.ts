@@ -5,6 +5,7 @@ import { INotificationToken } from '../interfaces/notification-token.interface';
 import { Expo, ExpoPushMessage } from 'expo-server-sdk';
 import { configService } from 'src/config/config.service';
 import { NotificationAdapter } from '../abstracts/notification-adapter.abstract';
+import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum';
 
 @Injectable()
 export class ExpoSDKAtapter extends NotificationAdapter implements INotificationAdapter {
@@ -14,7 +15,7 @@ export class ExpoSDKAtapter extends NotificationAdapter implements INotification
     constructor() {
         super();
 
-        this.type = 'mobile';
+        this.type = NotificationTokenTypeEnum.MOBILE;
         this.expo = new Expo({ accessToken: configService.getValue('EXPO_ACCESS_TOKEN') });
     }
 

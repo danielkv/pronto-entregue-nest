@@ -6,6 +6,7 @@ import fbAdmin, { messaging } from 'firebase-admin';
 import { resolve } from 'path';
 import { isString, toString } from 'lodash';
 import { NotificationAdapter } from '../abstracts/notification-adapter.abstract';
+import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum';
 
 @Injectable()
 export class FCMAdapter extends NotificationAdapter implements INotificationAdapter {
@@ -15,7 +16,7 @@ export class FCMAdapter extends NotificationAdapter implements INotificationAdap
     constructor() {
         super();
 
-        this.type = 'browser';
+        this.type = NotificationTokenTypeEnum.BROWSER;
 
         fbAdmin.initializeApp({
             credential: fbAdmin.credential.cert(resolve(__dirname, '..', '..', '..', '..', 'fb-privatekey.json')),
