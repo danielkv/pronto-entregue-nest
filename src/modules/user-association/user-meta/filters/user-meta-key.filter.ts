@@ -8,10 +8,10 @@ export class UserMetaKeyFilter implements IFilter<UserMeta, UserMetaFilterDTO> {
         query: QueryBuilderBase<UserMeta, UserMetaFilterDTO>,
         filter: UserMetaFilterDTO,
     ): QueryBuilderBase<UserMeta, UserMetaFilterDTO> {
-        if (!filter?.key) return query;
+        if (!filter?.keys) return query;
 
         // apply filter
-        query.andWhere('userMeta.key = :key').setParameters({ key: filter.key });
+        query.andWhere('userMeta.key IN (:...keys)').setParameters({ keys: filter.keys });
 
         //return filter
         return query;

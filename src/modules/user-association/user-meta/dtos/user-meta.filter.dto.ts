@@ -6,5 +6,5 @@ export class UserMetaFilterDTO {
     userId?: number | number[];
 
     @Field({ nullable: true })
-    key?: string;
+    keys?: string[];
 }
