@@ -4,15 +4,17 @@ import { INotificationAdapter } from '../interfaces/notification-adapter.interfa
 import { INotificationToken } from '../interfaces/notification-token.interface';
 import { Expo, ExpoPushMessage } from 'expo-server-sdk';
 import { configService } from 'src/config/config.service';
+import { NotificationAdapter } from '../abstracts/notification-adapter.abstract';
 
 @Injectable()
-export class ExpoSDKAtapter implements INotificationAdapter {
+export class ExpoSDKAtapter extends NotificationAdapter implements INotificationAdapter {
     private expo: Expo;
-    tokenName: string;
+    readonly type: string;
 
     constructor() {
-        this.tokenName = 'notification_tokens';
+        super();
 
+        this.type = 'mobile';
         this.expo = new Expo({ accessToken: configService.getValue('EXPO_ACCESS_TOKEN') });
     }
 
@@ -34,11 +36,6 @@ export class ExpoSDKAtapter implements INotificationAdapter {
         }
 
         return true;
-    }
-
-    //filter valid EXPO tokens
-    private filterTokens(tokens: INotificationToken[]) {
-        return tokens.filter(token => token.type === 'expo');
     }
 
     private createMessages(tokens: INotificationToken[], data: INotificationData): ExpoPushMessage[] {

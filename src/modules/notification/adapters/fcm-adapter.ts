@@ -5,14 +5,17 @@ import { INotificationToken } from '../interfaces/notification-token.interface';
 import fbAdmin, { messaging } from 'firebase-admin';
 import { resolve } from 'path';
 import { isString, toString } from 'lodash';
+import { NotificationAdapter } from '../abstracts/notification-adapter.abstract';
 
 @Injectable()
-export class FCMAdapter implements INotificationAdapter {
+export class FCMAdapter extends NotificationAdapter implements INotificationAdapter {
     private messaging: messaging.Messaging;
-    tokenName: string;
+    readonly type: string;
 
     constructor() {
-        this.tokenName = 'notification_desktop_tokens';
+        super();
+
+        this.type = 'browser';
 
         fbAdmin.initializeApp({
             credential: fbAdmin.credential.cert(resolve(__dirname, '..', '..', '..', '..', 'fb-privatekey.json')),
@@ -36,11 +39,6 @@ export class FCMAdapter implements INotificationAdapter {
         await this.messaging.sendMulticast(message);
 
         return true;
-    }
-
-    //filter valid FCM tokens
-    private filterTokens(tokens: INotificationToken[]) {
-        return tokens.filter(token => token.type === 'fcm');
     }
 
     private createMessage(tokens: INotificationToken[], data: INotificationData): messaging.MulticastMessage {

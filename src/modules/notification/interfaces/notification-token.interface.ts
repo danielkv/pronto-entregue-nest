@@ -1,4 +1,4 @@
 export interface INotificationToken {
     token: string;
-    type: string;
+    type: 'mobile' | 'browser';
 }
