@@ -22,6 +22,8 @@ import { ProductAssociationModule } from './modules/product-association/product-
 import { AuthModule } from './modules/auth/auth.module';
 import { UserAssociationModule } from './modules/user-association/user-association.module';
 import { NestEventModule } from 'nest-event';
+import { NotificationModule } from './modules/notification/notification.module';
+import { QueueModule } from './modules/queue/queue.module';
 
 @Module({
     imports: [
@@ -47,6 +49,8 @@ import { NestEventModule } from 'nest-event';
         AuthModule,
         UserAssociationModule,
         NestEventModule,
+        NotificationModule,
+        QueueModule,
     ],
     providers: [],
 })
