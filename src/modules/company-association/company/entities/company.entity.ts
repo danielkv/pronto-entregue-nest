@@ -24,59 +24,46 @@ import { Rating } from '../../../rating/entities/rating.entity';
 import { PickUpArea } from '../../../pickup/entities/pickup-area.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 
-import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-
-@ObjectType()
 @Index('addressId', ['addressId'], {})
 @Entity('companies')
 export class Company {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
-    name: string | null;
+    name: string;
 
-    @Field()
     @Column('varchar', { name: 'displayName', nullable: true, length: 255 })
-    displayName: string | null;
+    displayName: string;
 
-    @Field()
     @Column('text', { name: 'image', nullable: true })
-    image: string | null;
+    image: string;
 
-    @Field()
     @Column('varchar', { name: 'backgroundColor', nullable: true, length: 10 })
-    backgroundColor: string | null;
+    backgroundColor: string;
 
-    @Field()
     @Column({ type: 'boolean', name: 'acceptTakeout', default: true })
     acceptTakeout: boolean;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'active',
         nullable: true,
         default: false,
     })
-    active: boolean | null;
+    active: boolean;
 
-    @Field()
     @Column({ type: 'boolean', name: 'published', default: false })
     published: boolean;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'addressId', nullable: true })
-    addressId: number | null;
+    addressId: number;
 
     @OneToMany(
         () => Category,
@@ -84,7 +71,6 @@ export class Company {
     )
     categories: Category[];
 
-    @Field(() => [CompanySection])
     @ManyToMany(
         () => CompanySection,
         companyTypes => companyTypes.companies,
@@ -100,7 +86,6 @@ export class Company {
     })
     sections: CompanySection[];
 
-    @Field(() => Address, { nullable: true })
     @ManyToOne(
         () => Address,
         addresses => addresses.companies,
@@ -130,7 +115,6 @@ export class Company {
     )
     companyUsers: CompanyUser[];
 
-    @Field(() => [Coupon], { nullable: 'items' })
     @ManyToMany(
         () => Coupon,
         coupon => coupon.companies,
@@ -167,18 +151,13 @@ export class Company {
     )
     ratings: Rating[];
 
-    @Field()
     isOpen?: boolean;
 
-    @Field({ nullable: true })
     nextOpen?: Date;
 
-    @Field({ nullable: true })
     nextClose?: Date;
 
-    @Field({ nullable: true })
     allowBuyClosed?: string;
 
-    @Field(() => Float, { nullable: true })
     distance?: number;
 }

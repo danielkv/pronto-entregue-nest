@@ -1,53 +1,29 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { ListCompaniesService } from './services/list-companies.service';
-import { QueryCompanyResolver } from './resolvers/query.company.resolver';
-import { CompaniesListDTO } from './dtos/companies.list.dto';
-import { CountCompaniesService } from './services/count-companies.service';
-import { CompanyFilterDTO } from './dtos/company.filter.dto';
-import { CompanyRepositoryProvider } from './repositories/company.repository';
-import { GetCompanyService } from './services/get-company.service';
-import { CompanyResolver } from './resolvers/company.resolver';
-import { GetCompanyOrderTypeService } from './services/get-company-order-type.service';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { Module } from '@nestjs/common';
+import { CompanyDTO } from './dtos/company.dto';
 import { CompanyLocationFilter } from './filters/company.location.filter';
-import { CompanyActiveFilter } from './filters/company.active.filter';
-import { CompanyPublishedFilter } from './filters/company.published.filter';
-import { CompanySearchFilter } from './filters/company.search.filter';
-import { CategoryModule } from 'src/modules/category/category.module';
-import { CompanyCategoriesLoader } from './loaders/company-categories.loader';
-import { CompanyCategoriesResolver } from './resolvers/company-categories.resolver';
-import { UpdateCompanyService } from './services/update-company.service';
-import { CreateCompanyService } from './services/create-company.service';
-import { CompanyIdFilter } from './filters/company.id.filter';
+import { CompanyRepository } from './repositories/company.repository';
+import { CompanyQueryResolver } from './resolvers/company.resolver';
+import { CompanyService } from './services/company.service';
 
 @Module({
-    imports: [CompaniesListDTO, CompanyFilterDTO, forwardRef(() => CategoryModule)],
-    providers: [
-        // resolvers
-        CompanyResolver,
-        QueryCompanyResolver,
-        CompanyCategoriesResolver,
+    providers: [CompanyQueryResolver],
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([CompanyRepository])],
+            services: [CompanyService, CompanyLocationFilter],
 
-        // loaders
-        CompanyCategoriesLoader,
-
-        // services
-        GetCompanyOrderTypeService,
-        ListCompaniesService,
-        CountCompaniesService,
-        GetCompanyService,
-        CreateCompanyService,
-        UpdateCompanyService,
-
-        // filters
-        CompanyLocationFilter,
-        CompanyActiveFilter,
-        CompanyPublishedFilter,
-        CompanySearchFilter,
-        CompanyIdFilter,
-
-        // repositories
-        CompanyRepositoryProvider,
+            resolvers: [
+                {
+                    DTOClass: CompanyDTO,
+                    EntityClass: CompanyRepository,
+                    ServiceClass: CompanyService,
+                    read: { disabled: true },
+                    delete: { disabled: true },
+                },
+            ],
+        }),
     ],
-    exports: [CompanyRepositoryProvider, CompanyLocationFilter, GetCompanyService],
 })
 export class CompanyModule {}

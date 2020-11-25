@@ -7,8 +7,8 @@ import { GetRequestHelper } from './modules/common/helpers/get-request.helper';
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-    const getRequestHelper = new GetRequestHelper();
-    app.useGlobalGuards(new JwtUserAuthGuard(getRequestHelper), new JwtCompanyAuthGuard(getRequestHelper));
+    /*  const getRequestHelper = new GetRequestHelper();
+    app.useGlobalGuards(new JwtUserAuthGuard(getRequestHelper), new JwtCompanyAuthGuard(getRequestHelper)); */
 
     await app.listen(4001);
 }

@@ -11,21 +11,8 @@ import { SaveCompanyMetasService } from './services/save-company-metas.service';
 @Module({
     imports: [CompanyConfigDTO],
     providers: [
-        // services
-        GetCompanyConfigService,
-        GetCompanyMetaService,
-        SaveCompanyMetasService,
-
-        // loaders
-        CompanyConfigLoader,
-
-        // resolvers
-        ConfigCompanyResolver,
-        QueryCompanyMetaResolver,
-
         // repositories
         CompanyMetaRepositoryProvider,
     ],
-    exports: [SaveCompanyMetasService],
 })
 export class CompanyMetaModule {}

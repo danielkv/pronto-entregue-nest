@@ -1,64 +1,33 @@
-import { QueryRunner, Repository } from 'typeorm';
+import { QueryRunner, Repository, SelectQueryBuilder } from 'typeorm';
 import { IRepositoryListOptions } from '../interfaces/IRepositoryListOptions';
 import { IRepositoryFiltersOptions } from '../interfaces/IRepositoryFiltersOptions';
 import { IRepositoryBase } from '../interfaces/repository.base.interface';
 
 import { QueryBuilderBase } from './query.builder.base';
+import { IFilter } from '../interfaces/IFilter';
 
-export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Repository<Entity>
-    implements IRepositoryBase<Entity, EntityFilterDTO> {
+export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Repository<Entity> {
     protected tablename: string | null = null;
-
-    createQueryBuilder(alias?: string, queryRunner?: QueryRunner): QueryBuilderBase<Entity, EntityFilterDTO> {
-        const query = super.createQueryBuilder(alias, queryRunner);
-
-        return new QueryBuilderBase<Entity, EntityFilterDTO>(query);
-    }
 
     setQueryBuilderTableName(name: string): void {
         this.tablename = name;
     }
 
-    async get(entityId: number): Promise<Entity>;
-    async get(entityId: number[]): Promise<Entity[]>;
-    async get(entityId: any): Promise<Entity | Entity[]> {
-        // create query builder
-        const query = this.createQueryBuilder(this.tablename);
+    /**
+     * Generic pipe function to Apply filters on query builder
+     * @param filter Filter coming from frontend
+     */
+    applyFilters(
+        qb: SelectQueryBuilder<Entity>,
+        filterHelpers: IFilter<Entity, EntityFilterDTO>[],
+        filter: EntityFilterDTO,
+    ): SelectQueryBuilder<Entity> {
+        if (!filterHelpers.length) return qb;
 
-        // filter
-        query.whereInIds(entityId);
+        filterHelpers.forEach(filterInstance => {
+            filterInstance.apply(qb, filter);
+        });
 
-        // load results
-        const users = await query.getMany();
-
-        // return results
-        return Array.isArray(entityId) ? users : users[0];
-    }
-
-    public getList(options?: IRepositoryListOptions<Entity, EntityFilterDTO>): Promise<Entity[]> {
-        // create query builder
-        const query = this.createQueryBuilder(this.tablename);
-
-        // apply filters
-        if (options.filter) query.applyFilters(options.filterHelpers, options.filter);
-
-        // apply pagination
-        if (options.pagination) query.applyPagination(options.pagination);
-
-        if (options.orderBy) query.orderBy(options.orderBy);
-
-        // return results
-        return query.getMany();
-    }
-
-    getCount(options: IRepositoryFiltersOptions<Entity, EntityFilterDTO>): Promise<number> {
-        // create query builder
-        const query = this.createQueryBuilder(this.tablename);
-
-        // apply filters
-        query.applyFilters(options.filterHelpers, options.filter);
-
-        // return count
-        return query.getCount();
+        return qb;
     }
 }

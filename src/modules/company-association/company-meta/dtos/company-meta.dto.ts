@@ -1,3 +1,4 @@
+import { FilterableField } from '@nestjs-query/query-graphql';
 import { Field, ID, InputType } from '@nestjs/graphql';
 import { IsInt, IsString } from 'class-validator';
 
@@ -8,7 +9,7 @@ export class CompanyMetaDTO {
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     key: string;
 
     @IsString()

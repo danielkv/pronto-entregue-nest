@@ -3,7 +3,7 @@ import { IRepositoryBase } from '../../../common/interfaces/repository.base.inte
 import { UserFilterDTO } from '../dtos/user.filter.dto';
 import { User } from '../entities/user.entity';
 
-export interface IUserRepository extends IRepositoryBase<User, UserFilterDTO> {
+export interface IUserRepository extends IRepositoryBase<User> {
     findByEmail(email: string): Promise<User>;
 
     addAddress(userId: User['id'], addressId: Address['id']): Promise<any>;

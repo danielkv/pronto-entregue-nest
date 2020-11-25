@@ -1,21 +1,42 @@
-import { Info, Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { ExtractVariablePipe } from 'src/modules/common/pipes/extract-variable.pipe';
+import { ConnectionType } from '@nestjs-query/query-graphql';
+import { Resolver, Query, Args, ID } from '@nestjs/graphql';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
+import { CompanyDTO } from '../dtos/company.dto';
 import { Company } from '../entities/company.entity';
-import { GetCompanyOrderTypeService } from '../services/get-company-order-type.service';
+import { CompanyService } from '../services/company.service';
+import { CompanyQueryArgs } from '../types/company.query';
+import { CompanyConnection } from '../types/company.connection';
 
-@Resolver(() => Company)
-export class CompanyResolver {
-    constructor(private getCompanyOrderTypeService: GetCompanyOrderTypeService) {}
+@Resolver(() => CompanyDTO)
+export class CompanyQueryResolver {
+    constructor(private readonly service: CompanyService) {}
 
-    @ResolveField(() => [OrderTypeEnum])
-    orderType(
-        @Parent() company: Company,
-        @Info(new ExtractVariablePipe<GeoPoint>('userLocation')) userLocation: GeoPoint,
-    ): OrderTypeEnum[] {
-        if (!userLocation) throw new Error('Localização do usuário não definida');
+    @Query(() => CompanyDTO, { name: 'company' })
+    company(
+        @Args({ name: 'id', type: () => ID }) id: Company['id'],
+        @Args({ name: 'location', type: () => GeoPoint, nullable: true }) location?: GeoPoint,
+    ): Promise<CompanyDTO> {
+        return this.service.findByIdWithLocation(id, location);
+    }
 
-        return this.getCompanyOrderTypeService.execute(company);
+    @Query(() => CompanyConnection, { name: 'companies' })
+    companies(@Args() queryArgs: CompanyQueryArgs): Promise<ConnectionType<CompanyDTO>> {
+        // default filters
+        if (!queryArgs?.filter?.published) queryArgs.filter.published = { is: true };
+        if (!queryArgs?.filter?.active) queryArgs.filter.active = { is: true };
+
+        // default sort
+        if (queryArgs?.sorting) {
+            const notAllowed = ['isOpen', 'allowBuyClosed', 'nextOpen', 'nextClose', 'allowBuyClosed', 'distance'];
+            //console.log(queryArgs.sorting);
+            queryArgs.sorting = queryArgs.sorting.filter(sort => !notAllowed.includes(sort.field));
+            //console.log(queryArgs.sorting);
+        }
+
+        return CompanyConnection.createFromPromise(
+            () => this.service.findManyWithLocation(queryArgs),
+            queryArgs,
+            () => this.service.countWithLocation(queryArgs),
+        );
     }
 }

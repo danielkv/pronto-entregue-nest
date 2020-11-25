@@ -8,10 +8,6 @@ import { UnassignCompanyPaymentMethodService } from './services/unassign-company
 @Module({
     imports: [CompanyModule, PaymentModule],
     providers: [
-        // services
-        AssignCompanyPaymentMethodService,
-        UnassignCompanyPaymentMethodService,
-
         // repositories
         CompanyPaymentMethodRepositoryProvider,
     ],

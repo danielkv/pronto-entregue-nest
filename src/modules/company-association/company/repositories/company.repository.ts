@@ -1,133 +1,48 @@
 import { RepositoryBase } from '../../../common/repositories/repository.base';
 import { GeoPoint } from '../../../common/types/geo-point';
-import { EntityRepository, SelectQueryBuilder } from 'typeorm';
-import { CompanyFilterDTO } from '../dtos/company.filter.dto';
+import { Brackets, EntityRepository, SelectQueryBuilder } from 'typeorm';
+import { CompanyExtraFilterDTO } from '../dtos/company.extra-filter.dto';
 import { Company } from '../entities/company.entity';
-import { ICompanyRepository } from '../interfaces/company.repository.interface';
 import { RepositoryProviderFactory } from '../../../common/helpers/repository-provider.factory';
-import { ICompanyRepositoryListOptions } from '../interfaces/company-options.repository.interface';
-import { ICompanyFiltersOptions } from '../interfaces/company-filters-options.interface';
-import { Category } from 'src/modules/category/entities/category.entity';
+import { ObjectLike } from 'src/modules/common/interfaces/object.interface';
 
 @EntityRepository(Company)
-export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO> implements ICompanyRepository {
-    constructor() {
-        super();
-
-        this.setQueryBuilderTableName('company');
-    }
-
-    addCategory(companyId: Company['id'], categoryId: Category['id']) {
-        const query = this.manager
-            .createQueryBuilder(Category, 'category')
-            .update()
-            .set({
-                companyId,
-            })
-            .whereInIds(categoryId);
-
-        return query.execute();
-    }
-
-    removeCategory(companyId: Company['id'], categoryId: Category['id']) {
-        const query = this.manager
-            .createQueryBuilder(Category, 'category')
-            .delete()
-            .where('companyId = :companyId')
-            .andWhere('categoryId = :categoryId')
-            .setParameters({
-                companyId,
-                categoryId,
-            });
-
-        return query.execute();
-    }
-
-    async getList(options: ICompanyRepositoryListOptions): Promise<Company[]> {
-        const query = this.createQueryBuilder('company');
-
-        // apply base selection
-        this.applyBaseSelection(query);
-
-        // apply user selection
-        this.applyUserLocationSelection(query, options?.userLocation);
-
-        // apply areas selection
-        this.applyAreasSelection(query, options?.userLocation);
-
-        // apply filters
-        query.applyFilters(options.filterHelpers, options?.filter);
-
-        // apply pagination
-        query.applyPagination(options?.pagination);
-
-        // get data from DB
-        const { entities: companies, raw } = await query.getRawAndEntities();
-
-        // map raw fields to entities
-        this.mapProperties(companies, raw);
-
-        // get results
-        return companies;
-    }
-
-    async get(companyId: number, userLocation?: GeoPoint): Promise<Company>;
-    async get(companyId: number[], userLocation?: GeoPoint): Promise<Company[]>;
-    async get(companyId: any, userLocation?: GeoPoint): Promise<Company | Company[]> {
-        const returnType = Array.isArray(companyId) ? 'array' : 'single';
-
-        const query = this.createQueryBuilder('company');
-
-        // apply base selection
-        this.applyBaseSelection(query);
-
-        // apply selection
-        this.applyUserLocationSelection(query, userLocation);
-
-        // apply areas selection
-        this.applyAreasSelection(query, userLocation);
-
-        // check companyId type
-        const companyIds = !Array.isArray(companyId) ? [companyId] : companyId;
-
-        query.where('company.id IN (:...companyIds)', { companyIds });
-        //query.limit(1);
-
-        const { entities: companies, raw } = await query.getRawAndEntities();
-        this.mapProperties(companies, raw);
-
-        if (returnType === 'array') return companies;
-        else return companies[0];
-    }
-
-    getCount(options: ICompanyFiltersOptions): Promise<number> {
-        // create query
-        const query = this.createQueryBuilder('company');
-
-        // apply areas selection
-        this.applyAreasSelection(query, options.userLocation);
-
-        // apply filters
-        query.applyFilters(options.filterHelpers, options.filter);
-
-        // return count items
-        return query.getCount();
-    }
-
+export class CompanyRepository extends RepositoryBase<Company, CompanyExtraFilterDTO> {
     applyBaseSelection(query: SelectQueryBuilder<Company>): SelectQueryBuilder<Company> {
         // join businessHours
-        query.leftJoin('company.metas', 'meta', "meta.key = 'businessHours'");
+        query.leftJoin('Company.metas', 'meta', "meta.key = 'businessHours'");
 
         // query selection
         query.addSelect([
             'COMPANY_IS_OPEN(`meta`.`value`) as isOpen',
             'COMPANY_NEXT_OPEN_DATE(`meta`.`value`, NOW()) as nextOpen',
             'COMPANY_NEXT_CLOSE_DATE(`meta`.`value`) as nextClose',
-            'COMPANY_ALLOW_BUY_CLOSED_BY_ID(`company`.`id`) as allowBuyClosed',
+            'COMPANY_ALLOW_BUY_CLOSED_BY_ID(`Company`.`id`) as allowBuyClosed',
         ]);
 
         // order by (open | allowBuyClosed)
-        query.orderBy('isOpen OR (allowBuyClosed IS NOT NULL AND allowBuyClosed <> "false")', 'DESC');
+        query.addOrderBy('isOpen OR (allowBuyClosed IS NOT NULL AND allowBuyClosed <> "false")', 'DESC');
+
+        // return query
+        return query;
+    }
+
+    applyLocationFilter(query: SelectQueryBuilder<Company>): SelectQueryBuilder<Company> {
+        // checks if tables deliveryArea and viewArea were included
+        const sql = query.getSql();
+        if (!sql.includes('deliveryArea') || !sql.includes('pickUpArea'))
+            throw new Error('Não foi possível encontrar a localização do usuário');
+
+        // apply filter
+        query.andWhere(
+            new Brackets(qb =>
+                qb
+                    // filter deliveryAreas
+                    .where('deliveryArea.id IS NOT NULL')
+                    // OR filter viewAreas
+                    .orWhere('pickUpArea.id IS NOT NULL'),
+            ),
+        );
 
         // return query
         return query;
@@ -137,13 +52,13 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
         if (!location) return query;
 
         // join address
-        query.leftJoinAndSelect('company.address', 'address');
+        query.leftJoinAndSelect('Company.address', 'companyAddress');
 
         // define user point text
         const userPoint = `ST_GeomFromText('POINT(${location.coordinates[0]} ${location.coordinates[1]})')`;
 
         // add select distance (user address to company address)
-        query.addSelect(`ST_Distance_Sphere(${userPoint}, address.location) as distance`);
+        query.addSelect(`ST_Distance_Sphere(${userPoint}, companyAddress.location) as distance`);
 
         // add distance order
         query.addOrderBy('distance', 'ASC');
@@ -160,14 +75,14 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
 
         // join deliveryAreas
         query.leftJoinAndSelect(
-            'company.deliveryAreas',
+            'Company.deliveryAreas',
             'deliveryArea',
             `ST_Distance_Sphere(${userPoint}, deliveryArea.center) <= deliveryArea.radius AND deliveryArea.active`,
         );
 
         // join pickUpArea
         query.leftJoinAndSelect(
-            'company.pickUpAreas',
+            'Company.pickUpAreas',
             'pickUpArea',
             `ST_Distance_Sphere(${userPoint}, pickUpArea.center) <= pickUpArea.radius AND pickUpArea.active`,
         );
@@ -181,15 +96,18 @@ export class CompanyRepository extends RepositoryBase<Company, CompanyFilterDTO>
      * @param raw Raw result from query
      */
     mapProperties(companies: Company[], raw: any[]): Company[] {
-        companies.forEach((company, index) => {
-            company.isOpen = raw[index].isOpen;
-            company.nextClose = raw[index].nextClose;
-            company.nextOpen = raw[index].nextOpen;
-            company.allowBuyClosed = raw[index].allowBuyClosed;
-            company.distance = raw[index].distance;
-        });
+        return companies.map((company, index) => this.mapProperty(company, raw[index]));
+    }
 
-        return companies;
+    mapProperty(company: Company, raw: ObjectLike): Company {
+        return {
+            ...company,
+            isOpen: raw.isOpen,
+            nextClose: raw.nextClose,
+            nextOpen: raw.nextOpen,
+            allowBuyClosed: raw.allowBuyClosed,
+            distance: raw.distance,
+        };
     }
 }
 

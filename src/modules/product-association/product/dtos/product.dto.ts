@@ -29,9 +29,9 @@ export class ProductDTO {
     @Field()
     image: string;
 
-    @IsOptional()
+    /*  @IsOptional()
     @Field(() => Upload)
-    file?: FileUpload;
+    file?: FileUpload; */
 
     @IsBoolean()
     @Field()

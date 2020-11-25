@@ -1,22 +1,21 @@
-import { Field, ID, InputType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { IsBoolean, IsInt, IsString } from 'class-validator';
+import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/query-graphql';
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
-import { IsBoolean, IsInt, IsObject, IsString, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { CompanySectionDTO } from '../../company-section/dtos/company-section.dto';
-import { CompanyMetaDTO } from '../../company-meta/dtos/company-meta.dto';
 
-@InputType('CompanyInput')
+@ObjectType('Company')
+@FilterableRelation('address', () => AddressDTO, { disableRemove: true, allowFiltering: true })
 export class CompanyDTO {
     @IsInt()
-    @Field(() => ID, { nullable: true })
-    id: number;
+    @FilterableField(() => ID, { nullable: true })
+    id!: number;
 
     @IsString()
-    @Field()
-    name: string;
+    @FilterableField()
+    name!: string;
 
     @IsString()
-    @Field()
+    @FilterableField()
     displayName: string;
 
     @IsString()
@@ -28,15 +27,34 @@ export class CompanyDTO {
     backgroundColor: string;
 
     @IsBoolean()
-    @Field({ defaultValue: true })
+    @FilterableField()
     active: boolean;
 
     @IsBoolean()
-    @Field({ defaultValue: false })
+    @FilterableField()
     published: boolean;
 
-    @IsObject()
+    @Field()
+    isOpen?: boolean;
+
+    @Field({ nullable: true })
+    nextOpen?: Date;
+
+    @Field()
+    nextClose?: Date;
+
+    @Field()
+    allowBuyClosed?: string;
+
+    @Field()
+    distance?: number;
+
+    /*  @FilterableField({ allowedComparisons: ['is', 'isNot'] })
+    location: GeoPoint; */
+
+    /* @IsObject()
     @Type(() => AddressDTO)
+    @ValidateNested()
     @Field(() => AddressDTO)
     address: AddressDTO;
 
@@ -48,5 +66,5 @@ export class CompanyDTO {
     @ValidateNested({ each: true })
     @Type(() => CompanyMetaDTO)
     @Field(() => [CompanyMetaDTO], { nullable: true })
-    metas?: CompanyMetaDTO[];
+    metas?: CompanyMetaDTO[]; */
 }

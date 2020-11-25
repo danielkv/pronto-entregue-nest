@@ -1,8 +1,5 @@
-import { QueryBuilderBase } from '../repositories/query.builder.base';
+import { SelectQueryBuilder } from 'typeorm';
 
 export interface IFilter<T, U> {
-    apply(
-        query: QueryBuilderBase<T, U>,
-        filter: U,
-    ): QueryBuilderBase<T, U> | Promise<QueryBuilderBase<T, U>>;
+    apply(query: SelectQueryBuilder<T>, filter: U): SelectQueryBuilder<T>;
 }

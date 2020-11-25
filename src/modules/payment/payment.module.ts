@@ -12,24 +12,8 @@ import { ListPaymentMethodsService } from './services/list-payment-methods.servi
 @Module({
     imports: [PaymentMethodFilterDTO],
     providers: [
-        // services
-        ListPaymentMethodsService,
-        CountPaymentMethodsService,
-
-        // filters
-        PaymentMethodCompanyFilter,
-        PaymentMethodTypeFilter,
-
-        // loaders
-        CompanyPaymentMethodsLoader,
-
-        // resolvers
-        QueryPaymentMethodResolver,
-        PaymentMethodCompanyResolver,
-
         // repositoris
         PaymentMethodRepositoryProvider,
     ],
-    exports: [PaymentMethodRepositoryProvider],
 })
 export class PaymentModule {}

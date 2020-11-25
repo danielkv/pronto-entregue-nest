@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Company } from 'src/modules/company-association/company/entities/company.entity';
-import { ListCompaniesService } from 'src/modules/company-association/company/services/list-companies.service';
+//import { ListCompaniesService } from 'src/modules/company-association/company/services/list-companies.service';
 import { Product } from 'src/modules/product-association/product/entities/product.entity';
 import { ListProductsService } from 'src/modules/product-association/product/services/list-products.service';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
@@ -9,14 +9,14 @@ import { ListUsersService } from 'src/modules/user-association/user/services/lis
 @Injectable()
 export class ValiteSaveCouponHelper {
     constructor(
-        private listCompaniesService: ListCompaniesService,
+        // private listCompaniesService: ListCompaniesService,
         private listUserService: ListUsersService,
         private listProductsService: ListProductsService,
     ) {}
 
     async checkCompanies(companies: Company['id'][]): Promise<Company[]> {
         const companiesInstances = companies.length
-            ? await this.listCompaniesService.execute({ companyId: companies })
+            ? [] //await this.listCompaniesService.execute({ companyId: companies })
             : [];
         if (companies.length !== companies.length)
             throw new NotFoundException('Algumas empresas restringidas não foram encontradas');
