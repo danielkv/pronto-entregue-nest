@@ -4,6 +4,7 @@ import { FilterableField, PagingStrategies, Relation } from '@nestjs-query/query
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
 import { CompanyMetaDTO } from '../../company-meta/dtos/company-meta.dto';
 import { CompanySectionDTO } from '../../company-section/dtos/company-section.dto';
+import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
 
 @ObjectType('Company')
 @Relation('address', () => AddressDTO, { disableRemove: true, allowFiltering: true })
@@ -56,22 +57,6 @@ export class CompanyDTO {
     @Field()
     distance?: number;
 
-    /*  @FilterableField({ allowedComparisons: ['is', 'isNot'] })
-    location: GeoPoint; */
-
-    /* @IsObject()
-    @Type(() => AddressDTO)
-    @ValidateNested()
-    @Field(() => AddressDTO)
-    address: AddressDTO;
-
-    @ValidateNested({ each: true })
-    @Type(() => CompanySectionDTO)
-    @Field(() => [CompanySectionDTO], { nullable: true })
-    sections?: CompanySectionDTO[];
-
-    @ValidateNested({ each: true })
-    @Type(() => CompanyMetaDTO)
-    @Field(() => [CompanyMetaDTO], { nullable: true })
-    metas?: CompanyMetaDTO[]; */
+    @Field(() => [OrderTypeEnum])
+    orderType?: OrderTypeEnum[];
 }

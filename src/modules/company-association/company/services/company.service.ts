@@ -1,6 +1,7 @@
 import { QueryService } from '@nestjs-query/core';
 import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
+import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
 import { CompanyDTO } from '../dtos/company.dto';
 import { Company } from '../entities/company.entity';
 import { CompanyLocationFilter } from '../filters/company.location.filter';
@@ -13,7 +14,7 @@ export class CompanyService extends TypeOrmQueryService<Company> {
         super(companyRepository);
     }
 
-    async findByIdWithLocation(id: Company['id'], location?: GeoPoint): Promise<CompanyDTO> {
+    async findByIdWithLocation(id: Company['id'], location?: GeoPoint): Promise<Company> {
         const query = this.filterQueryBuilder.select({ filter: { id: { eq: id } } });
 
         this.companyRepository.applyBaseSelection(query);
@@ -29,7 +30,7 @@ export class CompanyService extends TypeOrmQueryService<Company> {
         return this.companyRepository.mapProperty(companies[0], raw[0]);
     }
 
-    async findManyWithLocation(queryArgs: CompanyQueryArgs): Promise<CompanyDTO[]> {
+    async findManyWithLocation(queryArgs: CompanyQueryArgs): Promise<Company[]> {
         const helper = this.filterQueryBuilder;
 
         const query = helper.select(queryArgs);
@@ -44,7 +45,12 @@ export class CompanyService extends TypeOrmQueryService<Company> {
 
         const { entities: companies, raw } = await query.getRawAndEntities();
 
-        return this.companyRepository.mapProperties(companies, raw);
+        const companiesReturn = this.companyRepository.mapProperties(companies, raw);
+
+        return companiesReturn.map(company => {
+            company.orderType = this.getOrderType(company);
+            return company;
+        });
     }
 
     countWithLocation(queryArgs: CompanyQueryArgs): Promise<number> {
@@ -60,5 +66,19 @@ export class CompanyService extends TypeOrmQueryService<Company> {
         //if (queryArgs.filterLocation === true) this.companyRepository.applyLocationFilter(query);
 
         return query.getCount();
+    }
+
+    private getOrderType({ deliveryAreas, pickUpAreas }: Company): OrderTypeEnum[] {
+        const orderTypes: OrderTypeEnum[] = [];
+
+        if (deliveryAreas.filter(deliveryArea => deliveryArea.type === OrderTypeEnum.DELIVERY).length)
+            orderTypes.push(OrderTypeEnum.DELIVERY);
+
+        if (deliveryAreas.filter(deliveryArea => deliveryArea.type === OrderTypeEnum.PE_DELIVERY).length)
+            orderTypes.push(OrderTypeEnum.PE_DELIVERY);
+
+        if (pickUpAreas.length) orderTypes.push(OrderTypeEnum.PICK_UP);
+
+        return orderTypes;
     }
 }

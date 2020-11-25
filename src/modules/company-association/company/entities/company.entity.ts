@@ -23,6 +23,7 @@ import { Product } from '../../../product-association/product/entities/product.e
 import { Rating } from '../../../rating/entities/rating.entity';
 import { PickUpArea } from '../../../pickup/entities/pickup-area.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
+import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
 
 @Index('addressId', ['addressId'], {})
 @Entity('companies')
@@ -160,4 +161,6 @@ export class Company {
     allowBuyClosed?: string;
 
     distance?: number;
+
+    orderType?: OrderTypeEnum[];
 }
