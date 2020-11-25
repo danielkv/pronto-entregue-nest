@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { GetUserMetaService } from 'src/modules/user-association/user-meta/services/get-user-meta.service';
-import { UpdateUserMetasService } from 'src/modules/user-association/user-meta/services/update-user-meta.service';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum';
 import { INotificationToken } from '../interfaces/notification-token.interface';
 
 @Injectable()
 export class RemoveUserNotificationTokenService {
-    constructor(
+    /* constructor(
         private getUserMetaService: GetUserMetaService,
         private updateUserMetasService: UpdateUserMetasService,
     ) {}
@@ -35,5 +33,5 @@ export class RemoveUserNotificationTokenService {
 
         // return token
         return notificationToken;
-    }
+    } */
 }

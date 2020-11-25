@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { UserMetaInputDTO } from 'src/modules/user-association/user-meta/dtos/user.meta.input.dto';
-import { GetUserMetaService } from 'src/modules/user-association/user-meta/services/get-user-meta.service';
-import { SaveUserMetasService } from 'src/modules/user-association/user-meta/services/save-user-metas.service';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum';
 import { INotificationToken } from '../interfaces/notification-token.interface';
 
 @Injectable()
 export class AddUserNotificationTokenService {
-    constructor(private getUserMetaService: GetUserMetaService, private saveUserMetaService: SaveUserMetasService) {}
+    /*  constructor(private getUserMetaService: GetUserMetaService, private saveUserMetaService: SaveUserMetasService) {}
 
     async execute(userId: User['id'], type: INotificationToken['type'], token: string): Promise<INotificationToken> {
         const key = NotificationTokenTypeEnum[type];
@@ -40,5 +38,5 @@ export class AddUserNotificationTokenService {
 
         // return token
         return notificationToken;
-    }
+    } */
 }

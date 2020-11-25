@@ -3,7 +3,7 @@ import { GeoPoint } from '../../common/types/geo-point';
 import { DeliveryFilterDTO } from '../../delivery/dtos/delivery.filter.dto';
 import { DeliveryArea } from '../entities/delivery.area.entity';
 
-export interface IDeliveryAreaRepository extends IRepositoryBase<DeliveryArea, DeliveryFilterDTO> {
+export interface IDeliveryAreaRepository extends IRepositoryBase<DeliveryArea> {
     /**
      * Filter companies and locations
      */

@@ -8,7 +8,7 @@ import { ISetDeliveryManEvent } from '../interfaces/set-delivery-man-event.inter
 
 @Injectable()
 export class SetDeliveryManService {
-    constructor(
+    /* constructor(
         @Inject('IDeliveryRepository') private deliveryRepository: IDeliveryRepository,
         private eventEmitter: NestEventEmitter,
     ) {}
@@ -32,5 +32,5 @@ export class SetDeliveryManService {
 
         // return
         return mergedDelivery;
-    }
+    } */
 }

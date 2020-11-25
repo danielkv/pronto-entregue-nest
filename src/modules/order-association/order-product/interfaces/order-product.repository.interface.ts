@@ -2,4 +2,4 @@ import { IRepositoryBase } from '../../../common/interfaces/repository.base.inte
 import { OrderProduct } from '../entities/order.product.entity';
 import { OrderProductFilterDTO } from '../dtos/order-product.filter.dto';
 
-export interface IOrderProductRepository extends IRepositoryBase<OrderProduct, OrderProductFilterDTO> {}
+export interface IOrderProductRepository extends IRepositoryBase<OrderProduct> {}

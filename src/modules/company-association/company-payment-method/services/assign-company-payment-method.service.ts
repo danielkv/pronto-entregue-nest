@@ -11,9 +11,8 @@ export class AssignCompanyPaymentMethodService {
     constructor(
         @Inject('IPaymentMethodRepository') private paymentMethodRepository: IPaymentMethodRepository,
         @Inject('ICompanyPaymentMethodRepository')
-        private companyPaymentMethodRepository: ICompanyPaymentMethodRepository,
-    ) //private getCompanyService: GetCompanyService,
-    {}
+        private companyPaymentMethodRepository: ICompanyPaymentMethodRepository, //private getCompanyService: GetCompanyService,
+    ) {}
     async execute(
         companyId: Company['id'],
         paymentMethodId: PaymentMethod['id'],
@@ -24,7 +23,7 @@ export class AssignCompanyPaymentMethodService {
         if (!company) throw new NotFoundException('Empresa não existe');
 
         // check if payment method exists
-        const paymentMethod = await this.paymentMethodRepository.get(paymentMethodId);
+        const paymentMethod = await this.paymentMethodRepository.findOne(paymentMethodId);
         if (!paymentMethod) throw new NotFoundException('Método de pagamento não existe');
 
         // create instance

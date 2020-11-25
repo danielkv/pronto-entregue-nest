@@ -10,6 +10,6 @@ export class GetRawConfigService {
     async execute(keys: IConfigKeys): Promise<Config>;
     async execute(keys: IConfigKeys[]): Promise<Config[]>;
     async execute(keys: any): Promise<Config | Config[]> {
-        return this.configRepository.get(keys);
+        return this.configRepository.find({ where: { key: { in: keys } } });
     }
 }

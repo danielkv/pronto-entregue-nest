@@ -3,7 +3,7 @@ import { GeoPoint } from '../../common/types/geo-point';
 import { PickUpAreaFilterDTO } from '../dtos/pickup-area.filter.dto';
 import { PickUpArea } from '../entities/pickup-area.entity';
 
-export interface IPickUpAreaRepository extends IRepositoryBase<PickUpArea, PickUpAreaFilterDTO> {
+export interface IPickUpAreaRepository extends IRepositoryBase<PickUpArea> {
     /**
      * Filter companies and locations
      */

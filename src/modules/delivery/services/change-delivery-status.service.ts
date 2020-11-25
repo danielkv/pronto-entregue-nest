@@ -1,17 +1,14 @@
 import { ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { NestEventEmitter } from 'nest-event';
 import { IMainEvents } from 'src/main-event-emitter/main-events.interface';
-import { ACLResourcesEnum } from 'src/modules/auth/enums/resources.enum';
 import { IDeliveryRepository } from '../interfaces/delivery.repository.interface';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { Delivery } from '../entities/delivery.entity';
 import { IChangeDeliveryStatusEvent } from '../interfaces/change-delivery-status-event.interface';
-import { UserTokenPayload } from 'src/modules/auth/interfaces/user-token-payload.interface';
-import { AcCheckService } from 'src/modules/auth/services/validate-roles.service';
 
 @Injectable()
 export class ChangeDeliveryStatusService {
-    constructor(
+    /*  constructor(
         @Inject('IDeliveryRepository') private deliveryRepository: IDeliveryRepository,
         private acCheckService: AcCheckService,
         private eventEmitter: NestEventEmitter,
@@ -68,5 +65,5 @@ export class ChangeDeliveryStatusService {
             throw new ForbiddenException('Você não tem permissão voltar ao status anterior');
 
         return true;
-    }
+    } */
 }

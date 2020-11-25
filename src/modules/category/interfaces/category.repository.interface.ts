@@ -2,4 +2,4 @@ import { IRepositoryBase } from '../../common/interfaces/repository.base.interfa
 import { CategoryFilterDTO } from '../dtos/category.filter.dto';
 import { Category } from '../entities/category.entity';
 
-export interface ICategoryRepository extends IRepositoryBase<Category, CategoryFilterDTO> {}
+export interface ICategoryRepository extends IRepositoryBase<Category> {}

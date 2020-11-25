@@ -60,7 +60,9 @@ export class CompanyService extends TypeOrmQueryService<Company> {
 
         this.companyRepository.applyUserLocationSelection(query, queryArgs.location);
 
-        if (queryArgs.filterLocation === true) this.companyRepository.applyLocationFilter(query);
+        this.companyRepository.applyFilters(query, [this.companyLocationFilter], queryArgs.extraFilter);
+
+        //if (queryArgs.filterLocation === true) this.companyRepository.applyLocationFilter(query);
 
         return query.getCount();
     }

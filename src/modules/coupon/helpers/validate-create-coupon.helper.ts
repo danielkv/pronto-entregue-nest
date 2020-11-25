@@ -2,13 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Company } from 'src/modules/company-association/company/entities/company.entity';
 //import { ListCompaniesService } from 'src/modules/company-association/company/services/list-companies.service';
 import { Product } from 'src/modules/product-association/product/entities/product.entity';
-import { ListProductsService } from 'src/modules/product-association/product/services/list-products.service';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
-import { ListUsersService } from 'src/modules/user-association/user/services/list.users.service';
 
 @Injectable()
 export class ValiteSaveCouponHelper {
-    constructor(
+    /* constructor(
         // private listCompaniesService: ListCompaniesService,
         private listUserService: ListUsersService,
         private listProductsService: ListProductsService,
@@ -38,5 +36,5 @@ export class ValiteSaveCouponHelper {
             throw new NotFoundException('Alguns produtos restringidos não foram encontrados');
 
         return productInstances;
-    }
+    } */
 }

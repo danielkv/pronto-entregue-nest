@@ -4,7 +4,7 @@ import { DeliveryFilterDTO } from '../dtos/delivery.filter.dto';
 import { Delivery } from '../entities/delivery.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 
-export interface IDeliveryRepository extends IRepositoryBase<Delivery, DeliveryFilterDTO> {
+export interface IDeliveryRepository extends IRepositoryBase<Delivery> {
     setDeliveryMan(deliveryId: Delivery['id'], userId: User['id']): Promise<any>;
 
     changeStatus(deliveryId: Delivery['id'], newStatus: DeliveryStatusEnum): Promise<any>;
