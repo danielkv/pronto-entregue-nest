@@ -1,6 +1,6 @@
-import { Field, ID, InputType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@InputType('CompanyExtraFilterInput')
+@InputType('CompanyExtraFilter')
 export class CompanyExtraFilterDTO {
     @Field({ nullable: true })
     location?: boolean;

@@ -3,6 +3,7 @@ import { NestjsQueryTypeOrmModule, TypeOrmQueryService } from '@nestjs-query/que
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { CompanySectionRepository } from './repositories/company-section.repository';
 import { CompanySectionDTO } from './dtos/company-section.dto';
+import { CompanySectionQueryArgs } from './types/company-section.query';
 
 TypeOrmQueryService;
 
@@ -14,6 +15,9 @@ TypeOrmQueryService;
                 {
                     DTOClass: CompanySectionDTO,
                     EntityClass: CompanySectionRepository,
+                    read: {
+                        QueryArgs: CompanySectionQueryArgs,
+                    },
                 },
             ],
         }),

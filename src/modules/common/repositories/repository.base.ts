@@ -1,9 +1,4 @@
-import { QueryRunner, Repository, SelectQueryBuilder } from 'typeorm';
-import { IRepositoryListOptions } from '../interfaces/IRepositoryListOptions';
-import { IRepositoryFiltersOptions } from '../interfaces/IRepositoryFiltersOptions';
-import { IRepositoryBase } from '../interfaces/repository.base.interface';
-
-import { QueryBuilderBase } from './query.builder.base';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { IFilter } from '../interfaces/IFilter';
 
 export abstract class RepositoryBase<Entity, EntityFilterDTO = void> extends Repository<Entity> {
