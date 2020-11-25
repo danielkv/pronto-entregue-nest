@@ -1,10 +1,17 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsString } from 'class-validator';
-import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/query-graphql';
+import { FilterableField, PagingStrategies, Relation } from '@nestjs-query/query-graphql';
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
+import { CompanyMetaDTO } from '../../company-meta/dtos/company-meta.dto';
+import { CompanySectionDTO } from '../../company-section/dtos/company-section.dto';
 
 @ObjectType('Company')
-@FilterableRelation('address', () => AddressDTO, { disableRemove: true, allowFiltering: true })
+@Relation('address', () => AddressDTO, { disableRemove: true, allowFiltering: true })
+@Relation('metas', () => [CompanyMetaDTO], {
+    pagingStrategy: PagingStrategies.NONE,
+    disableRemove: true,
+})
+@Relation('sections', () => [CompanySectionDTO], { allowFiltering: true })
 export class CompanyDTO {
     @IsInt()
     @FilterableField(() => ID, { nullable: true })

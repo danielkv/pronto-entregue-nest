@@ -17,6 +17,6 @@ export class CompanyMetaDTO {
     value: string;
 
     @IsInt()
-    @FilterableField()
+    @FilterableField(() => ID)
     companyId: number;
 }

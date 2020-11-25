@@ -1,15 +1,15 @@
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
-import { PaymentModule } from 'src/modules/payment/payment.module';
-import { CompanyModule } from '../company/company.module';
-import { CompanyPaymentMethodRepositoryProvider } from './repositories/company-payment-method.repository';
-import { AssignCompanyPaymentMethodService } from './services/assign-company-payment-method.service';
-import { UnassignCompanyPaymentMethodService } from './services/unassign-company-payment-method.service';
+import { CompanyPaymentMethodDTO } from './dtos/company.payment.method.dto';
+import { CompanyPaymentMethodRepository } from './repositories/company-payment-method.repository';
 
 @Module({
-    imports: [CompanyModule, PaymentModule],
-    providers: [
-        // repositories
-        CompanyPaymentMethodRepositoryProvider,
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([CompanyPaymentMethodRepository])],
+            resolvers: [{ DTOClass: CompanyPaymentMethodDTO, EntityClass: CompanyPaymentMethodRepository }],
+        }),
     ],
 })
 export class CompanyPaymentMethodModule {}

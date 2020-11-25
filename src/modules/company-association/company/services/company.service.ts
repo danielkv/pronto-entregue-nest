@@ -1,8 +1,6 @@
-import { QueryService, getFilterOmitting } from '@nestjs-query/core';
+import { QueryService } from '@nestjs-query/core';
 import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
-import { FilterQueryBuilder } from '@nestjs-query/query-typeorm/dist/src/query';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { FilterQuery } from 'typeorm';
 import { CompanyDTO } from '../dtos/company.dto';
 import { Company } from '../entities/company.entity';
 import { CompanyLocationFilter } from '../filters/company.location.filter';
@@ -34,7 +32,7 @@ export class CompanyService extends TypeOrmQueryService<Company> {
     async findManyWithLocation(queryArgs: CompanyQueryArgs): Promise<CompanyDTO[]> {
         const helper = this.filterQueryBuilder;
 
-        const query = helper.repo.createQueryBuilder().addSelect('addressId');
+        const query = helper.select(queryArgs);
 
         this.companyRepository.applyBaseSelection(query);
 
@@ -51,10 +49,7 @@ export class CompanyService extends TypeOrmQueryService<Company> {
 
     countWithLocation(queryArgs: CompanyQueryArgs): Promise<number> {
         const helper = this.filterQueryBuilder;
-        let query = helper.select({ ...queryArgs, filter: {}, sorting: [] });
-
-        query = helper.applyFilter(query, queryArgs.filter);
-        query = helper.applySorting(query, queryArgs.sorting);
+        const query = helper.select(queryArgs);
 
         this.companyRepository.applyAreasSelection(query, queryArgs.location);
 
