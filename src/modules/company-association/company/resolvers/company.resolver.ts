@@ -21,18 +21,6 @@ export class CompanyQueryResolver {
 
     @Query(() => CompanyConnection, { name: 'companies' })
     companies(@Args() queryArgs: CompanyQueryArgs): Promise<ConnectionType<CompanyDTO>> {
-        // default filters
-        if (!queryArgs?.filter?.published) queryArgs.filter.published = { is: true };
-        if (!queryArgs?.filter?.active) queryArgs.filter.active = { is: true };
-
-        // default sort
-        if (queryArgs?.sorting) {
-            const notAllowed = ['isOpen', 'allowBuyClosed', 'nextOpen', 'nextClose', 'allowBuyClosed', 'distance'];
-            //console.log(queryArgs.sorting);
-            queryArgs.sorting = queryArgs.sorting.filter(sort => !notAllowed.includes(sort.field));
-            //console.log(queryArgs.sorting);
-        }
-
         return CompanyConnection.createFromPromise(
             () => this.service.findManyWithLocation(queryArgs),
             queryArgs,

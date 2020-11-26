@@ -54,7 +54,7 @@ export class CompanyDTO {
     @Field()
     allowBuyClosed?: string;
 
-    @Field()
+    @Field({ nullable: true })
     distance?: number;
 
     @Field(() => [OrderTypeEnum])
