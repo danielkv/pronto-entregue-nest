@@ -23,7 +23,8 @@ import { Product } from '../../../product-association/product/entities/product.e
 import { Rating } from '../../../rating/entities/rating.entity';
 import { PickUpArea } from '../../../pickup/entities/pickup-area.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
-import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
+import { DeliveryAreaTypeEnum } from 'src/modules/delivery-area/enums/delivery-area-type.enum';
+import { PickUpAreaTypeEnum } from 'src/modules/pickup/enums/pickup-area-type.enum';
 
 @Index('addressId', ['addressId'], {})
 @Entity('companies')
@@ -162,5 +163,5 @@ export class Company {
 
     distance?: number;
 
-    orderType?: OrderTypeEnum[];
+    orderType?: (DeliveryAreaTypeEnum | PickUpAreaTypeEnum)[];
 }

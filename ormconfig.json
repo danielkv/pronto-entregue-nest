@@ -1,0 +1,21 @@
+{
+  "type": "mysql",
+  "legacySpatialSupport": false,
+  "host": "localhost",
+  "port": 5001,
+  "username": "root",
+  "password": "0000",
+  "database": "pronto_entregue",
+  "entities": [
+    "C:\\Users\\danie\\Documents\\GitHub\\pronto-entregue-nest\\src\\**\\**.entity{.js,.ts}"
+  ],
+  "migrationsTableName": "migration",
+  "migrations": [
+    "C:\\Users\\danie\\Documents\\GitHub\\pronto-entregue-nest\\src\\migration\\*{.js,.ts}"
+  ],
+  "cli": {
+    "migrationsDir": "src/migration"
+  },
+  "logging": true,
+  "ssl": false
+}
