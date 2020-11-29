@@ -1,13 +1,21 @@
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
 import { User } from '../../../user-association/user/entities/user.entity';
+import { CreditHistoryDTO } from '../dtos/credit.history.dto';
+import { CreditHistoryRepository } from '../repositories/credit-history.repository';
 
 @Injectable()
 export class CalculateUserCreditService {
-    /* constructor(private listCreditHistoriesService: ListCreditHistoriesService) {}
+    constructor(
+        @InjectQueryService(CreditHistoryRepository) private creditHistoriesService: QueryService<CreditHistoryDTO>,
+    ) {}
 
     async execute(userId: User['id']): Promise<number> {
-        const creditHistories = await this.listCreditHistoriesService.execute({ userId });
+        const creditHistoriesSum = await this.creditHistoriesService.aggregate(
+            { userId: { eq: userId } },
+            { sum: ['value'] },
+        );
 
-        return creditHistories.reduce<number>((total, creditHistory) => total + creditHistory.value, 0);
-    } */
+        return creditHistoriesSum.sum.value;
+    }
 }

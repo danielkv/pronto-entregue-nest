@@ -1,36 +1,35 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { NestEventEmitter } from 'nest-event';
 import { IMainEvents } from 'src/main-event-emitter/main-events.interface';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { Delivery } from '../entities/delivery.entity';
-import { IDeliveryRepository } from '../interfaces/delivery.repository.interface';
+
 import { ISetDeliveryManEvent } from '../interfaces/set-delivery-man-event.interface';
+import { DeliveryRepository } from '../repositories/delivery.repository';
 
 @Injectable()
 export class SetDeliveryManService {
-    /* constructor(
-        @Inject('IDeliveryRepository') private deliveryRepository: IDeliveryRepository,
+    constructor(
+        @InjectQueryService(DeliveryRepository) private deliveryService: QueryService<Delivery>,
         private eventEmitter: NestEventEmitter,
     ) {}
 
     async execute(deliveryId: Delivery['id'], userId: User['id']): Promise<Delivery> {
         // check if delivery exists
-        const delivery = await this.deliveryRepository.get(deliveryId);
+        const delivery = await this.deliveryService.findById(deliveryId);
         if (!delivery) throw new NotFoundException('Entrega não existe');
 
-        // merge new data
-        const mergedDelivery = this.deliveryRepository.merge(delivery, { deliveryManId: userId });
-
         // set delivery man
-        await this.deliveryRepository.setDeliveryMan(deliveryId, userId);
+        const updated = await this.deliveryService.updateOne(deliveryId, { deliveryManId: userId });
 
         // events
         const event: ISetDeliveryManEvent = {
-            delivery: mergedDelivery,
+            delivery: updated,
         };
         this.eventEmitter.strictEmitter<IMainEvents>().emit('setDeliveryMan', event);
 
         // return
-        return mergedDelivery;
-    } */
+        return updated;
+    }
 }

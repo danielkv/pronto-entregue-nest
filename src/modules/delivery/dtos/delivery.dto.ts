@@ -1,19 +1,19 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
 import { DeliverySizesEnum } from '../enums/delivery-sizes.enum';
 import { IsInt, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { FilterableField } from '@nestjs-query/query-graphql';
 
-@InputType('DeliveryInput')
+@ObjectType('Delivery')
 export class DeliveryDTO {
-    @IsOptional()
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => ID)
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     description: string;
 
     @IsString()
@@ -21,7 +21,7 @@ export class DeliveryDTO {
     size: DeliverySizesEnum;
 
     @IsString()
-    @Field()
+    @FilterableField()
     status: DeliveryStatusEnum;
 
     @IsNumber()
@@ -29,15 +29,15 @@ export class DeliveryDTO {
     value: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     receiverName: string;
 
     @IsString()
-    @Field()
+    @FilterableField()
     receiverContact: string;
 
     @IsString()
-    @Field()
+    @FilterableField()
     senderContact: string;
 
     @ValidateNested()
@@ -50,13 +50,13 @@ export class DeliveryDTO {
     @Field(() => AddressDTO)
     addressTo: AddressDTO;
 
-    @IsOptional()
+    /* @IsOptional()
     @IsInt()
     @Field(() => Int, { nullable: true })
-    orderId?: number;
+    orderId?: number; */
 
-    @IsOptional()
+    /* @IsOptional()
     @IsInt()
     @Field(() => Int, { nullable: true })
-    deliveryManId: number;
+    deliveryManId: number; */
 }

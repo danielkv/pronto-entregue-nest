@@ -12,37 +12,28 @@ import { Order } from '../../order-association/order/entities/order.entity';
 import { Product } from '../../product-association/product/entities/product.entity';
 import { User } from '../../user-association/user/entities/user.entity';
 import { Company } from '../../company-association/company/entities/company.entity';
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { CouponValueType } from '../enums/coupon-valye-type.enum';
 
-@ObjectType()
 @Entity('coupons')
 export class Coupon {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field()
     @Column('text', { name: 'image', nullable: true })
     image: string | null;
 
-    @Field()
     @Column('datetime', { name: 'startsAt', nullable: true })
     startsAt: Date | null;
 
-    @Field()
     @Column('datetime', { name: 'expiresAt', nullable: true })
     expiresAt: Date | null;
 
-    @Field()
     @Column('varchar', { name: 'description', nullable: true, length: 255 })
     description: string | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'masterOnly',
@@ -52,7 +43,6 @@ export class Coupon {
     })
     masterOnly: boolean | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'onlyFirstPurchases',
@@ -62,7 +52,6 @@ export class Coupon {
     })
     onlyFirstPurchases: boolean | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'featured',
@@ -72,7 +61,6 @@ export class Coupon {
     })
     featured: boolean | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'active',
@@ -81,7 +69,6 @@ export class Coupon {
     })
     active: boolean | null;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'taxable',
         nullable: true,
@@ -92,15 +79,12 @@ export class Coupon {
     })
     taxable: number | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'maxPerUser', nullable: true, default: 1 })
     maxPerUser: number | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'maxPurchases', nullable: true, default: 0 })
     maxPurchases: number | null;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'minValue',
         nullable: true,
@@ -110,7 +94,6 @@ export class Coupon {
     })
     minValue: number | null;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'maxValue',
         nullable: true,
@@ -120,7 +103,6 @@ export class Coupon {
     })
     maxValue: number | null;
 
-    @Field(() => CouponValueType)
     @Column('enum', {
         name: 'valueType',
         enum: CouponValueType,
@@ -128,7 +110,6 @@ export class Coupon {
     })
     valueType: CouponValueType;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'value',
         nullable: true,
@@ -137,15 +118,12 @@ export class Coupon {
     })
     value: number | null;
 
-    @Field()
     @Column({ type: 'boolean', name: 'freeDelivery', default: false })
     freeDelivery: boolean;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 

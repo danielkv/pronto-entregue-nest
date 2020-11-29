@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AddressDTO } from 'src/modules/address/dtos/address.dto';
 import { Address } from '../../address/entities/address.entity';
 import { IEntityAddress } from '../interfaces/entity.address.interface';
 
@@ -19,7 +20,7 @@ export class AddressHelper<EntityAddressDTO> {
         };
     }
 
-    join(address: Address, suffix = ''): IEntityAddress {
+    join(address: AddressDTO, suffix = ''): IEntityAddress {
         return {
             [`nameAddress${suffix}`]: address.name,
             [`streetAddress${suffix}`]: address.street,

@@ -20,29 +20,22 @@ import { UserMeta } from '../../user-meta/entities/user.meta.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { Product } from '../../../product-association/product/entities/product.entity';
 import { Address } from '../../../address/entities/address.entity';
-import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-@ObjectType()
 @Index('email', ['email'], { unique: true })
 @Entity('users')
 export class User {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'firstName', nullable: true, length: 255 })
     firstName: string | null;
 
-    @Field({ nullable: true })
     @Column('varchar', { name: 'lastName', nullable: true, length: 255 })
     lastName: string | null;
 
-    @Field({ nullable: true })
     @Column('text', { name: 'image', nullable: true })
     image: string | null;
 
-    @Field()
     @Column('varchar', {
         name: 'email',
         nullable: true,
@@ -54,7 +47,6 @@ export class User {
     @Column('varchar', { name: 'password', nullable: true, length: 255 })
     password: string | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'active',
@@ -63,7 +55,6 @@ export class User {
     })
     active: boolean | null;
 
-    @Field()
     @Column('varchar', {
         name: 'role',
         comment: 'master | default',
@@ -72,18 +63,15 @@ export class User {
     })
     role: string;
 
-    @Field()
     @Column('boolean', {
         name: 'isMaster',
         default: false,
     })
     isMaster: boolean;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 

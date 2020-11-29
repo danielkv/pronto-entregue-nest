@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
-import { DeliveryRepositoryProvider } from './repositories/delivery.repository';
-import { SetDeliveryManService } from './services/set-delivery-man.service';
-import { ChangeDeliveryStatusService } from './services/change-delivery-status.service';
+import { DeliveryRepository } from './repositories/delivery.repository';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { DeliveryDTO } from './dtos/delivery.dto';
+import { DeliveryAssembler } from './assemblers/delivery.assembler';
 
 @Module({
-    providers: [
-        // services
-        SetDeliveryManService,
-        ChangeDeliveryStatusService,
-
-        // respositories
-        DeliveryRepositoryProvider,
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([DeliveryRepository])],
+            resolvers: [{ DTOClass: DeliveryDTO, EntityClass: DeliveryRepository }],
+            assemblers: [DeliveryAssembler],
+        }),
     ],
 })
 export class DeliveryModule {}

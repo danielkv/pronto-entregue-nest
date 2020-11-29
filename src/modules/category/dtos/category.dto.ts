@@ -1,14 +1,15 @@
+import { FilterableField } from '@nestjs-query/query-graphql';
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsString } from 'class-validator';
 
 @InputType('CategoryInput')
 export class CategoryDTO {
     @IsInt()
-    @Field(() => Int, { nullable: true })
+    @FilterableField(() => Int, { nullable: true })
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     name: string;
 
     @IsString()
@@ -16,11 +17,14 @@ export class CategoryDTO {
     image?: string;
 
     @IsString()
-    @Field({ nullable: true })
+    @FilterableField({ nullable: true })
     description?: string;
 
+    @FilterableField()
+    companyId?: string;
+
     @IsBoolean()
-    @Field()
+    @FilterableField()
     active: boolean;
 
     @IsInt()

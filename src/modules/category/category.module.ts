@@ -1,10 +1,15 @@
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
-import { CategoryRepositoryProvider } from './repositories/category.repository';
+import { CategoryDTO } from './dtos/category.dto';
+import { CategoryRepository } from './repositories/category.repository';
 
 @Module({
-    providers: [
-        //repositories
-        CategoryRepositoryProvider,
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([CategoryRepository])],
+            resolvers: [{ DTOClass: CategoryDTO, EntityClass: CategoryRepository }],
+        }),
     ],
 })
 export class CategoryModule {}

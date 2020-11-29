@@ -1,17 +1,15 @@
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
-import { CompanyUserFilterDTO } from './dtos/company-user.filter.dto';
-import { CompanyUserRepositoryProvider } from './repositories/company-user.repository';
-import { GetCompanyUserConnectionService } from './services/get-company-user-connection.service';
+import { CompanyUserDTO } from './dtos/company.user.dto';
+import { CompanyUserRepository } from './repositories/company-user.repository';
 
 @Module({
-    imports: [CompanyUserFilterDTO],
-    providers: [
-        // services
-        GetCompanyUserConnectionService,
-
-        // repositories
-        CompanyUserRepositoryProvider,
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([CompanyUserRepository])],
+            resolvers: [{ DTOClass: CompanyUserDTO, EntityClass: CompanyUserRepository }],
+        }),
     ],
-    exports: [GetCompanyUserConnectionService],
 })
 export class CompanyUserModule {}

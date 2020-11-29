@@ -1,11 +1,11 @@
-import { Field, Float, ID, InputType, Int } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { IsArray, IsBoolean, IsDate, IsInt, IsNumber, IsString } from 'class-validator';
 import { Company } from '../../company-association/company/entities/company.entity';
 import { Product } from '../../product-association/product/entities/product.entity';
 import { User } from '../../user-association/user/entities/user.entity';
 import { CouponValueType } from '../enums/coupon-valye-type.enum';
 
-@InputType('CouponInput')
+@ObjectType('Coupon')
 export class CouponDTO {
     @IsInt()
     @Field(() => ID, { nullable: true })

@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { UserFilterDTO } from './dtos/user.filter.dto';
-import { UserRepositoryProvider } from './repositories/user.reporitory';
+import { UserRepository } from './repositories/user.reporitory';
 
-import { UserMetaModule } from '../user-meta/user-meta.module';
-
-import { AddressModule } from 'src/modules/address/address.module';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
+import { UserDTO } from './dtos/user.dto';
 
 @Module({
-    imports: [UserFilterDTO, UserMetaModule, AddressModule],
-    providers: [
-        // repositories
-        UserRepositoryProvider,
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([UserRepository])],
+            resolvers: [{ DTOClass: UserDTO, EntityClass: UserRepository }],
+        }),
     ],
 })
 export class UserModule {}
