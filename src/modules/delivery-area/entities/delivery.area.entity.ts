@@ -72,6 +72,7 @@ export class DeliveryArea {
     @Column({
         type: 'enum',
         nullable: false,
+        enum: DeliveryAreaTypeEnum,
         default: DeliveryAreaTypeEnum.DELIVERY,
     })
     type: DeliveryAreaTypeEnum;
