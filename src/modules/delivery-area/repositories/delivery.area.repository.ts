@@ -1,20 +1,10 @@
 import { RepositoryBase } from '../../common/repositories/repository.base';
 import { Brackets, EntityRepository } from 'typeorm';
 import { DeliveryArea } from '../entities/delivery.area.entity';
-import { DeliveryAreaFilterDTO } from '../dtos/delivery.area.filter.dto';
 import { GeoPoint } from '../../common/types/geo-point';
-import { IDeliveryAreaRepository } from '../interfaces/delivery-area.repository.interface';
-import { RepositoryProviderFactory } from '../../common/helpers/repository-provider.factory';
 
 @EntityRepository(DeliveryArea)
-export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea, DeliveryAreaFilterDTO>
-    implements IDeliveryAreaRepository {
-    constructor() {
-        super();
-
-        this.setQueryBuilderTableName('deliveryArea');
-    }
-
+export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea> {
     filterCompanyAndLocation(companyId: number, location: GeoPoint): Promise<DeliveryArea[]>;
     filterCompanyAndLocation(companyId: number[], location: GeoPoint[]): Promise<DeliveryArea[]>;
     filterCompanyAndLocation(companyId: any, location: any): Promise<DeliveryArea[]> {
@@ -54,8 +44,3 @@ export class DeliveryAreaRepository extends RepositoryBase<DeliveryArea, Deliver
         return query.getMany();
     }
 }
-
-export const DeliveryAreaRepositoryProvider = new RepositoryProviderFactory(
-    'IDeliveryAreaRepository',
-    DeliveryAreaRepository,
-).create();

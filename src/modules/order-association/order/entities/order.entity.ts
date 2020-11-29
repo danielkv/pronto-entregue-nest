@@ -23,6 +23,8 @@ import { OrderStatusEnum } from '../enums/order.status.enum';
 import { OrderTypeEnum } from '../enums/order.type.enum';
 import { GeoPoint } from '../../../common/types/geo-point';
 import { GeoPointHelper } from '../../../common/helpers/geo.point.helper';
+import { DeliveryAreaTypeEnum } from 'src/modules/delivery-area/enums/delivery-area-type.enum';
+import { PickUpAreaTypeEnum } from 'src/modules/pickup/enums/pickup-area-type.enum';
 
 const geoPointHelper = new GeoPointHelper();
 
@@ -66,7 +68,7 @@ export class Order {
         enum: OrderTypeEnum,
         default: OrderTypeEnum.DELIVERY,
     })
-    type: OrderTypeEnum;
+    type: DeliveryAreaTypeEnum | PickUpAreaTypeEnum;
 
     @Field(() => Float)
     @Column('decimal', {
