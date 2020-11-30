@@ -1,5 +1,6 @@
 import { FilterableField, Relation } from '@nestjs-query/query-graphql';
-import { ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { AppRoles } from 'src/modules/auth/enums/app-roles.enum';
 import { UserDTO } from 'src/modules/user-association/user/dtos/user.dto';
 
 @ObjectType('CompanyUser')
@@ -14,6 +15,6 @@ export class CompanyUserDTO {
     @FilterableField()
     userId: number;
 
-    @FilterableField()
-    permissions: string[];
+    @Field(() => [AppRoles])
+    permissions: AppRoles[];
 }

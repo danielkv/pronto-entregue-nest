@@ -18,17 +18,14 @@ import { PaymentMethod } from '../../../payment/entities/payment.method.entity';
 import { CreditHistory } from '../../../credit-association/credit-history/entities/credit.history.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { Rating } from '../../../rating/entities/rating.entity';
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
+
 import { OrderStatusEnum } from '../enums/order.status.enum';
-import { OrderTypeEnum } from '../enums/order.type.enum';
+import { OrderType, OrderTypeEnum } from '../enums/order.type.enum';
 import { GeoPoint } from '../../../common/types/geo-point';
 import { GeoPointHelper } from '../../../common/helpers/geo.point.helper';
-import { DeliveryAreaTypeEnum } from 'src/modules/delivery-area/enums/delivery-area-type.enum';
-import { PickUpAreaTypeEnum } from 'src/modules/pickup/enums/pickup-area-type.enum';
 
 const geoPointHelper = new GeoPointHelper();
 
-@ObjectType()
 @Index('userId', ['userId'], {})
 @Index('companyId', ['companyId'], {})
 @Index('paymentMethodId', ['paymentMethodId'], {})
@@ -36,59 +33,51 @@ const geoPointHelper = new GeoPointHelper();
 @Index('orders_couponId_foreign_idx', ['couponId'], {})
 @Entity('orders')
 export class Order {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'paymentFee',
         nullable: true,
         precision: 10,
         scale: 2,
     })
-    paymentFee: number | null;
+    paymentFee: number;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'deliveryPrice',
         nullable: true,
         precision: 10,
         scale: 2,
     })
-    deliveryPrice: number | null;
+    deliveryPrice: number;
 
-    @Field(() => Int)
     @Column('int', { name: 'deliveryTime', default: 0 })
     deliveryTime: number;
 
-    @Field(() => OrderTypeEnum)
     @Column('enum', {
         name: 'type',
         enum: OrderTypeEnum,
         default: OrderTypeEnum.DELIVERY,
     })
-    type: DeliveryAreaTypeEnum | PickUpAreaTypeEnum;
+    type: OrderType;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'price',
         nullable: true,
         precision: 10,
         scale: 2,
     })
-    price: number | null;
+    price: number;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'discount',
         nullable: true,
         precision: 10,
         scale: 2,
     })
-    discount: number | null;
+    discount: number;
 
-    @Field(() => OrderStatusEnum)
     @Column('enum', {
         name: 'status',
         nullable: true,
@@ -97,44 +86,43 @@ export class Order {
     })
     status: OrderStatusEnum;
 
-    @Field({ nullable: true })
     @Column('text', { name: 'message', nullable: true })
-    message: string | null;
+    message: string;
 
     @Column('varchar', { name: 'nameAddress', nullable: true, length: 255 })
-    nameAddress: string | null;
+    nameAddress: string;
 
     @Column('varchar', { name: 'streetAddress', nullable: true, length: 255 })
-    streetAddress: string | null;
+    streetAddress: string;
 
     @Column('int', { name: 'numberAddress', nullable: true })
-    numberAddress: number | null;
+    numberAddress: number;
 
     @Column('varchar', {
         name: 'complementAddress',
         nullable: true,
         length: 255,
     })
-    complementAddress: string | null;
+    complementAddress: string;
 
     @Column('varchar', {
         name: 'referenceAddress',
         nullable: true,
         length: 255,
     })
-    referenceAddress: string | null;
+    referenceAddress: string;
 
     @Column('varchar', { name: 'districtAddress', nullable: true, length: 255 })
-    districtAddress: string | null;
+    districtAddress: string;
 
     @Column('int', { name: 'zipcodeAddress', nullable: true })
-    zipcodeAddress: number | null;
+    zipcodeAddress: number;
 
     @Column('varchar', { name: 'cityAddress', nullable: true, length: 255 })
-    cityAddress: string | null;
+    cityAddress: string;
 
     @Column('varchar', { name: 'stateAddress', nullable: true, length: 255 })
-    stateAddress: string | null;
+    stateAddress: string;
 
     @Column('point', {
         name: 'locationAddress',
@@ -143,32 +131,29 @@ export class Order {
     })
     locationAddress: GeoPoint;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'userId', nullable: true })
-    userId: number | null;
+    userId: number;
 
     @Column('int', { name: 'companyId', nullable: true })
-    companyId: number | null;
+    companyId: number;
 
     @Column('int', { name: 'paymentMethodId', nullable: true })
-    paymentMethodId: number | null;
+    paymentMethodId: number;
 
     @Column('int', { name: 'creditHistoryId', nullable: true })
-    creditHistoryId: number | null;
+    creditHistoryId: number;
 
     @Column('int', { name: 'couponId', nullable: true })
-    couponId: number | null;
+    couponId: number;
 
-    @Field({ nullable: true })
     @Column('datetime', { name: 'scheduledTo', nullable: true })
-    scheduledTo: Date | null;
+    scheduledTo: Date;
 
     @OneToMany(
         () => Delivery,

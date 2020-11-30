@@ -1,15 +1,16 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { OrderStatusEnum } from '../enums/order.status.enum';
-import { OrderTypeEnum } from '../enums/order.type.enum';
-import { Type } from 'class-transformer';
-import { IsDate, IsInt, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { OrderType, OrderTypeEnum } from '../enums/order.type.enum';
+import { IsInt, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { FilterableField, Relation } from '@nestjs-query/query-graphql';
+import { PaymentMethodDTO } from 'src/modules/payment/dtos/payment.method.dto';
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
+import { Type } from 'class-transformer';
 
-@InputType('OrderInput')
+@ObjectType('Order')
+@Relation('paymentMethod', () => PaymentMethodDTO)
 export class OrderDTO {
-    @IsOptional()
-    @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => ID)
     id?: number;
 
     @IsNumber()
@@ -17,62 +18,53 @@ export class OrderDTO {
     paymentFee: number;
 
     @IsNumber()
-    @Field(() => Float)
+    @FilterableField(() => Float)
     deliveryPrice: number;
 
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int)
     deliveryTime: number;
 
     @IsString()
-    @Field(() => OrderTypeEnum)
-    type: OrderTypeEnum;
+    @FilterableField(() => OrderTypeEnum)
+    type: OrderType;
 
     @IsNumber()
-    @Field(() => Float)
+    @FilterableField(() => Float)
     price: number;
 
     @IsNumber()
-    @Field(() => Float)
+    @FilterableField(() => Float)
     discount: number;
 
     @IsString()
-    @Field(() => OrderStatusEnum)
+    @FilterableField(() => OrderStatusEnum)
     status: OrderStatusEnum;
 
     @IsString()
-    @Field({ nullable: true })
+    @FilterableField({ nullable: true })
     message: string;
+
+    @FilterableField()
+    createdAt: Date;
 
     @ValidateNested()
     @Type(() => AddressDTO)
     @Field(() => AddressDTO)
     address: AddressDTO;
 
-    @IsInt()
-    @Field()
+    @FilterableField(() => ID)
     userId: number;
 
-    @IsInt()
-    @Field()
+    @FilterableField(() => ID)
     companyId: number;
 
-    @IsInt()
-    @Field()
-    paymentMethodId: number;
+    @FilterableField(() => ID, { nullable: true })
+    creditHistoryId: number;
 
-    @IsOptional()
-    @IsInt()
-    @Field({ nullable: true })
-    creditHistoryId?: number;
+    @FilterableField(() => ID, { nullable: true })
+    couponId: number;
 
-    @IsOptional()
-    @IsInt()
-    @Field({ nullable: true })
-    couponId?: number;
-
-    @IsOptional()
-    @IsDate()
-    @Field({ nullable: true })
-    scheduledTo?: Date;
+    @FilterableField({ nullable: true })
+    scheduledTo: Date;
 }

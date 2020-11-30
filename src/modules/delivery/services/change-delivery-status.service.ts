@@ -1,7 +1,6 @@
 import { ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { NestEventEmitter } from 'nest-event';
 import { IMainEvents } from 'src/main-event-emitter/main-events.interface';
-import { IDeliveryRepository } from '../interfaces/delivery.repository.interface';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { Delivery } from '../entities/delivery.entity';
 import { IChangeDeliveryStatusEvent } from '../interfaces/change-delivery-status-event.interface';

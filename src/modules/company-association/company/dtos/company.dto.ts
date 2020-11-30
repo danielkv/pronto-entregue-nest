@@ -4,7 +4,7 @@ import { FilterableField, PagingStrategies, Relation } from '@nestjs-query/query
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
 import { CompanyMetaDTO } from '../../company-meta/dtos/company-meta.dto';
 import { CompanySectionDTO } from '../../company-section/dtos/company-section.dto';
-import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
+import { OrderType, OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
 
 @ObjectType('Company')
 @Relation('address', () => AddressDTO, { disableRemove: true, allowFiltering: true })
@@ -58,5 +58,5 @@ export class CompanyDTO {
     distance?: number;
 
     @Field(() => [OrderTypeEnum])
-    orderType?: OrderTypeEnum[];
+    orderType?: OrderType[];
 }

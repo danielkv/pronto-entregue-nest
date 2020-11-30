@@ -7,4 +7,6 @@ export const OrderTypeEnum = {
     ...DeliveryAreaTypeEnum,
 };
 
+export type OrderType = PickUpAreaTypeEnum | DeliveryAreaTypeEnum;
+
 registerEnumType(OrderTypeEnum, { name: 'OrderTypeEnum' });

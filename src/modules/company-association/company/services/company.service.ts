@@ -1,7 +1,7 @@
 import { QueryService } from '@nestjs-query/core';
 import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { GeoPoint } from 'src/modules/common/types/geo-point';
-import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
+import { OrderType, OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
 import { CompanyDTO } from '../dtos/company.dto';
 import { Company } from '../entities/company.entity';
 import { CompanyLocationFilter } from '../filters/company.location.filter';
@@ -68,8 +68,8 @@ export class CompanyService extends TypeOrmQueryService<Company> {
         return query.getCount();
     }
 
-    private getOrderType({ deliveryAreas, pickUpAreas }: Company): OrderTypeEnum[] {
-        const orderTypes: OrderTypeEnum[] = [];
+    private getOrderType({ deliveryAreas, pickUpAreas }: Company): OrderType[] {
+        const orderTypes: OrderType[] = [];
 
         if (deliveryAreas.filter(deliveryArea => deliveryArea.type === OrderTypeEnum.DELIVERY).length)
             orderTypes.push(OrderTypeEnum.DELIVERY);
