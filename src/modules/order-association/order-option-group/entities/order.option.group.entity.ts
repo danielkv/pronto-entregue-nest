@@ -11,24 +11,19 @@ import {
 } from 'typeorm';
 import { OrderProduct } from '../../order-product/entities/order.product.entity';
 import { OrderOption } from '../../order-option/entities/order.option.entity';
-import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { OrderOptionGroupPriceType } from '../enums/order-option-group-price-type.enum';
 import { OptionGroup } from 'src/modules/product-association/option-group/entities/option.group.entity';
 
-@ObjectType()
 @Index('orderProductId', ['orderProductId'], {})
 @Index('optionsGroupRelatedId', ['optionsGroupRelatedId'], {})
 @Entity('order_option_groups')
 export class OrderOptionGroup {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field(() => OrderOptionGroupPriceType)
     @Column('enum', {
         name: 'priceType',
         enum: OrderOptionGroupPriceType,
@@ -36,11 +31,9 @@ export class OrderOptionGroup {
     })
     priceType: OrderOptionGroupPriceType;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
