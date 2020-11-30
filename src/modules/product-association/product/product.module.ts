@@ -14,7 +14,10 @@ import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
                     DTOClass: ProductDTO,
                     EntityClass: ProductRepository,
                     delete: { disabled: true },
-                    read: { defaultSort: [{ field: 'order', direction: SortDirection.DESC }] },
+                    read: {
+                        defaultSort: [{ field: 'order', direction: SortDirection.DESC }],
+                        defaultFilter: { active: { is: true } },
+                    },
                 },
             ],
         }),

@@ -14,7 +14,10 @@ import { OptionGroupDTO } from './dtos/option.group.dto';
                     DTOClass: OptionGroupDTO,
                     EntityClass: OptionGroupRepository,
                     delete: { disabled: true },
-                    read: { defaultSort: [{ field: 'order', direction: SortDirection.DESC }] },
+                    read: {
+                        defaultSort: [{ field: 'order', direction: SortDirection.DESC }],
+                        defaultFilter: { active: { is: true }, removed: { isNot: true } },
+                    },
                 },
             ],
         }),
