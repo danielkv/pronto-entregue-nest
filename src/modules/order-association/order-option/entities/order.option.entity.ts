@@ -1,4 +1,3 @@
-import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import {
     Column,
     CreateDateColumn,
@@ -12,24 +11,19 @@ import {
 import { OrderOptionGroup } from '../../order-option-group/entities/order.option.group.entity';
 import { Option } from '../../../product-association/option/entities/option.entity';
 
-@ObjectType()
 @Index('orderOptionsGroupId', ['orderOptionsGroupId'], {})
 @Index('optionRelatedId', ['optionRelatedId'], {})
 @Entity('order_options')
 export class OrderOption {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field()
     @Column('varchar', { name: 'description', nullable: true, length: 255 })
     description: string | null;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'price',
         nullable: true,
@@ -38,11 +32,9 @@ export class OrderOption {
     })
     price: number | null;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 

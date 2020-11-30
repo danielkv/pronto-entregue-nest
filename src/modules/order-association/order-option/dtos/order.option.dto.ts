@@ -1,19 +1,20 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
+import { FilterableField } from '@nestjs-query/query-graphql';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
-@InputType('OrderOptionInput')
+@ObjectType('OrderOption')
 export class OrderOptionDTO {
     @IsOptional()
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => ID)
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     name: string;
 
     @IsString()
-    @Field()
+    @FilterableField()
     description: string;
 
     @IsNumber()
@@ -21,6 +22,6 @@ export class OrderOptionDTO {
     price: number;
 
     @IsInt()
-    @Field()
+    @FilterableField(() => ID)
     optionRelatedId: number;
 }
