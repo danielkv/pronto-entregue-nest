@@ -13,39 +13,31 @@ import {
 import { OrderProduct } from '../../../order-association/order-product/entities/order.product.entity';
 import { Category } from '../../../category/entities/category.entity';
 import { Company } from '../../../company-association/company/entities/company.entity';
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { User } from '../../../user-association/user/entities/user.entity';
 import { OptionGroup } from '../../option-group/entities/option.group.entity';
 import { Sale } from '../../sale/entities/sale.entity';
 import { ProductTypeEnum } from '../enums/product-type.enum';
 
-@ObjectType()
 @Index('categoryId', ['categoryId'], {})
 @Index('companyId', ['companyId'], {})
 @Entity('products')
 export class Product {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field()
     @Column('varchar', { name: 'description', nullable: true, length: 255 })
     description: string | null;
 
-    @Field()
     @Column('varchar', { name: 'sku', nullable: true, length: 100 })
     sku: string | null;
 
-    @Field()
     @Column('text', { name: 'image', nullable: true })
     image: string | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'active',
@@ -54,7 +46,6 @@ export class Product {
     })
     active: boolean | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'listed',
@@ -64,19 +55,15 @@ export class Product {
     })
     listed: boolean | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'order', default: 0 })
     order: number;
 
-    @Field(() => ProductTypeEnum)
     @Column('enum', {
         name: 'type',
         enum: ProductTypeEnum,
         default: ProductTypeEnum.INLINE,
     })
     type: ProductTypeEnum;
-
-    @Field(() => Float)
     @Column('decimal', {
         name: 'fromPrice',
         nullable: true,
@@ -85,7 +72,6 @@ export class Product {
     })
     fromPrice: number | null;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'price',
         nullable: true,
@@ -94,11 +80,9 @@ export class Product {
     })
     price: number | null;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
@@ -108,11 +92,9 @@ export class Product {
     @Column('int', { name: 'companyId', nullable: true })
     companyId: number | null;
 
-    @Field(() => Int, { nullable: true })
     @Column('int', { name: 'minDeliveryTime', nullable: true })
     minDeliveryTime: number | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'scheduleEnabled',

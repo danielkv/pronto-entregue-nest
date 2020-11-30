@@ -1,48 +1,49 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { ProductTypeEnum } from '../enums/product-type.enum';
-import { IsBoolean, IsInt, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsBoolean, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 import { OptionGroupDTO } from '../../option-group/dtos/option.group.dto';
-import { Type } from 'class-transformer';
 import { FileUpload } from 'graphql-upload';
 import { Upload } from 'src/modules/graphql/scalars/upload.scalar';
+import { FilterableField, FilterableRelation } from '@nestjs-query/query-graphql';
 
-@InputType('ProductInput')
+@ObjectType('Product')
+@FilterableRelation('optionsGroups', () => OptionGroupDTO)
 export class ProductDTO {
     @IsOptional()
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int)
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     name: string;
 
     @IsString()
-    @Field()
+    @FilterableField()
     description: string;
 
     @IsString()
-    @Field()
+    @FilterableField()
     sku: string;
 
     @IsString()
     @Field()
     image: string;
 
-    /*  @IsOptional()
+    @IsOptional()
     @Field(() => Upload)
-    file?: FileUpload; */
+    file?: FileUpload;
 
     @IsBoolean()
-    @Field()
+    @FilterableField()
     active: boolean;
 
-    @IsBoolean()
+    /* @IsBoolean()
     @Field()
-    listed: boolean;
+    listed: boolean; */
 
     @IsInt()
-    @Field(() => Int)
+    @FilterableField({ allowedComparisons: [] })
     order: number;
 
     @IsString()
@@ -54,15 +55,15 @@ export class ProductDTO {
     fromPrice: number;
 
     @IsNumber()
-    @Field(() => Float)
+    @FilterableField(() => Float)
     price: number;
 
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int)
     categoryId: number;
 
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int)
     companyId: number;
 
     @IsInt()
@@ -72,9 +73,4 @@ export class ProductDTO {
     @IsBoolean()
     @Field()
     scheduleEnabled: boolean;
-
-    @ValidateNested({ each: true })
-    @Type(() => OptionGroupDTO)
-    @Field(() => [OptionGroupDTO])
-    optionsGroups: OptionGroupDTO[];
 }

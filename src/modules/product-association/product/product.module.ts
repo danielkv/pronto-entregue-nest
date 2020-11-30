@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { OptionGroupModule } from '../option-group/option-group.module';
-import { ProductFilterDTO } from './dtos/product.filter.dto';
-import { ProductRepositoryProvider } from './repositories/product.repository';
+import { ProductRepository } from './repositories/product.repository';
 import { ProductDTO } from './dtos/product.dto';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 
 @Module({
-    imports: [ProductFilterDTO, OptionGroupModule, ProductDTO],
-    providers: [
-        // repositories
-        ProductRepositoryProvider,
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([ProductRepository])],
+            resolvers: [{ DTOClass: ProductDTO, EntityClass: ProductRepository, delete: { disabled: true } }],
+        }),
     ],
 })
 export class ProductModule {}
