@@ -10,28 +10,22 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Option } from '../../option/entities/option.entity';
 import { Product } from '../../product/entities/product.entity';
 import { OrderOptionGroup } from '../../../order-association/order-option-group/entities/order.option.group.entity';
 import { OptionGroupTypeEnum } from '../enums/option-group-type.enum';
 import { OptionGroupPriceTypeEnum } from '../enums/option-group-price-type.enum';
 
-@ObjectType()
 @Index('productId', ['productId'], {})
 @Index('maxSelectRestrain', ['maxSelectRestrain'], {})
 @Entity('options_groups')
 export class OptionGroup {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field(() => OptionGroupTypeEnum)
     @Column('enum', {
         name: 'type',
         enum: OptionGroupTypeEnum,
@@ -39,7 +33,6 @@ export class OptionGroup {
     })
     type: OptionGroupTypeEnum;
 
-    @Field(() => OptionGroupPriceTypeEnum)
     @Column('enum', {
         name: 'priceType',
         enum: OptionGroupPriceTypeEnum,
@@ -47,19 +40,15 @@ export class OptionGroup {
     })
     priceType: OptionGroupPriceTypeEnum;
 
-    @Field(() => Int)
     @Column('int', { name: 'order', default: 0 })
     order: number;
 
-    @Field(() => Int)
     @Column('int', { name: 'minSelect', nullable: true })
     minSelect: number | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'maxSelect', nullable: true })
     maxSelect: number | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'active',
@@ -68,15 +57,12 @@ export class OptionGroup {
     })
     active: boolean | null;
 
-    @Field()
     @Column({ type: 'boolean', name: 'removed', default: false })
     removed: boolean;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 

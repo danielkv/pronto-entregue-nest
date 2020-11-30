@@ -1,19 +1,20 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { OptionGroupTypeEnum } from '../enums/option-group-type.enum';
 import { OptionGroupPriceTypeEnum } from '../enums/option-group-price-type.enum';
-import { IsBoolean, IsInt, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsBoolean, IsInt, IsOptional, IsString } from 'class-validator';
 import { OptionDTO } from '../../option/dtos/option.dto';
-import { Type } from 'class-transformer';
+import { FilterableField, FilterableRelation } from '@nestjs-query/query-graphql';
 
-@InputType('OptionGroupInput')
+@ObjectType('OptionGroup')
+@FilterableRelation('options', () => OptionDTO)
 export class OptionGroupDTO {
     @IsOptional()
     @IsInt()
-    @Field(() => Int, { nullable: true })
+    @FilterableField(() => ID, { nullable: true })
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     name: string;
 
     @IsString()
@@ -25,7 +26,7 @@ export class OptionGroupDTO {
     priceType: OptionGroupPriceTypeEnum;
 
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int, { allowedComparisons: [] })
     order: number;
 
     @IsInt()
@@ -36,20 +37,18 @@ export class OptionGroupDTO {
     @Field(() => Int)
     maxSelect: number;
 
-    @IsBoolean()
     @Field()
+    createdAt: Date;
+
+    @IsBoolean()
+    @FilterableField()
     active: boolean;
 
     @IsBoolean()
-    @Field()
+    @FilterableField()
     removed: boolean;
 
     @IsInt()
     @Field(() => Int)
     maxSelectRestrain: number;
-
-    @ValidateNested({ each: true })
-    @Type(() => OptionDTO)
-    @Field(() => [OptionDTO])
-    options: OptionDTO[];
 }
