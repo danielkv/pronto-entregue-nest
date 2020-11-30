@@ -1,23 +1,24 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
+import { FilterableField } from '@nestjs-query/query-graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
-@InputType('OptionInput')
+@ObjectType('Option')
 export class OptionDTO {
     @IsOptional()
     @IsInt()
-    @Field(() => Int, { nullable: true })
+    @FilterableField(() => Int, { nullable: true })
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     name: string;
 
     @IsString()
-    @Field()
+    @FilterableField()
     description: string;
 
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int, { allowedComparisons: [] })
     order: number;
 
     @IsInt()
@@ -25,11 +26,11 @@ export class OptionDTO {
     maxSelectRestrainOther: number;
 
     @IsBoolean()
-    @Field()
+    @FilterableField()
     active: boolean;
 
     @IsBoolean()
-    @Field()
+    @FilterableField()
     removed: boolean;
 
     @IsNumber()

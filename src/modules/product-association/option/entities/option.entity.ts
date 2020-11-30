@@ -9,36 +9,27 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { OptionGroup } from '../../option-group/entities/option.group.entity';
 import { OrderOption } from '../../../order-association/order-option/entities/order.option.entity';
 
-@ObjectType()
 @Index('optionsGroupId', ['optionsGroupId'], {})
 @Entity('options')
 export class Option {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field()
     @Column('varchar', { name: 'description', nullable: true, length: 255 })
     description: string | null;
 
-    @Field(() => Int)
     @Column('int', { name: 'order', default: 0 })
     order: number;
 
-    @Field(() => Int)
     @Column('int', { name: 'maxSelectRestrainOther', nullable: true })
     maxSelectRestrainOther: number | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'active',
@@ -47,11 +38,9 @@ export class Option {
     })
     active: boolean | null;
 
-    @Field()
     @Column({ type: 'boolean', name: 'removed', default: false })
     removed: boolean;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'price',
         nullable: true,
@@ -60,11 +49,9 @@ export class Option {
     })
     price: number | null;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
