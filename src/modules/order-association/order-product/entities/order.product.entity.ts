@@ -12,26 +12,20 @@ import {
 import { OrderOptionGroup } from '../../order-option-group/entities/order.option.group.entity';
 import { Product } from '../../../product-association/product/entities/product.entity';
 import { Order } from '../../order/entities/order.entity';
-import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
-@ObjectType()
 @Index('orderId', ['orderId'], {})
 @Index('productRelatedId', ['productRelatedId'], {})
 @Entity('order_products')
 export class OrderProduct {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
     id: number;
 
-    @Field()
     @Column('int', { name: 'quantity', nullable: true })
     quantity: number | null;
 
-    @Field()
     @Column('varchar', { name: 'name', nullable: true, length: 255 })
     name: string | null;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'price',
         nullable: true,
@@ -40,15 +34,12 @@ export class OrderProduct {
     })
     price: number | null;
 
-    @Field()
     @Column('varchar', { name: 'message', nullable: true, length: 255 })
     message: string | null;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 

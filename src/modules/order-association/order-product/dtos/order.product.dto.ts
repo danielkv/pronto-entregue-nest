@@ -1,21 +1,21 @@
-import { Field, Float, InputType, Int } from '@nestjs/graphql';
-import { IsInt, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { OrderOptionGroupDTO } from '../../order-option-group/dtos/order.option.group.dto';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
+import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
-@InputType('OrderProductInput')
+import { FilterableField } from '@nestjs-query/query-graphql';
+
+@ObjectType('OrderProduct')
 export class OrderProductDTO {
     @IsOptional()
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int)
     id?: number;
 
     @IsInt()
-    @Field()
+    @FilterableField()
     quantity: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     name: string;
 
     @IsNumber()
@@ -23,19 +23,19 @@ export class OrderProductDTO {
     price: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     message: string;
 
-    @IsInt()
+    /*  @IsInt()
     @Field()
-    orderId: number;
+    orderId: number; */
 
-    @IsInt()
+    /*  @IsInt()
     @Field()
     productRelatedId: number;
-
-    @ValidateNested({ each: true })
+ */
+    /* @ValidateNested({ each: true })
     @Type(() => OrderOptionGroupDTO)
     @Field(() => OrderOptionGroupDTO)
-    orderOptionGroups: OrderOptionGroupDTO[];
+    orderOptionGroups: OrderOptionGroupDTO[]; */
 }

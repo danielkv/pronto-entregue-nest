@@ -12,6 +12,7 @@ import { OrderOptionGroupRepository } from './repository/order-option-group.repo
                 {
                     DTOClass: OrderOptionGroupDTO,
                     EntityClass: OrderOptionGroupRepository,
+                    delete: { disabled: true },
                 },
             ],
         }),
