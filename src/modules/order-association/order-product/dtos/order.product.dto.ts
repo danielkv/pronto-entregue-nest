@@ -1,9 +1,13 @@
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
-import { FilterableField } from '@nestjs-query/query-graphql';
+import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/query-graphql';
+import { OrderOptionGroupDTO } from '../../order-option-group/dtos/order.option.group.dto';
+import { ProductDTO } from 'src/modules/product-association/product/dtos/product.dto';
 
 @ObjectType('OrderProduct')
+@FilterableRelation('optionsGroups', () => [OrderOptionGroupDTO])
+@Relation('relatedProduct', () => ProductDTO)
 export class OrderProductDTO {
     @IsOptional()
     @IsInt()
@@ -25,17 +29,4 @@ export class OrderProductDTO {
     @IsString()
     @FilterableField()
     message: string;
-
-    /*  @IsInt()
-    @Field()
-    orderId: number; */
-
-    /*  @IsInt()
-    @Field()
-    productRelatedId: number;
- */
-    /* @ValidateNested({ each: true })
-    @Type(() => OrderOptionGroupDTO)
-    @Field(() => OrderOptionGroupDTO)
-    orderOptionGroups: OrderOptionGroupDTO[]; */
 }
