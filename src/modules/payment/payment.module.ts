@@ -8,7 +8,9 @@ import { PaymentMethodRepository } from './repositories/payment-method.repositor
     imports: [
         NestjsQueryGraphQLModule.forFeature({
             imports: [NestjsQueryTypeOrmModule.forFeature([PaymentMethodRepository])],
-            resolvers: [{ DTOClass: PaymentMethodDTO, EntityClass: PaymentMethodRepository }],
+            resolvers: [
+                { DTOClass: PaymentMethodDTO, EntityClass: PaymentMethodRepository, delete: { disabled: true } },
+            ],
         }),
     ],
 })

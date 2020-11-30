@@ -1,6 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PaymentMethod } from 'src/modules/payment/entities/payment.method.entity';
-import { IPaymentMethodRepository } from 'src/modules/payment/interfaces/payment-method.repository.interface';
 import { Company } from '../../company/entities/company.entity';
 //import { GetCompanyService } from '../../company/services/get-company.service';
 import { ICompanyPaymentMethodRepository } from '../interfaces/company-payment-method-repository.interface';
@@ -8,7 +7,7 @@ import { IPaymentMethodSettings } from '../interfaces/payment-method-setting.int
 
 @Injectable()
 export class AssignCompanyPaymentMethodService {
-    constructor(
+    /* constructor(
         @Inject('IPaymentMethodRepository') private paymentMethodRepository: IPaymentMethodRepository,
         @Inject('ICompanyPaymentMethodRepository')
         private companyPaymentMethodRepository: ICompanyPaymentMethodRepository, //private getCompanyService: GetCompanyService,
@@ -38,5 +37,5 @@ export class AssignCompanyPaymentMethodService {
 
         // return instance
         return paymentMethod;
-    }
+    } */
 }
