@@ -1,19 +1,20 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { FilterableField } from '@nestjs-query/query-graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsOptional, IsString } from 'class-validator';
 
-@InputType('RatingInput')
+@ObjectType('Rating')
 export class RatingDTO {
     @IsOptional()
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => ID)
     id?: number;
 
     @IsInt()
-    @Field(() => Int)
+    @FilterableField(() => Int)
     rate: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     comment: string;
 
     @IsBoolean()
@@ -21,14 +22,14 @@ export class RatingDTO {
     hidden: boolean;
 
     @IsInt()
-    @Field()
+    @FilterableField(() => ID)
     companyId: number;
 
     @IsInt()
-    @Field()
+    @FilterableField(() => ID)
     orderId: number;
 
     @IsInt()
-    @Field()
+    @FilterableField(() => ID)
     userId: number;
 }

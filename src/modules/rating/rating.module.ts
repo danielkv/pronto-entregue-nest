@@ -1,12 +1,15 @@
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
-import { RatingFilterDTO } from './dtos/rating.filters.dto';
-import { RatingRepositoryProvider } from './repositories/rating.repository';
+import { RatingDTO } from './dtos/rating.dto';
+import { RatingRepository } from './repositories/rating.repository';
 
 @Module({
-    imports: [RatingFilterDTO],
-    providers: [
-        // repositories
-        RatingRepositoryProvider,
+    imports: [
+        NestjsQueryGraphQLModule.forFeature({
+            imports: [NestjsQueryTypeOrmModule.forFeature([RatingRepository])],
+            resolvers: [{ DTOClass: RatingDTO, EntityClass: RatingRepository, delete: { disabled: true } }],
+        }),
     ],
 })
 export class RatingModule {}
