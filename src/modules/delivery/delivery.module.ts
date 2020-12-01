@@ -11,7 +11,6 @@ import { DeliveryInputDTO } from './dtos/delivery.input.dto';
     imports: [
         NestjsQueryGraphQLModule.forFeature({
             imports: [NestjsQueryTypeOrmModule.forFeature([Delivery])],
-            //services: [DeliveryAssembler],
             assemblers: [DeliveryAssembler],
             resolvers: [
                 {
