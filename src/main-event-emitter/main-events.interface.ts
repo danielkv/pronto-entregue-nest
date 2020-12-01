@@ -32,7 +32,7 @@ export interface IMainEvents {
     createUser(event: ICreateUserEvent): void;
     updateUser(event: IUpdateUserEvent): void;
 
-    // user address
+    /*  // user address
     addUserAddress(event: IAddUserAddressEvent): void;
     updateUserAddress(event: IUpdateUserAddressEvent): void;
 
@@ -42,11 +42,11 @@ export interface IMainEvents {
 
     // category
     createCategory(event: ICreateCategoryEvent): void;
-    updateCategory(event: IUpdateCategoryEvent): void;
+    updateCategory(event: IUpdateCategoryEvent): void; 
 
     // company
     createCompany(event: ICreateCompanyEvent): void;
-    updateCompany(event: IUpdateCompanyEvent): void;
+    updateCompany(event: IUpdateCompanyEvent): void; 
 
     // section
     createSection(event: ICreateCompanySectionEvent): void;
@@ -54,7 +54,7 @@ export interface IMainEvents {
 
     // coupon
     createCoupon(event: ICreateCouponEvent): void;
-    updateCoupon(event: IUpdateCouponEvent): void;
+    updateCoupon(event: IUpdateCouponEvent): void;*/
 
     // creditHistory
     createCreditHistory(event: ICreateCreditHistoryEvent): void;
