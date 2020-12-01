@@ -2,7 +2,7 @@ import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/com
 
 import { AuthGuard } from '@nestjs/passport';
 import { GetRequestHelper } from 'src/modules/common/helpers/get-request.helper';
-import { CompanyUserTokenPayload } from '../interfaces/company-user-token-payload.interface';
+import { AuthenticatedCompany } from '../interfaces/authenticated-company.interface';
 
 @Injectable()
 export class JwtCompanyAuthGuard extends AuthGuard('jwt-company') {
@@ -14,7 +14,7 @@ export class JwtCompanyAuthGuard extends AuthGuard('jwt-company') {
         return this.getRequestHelper.execute(context);
     }
 
-    handleRequest(err, companyAccess: CompanyUserTokenPayload, info, ctx) {
+    handleRequest(err, companyAccess: AuthenticatedCompany, info, ctx) {
         const req = this.getRequest(ctx);
 
         const user = req.user;

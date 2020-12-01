@@ -23,6 +23,7 @@
 		"typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
 	},
 	"dependencies": {
+		"@nestjs-query/core": "^0.21.2",
 		"@nestjs-query/query-graphql": "^0.21.2",
 		"@nestjs-query/query-typeorm": "^0.21.2",
 		"@nestjs/bull": "^0.2.3",

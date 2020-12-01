@@ -1,18 +1,21 @@
 import { Body, Controller, Get, ParseIntPipe, Post, Request, UseGuards } from '@nestjs/common';
 import { Company } from '../../company-association/company/entities/company.entity';
-import { AclScopes } from '../decorators/acl-scopes.decorator';
+import { AuthContext } from '../decorators/acl-scopes.decorator';
 import { UseRoles } from '../decorators/use-roles.decorator';
 import { LoginCompanyDTO } from '../dtos/login-company.dto';
 import { ACLResourcesEnum } from '../enums/resources.enum';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { ACGuard } from '../guards/ac.guard';
-import { IPermissionsScopes, RoleScopeEnum } from '../interfaces/guard-roles.interface';
+import { IAuthContext } from '../interfaces/guard-roles.interface';
 import { LoginCompanyService } from '../services/login-company.service';
 import { LoginUserService } from '../services/login-user.service';
+import { JwtCompanyAuthGuard } from '../guards/jwt-company-auth.guard';
+import { JwtUserAuthGuard } from '../guards/jwt-user-auth.guard';
 
 @Controller()
+@UseGuards(JwtCompanyAuthGuard, JwtUserAuthGuard)
 export class AuthController {
-    /* constructor(private loginUserService: LoginUserService, private loginCompanyService: LoginCompanyService) {}
+    constructor(private loginUserService: LoginUserService, private loginCompanyService: LoginCompanyService) {}
 
     @UseGuards(LocalAuthGuard)
     @Post('auth/login')
@@ -35,12 +38,11 @@ export class AuthController {
 
     @UseGuards(ACGuard)
     @UseRoles({
-        scope: RoleScopeEnum.COMPANY,
         action: 'update',
         resource: ACLResourcesEnum.USER,
     })
     @Get('test')
-    async testRole(@AclScopes() scopes: IPermissionsScopes) {
+    async testRole(@AuthContext() scopes: IAuthContext) {
         return scopes;
-    }*/
+    }
 }

@@ -1298,7 +1298,7 @@
   resolved "https://registry.yarnpkg.com/@nestjs-plus/discovery/-/discovery-2.0.2.tgz#c29a2d70ddecf58082fa3f2574ef511b916c1e8d"
   integrity sha512-7cOA00gFFbDj6DgWmCD6gXEOKUHs4fn/qBTB4yq7APkWVXKhF3+92D7MKLfpZstFAlKapdDu25c+Ed0ZUKIoGA==
 
-"@nestjs-query/core@0.21.2":
+"@nestjs-query/core@0.21.2", "@nestjs-query/core@^0.21.2":
   version "0.21.2"
   resolved "https://registry.yarnpkg.com/@nestjs-query/core/-/core-0.21.2.tgz#a416735278d713f855e2805537503f91fbbaa375"
   integrity sha512-1BvvlnMBpF654b9Lx+FdfjsBtWfH8Be09jcmUxJIZDYqqkCdEc3LGVaFZeCOouR8U1+5RZE66FM1nnGDJuwYMA==

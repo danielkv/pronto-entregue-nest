@@ -2,14 +2,18 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
 import { CompanyUserDTO } from './dtos/company.user.dto';
-import { CompanyUserRepository } from './repositories/company-user.repository';
+import { CompanyUser } from './entities/company.user.entity';
+
+const companyUserTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([CompanyUser]);
 
 @Module({
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([CompanyUserRepository])],
-            resolvers: [{ DTOClass: CompanyUserDTO, EntityClass: CompanyUserRepository }],
+            imports: [companyUserTypeOrmModule],
+            resolvers: [{ DTOClass: CompanyUserDTO, EntityClass: CompanyUser }],
         }),
+        companyUserTypeOrmModule,
     ],
+    exports: [companyUserTypeOrmModule],
 })
 export class CompanyUserModule {}

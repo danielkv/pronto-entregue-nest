@@ -17,6 +17,7 @@ export class PasswordService {
     async compare(plainTextPassword: string, hash: string): Promise<boolean> {
         const salt = this.break(hash).salt;
         const comparePasswordHash = this.salt(plainTextPassword, salt);
+        console.log(comparePasswordHash, hash);
         return comparePasswordHash === hash;
     }
 

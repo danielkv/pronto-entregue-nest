@@ -2,7 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { configService } from 'src/config/config.service';
-import { CompanyUserTokenPayload } from '../interfaces/company-user-token-payload.interface';
+import { AuthenticatedCompany } from '../interfaces/authenticated-company.interface';
 
 @Injectable()
 export class JwtCompanyStrategy extends PassportStrategy(Strategy, 'jwt-company') {
@@ -15,7 +15,7 @@ export class JwtCompanyStrategy extends PassportStrategy(Strategy, 'jwt-company'
         });
     }
 
-    validate(req, payload: CompanyUserTokenPayload): CompanyUserTokenPayload {
+    validate(req, payload: AuthenticatedCompany): AuthenticatedCompany {
         // populate req.company with payload
         req.company = { userId: payload.userId, companyId: payload.companyId, permissions: payload.permissions };
 

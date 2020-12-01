@@ -46,7 +46,7 @@ import { AcCheckService } from './services/validate-roles.service';
         ExtractAclScopesHelper,
         AccessControlProvider,
     ],
-    exports: [AccessControlProvider, ExtractAclScopesHelper, AcCheckService],
+
     controllers: [AuthController],
 })
 export class AuthModule {}

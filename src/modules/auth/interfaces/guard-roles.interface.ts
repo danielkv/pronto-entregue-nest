@@ -1,22 +1,14 @@
 import { ACLResourcesEnum } from '../enums/resources.enum';
-import { CompanyUserTokenPayload } from './company-user-token-payload.interface';
-import { UserTokenPayload } from './user-token-payload.interface';
+import { AuthenticatedCompany } from './authenticated-company.interface';
+import { AuthenticatedUser } from './authenticated-user.interface';
 
-export enum RoleScopeEnum {
-    USER = 'user',
-    COMPANY = 'company',
-    REGION = 'region',
-}
-
-export interface IPermissionsScopes {
-    user?: UserTokenPayload;
-    company?: CompanyUserTokenPayload;
+export interface IAuthContext {
+    user?: AuthenticatedUser;
+    company?: AuthenticatedCompany;
 }
 
 export interface IRole {
     possession?: 'any' | 'own';
-    scope?: RoleScopeEnum;
     resource: ACLResourcesEnum;
     action: 'create' | 'update' | 'delete' | 'read';
-    testOwner?(scopes: IPermissionsScopes, resource: any): boolean;
 }

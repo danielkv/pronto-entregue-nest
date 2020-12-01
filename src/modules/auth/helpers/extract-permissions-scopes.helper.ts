@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import { IPermissionsScopes } from '../interfaces/guard-roles.interface';
+import { IAuthContext } from '../interfaces/guard-roles.interface';
 
 @Injectable()
 export class ExtractAclScopesHelper {
-    execute(req): IPermissionsScopes {
+    execute(req): IAuthContext {
         return {
             user: req?.user,
             company: req?.company,
