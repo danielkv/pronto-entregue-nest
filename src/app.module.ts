@@ -42,7 +42,7 @@ import { QueueModule } from './modules/queue/queue.module';
 
         CommonModule,
         PickupModule,
-        //DeliveryAreaModule,
+        DeliveryAreaModule,
         OrderAssociationModule,
         CreditAssociationModule,
         ProductAssociationModule,
