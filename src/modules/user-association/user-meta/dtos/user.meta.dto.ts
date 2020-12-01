@@ -1,43 +1,23 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, IsJSON, IsString } from 'class-validator';
+import { FilterableField } from '@nestjs-query/query-graphql';
+import { Int, ObjectType } from '@nestjs/graphql';
+import { IsNumber, IsString } from 'class-validator';
+import { UserMeta } from '../entities/user.meta.entity';
 
-export enum IUserMetaKeys {
-    DOCUMENT = 'document',
-    PHONE = 'phone',
-    GOOGLE_USER_ID = '_google_userId',
-    FACEBOOK_USER_ID = '_facebook_userId',
-    DELIVERY_MAN_ENABLED = 'deliveryManEnabled',
-    NOTIFICATION_TOKENS = 'notification_tokens',
-    NOTIFICATION_DESKTOP_TOKENS = 'notification_desktop_tokens',
-}
-
-@ObjectType()
+@ObjectType('UserMeta')
 export class UserMetaDTO {
-    @Field({ nullable: true })
+    @IsNumber()
+    @FilterableField(() => Int, { nullable: true })
+    id?: UserMeta['id'];
+
     @IsString()
-    document?: string;
+    @FilterableField({ nullable: true })
+    key?: string;
 
-    @Field({ nullable: true })
     @IsString()
-    phone?: string;
+    @FilterableField({ nullable: true })
+    value?: string;
 
-    @Field({ nullable: true })
-    @IsString()
-    _google_userId?: string;
-
-    @Field({ nullable: true })
-    @IsString()
-    _facebook_userId?: string;
-
-    @Field({ nullable: true })
-    @IsBoolean()
-    deliveryManEnabled?: boolean;
-
-    @Field(() => Object, { nullable: true })
-    @IsJSON()
-    notification_tokens?: Record<string, unknown>;
-
-    @Field(() => Object, { nullable: true })
-    @IsJSON()
-    notification_desktop_tokens?: Record<string, unknown>;
+    @IsNumber()
+    @FilterableField({ nullable: true })
+    userId?: number;
 }

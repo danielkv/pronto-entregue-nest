@@ -40,7 +40,7 @@ export class DeliveryDTO {
     @FilterableField()
     senderContact: string;
 
-    @ValidateNested()
+    /*  @ValidateNested()
     @Type(() => AddressDTO)
     @Field(() => AddressDTO)
     addressFrom: AddressDTO;
@@ -48,7 +48,7 @@ export class DeliveryDTO {
     @ValidateNested()
     @Type(() => AddressDTO)
     @Field(() => AddressDTO)
-    addressTo: AddressDTO;
+    addressTo: AddressDTO; */
 
     /* @IsOptional()
     @IsInt()

@@ -1,4 +1,3 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
 import {
     Column,
     CreateDateColumn,
@@ -11,15 +10,12 @@ import {
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
-@ObjectType()
 @Index('userId', ['userId'], {})
 @Entity('user_metas')
 export class UserMeta {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', {
         name: 'key',
         nullable: true,
@@ -28,11 +24,9 @@ export class UserMeta {
     })
     key: string | null;
 
-    @Field()
     @Column('text', { name: 'value', nullable: true })
     value: string | null;
 
-    @Field()
     @Column({
         type: 'boolean',
         name: 'unique',
@@ -41,18 +35,15 @@ export class UserMeta {
     })
     unique: boolean | null;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'userId', nullable: true })
     userId: number | null;
 
-    @Field(() => User)
     @ManyToOne(
         () => User,
         users => users.metas,

@@ -26,7 +26,7 @@ export class OptionGroupDTO {
     priceType: OptionGroupPriceTypeEnum;
 
     @IsInt()
-    @FilterableField(() => Int, { allowedComparisons: [] })
+    @FilterableField(() => Int)
     order: number;
 
     @IsInt()

@@ -30,9 +30,9 @@ export class ProductDTO {
     @Field()
     image: string;
 
-    @IsOptional()
+    /*  @IsOptional()
     @Field(() => Upload)
-    file?: FileUpload;
+    file?: FileUpload; */
 
     @IsBoolean()
     @FilterableField()
@@ -43,7 +43,7 @@ export class ProductDTO {
     listed: boolean; */
 
     @IsInt()
-    @FilterableField({ allowedComparisons: [] })
+    @FilterableField()
     order: number;
 
     @IsString()

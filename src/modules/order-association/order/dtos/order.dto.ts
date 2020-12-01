@@ -50,10 +50,10 @@ export class OrderDTO {
     @FilterableField()
     createdAt: Date;
 
-    @ValidateNested()
+    /*  @ValidateNested()
     @Type(() => AddressDTO)
     @Field(() => AddressDTO)
-    address: AddressDTO;
+    address: AddressDTO; */
 
     @FilterableField(() => ID)
     userId: number;

@@ -18,7 +18,7 @@ export class OptionDTO {
     description: string;
 
     @IsInt()
-    @FilterableField(() => Int, { allowedComparisons: [] })
+    @FilterableField(() => Int)
     order: number;
 
     @IsInt()

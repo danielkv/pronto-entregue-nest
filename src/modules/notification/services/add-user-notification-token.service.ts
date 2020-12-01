@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { UserMetaInputDTO } from 'src/modules/user-association/user-meta/dtos/user.meta.input.dto';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum';
 import { INotificationToken } from '../interfaces/notification-token.interface';

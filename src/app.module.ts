@@ -31,26 +31,26 @@ import { QueueModule } from './modules/queue/queue.module';
         AddressModule,
         NestEventModule,
         GraphqlModule,
-        /* CategoryModule,
+        CategoryModule,
         ConfigModule,
         //CouponModule,
         DeliveryModule,
         ProductModule,
-        UserModule,
+
         PaymentModule,
         RatingModule,
-        ,
+
         CommonModule,
         PickupModule,
-        DeliveryAreaModule,
+        //DeliveryAreaModule,
         OrderAssociationModule,
-       	CreditAssociationModule,
+        CreditAssociationModule,
         ProductAssociationModule,
-        AuthModule,
+        //AuthModule,
         UserAssociationModule,
-        
+
         NotificationModule,
-        QueueModule, */
+        QueueModule,
     ],
     providers: [],
 })

@@ -7,7 +7,7 @@ import { Order } from '../entities/order.entity';
 // the QueryService service will be able to auto discover it.
 @Assembler(OrderDTO, Order)
 export class OrderAssembler extends ClassTransformerAssembler<OrderDTO, Order> {
-    constructor(private addressHelper: AddressHelper<Order>) {
+    /* constructor(private addressHelper: AddressHelper<Order>) {
         super();
     }
 
@@ -33,5 +33,5 @@ export class OrderAssembler extends ClassTransformerAssembler<OrderDTO, Order> {
         );
 
         return dtoConverted;
-    }
+    } */
 }

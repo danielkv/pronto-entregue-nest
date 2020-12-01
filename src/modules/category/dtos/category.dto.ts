@@ -1,8 +1,8 @@
 import { FilterableField } from '@nestjs-query/query-graphql';
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsInt, IsString } from 'class-validator';
 
-@InputType('CategoryInput')
+@ObjectType('Category')
 export class CategoryDTO {
     @IsInt()
     @FilterableField(() => Int, { nullable: true })

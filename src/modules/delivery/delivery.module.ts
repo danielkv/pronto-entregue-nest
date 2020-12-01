@@ -10,7 +10,7 @@ import { DeliveryAssembler } from './assemblers/delivery.assembler';
         NestjsQueryGraphQLModule.forFeature({
             imports: [NestjsQueryTypeOrmModule.forFeature([DeliveryRepository])],
             resolvers: [{ DTOClass: DeliveryDTO, EntityClass: DeliveryRepository }],
-            assemblers: [DeliveryAssembler],
+            //assemblers: [DeliveryAssembler],
         }),
     ],
 })

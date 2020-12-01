@@ -4,10 +4,12 @@ import { AddressDTO } from './dtos/address.dto';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { AddressRepository } from './respositories/address.repository';
 
+const nestjsQueryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([AddressRepository]);
+
 @Module({
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([AddressRepository])],
+            imports: [nestjsQueryTypeOrmModule],
             resolvers: [
                 {
                     DTOClass: AddressDTO,
@@ -15,6 +17,8 @@ import { AddressRepository } from './respositories/address.repository';
                 },
             ],
         }),
+        nestjsQueryTypeOrmModule,
     ],
+    exports: [nestjsQueryTypeOrmModule],
 })
 export class AddressModule {}

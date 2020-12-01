@@ -1,7 +1,11 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { FilterableField } from '@nestjs-query/query-graphql';
+import { FilterableConnection, FilterableField, FilterableRelation } from '@nestjs-query/query-graphql';
+import { AddressDTO } from 'src/modules/address/dtos/address.dto';
+import { UserMetaDTO } from '../../user-meta/dtos/user.meta.dto';
 
 @ObjectType('User')
+@FilterableRelation('metas', () => [UserMetaDTO])
+@FilterableConnection('addresses', () => AddressDTO, { disableRemove: true, disableUpdate: true })
 export class UserDTO {
     @FilterableField(() => ID)
     id: number;
@@ -30,9 +34,6 @@ export class UserDTO {
     @FilterableField()
     createdAt: Date;
 
-    @FilterableField()
-    updatedAt: Date;
-
     //coupons: Coupon[];
 
     //creditBalance: CreditBalance;
@@ -46,6 +47,4 @@ export class UserDTO {
     //ratings: Rating[];
 
     //addresses: Address[];
-
-    //metas: UserMeta[];
 }

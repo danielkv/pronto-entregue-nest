@@ -1,7 +1,6 @@
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
-import { UserMetaDTO } from 'src/modules/user-association/user-meta/dtos/user.meta.dto';
-import { UserMeta } from 'src/modules/user-association/user-meta/entities/user.meta.entity';
+
 import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum';
 import { INotificationToken } from '../interfaces/notification-token.interface';
