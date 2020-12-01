@@ -49,14 +49,4 @@ export class DeliveryDTO {
     @Type(() => AddressDTO)
     @Field(() => AddressDTO)
     addressTo: AddressDTO;
-
-    /* @IsOptional()
-    @IsInt()
-    @Field(() => Int, { nullable: true })
-    orderId?: number; */
-
-    /* @IsOptional()
-    @IsInt()
-    @Field(() => Int, { nullable: true })
-    deliveryManId: number; */
 }
