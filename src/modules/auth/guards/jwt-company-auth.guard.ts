@@ -15,15 +15,18 @@ export class JwtCompanyAuthGuard extends AuthGuard('jwt-company') {
     }
 
     handleRequest(err, companyAccess: AuthenticatedCompany, info, ctx) {
+        if (err) throw err;
+
         const req = this.getRequest(ctx);
 
         const user = req.user;
 
         if (!user) return null;
 
-        if (err || (companyAccess && !user)) throw err || new UnauthorizedException();
+        if (companyAccess && !user) throw new UnauthorizedException();
 
-        if (companyAccess.userId !== user.userId) new UnauthorizedException();
+        if (companyAccess.userId !== user.userId)
+            throw new UnauthorizedException('Esse usuário não está autenticado nesse estabelecimento');
 
         return user;
     }

@@ -17,11 +17,13 @@ export class LoginCompanyService {
     async execute(companyId: Company['id'], userId: User['id']): Promise<LoginCompanyDTO> {
         if (!companyId || !userId) throw new UnauthorizedException();
 
-        const companyUser = await this.companyUserService.findById(userId, {
-            filter: { companyId: { eq: companyId } },
+        const companyUsers = await this.companyUserService.query({
+            filter: { companyId: { eq: companyId }, userId: { eq: userId } },
         });
 
-        if (!companyUser) throw new UnauthorizedException();
+        if (companyUsers.length !== 1) throw new UnauthorizedException();
+
+        const companyUser = companyUsers[0];
 
         const payload: AuthenticatedCompany = {
             companyId: companyUser.companyId,

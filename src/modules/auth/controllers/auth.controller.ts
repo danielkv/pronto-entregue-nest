@@ -1,6 +1,6 @@
 import { Body, Controller, Get, ParseIntPipe, Post, Request, UseGuards } from '@nestjs/common';
 import { Company } from '../../company-association/company/entities/company.entity';
-import { AuthContext } from '../decorators/acl-scopes.decorator';
+import { AuthContext } from '../decorators/auth-context.decorator';
 import { UseRoles } from '../decorators/use-roles.decorator';
 import { LoginCompanyDTO } from '../dtos/login-company.dto';
 import { ACLResourcesEnum } from '../enums/resources.enum';
@@ -13,7 +13,7 @@ import { JwtCompanyAuthGuard } from '../guards/jwt-company-auth.guard';
 import { JwtUserAuthGuard } from '../guards/jwt-user-auth.guard';
 
 @Controller()
-@UseGuards(JwtCompanyAuthGuard, JwtUserAuthGuard)
+@UseGuards(JwtUserAuthGuard, JwtCompanyAuthGuard)
 export class AuthController {
     constructor(private loginUserService: LoginUserService, private loginCompanyService: LoginCompanyService) {}
 
