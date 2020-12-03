@@ -7,7 +7,7 @@ import {
 } from '@nestjs-query/core';
 import { User } from '../entities/user.entity';
 import { Address } from 'src/modules/address/entities/address.entity';
-import { UserInputDTO } from '../dtos/user-create.dto';
+import { UserInputDTO } from '../dtos/user-input.dto';
 import { ForbiddenException } from '@nestjs/common';
 import { PasswordService } from 'src/modules/common/services/password.service';
 import { NestEventEmitter } from 'nest-event';

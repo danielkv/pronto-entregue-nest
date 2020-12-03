@@ -6,7 +6,7 @@ import { UserDTO } from './dtos/user.dto';
 import { AddressModule } from 'src/modules/address/address.module';
 import { UserService } from './services/user.service';
 import { User } from './entities/user.entity';
-import { UserInputDTO } from './dtos/user-create.dto';
+import { UserInputDTO } from './dtos/user-input.dto';
 
 const userTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([User]);
 
