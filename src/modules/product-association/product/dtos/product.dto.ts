@@ -2,12 +2,16 @@ import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { ProductTypeEnum } from '../enums/product-type.enum';
 import { IsBoolean, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 import { OptionGroupDTO } from '../../option-group/dtos/option.group.dto';
-import { FileUpload } from 'graphql-upload';
-import { Upload } from 'src/modules/graphql/scalars/upload.scalar';
-import { FilterableField, FilterableRelation } from '@nestjs-query/query-graphql';
+import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/query-graphql';
+import { SortDirection } from '@nestjs-query/core';
+import { Sale } from '../../sale/entities/sale.entity';
 
 @ObjectType('Product')
-@FilterableRelation('optionsGroups', () => OptionGroupDTO)
+@FilterableRelation('optionsGroups', () => OptionGroupDTO, {
+    defaultFilter: { removed: { isNot: true }, active: { is: true } },
+    defaultSort: [{ field: 'order', direction: SortDirection.DESC }],
+})
+@Relation('sale', () => Sale)
 export class ProductDTO {
     @IsOptional()
     @IsInt()
@@ -30,17 +34,9 @@ export class ProductDTO {
     @Field()
     image: string;
 
-    /*  @IsOptional()
-    @Field(() => Upload)
-    file?: FileUpload; */
-
     @IsBoolean()
     @FilterableField()
     active: boolean;
-
-    /* @IsBoolean()
-    @Field()
-    listed: boolean; */
 
     @IsInt()
     @FilterableField()

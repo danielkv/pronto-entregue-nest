@@ -1,23 +1,21 @@
-import { SortDirection } from '@nestjs-query/core';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
 import { OptionDTO } from './dtos/option.dto';
-import { OptionRepository } from './repositories/option.repository';
+import { Option } from './entities/option.entity';
 
 @Module({
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([OptionRepository])],
+            imports: [NestjsQueryTypeOrmModule.forFeature([Option])],
             resolvers: [
                 {
                     DTOClass: OptionDTO,
-                    EntityClass: OptionRepository,
+                    EntityClass: Option,
                     delete: { disabled: true },
-                    read: {
-                        defaultSort: [{ field: 'order', direction: SortDirection.DESC }],
-                        defaultFilter: { active: { is: true }, removed: { isNot: true } },
-                    },
+                    read: { disabled: true },
+                    create: { disabled: true },
+                    update: { disabled: true },
                 },
             ],
         }),

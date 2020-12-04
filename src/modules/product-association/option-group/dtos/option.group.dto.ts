@@ -3,10 +3,16 @@ import { OptionGroupTypeEnum } from '../enums/option-group-type.enum';
 import { OptionGroupPriceTypeEnum } from '../enums/option-group-price-type.enum';
 import { IsBoolean, IsInt, IsOptional, IsString } from 'class-validator';
 import { OptionDTO } from '../../option/dtos/option.dto';
-import { FilterableField, FilterableRelation } from '@nestjs-query/query-graphql';
+import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/query-graphql';
+import { SortDirection } from '@nestjs-query/core';
 
 @ObjectType('OptionGroup')
-@FilterableRelation('options', () => OptionDTO)
+@FilterableRelation('options', () => OptionDTO, {
+    defaultFilter: { removed: { isNot: true }, active: { is: true } },
+    defaultSort: [{ field: 'order', direction: SortDirection.DESC }],
+})
+@Relation('restrainedBy', () => OptionGroupDTO)
+@Relation('groupRestrained', () => OptionGroupDTO)
 export class OptionGroupDTO {
     @IsOptional()
     @IsInt()
