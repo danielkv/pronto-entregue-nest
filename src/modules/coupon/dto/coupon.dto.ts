@@ -1,18 +1,22 @@
+import { FilterableField, Relation } from '@nestjs-query/query-graphql';
 import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
-import { IsArray, IsBoolean, IsDate, IsInt, IsNumber, IsString } from 'class-validator';
-import { Company } from '../../company-association/company/entities/company.entity';
-import { Product } from '../../product-association/product/entities/product.entity';
-import { User } from '../../user-association/user/entities/user.entity';
+import { IsBoolean, IsDate, IsInt, IsNumber, IsString } from 'class-validator';
+import { CompanyDTO } from 'src/modules/company-association/company/dtos/company.dto';
+import { ProductDTO } from 'src/modules/product-association/product/dtos/product.dto';
+import { UserDTO } from 'src/modules/user-association/user/dtos/user.dto';
 import { CouponValueType } from '../enums/coupon-valye-type.enum';
 
 @ObjectType('Coupon')
+@Relation('companies', () => [CompanyDTO])
+@Relation('users', () => [UserDTO])
+@Relation('products', () => [ProductDTO])
 export class CouponDTO {
     @IsInt()
     @Field(() => ID, { nullable: true })
     id?: number;
 
     @IsString()
-    @Field()
+    @FilterableField()
     name: string;
 
     @IsString()
@@ -20,27 +24,27 @@ export class CouponDTO {
     image: string;
 
     @IsDate()
-    @Field()
+    @FilterableField()
     startsAt: Date;
 
     @IsDate()
-    @Field()
+    @FilterableField()
     expiresAt: Date;
 
     @IsString()
-    @Field()
+    @FilterableField()
     description: string;
 
     @IsBoolean()
-    @Field()
+    @FilterableField()
     masterOnly: boolean;
 
     @IsBoolean()
-    @Field()
+    @FilterableField()
     onlyFirstPurchases: boolean;
 
     @IsBoolean()
-    @Field()
+    @FilterableField()
     featured: boolean;
 
     @IsBoolean()
@@ -78,16 +82,4 @@ export class CouponDTO {
     @IsBoolean()
     @Field()
     freeDelivery: boolean;
-
-    @IsArray()
-    @Field(() => [Int], { nullable: 'items' })
-    companies: Company['id'][];
-
-    @IsArray()
-    @Field(() => [Int], { nullable: 'items' })
-    products: Product['id'][];
-
-    @IsArray()
-    @Field(() => [Int], { nullable: 'items' })
-    users: User['id'][];
 }

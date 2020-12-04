@@ -53,7 +53,7 @@ export class FCMAdapter extends NotificationAdapter implements INotificationAdap
 
         // Create message that you want to send to clients
         const message: messaging.MulticastMessage = {
-            tokens: tokens.map(token => token.token),
+            tokens: tokens.map(token => token.value),
             notification: {
                 title: data.title,
                 body: data.body,

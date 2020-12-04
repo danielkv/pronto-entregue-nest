@@ -1,4 +1,8 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export enum NotificationTokenTypeEnum {
-    MOBILE = 'notification_tokens',
-    BROWSER = 'notification_desktop_tokens',
+    MOBILE = 'mobile',
+    BROWSER = 'browser',
 }
+
+registerEnumType(NotificationTokenTypeEnum, { name: 'NotificationTokenTypeEnum' });

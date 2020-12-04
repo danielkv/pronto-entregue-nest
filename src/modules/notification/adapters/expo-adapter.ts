@@ -46,7 +46,7 @@ export class ExpoSDKAtapter extends NotificationAdapter implements INotification
         // create messages
         tokens.forEach(token => {
             // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
-            const pushToken = token.token;
+            const pushToken = token.value;
 
             if (!Expo.isExpoPushToken(pushToken)) {
                 throw new Error('Push token inválido');

@@ -1,14 +1,13 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AddressModule } from './modules/address/address.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ConfigModule } from './modules/config/config.module';
 import { CouponModule } from './modules/coupon/coupon.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
 import { ProductModule } from './modules/product-association/product/product.module';
-import { UserModule } from './modules/user-association/user/user.module';
+
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
-import { Connection } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
 import { GraphqlModule } from './modules/graphql/graphql.module';
@@ -22,8 +21,10 @@ import { ProductAssociationModule } from './modules/product-association/product-
 import { UserAssociationModule } from './modules/user-association/user-association.module';
 import { NestEventModule } from 'nest-event';
 import { NotificationModule } from './modules/notification/notification.module';
-import { QueueModule } from './modules/queue/queue.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { InjectQueue } from '@nestjs/bull';
+import { setQueues, UI } from 'bull-board';
+import { Queue } from 'bull';
 
 @Module({
     imports: [
@@ -34,7 +35,7 @@ import { AuthModule } from './modules/auth/auth.module';
         GraphqlModule,
         CategoryModule,
         ConfigModule,
-        //CouponModule,
+        CouponModule,
         DeliveryModule,
         ProductModule,
 
@@ -51,10 +52,15 @@ import { AuthModule } from './modules/auth/auth.module';
         UserAssociationModule,
 
         NotificationModule,
-        QueueModule,
     ],
     providers: [],
 })
 export class AppModule {
-    constructor(private connection: Connection) {}
+    constructor(@InjectQueue('notification') private notificationQueue: Queue) {
+        setQueues([this.notificationQueue]);
+    }
+
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(UI).forRoutes('bull');
+    }
 }
