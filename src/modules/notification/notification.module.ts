@@ -42,6 +42,6 @@ const notificationTokenTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Noti
         ExpoSDKAtapter,
         FCMAdapter,
     ],
-    exports: [QueueNotificationService, NotificationQueueModule],
+    exports: [QueueNotificationService, NotificationQueueModule, notificationTokenTypeOrmModule],
 })
 export class NotificationModule {}

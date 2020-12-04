@@ -1,50 +1,45 @@
-import { FilterableField } from '@nestjs-query/query-graphql';
-import { Field, ID, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsInt, IsString } from 'class-validator';
 import { GeoPoint } from '../../common/types/geo-point';
 
 @InputType('AddressInput')
 export class AddressInputDTO {
-    @IsInt()
-    @FilterableField(() => ID, { nullable: true })
-    id?: number;
-
     @IsString()
-    @FilterableField({ nullable: true })
+    @Field({ nullable: true })
     name: string;
 
     @IsString()
-    @FilterableField()
+    @Field()
     street: string;
 
     @IsInt()
-    @FilterableField(() => Int)
+    @Field(() => Int)
     number: number;
 
     @IsString()
-    @FilterableField({ nullable: true })
+    @Field({ nullable: true })
     complement: string;
 
     @IsString()
-    @FilterableField()
+    @Field()
     district: string;
 
     @IsInt()
-    @FilterableField(() => Int)
+    @Field(() => Int)
     zipcode: number;
 
     @IsString()
-    @FilterableField()
+    @Field()
     city: string;
 
     @IsString()
-    @FilterableField()
+    @Field()
     state: string;
 
     @Field(() => GeoPoint)
     location: GeoPoint;
 
     @IsString()
-    @FilterableField({ nullable: true })
+    @Field({ nullable: true })
     reference: string;
 }

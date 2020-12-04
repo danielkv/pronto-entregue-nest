@@ -2,17 +2,20 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
 import { OrderProductDTO } from './dtos/order.product.dto';
-import { OrderProductRepository } from './repositories/order-product.repository';
+import { OrderProduct } from './entities/order.product.entity';
 
 @Module({
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([OrderProductRepository])],
+            imports: [NestjsQueryTypeOrmModule.forFeature([OrderProduct])],
             resolvers: [
                 {
                     DTOClass: OrderProductDTO,
-                    EntityClass: OrderProductRepository,
+                    EntityClass: OrderProduct,
+                    create: { disabled: true },
                     delete: { disabled: true },
+                    update: { disabled: true },
+                    read: { disabled: true },
                 },
             ],
         }),

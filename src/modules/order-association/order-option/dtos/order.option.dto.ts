@@ -4,7 +4,7 @@ import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 import { OptionDTO } from 'src/modules/product-association/option/dtos/option.dto';
 
 @ObjectType('OrderOption')
-@Relation('relatedOption', () => OptionDTO)
+@Relation('optionRelated', () => OptionDTO)
 export class OrderOptionDTO {
     @IsOptional()
     @IsInt()

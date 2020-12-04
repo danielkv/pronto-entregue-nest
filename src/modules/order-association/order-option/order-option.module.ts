@@ -2,17 +2,20 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
 import { OrderOptionDTO } from './dtos/order.option.dto';
-import { OrderOptionRepository } from './repositories/order-option.repository';
+import { OrderOption } from './entities/order.option.entity';
 
 @Module({
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([OrderOptionRepository])],
+            imports: [NestjsQueryTypeOrmModule.forFeature([OrderOption])],
             resolvers: [
                 {
                     DTOClass: OrderOptionDTO,
-                    EntityClass: OrderOptionRepository,
+                    EntityClass: OrderOption,
+                    create: { disabled: true },
                     delete: { disabled: true },
+                    update: { disabled: true },
+                    read: { disabled: true },
                 },
             ],
         }),

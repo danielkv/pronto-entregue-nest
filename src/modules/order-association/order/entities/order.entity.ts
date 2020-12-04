@@ -166,7 +166,7 @@ export class Order {
         orderProducts => orderProducts.order,
         { cascade: true },
     )
-    orderProducts: OrderProduct[];
+    products: OrderProduct[];
 
     @ManyToOne(
         () => User,

@@ -106,7 +106,7 @@ export class OptionGroup {
 
     @OneToMany(
         () => OrderOptionGroup,
-        orderOptionGroups => orderOptionGroups.optionsGroupRelated,
+        orderOptionGroups => orderOptionGroups.optionGroupRelated,
     )
-    orderOptionGroups: OrderOptionGroup[];
+    orderOptionsGroups: OrderOptionGroup[];
 }

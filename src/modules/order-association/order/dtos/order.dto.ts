@@ -1,22 +1,21 @@
 import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { OrderStatusEnum } from '../enums/order.status.enum';
 import { OrderType, OrderTypeEnum } from '../enums/order.type.enum';
-import { IsInt, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsInt, IsNumber, IsString } from 'class-validator';
 import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/query-graphql';
 import { PaymentMethodDTO } from 'src/modules/payment/dtos/payment.method.dto';
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
-import { Type } from 'class-transformer';
 import { OrderProductDTO } from '../../order-product/dtos/order.product.dto';
 
 @ObjectType('Order')
 @Relation('paymentMethod', () => PaymentMethodDTO)
-@FilterableRelation('products', () => [OrderProductDTO])
+@Relation('products', () => [OrderProductDTO])
 export class OrderDTO {
-    @FilterableField(() => ID)
+    @FilterableField(() => ID, { nullable: true })
     id?: number;
 
     @IsNumber()
-    @Field(() => Float)
+    @Field(() => Float, { nullable: true })
     paymentFee: number;
 
     @IsNumber()
@@ -50,10 +49,8 @@ export class OrderDTO {
     @FilterableField()
     createdAt: Date;
 
-    /*  @ValidateNested()
-    @Type(() => AddressDTO)
     @Field(() => AddressDTO)
-    address: AddressDTO; */
+    address: AddressDTO;
 
     @FilterableField(() => ID)
     userId: number;

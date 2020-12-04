@@ -45,24 +45,24 @@ export class OrderOptionGroup {
 
     @ManyToOne(
         () => OrderProduct,
-        orderProducts => orderProducts.orderOptionGroups,
+        orderProducts => orderProducts.optionsGroups,
         { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
     )
     @JoinColumn([{ name: 'orderProductId', referencedColumnName: 'id' }])
-    orderProduct: OrderProduct;
+    product: OrderProduct;
 
     @ManyToOne(
         () => OptionGroup,
-        optionsGroups => optionsGroups.orderOptionGroups,
+        optionsGroups => optionsGroups.orderOptionsGroups,
         { onDelete: 'SET NULL', onUpdate: 'CASCADE' },
     )
     @JoinColumn([{ name: 'optionsGroupRelatedId', referencedColumnName: 'id' }])
-    optionsGroupRelated: OptionGroup;
+    optionGroupRelated: OptionGroup;
 
     @OneToMany(
         () => OrderOption,
-        orderOptions => orderOptions.orderOptionsGroup,
+        orderOptions => orderOptions.optionGroup,
         { cascade: true },
     )
-    orderOptions: OrderOption[];
+    options: OrderOption[];
 }

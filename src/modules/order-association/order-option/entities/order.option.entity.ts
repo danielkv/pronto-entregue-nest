@@ -46,11 +46,11 @@ export class OrderOption {
 
     @ManyToOne(
         () => OrderOptionGroup,
-        orderOptionGroups => orderOptionGroups.orderOptions,
+        orderOptionGroups => orderOptionGroups.options,
         { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
     )
     @JoinColumn([{ name: 'orderOptionsGroupId', referencedColumnName: 'id' }])
-    orderOptionsGroup: OrderOptionGroup;
+    optionGroup: OrderOptionGroup;
 
     @ManyToOne(
         () => Option,

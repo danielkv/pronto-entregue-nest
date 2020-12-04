@@ -51,14 +51,14 @@ export class OrderProduct {
 
     @OneToMany(
         () => OrderOptionGroup,
-        orderOptionGroups => orderOptionGroups.orderProduct,
+        orderOptionGroups => orderOptionGroups.product,
         { cascade: true },
     )
-    orderOptionGroups: OrderOptionGroup[];
+    optionsGroups: OrderOptionGroup[];
 
     @ManyToOne(
         () => Order,
-        orders => orders.orderProducts,
+        orders => orders.products,
         {
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',

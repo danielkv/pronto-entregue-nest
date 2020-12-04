@@ -1,14 +1,15 @@
-import { InjectQueryService, QueryService } from '@nestjs-query/core';
+import { DeepPartial, InjectAssemblerQueryService, QueryService } from '@nestjs-query/core';
 import { NestEventEmitter } from 'nest-event';
 
 import { Order } from '../entities/order.entity';
-import { OrderRepository } from '../repositories/order.repository';
 import { EventEmitterService } from '../../../common/services/event-emitter.service';
+import { OrderAssembler } from '../assemblers/order.assembler';
+import { OrderInputDTO } from '../dtos/order-input.dto';
 
 @QueryService(Order)
-export class OrderService extends EventEmitterService<Order> {
+export class OrderService extends EventEmitterService<Order, DeepPartial<OrderInputDTO>, DeepPartial<OrderInputDTO>> {
     constructor(
-        @InjectQueryService(OrderRepository) service: QueryService<Order>,
+        @InjectAssemblerQueryService(OrderAssembler) readonly service: QueryService<Order>,
         protected eventEmitter: NestEventEmitter,
     ) {
         // provide the logger name and the service
