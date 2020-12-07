@@ -2,20 +2,24 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
 import { UserMetaDTO } from './dtos/user.meta.dto';
-import { UserMetaRepository } from './repositories/user.meta.reporitory';
+import { UserMeta } from './entities/user.meta.entity';
+
+const userMetaTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([UserMeta]);
 
 @Module({
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([UserMetaRepository])],
+            imports: [userMetaTypeOrmModule],
             resolvers: [
                 {
                     DTOClass: UserMetaDTO,
-                    EntityClass: UserMetaRepository,
+                    EntityClass: UserMeta,
                     delete: { disabled: true },
                 },
             ],
         }),
+        userMetaTypeOrmModule,
     ],
+    exports: [userMetaTypeOrmModule],
 })
 export class UserMetaModule {}

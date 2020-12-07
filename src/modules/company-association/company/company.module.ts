@@ -7,11 +7,13 @@ import { CompanyRepository } from './repositories/company.repository';
 import { CompanyQueryResolver } from './resolvers/company.resolver';
 import { CompanyService } from './services/company.service';
 
+const companyTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([CompanyRepository]);
+
 @Module({
     providers: [CompanyQueryResolver],
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([CompanyRepository])],
+            imports: [companyTypeOrmModule],
             services: [CompanyService, CompanyLocationFilter],
 
             resolvers: [
@@ -24,6 +26,8 @@ import { CompanyService } from './services/company.service';
                 },
             ],
         }),
+        companyTypeOrmModule,
     ],
+    exports: [companyTypeOrmModule],
 })
 export class CompanyModule {}
