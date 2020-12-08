@@ -1,6 +1,7 @@
 import { Assembler, ClassTransformerAssembler } from '@nestjs-query/core';
 import { AddressHelper } from 'src/modules/common/helpers/address.helper';
 import { DeliveryDTO } from '../dtos/delivery.dto';
+import { DeliveryInputDTO } from '../dtos/delivery.input.dto';
 import { Delivery } from '../entities/delivery.entity';
 
 // `@Assembler` decorator will register the assembler with `nestjs-query` and
@@ -22,6 +23,29 @@ export class DeliveryAssembler extends ClassTransformerAssembler<DeliveryDTO, De
         );
 
         return entity;
+    }
+
+    private convertInputToEntity(dto: DeliveryInputDTO): Delivery {
+        const addressFrom = dto.addressFrom;
+        const addressTo = dto.addressTo;
+        delete dto.addressFrom;
+        delete dto.addressTo;
+
+        const entity = this.convert(Delivery, {
+            ...dto,
+            ...this.addressHelper.join(addressFrom, 'From'),
+            ...this.addressHelper.join(addressTo, 'To'),
+        });
+
+        return entity;
+    }
+
+    convertToCreateEntity(inputDto: DeliveryInputDTO): Delivery {
+        return this.convertInputToEntity(inputDto);
+    }
+
+    convertToUpdateEntity(inputDto: DeliveryInputDTO): Delivery {
+        return this.convertInputToEntity(inputDto);
     }
 
     convertToDTO(delivery: Delivery): DeliveryDTO {

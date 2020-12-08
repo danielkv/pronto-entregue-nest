@@ -5,6 +5,7 @@ import { IsInt, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { FilterableField } from '@nestjs-query/query-graphql';
 import { AddressInputDTO } from 'src/modules/address/dtos/address.input.dto';
+import { Order } from 'src/modules/order-association/order/entities/order.entity';
 
 @InputType('DeliveryInput')
 export class DeliveryInputDTO {
@@ -17,8 +18,8 @@ export class DeliveryInputDTO {
     description: string;
 
     @IsString()
-    @Field()
-    size: DeliverySizesEnum;
+    @Field({ nullable: true })
+    size?: DeliverySizesEnum;
 
     @IsString()
     @FilterableField()
@@ -49,4 +50,7 @@ export class DeliveryInputDTO {
     @Type(() => AddressInputDTO)
     @Field(() => AddressInputDTO)
     addressTo: AddressInputDTO;
+
+    @Field(() => ID, { nullable: true })
+    orderId?: Order['id'];
 }

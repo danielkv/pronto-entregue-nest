@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DeliveryRepository } from './repositories/delivery.repository';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { DeliveryDTO } from './dtos/delivery.dto';
@@ -14,11 +13,12 @@ import { CreateDeliveryFromOrderService } from './services/create-delivery-from-
 import { UserModule } from '../user-association/user/user.module';
 import { UserMetaModule } from '../user-association/user-meta/user-meta.module';
 import { CompanyModule } from '../company-association/company/company.module';
+import { DeliveryListener } from './listeners/delivery.listener';
 
 const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
 @Module({
-    providers: [SetDeliveryManService, SetDeliveryManResolver, CreateDeliveryFromOrderService],
+    providers: [SetDeliveryManService, SetDeliveryManResolver, CreateDeliveryFromOrderService, DeliveryListener],
     imports: [
         AddressModule,
         UserModule,

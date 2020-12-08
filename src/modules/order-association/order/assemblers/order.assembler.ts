@@ -34,7 +34,6 @@ export class OrderAssembler extends ClassTransformerAssembler<OrderDTO, Order> {
             ...this.addressHelper.join(address),
         });
 
-        console.log(entity);
         return entity;
     }
 

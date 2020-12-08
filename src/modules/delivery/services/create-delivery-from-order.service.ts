@@ -2,13 +2,13 @@ import { InjectQueryService, QueryService } from '@nestjs-query/core';
 import { NotFoundException } from '@nestjs/common';
 import { Address } from 'src/modules/address/entities/address.entity';
 import { AddressHelper } from 'src/modules/common/helpers/address.helper';
-import { Company } from 'src/modules/company-association/company/entities/company.entity';
 import { CompanyRepository } from 'src/modules/company-association/company/repositories/company.repository';
 import { CompanyService } from 'src/modules/company-association/company/services/company.service';
 import { Order } from 'src/modules/order-association/order/entities/order.entity';
 import { UserMeta } from 'src/modules/user-association/user-meta/entities/user.meta.entity';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { UserService } from 'src/modules/user-association/user/services/user.service';
+import { DeliveryInputDTO } from '../dtos/delivery.input.dto';
 import { Delivery } from '../entities/delivery.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { DeliveryService } from './delivery.service';
@@ -16,7 +16,7 @@ import { DeliveryService } from './delivery.service';
 export class CreateDeliveryFromOrderService {
     constructor(
         private addressHelper: AddressHelper<Order>,
-        @InjectQueryService(Delivery) private deliveryService: DeliveryService,
+        private deliveryService: DeliveryService,
         @InjectQueryService(UserMeta) private userMetaService: QueryService<UserMeta>,
         @InjectQueryService(User) private userService: UserService,
         @InjectQueryService(CompanyRepository) private companyService: CompanyService,
@@ -41,9 +41,9 @@ export class CreateDeliveryFromOrderService {
         if (!userContact) userContact = '';
 
         // create new delivery data
-        const newDelivery = {
-            from: companyAddress,
-            to: this.addressHelper.split(order),
+        const newDelivery: DeliveryInputDTO = {
+            addressFrom: companyAddress,
+            addressTo: this.addressHelper.split(order),
             description: `Pedido #${order.id} de ${company.displayName}`,
             value: order.deliveryPrice,
             receiverName: `${user.firstName} ${user.lastName}`,
