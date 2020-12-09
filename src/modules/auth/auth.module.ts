@@ -14,8 +14,9 @@ import { LoginCompanyDTO } from './dtos/login-company.dto';
 import { LoginUserDTO } from './dtos/login-user.dto';
 import { LoginCompanyService } from './services/login-company.service';
 import { AccessControlProvider } from './acl/acRoles';
-import { ExtractAclScopesHelper } from './helpers/extract-permissions-scopes.helper';
+import { ExtractAuthContextHelper } from './helpers/extract-auth-context.helper';
 import { AcCheckService } from './services/validate-roles.service';
+import { ExtractPermissionsHelper } from './helpers/extract-permissions.helper';
 
 @Global()
 @Module({
@@ -38,15 +39,20 @@ import { AcCheckService } from './services/validate-roles.service';
         LoginCompanyService,
         AcCheckService,
 
+        // helpers
+        ExtractPermissionsHelper,
+        ExtractAuthContextHelper,
+
         // strategies
         LocalStrategy,
         JwtStrategy,
         JwtCompanyStrategy,
 
-        ExtractAclScopesHelper,
         AccessControlProvider,
     ],
 
     controllers: [AuthController],
+
+    exports: [AcCheckService, ExtractAuthContextHelper, ExtractPermissionsHelper],
 })
 export class AuthModule {}

@@ -25,7 +25,7 @@ export class JwtCompanyAuthGuard extends AuthGuard('jwt-company') {
 
         if (companyAccess && !user) throw new UnauthorizedException();
 
-        if (companyAccess.userId !== user.userId)
+        if (companyAccess && companyAccess?.userId !== user.userId)
             throw new UnauthorizedException('Esse usuário não está autenticado nesse estabelecimento');
 
         return user;

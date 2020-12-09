@@ -31,11 +31,12 @@ export class DeliveryAssembler extends ClassTransformerAssembler<DeliveryDTO, De
         delete dto.addressFrom;
         delete dto.addressTo;
 
-        const entity = this.convert(Delivery, {
-            ...dto,
-            ...this.addressHelper.join(addressFrom, 'From'),
-            ...this.addressHelper.join(addressTo, 'To'),
-        });
+        let converting = { ...dto };
+
+        if (addressTo) converting = { ...converting, ...this.addressHelper.join(addressTo, 'To') };
+        if (addressFrom) converting = { ...converting, ...this.addressHelper.join(addressFrom, 'From') };
+
+        const entity = this.convert(Delivery, converting);
 
         return entity;
     }

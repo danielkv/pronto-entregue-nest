@@ -5,12 +5,17 @@ import { DeliverySizesEnum } from '../enums/delivery-sizes.enum';
 import { IsInt, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { FilterableField } from '@nestjs-query/query-graphql';
+import { Order } from 'src/modules/order-association/order/entities/order.entity';
 
 @ObjectType('Delivery')
 export class DeliveryDTO {
     @IsInt()
     @FilterableField(() => ID)
     id?: number;
+
+    @IsInt()
+    @FilterableField(() => ID)
+    orderId?: Order['id'];
 
     @IsString()
     @FilterableField()

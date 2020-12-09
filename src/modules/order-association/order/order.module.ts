@@ -9,13 +9,17 @@ import { OrderInputDTO } from './dtos/order-input.dto';
 import { AddressModule } from 'src/modules/address/address.module';
 import { Order } from './entities/order.entity';
 import { OrderAssembler } from './assemblers/order.assembler';
+import { ChangeOrderStatusService } from './services/change-order-status.service';
+import { OrderResolver } from './resolvers/order.resolver';
+
+const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
 
 @Module({
     imports: [
         NotificationModule,
         AddressModule,
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([Order])],
+            imports: [orderTypeOrmModule],
             services: [OrderService],
             assemblers: [OrderAssembler],
             resolvers: [
@@ -23,19 +27,25 @@ import { OrderAssembler } from './assemblers/order.assembler';
                     DTOClass: OrderDTO,
                     CreateDTOClass: OrderInputDTO,
                     UpdateDTOClass: OrderInputDTO,
-                    //EntityClass: Order,
                     ServiceClass: OrderService,
-                    // AssemblerClass: OrderAssembler,
                     update: { many: { disabled: true } },
                     create: { many: { disabled: true } },
                     delete: { disabled: true },
                 },
             ],
         }),
+        orderTypeOrmModule,
     ],
     providers: [
+        // services
+        ChangeOrderStatusService,
+
+        // resolvers
+        OrderResolver,
+
         // listeners
         OrderListener,
     ],
+    exports: [orderTypeOrmModule],
 })
 export class OrderModule {}

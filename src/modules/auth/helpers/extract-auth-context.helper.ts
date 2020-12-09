@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { IAuthContext } from '../interfaces/guard-roles.interface';
 
 @Injectable()
-export class ExtractAclScopesHelper {
+export class ExtractAuthContextHelper {
     execute(req): IAuthContext {
         return {
             user: req?.user,

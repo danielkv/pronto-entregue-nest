@@ -31,8 +31,8 @@ ac.grant(AppRoles.ORDERS_CREATE_OWN).createOwn(ACLResourcesEnum.ORDER);
 ac.grant(AppRoles.ORDERS_EDIT).update(ACLResourcesEnum.ORDER);
 ac.grant(AppRoles.ORDERS_EDIT_OWN).updateOwn(ACLResourcesEnum.ORDER);
 
-ac.grant(AppRoles.ORDERS_STATUS_CHANGE).update(ACLResourcesEnum.ORDER);
-ac.grant(AppRoles.ORDERS_STATUS_CHANGE_OWN).updateOwn(ACLResourcesEnum.ORDER);
+ac.grant(AppRoles.ORDERS_STATUS_CHANGE).update(ACLResourcesEnum.ORDER_STATUS);
+ac.grant(AppRoles.ORDERS_STATUS_CHANGE_OWN).updateOwn(ACLResourcesEnum.ORDER_STATUS);
 
 ac.grant(AppRoles.USERS_READ).read(ACLResourcesEnum.USER);
 ac.grant(AppRoles.USERS_CREATE).create(ACLResourcesEnum.USER);
@@ -50,25 +50,14 @@ ac.grant(AppRoles.COMPANY_USER).extend([
     AppRoles.PRODUCTS_CREATE_OWN,
     AppRoles.PRODUCTS_EDIT_OWN,
 ]);
-ac.grant(AppRoles.MASTER).extend([
-    AppRoles.PRODUCTS_READ,
-    AppRoles.PRODUCTS_CREATE,
-    AppRoles.PRODUCTS_EDIT,
-    AppRoles.COMPANIES_READ,
-    AppRoles.COMPANIES_CREATE,
-    AppRoles.COMPANIES_EDIT,
-    AppRoles.ORDERS_READ,
-    AppRoles.ORDERS_CREATE,
-    AppRoles.ORDERS_EDIT,
-    AppRoles.ORDERS_STATUS_CHANGE,
-    AppRoles.ORDERS_STATUS_CHANGE_OWN,
-    AppRoles.USERS_READ,
-    AppRoles.USERS_CREATE,
-    AppRoles.USERS_EDIT,
-    AppRoles.ROLES_READ,
-    AppRoles.ROLES_EDIT,
+
+ac.grant(AppRoles.REGION_OWNER).extend([
+    AppRoles.COMPANY_USER,
+    AppRoles.COMPANIES_CREATE_OWN,
+    AppRoles.COMPANIES_EDIT_OWN,
+    AppRoles.COMPANIES_READ_OWN,
 ]);
 
-ac.grant(AppRoles.REGION_OWNER);
+ac.grant(AppRoles.MASTER).extend(Object.values(AppRoles).filter(role => role !== AppRoles.MASTER));
 
 ac.lock();

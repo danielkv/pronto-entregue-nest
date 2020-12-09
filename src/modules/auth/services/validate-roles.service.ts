@@ -1,11 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { AccessControl } from 'accesscontrol';
+import { ExtractPermissionsHelper } from '../helpers/extract-permissions.helper';
 
 import { IAuthContext, IRole } from '../interfaces/guard-roles.interface';
 
 @Injectable()
 export class AcCheckService {
-    constructor(@Inject('AccessControl') private accessControl: AccessControl) {}
+    constructor(
+        @Inject('AccessControl') private accessControl: AccessControl,
+        private extractPermissionsHelper: ExtractPermissionsHelper,
+    ) {}
 
     execute(roles: IRole | IRole[], authContext: IAuthContext): boolean {
         const rolesToCheck = Array.isArray(roles) ? roles : [roles];
@@ -14,7 +18,7 @@ export class AcCheckService {
     }
 
     checkPermission(role: IRole, authContext: IAuthContext) {
-        const permissions = this.getPermissionsFromContext(authContext);
+        const permissions = this.extractPermissionsHelper.execute(authContext);
 
         if (!permissions.length) return false;
 
@@ -28,13 +32,5 @@ export class AcCheckService {
         //
 
         return hasPermission.granted;
-    }
-
-    getPermissionsFromContext(authContext: IAuthContext): string[] {
-        const permissions = [...authContext.user.permissions];
-
-        if (authContext?.company?.permissions) permissions.push(...authContext.company.permissions);
-
-        return permissions;
     }
 }

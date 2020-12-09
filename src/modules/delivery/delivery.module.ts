@@ -7,19 +7,33 @@ import { Delivery } from './entities/delivery.entity';
 import { DeliveryInputDTO } from './dtos/delivery.input.dto';
 import { DeliveryService } from './services/delivery.service';
 import { SetDeliveryManService } from './services/set-delivery-man.service';
-import { SetDeliveryManResolver } from './resolvers/set-delivery-man.resolver';
+import { DeliveryResolver } from './resolvers/delivery.resolver';
 import { AddressModule } from '../address/address.module';
 import { CreateDeliveryFromOrderService } from './services/create-delivery-from-order.service';
 import { UserModule } from '../user-association/user/user.module';
 import { UserMetaModule } from '../user-association/user-meta/user-meta.module';
 import { CompanyModule } from '../company-association/company/company.module';
 import { DeliveryListener } from './listeners/delivery.listener';
+import { ChangeDeliveryStatusService } from './services/change-delivery-status.service';
+import { OrderModule } from '../order-association/order/order.module';
 
 const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
 @Module({
-    providers: [SetDeliveryManService, SetDeliveryManResolver, CreateDeliveryFromOrderService, DeliveryListener],
+    providers: [
+        // services
+        SetDeliveryManService,
+        CreateDeliveryFromOrderService,
+        ChangeDeliveryStatusService,
+
+        // listeners
+        DeliveryListener,
+
+        // resolvers
+        DeliveryResolver,
+    ],
     imports: [
+        OrderModule,
         AddressModule,
         UserModule,
         UserMetaModule,

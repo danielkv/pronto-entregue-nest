@@ -1,14 +1,24 @@
-import { ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { NestEventEmitter } from 'nest-event';
-import { IMainEvents } from 'src/main-event-emitter/main-events.interface';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { Delivery } from '../entities/delivery.entity';
-import { IChangeDeliveryStatusEvent } from '../interfaces/change-delivery-status-event.interface';
+import { ACLResourcesEnum } from 'src/modules/auth/enums/resources.enum';
+import { IAuthContext } from 'src/modules/auth/interfaces/guard-roles.interface';
+import { AcCheckService } from 'src/modules/auth/services/validate-roles.service';
+import { DeepPartial, InjectAssemblerQueryService, InjectQueryService, QueryService } from '@nestjs-query/core';
+import { DeliveryAssembler } from '../assemblers/delivery.assembler';
+import { DeliveryDTO } from '../dtos/delivery.dto';
+import { Order } from 'src/modules/order-association/order/entities/order.entity';
+
+import { OrderService } from 'src/modules/order-association/order/services/order.service';
 
 @Injectable()
 export class ChangeDeliveryStatusService {
-    /*  constructor(
-        @Inject('IDeliveryRepository') private deliveryRepository: IDeliveryRepository,
+    constructor(
+        @InjectQueryService(Order) private orderService: OrderService,
+
+        @InjectAssemblerQueryService(DeliveryAssembler)
+        private deliveryService: QueryService<DeliveryDTO, DeepPartial<DeliveryDTO>, DeepPartial<Delivery>>,
         private acCheckService: AcCheckService,
         private eventEmitter: NestEventEmitter,
     ) {}
@@ -16,38 +26,52 @@ export class ChangeDeliveryStatusService {
     async execute(
         deliveryId: Delivery['id'],
         newStatus: DeliveryStatusEnum,
-        userCtx: UserTokenPayload,
-    ): Promise<Delivery> {
+        authContext: IAuthContext,
+    ): Promise<DeliveryDTO> {
         // check if order exists
-        const delivery = await this.deliveryRepository.get(deliveryId);
+        const delivery = await this.deliveryService.findById(deliveryId);
         if (!delivery) throw new NotFoundException('Entrega não existe');
 
         // check user permissions
-        this.checkUserPermissions(delivery.status, newStatus, userCtx);
+        if (!(await this.checkUserPermissions(delivery, newStatus, authContext))) return;
 
         // update status
-        await this.deliveryRepository.changeStatus(deliveryId, newStatus);
-
-        // merge
-        const mergedDelivery = this.deliveryRepository.merge(delivery, { status: newStatus });
+        const updatedDelivery = await this.deliveryService.updateOne(deliveryId, { status: newStatus });
 
         // events
-        const event: IChangeDeliveryStatusEvent = {
-            delivery: mergedDelivery,
+        const event = {
+            delivery: updatedDelivery,
             status: newStatus,
         };
-        this.eventEmitter.strictEmitter<IMainEvents>().emit('changeDeliveryStatus', event);
+        this.eventEmitter.emit('changeDeliveryStatus', event);
 
         // return
-        return mergedDelivery;
+        return updatedDelivery;
     }
 
-    checkUserPermissions(oldStatus: DeliveryStatusEnum, newStatus: DeliveryStatusEnum, userCtx: UserTokenPayload) {
+    private async checkUserPermissions(
+        delivery: DeliveryDTO,
+        newStatus: DeliveryStatusEnum,
+        authContext: IAuthContext,
+    ) {
+        // test company
+        if (authContext.company) {
+            const companyId = authContext.company.companyId;
+
+            const order = await this.orderService.findById(delivery.orderId);
+            if (!order) throw new NotFoundException('Pedido não encontrado');
+
+            if (companyId !== order.companyId)
+                throw new UnauthorizedException('Usuário não autenticado para esse estabelecimento');
+        }
+
+        const oldStatus = delivery.status;
+
         // check user permissions
         if (
             this.acCheckService.execute(
                 { action: 'update', resource: ACLResourcesEnum.ORDER_STATUS, possession: 'own' },
-                { user: userCtx },
+                authContext,
             )
         )
             return true;
@@ -64,5 +88,5 @@ export class ChangeDeliveryStatusService {
             throw new ForbiddenException('Você não tem permissão voltar ao status anterior');
 
         return true;
-    } */
+    }
 }

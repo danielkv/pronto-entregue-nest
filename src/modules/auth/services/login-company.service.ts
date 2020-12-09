@@ -1,11 +1,13 @@
-import { InjectQueryService, QueryService } from '@nestjs-query/core';
+import { Filter, InjectQueryService, QueryService } from '@nestjs-query/core';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { CompanyUserDTO } from 'src/modules/company-association/company-user/dtos/company.user.dto';
 import { CompanyUser } from 'src/modules/company-association/company-user/entities/company.user.entity';
 import { Company } from 'src/modules/company-association/company/entities/company.entity';
-import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { LoginCompanyDTO } from '../dtos/login-company.dto';
+import { AppRoles } from '../enums/app-roles.enum';
 import { AuthenticatedCompany } from '../interfaces/authenticated-company.interface';
+import { AuthenticatedUser } from '../interfaces/authenticated-user.interface';
 
 @Injectable()
 export class LoginCompanyService {
@@ -14,20 +16,22 @@ export class LoginCompanyService {
         private jwtService: JwtService,
     ) {}
 
-    async execute(companyId: Company['id'], userId: User['id']): Promise<LoginCompanyDTO> {
-        if (!companyId || !userId) throw new UnauthorizedException();
+    async execute(companyId: Company['id'], user: AuthenticatedUser): Promise<LoginCompanyDTO> {
+        if (!companyId || !user?.userId) throw new UnauthorizedException();
 
-        const companyUsers = await this.companyUserService.query({
-            filter: { companyId: { eq: companyId }, userId: { eq: userId } },
-        });
+        const filter: Filter<CompanyUserDTO> = { companyId: { eq: companyId }, active: { is: true } };
 
-        if (companyUsers.length !== 1) throw new UnauthorizedException();
+        if (!user.permissions.includes(AppRoles.MASTER)) filter.userId = { eq: user.userId };
+
+        const companyUsers = await this.companyUserService.query({ filter });
+
+        if (companyUsers.length < 1) throw new UnauthorizedException();
 
         const companyUser = companyUsers[0];
 
         const payload: AuthenticatedCompany = {
             companyId: companyUser.companyId,
-            userId: companyUser.userId,
+            userId: user.userId,
             permissions: companyUser.permissions,
         };
 

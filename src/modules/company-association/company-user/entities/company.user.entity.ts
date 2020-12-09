@@ -11,6 +11,7 @@ import {
 import { Company } from '../../company/entities/company.entity';
 import { User } from '../../../user-association/user/entities/user.entity';
 import { Role } from '../../../user-association/user/entities/role.entity';
+import { AppRoles } from 'src/modules/auth/enums/app-roles.enum';
 
 @Index('company_users_userId_companyId_unique', ['companyId', 'userId'], {
     unique: true,
@@ -50,7 +51,7 @@ export class CompanyUser {
         name: 'permissions',
         nullable: true,
     })
-    permissions: string[];
+    permissions: AppRoles[];
 
     @ManyToOne(
         () => Company,

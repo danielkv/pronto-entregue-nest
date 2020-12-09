@@ -1,16 +1,15 @@
 import { Body, Controller, Get, ParseIntPipe, Post, Request, UseGuards } from '@nestjs/common';
 import { Company } from '../../company-association/company/entities/company.entity';
 import { AuthContext } from '../decorators/auth-context.decorator';
-import { UseRoles } from '../decorators/use-roles.decorator';
 import { LoginCompanyDTO } from '../dtos/login-company.dto';
-import { ACLResourcesEnum } from '../enums/resources.enum';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
-import { ACGuard } from '../guards/ac.guard';
 import { IAuthContext } from '../interfaces/guard-roles.interface';
 import { LoginCompanyService } from '../services/login-company.service';
 import { LoginUserService } from '../services/login-user.service';
 import { JwtCompanyAuthGuard } from '../guards/jwt-company-auth.guard';
 import { JwtUserAuthGuard } from '../guards/jwt-user-auth.guard';
+import { AuthPermissions } from '../decorators/permissions-context.decorator';
+import { AppRoles } from '../enums/app-roles.enum';
 
 @Controller()
 @UseGuards(JwtUserAuthGuard, JwtCompanyAuthGuard)
@@ -25,10 +24,10 @@ export class AuthController {
 
     @Post('select/company')
     async selectCompany(
-        @Request() req,
+        @AuthContext() ctx: IAuthContext,
         @Body('companyId', ParseIntPipe) companyId: Company['id'],
     ): Promise<LoginCompanyDTO> {
-        return this.loginCompanyService.execute(companyId, req?.user?.userId);
+        return this.loginCompanyService.execute(companyId, ctx?.user);
     }
 
     @Get('session')
@@ -36,13 +35,14 @@ export class AuthController {
         return { user: req.user, company: req.company };
     }
 
-    @UseGuards(ACGuard)
+    /* @UseGuards(ACGuard)
     @UseRoles({
-        action: 'update',
-        resource: ACLResourcesEnum.USER,
-    })
+        action: 'read',
+        resource: ACLResourcesEnum.ORDER,
+        possession: 'any',
+    }) */
     @Get('test')
-    async testRole(@AuthContext() scopes: IAuthContext) {
-        return scopes;
+    async testRole(@AuthPermissions() permissions: AppRoles[]) {
+        return permissions;
     }
 }

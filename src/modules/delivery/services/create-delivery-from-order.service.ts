@@ -8,7 +8,6 @@ import { Order } from 'src/modules/order-association/order/entities/order.entity
 import { UserMeta } from 'src/modules/user-association/user-meta/entities/user.meta.entity';
 import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { UserService } from 'src/modules/user-association/user/services/user.service';
-import { DeliveryInputDTO } from '../dtos/delivery.input.dto';
 import { Delivery } from '../entities/delivery.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { DeliveryService } from './delivery.service';
@@ -41,7 +40,7 @@ export class CreateDeliveryFromOrderService {
         if (!userContact) userContact = '';
 
         // create new delivery data
-        const newDelivery: DeliveryInputDTO = {
+        const newDelivery = {
             addressFrom: companyAddress,
             addressTo: this.addressHelper.split(order),
             description: `Pedido #${order.id} de ${company.displayName}`,

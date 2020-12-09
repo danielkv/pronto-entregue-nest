@@ -22,7 +22,7 @@ export class AddressHelper<EntityAddressDTO> {
 
     join(address: AddressDTO, suffix = ''): IEntityAddress {
         return {
-            [`nameAddress${suffix}`]: address.name,
+            [`nameAddress${suffix}`]: address?.name || '',
             [`streetAddress${suffix}`]: address.street,
             [`numberAddress${suffix}`]: address.number,
             [`complementAddress${suffix}`]: address.complement,
