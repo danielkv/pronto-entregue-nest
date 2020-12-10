@@ -1,4 +1,4 @@
-import { ObjectLike } from 'src/modules/common/interfaces/object.interface';
+import { Injectable } from '@nestjs/common';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { IStatusLabelsHelper } from '../interfaces/status-labels-helper.interface';
 import { IStatusLabels } from '../interfaces/status-labels.interface';
@@ -12,6 +12,7 @@ interface ILabels {
     [key: string]: IStatusLabelsHelper;
 }
 
+@Injectable()
 export class StatusLabelsHelper {
     labels: ILabels;
 
@@ -32,6 +33,7 @@ export class StatusLabelsHelper {
     }
 
     get(status: DeliveryStatusEnum): IStatusLabels {
+        console.log(this.waitingDeliveryStatus);
         return this.labels[status].get();
     }
 }

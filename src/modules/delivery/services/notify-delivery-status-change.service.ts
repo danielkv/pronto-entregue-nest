@@ -3,7 +3,10 @@ import { MobileScreenHelper } from 'src/modules/common/helpers/mobile-redirect.h
 import { Delivery } from 'src/modules/delivery/entities/delivery.entity';
 import { NotificationGroupsEnum } from 'src/modules/notification-association/notification-receiver-groups/enums/notification-groups.enum';
 import { GetNotificationGroupTokensService } from 'src/modules/notification-association/notification-receiver-groups/services/get-notification-group.service';
-import { INotificationData } from 'src/modules/notification-association/notification/interfaces/notification-data.interface';
+import {
+    INotificationData,
+    INotificationMessage,
+} from 'src/modules/notification-association/notification/interfaces/notification-data.interface';
 import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
 import { Order } from 'src/modules/order-association/order/entities/order.entity';
 import { StatusLabelsHelper } from '../helpers/status-labels.helper';
@@ -26,9 +29,13 @@ export class NotifyDeliveryChangeStatusService {
         // get status readeble (slug => label)
         const statusLabel = this.statusLabelsHelper.get(delivery.status);
 
-        const notificationData: INotificationData = {
+        const message: INotificationMessage = {
             title: 'Status alterado',
-            body: `O entregador alterou o status da entrega do pedido #${orderId} para ${statusLabel}`,
+            body: `O entregador alterou o status da entrega do pedido #${orderId} para ${statusLabel.default}`,
+        };
+
+        const notificationData: INotificationData = {
+            ...message,
             data: {
                 action: 'statusChange',
                 orderId: orderId,
@@ -36,10 +43,7 @@ export class NotifyDeliveryChangeStatusService {
                 companyId: companyId,
                 deliveryId: deliveryId,
                 redirect: this.mobileScreenHelper.find('companyOrders', { refetchOrders: true }),
-                alertData: {
-                    title: 'Status alterado',
-                    body: `O entregador alterou o status da entrega do pedido #${orderId} para ${statusLabel}`,
-                },
+                alertData: message,
             },
         };
 

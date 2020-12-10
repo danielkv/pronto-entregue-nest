@@ -1,6 +1,8 @@
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
 import { On } from 'nest-event';
+import { Company } from 'src/modules/company-association/company/entities/company.entity';
+import { CompanyRepository } from 'src/modules/company-association/company/repositories/company.repository';
 import { Order } from 'src/modules/order-association/order/entities/order.entity';
 import { OrderStatusEnum } from 'src/modules/order-association/order/enums/order.status.enum';
 import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
@@ -20,6 +22,7 @@ export class DeliveryListener {
     constructor(
         @InjectQueryService(Delivery) private deliveryService: DeliveryService,
         @InjectQueryService(Order) private orderService: QueryService<Order>,
+        @InjectQueryService(CompanyRepository) private companyService: QueryService<Company>,
         private notifyDeliveryMenService: NotifyDeliveryMenService,
         private notifyDeliveryChangeStatusService: NotifyDeliveryChangeStatusService,
         private createDeliveryFromOrderService: CreateDeliveryFromOrderService,
@@ -72,7 +75,11 @@ export class DeliveryListener {
 
         // check if order exits
         const order = await this.orderService.findById(delivery.orderId);
-        if (!order) throw new Error('Pedido não encontrado');
+        if (!order) return;
+
+        // check if company exits
+        const company = await this.companyService.findById(order.companyId);
+        if (!company) return;
 
         // send delivery data to subscribers
         //pubSub.publish(ORDER_UPDATED, { orderUpdated: instanceToData(order), companyId: order.get('companyId') });
@@ -87,9 +94,11 @@ export class DeliveryListener {
         }
 
         // notify company users if delivery is assign to order
-        if (status !== 'delivering') this.notifyDeliveryChangeStatusService.execute(delivery, order);
+        if ([DeliveryStatusEnum.DELIVERED, DeliveryStatusEnum.CANCELED].includes(status))
+            this.notifyDeliveryChangeStatusService.execute(delivery, order);
 
         // case new status is waitingDelivery, notify delivery men
-        if (status === 'waitingDelivery') this.notifyDeliveryMenService.execute(delivery, order, order.company);
+        if (status === DeliveryStatusEnum.WAITING_DELIVERY)
+            this.notifyDeliveryMenService.execute(delivery, order, company);
     }
 }

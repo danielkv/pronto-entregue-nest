@@ -46,7 +46,7 @@ export class ChangeDeliveryStatusService {
             status: newStatus,
             authContext,
         };
-        if (!options.disableEvents) this.eventEmitter.emit('changeDeliveryStatus', event);
+        if (!options?.disableEvents) this.eventEmitter.emit('changeDeliveryStatus', event);
 
         // return
         return updatedDelivery;
@@ -65,7 +65,7 @@ export class ChangeDeliveryStatusService {
             if (!order) throw new NotFoundException('Pedido não encontrado');
 
             if (companyId !== order.companyId)
-                throw new UnauthorizedException('Usuário não autenticado para esse estabelecimento');
+                throw new UnauthorizedException('Sem permissões para alterar o status dessa entrega');
         }
 
         const oldStatus = delivery.status;

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { INotificationData } from '../interfaces/notification-data.interface';
 import { INotificationAdapter } from '../interfaces/notification-adapter.interface';
 import { INotificationToken } from '../interfaces/notification-token.interface';
@@ -11,6 +11,7 @@ import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum
 @Injectable()
 export class FCMAdapter extends NotificationAdapter implements INotificationAdapter {
     private messaging: messaging.Messaging;
+    private logger = new Logger('Browser Notification');
     readonly type: string;
 
     constructor() {
@@ -38,6 +39,8 @@ export class FCMAdapter extends NotificationAdapter implements INotificationAdap
 
         // send messages
         await this.messaging.sendMulticast(message);
+
+        this.logger.log(`${validTokens.length} mobile notifications sent`, 'Mobile Notification');
 
         return true;
     }

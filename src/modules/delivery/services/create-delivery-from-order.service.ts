@@ -49,6 +49,7 @@ export class CreateDeliveryFromOrderService {
             receiverContact: userContact,
             senderContact: '',
             status: DeliveryStatusEnum.WAITING,
+            companyId: order.companyId,
             orderId: order.id,
         };
 

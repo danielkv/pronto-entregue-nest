@@ -41,7 +41,7 @@ export class ChangeOrderStatusService {
             status: newStatus,
             authContext,
         };
-        if (!options.disableEvents) this.eventEmitter.emit('changeOrderStatus', event);
+        if (!options?.disableEvents) this.eventEmitter.emit('changeOrderStatus', event);
 
         // return
         return updatedOrder;
@@ -53,7 +53,7 @@ export class ChangeOrderStatusService {
             const companyId = authContext.company.companyId;
 
             if (companyId !== order.companyId)
-                throw new UnauthorizedException('Usuário não autenticado para esse estabelecimento');
+                throw new UnauthorizedException('Sem permissões para alterar o status desse pedido');
         }
 
         const oldStatus = order.status;

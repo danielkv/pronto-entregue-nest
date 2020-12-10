@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { INotificationData } from '../interfaces/notification-data.interface';
 import { INotificationAdapter } from '../interfaces/notification-adapter.interface';
 import { INotificationToken } from '../interfaces/notification-token.interface';
@@ -10,6 +10,7 @@ import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum
 @Injectable()
 export class ExpoSDKAtapter extends NotificationAdapter implements INotificationAdapter {
     private expo: Expo;
+    private logger = new Logger('Browser Notification');
     readonly type: string;
 
     constructor() {
@@ -35,6 +36,8 @@ export class ExpoSDKAtapter extends NotificationAdapter implements INotification
             const ticketChunk = await this.expo.sendPushNotificationsAsync(chunk);
             tickets.push(...ticketChunk);
         }
+
+        this.logger.log(`${validTokens.length} mobile notifications sent`, 'Mobile Notification');
 
         return true;
     }
