@@ -25,6 +25,7 @@ import { PickUpArea } from '../../../pickup/entities/pickup-area.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { DeliveryAreaTypeEnum } from 'src/modules/delivery-area/enums/delivery-area-type.enum';
 import { PickUpAreaTypeEnum } from 'src/modules/pickup/enums/pickup-area-type.enum';
+import { Delivery } from 'src/modules/delivery/entities/delivery.entity';
 
 @Index('addressId', ['addressId'], {})
 @Entity('companies')
@@ -72,6 +73,12 @@ export class Company {
         categories => categories.company,
     )
     categories: Category[];
+
+    @OneToMany(
+        () => Delivery,
+        delivery => delivery.company,
+    )
+    deliveries: Delivery[];
 
     @ManyToMany(
         () => CompanySection,

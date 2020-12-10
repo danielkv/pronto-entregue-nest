@@ -42,6 +42,9 @@ export class DeliveryInputDTO {
     @Field(() => AddressInputDTO)
     addressTo: AddressInputDTO;
 
+    @Field(() => ID)
+    companyId: number;
+
     @Field(() => ID, { nullable: true })
     orderId?: Order['id'];
 }

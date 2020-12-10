@@ -11,11 +11,14 @@ import { Order } from 'src/modules/order-association/order/entities/order.entity
 export class DeliveryDTO {
     @IsInt()
     @FilterableField(() => ID)
-    id?: number;
+    id: number;
 
     @IsInt()
+    @FilterableField(() => ID, { nullable: true })
+    orderId: Order['id'];
+
     @FilterableField(() => ID)
-    orderId?: Order['id'];
+    companyId: number;
 
     @IsString()
     @FilterableField()

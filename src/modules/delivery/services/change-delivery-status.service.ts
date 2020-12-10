@@ -5,19 +5,14 @@ import { Delivery } from '../entities/delivery.entity';
 import { ACLResourcesEnum } from 'src/modules/auth/enums/resources.enum';
 import { IAuthContext } from 'src/modules/auth/interfaces/guard-roles.interface';
 import { AcCheckService } from 'src/modules/auth/services/validate-roles.service';
-import { DeepPartial, InjectAssemblerQueryService, InjectQueryService, QueryService } from '@nestjs-query/core';
+import { DeepPartial, InjectAssemblerQueryService, QueryService } from '@nestjs-query/core';
 import { DeliveryAssembler } from '../assemblers/delivery.assembler';
 import { DeliveryDTO } from '../dtos/delivery.dto';
-import { Order } from 'src/modules/order-association/order/entities/order.entity';
-
-import { OrderService } from 'src/modules/order-association/order/services/order.service';
 import { IServiceOptions } from 'src/modules/common/interfaces/service-options.interface';
 
 @Injectable()
 export class ChangeDeliveryStatusService {
     constructor(
-        @InjectQueryService(Order) private orderService: OrderService,
-
         @InjectAssemblerQueryService(DeliveryAssembler)
         private deliveryService: QueryService<DeliveryDTO, DeepPartial<DeliveryDTO>, DeepPartial<Delivery>>,
         private acCheckService: AcCheckService,
@@ -61,10 +56,7 @@ export class ChangeDeliveryStatusService {
         if (authContext.company) {
             const companyId = authContext.company.companyId;
 
-            const order = await this.orderService.findById(delivery.orderId);
-            if (!order) throw new NotFoundException('Pedido não encontrado');
-
-            if (companyId !== order.companyId)
+            if (companyId !== delivery.companyId)
                 throw new UnauthorizedException('Sem permissões para alterar o status dessa entrega');
         }
 

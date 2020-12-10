@@ -19,6 +19,11 @@ import { OrderModule } from '../order-association/order/order.module';
 import { NotifyDeliveryChangeStatusService } from './services/notify-delivery-status-change.service';
 import { StatusLabelsHelper } from './helpers/status-labels.helper';
 import { NotifyDeliveryMenService } from './services/notify-delivery-men.service';
+import { WaitingStatus } from './helpers/status-labels/waiting-status.helper';
+import { DeliveringStatus } from './helpers/status-labels/delivering-status.helper';
+import { DeliveredStatus } from './helpers/status-labels/delivered-status.helper';
+import { CanceledStatus } from './helpers/status-labels/canceled-status.helper';
+import { WaitingDeliveryStatus } from './helpers/status-labels/waiting-delivery-status.helper';
 
 const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
@@ -34,6 +39,11 @@ const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
         // helpers
         StatusLabelsHelper,
+        WaitingStatus,
+        WaitingDeliveryStatus,
+        DeliveringStatus,
+        DeliveredStatus,
+        CanceledStatus,
 
         // listeners
         DeliveryListener,

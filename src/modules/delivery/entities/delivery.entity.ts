@@ -1,4 +1,3 @@
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { GeoPointHelper } from '../../common/helpers/geo.point.helper';
 import { GeoPoint } from '../../common/types/geo-point';
 import {
@@ -15,23 +14,20 @@ import { Order } from '../../order-association/order/entities/order.entity';
 import { User } from '../../user-association/user/entities/user.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { DeliverySizesEnum } from '../enums/delivery-sizes.enum';
+import { Company } from 'src/modules/company-association/company/entities/company.entity';
 
 const geoPointHelper = new GeoPointHelper();
 
-@ObjectType()
 @Index('orderId', ['orderId'], {})
 @Index('deliveryManId', ['deliveryManId'], {})
 @Entity('deliveries')
 export class Delivery {
-    @Field(() => ID)
     @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
     id: number;
 
-    @Field()
     @Column('varchar', { name: 'description', nullable: true, length: 255 })
-    description: string | null;
+    description: string;
 
-    @Field()
     @Column('enum', {
         name: 'size',
         nullable: true,
@@ -48,84 +44,70 @@ export class Delivery {
     })
     status: DeliveryStatusEnum;
 
-    @Field(() => Float)
     @Column('decimal', {
         name: 'value',
         nullable: true,
         precision: 2,
         scale: 0,
     })
-    value: number | null;
+    value: number;
 
-    @Field()
     @Column('varchar', { name: 'receiverName', nullable: true, length: 255 })
-    receiverName: string | null;
+    receiverName: string;
 
-    @Field()
     @Column('varchar', { name: 'receiverContact', nullable: true, length: 255 })
-    receiverContact: string | null;
+    receiverContact: string;
 
-    @Field()
     @Column('varchar', { name: 'senderContact', nullable: true, length: 255 })
-    senderContact: string | null;
+    senderContact: string;
 
-    @Field()
     @Column('varchar', { name: 'nameAddressFrom', nullable: true, length: 255 })
-    nameAddressFrom: string | null;
+    nameAddressFrom: string;
 
-    @Field()
     @Column('varchar', {
         name: 'streetAddressFrom',
         nullable: true,
         length: 255,
     })
-    streetAddressFrom: string | null;
+    streetAddressFrom: string;
 
-    @Field(() => Int)
     @Column('int', { name: 'numberAddressFrom', nullable: true })
-    numberAddressFrom: number | null;
+    numberAddressFrom: number;
 
-    @Field()
     @Column('varchar', {
         name: 'complementAddressFrom',
         nullable: true,
         length: 255,
     })
-    complementAddressFrom: string | null;
+    complementAddressFrom: string;
 
-    @Field()
     @Column('varchar', {
         name: 'districtAddressFrom',
         nullable: true,
         length: 255,
     })
-    districtAddressFrom: string | null;
+    districtAddressFrom: string;
 
-    @Field(() => Int)
     @Column('int', { name: 'zipcodeAddressFrom', nullable: true })
-    zipcodeAddressFrom: number | null;
+    zipcodeAddressFrom: number;
 
-    @Field()
     @Column('varchar', { name: 'cityAddressFrom', nullable: true, length: 255 })
-    cityAddressFrom: string | null;
+    cityAddressFrom: string;
 
-    @Field()
     @Column('varchar', {
         name: 'stateAddressFrom',
         nullable: true,
         length: 255,
     })
-    stateAddressFrom: string | null;
+    stateAddressFrom: string;
 
-    @Field()
     @Column('varchar', {
         name: 'referenceAddressFrom',
         nullable: true,
         length: 255,
     })
-    referenceAddressFrom: string | null;
+    referenceAddressFrom: string;
 
-    @Field(() => GeoPoint)
     @Column('point', {
         name: 'locationAddressFrom',
         nullable: true,
@@ -133,55 +115,45 @@ export class Delivery {
     })
     locationAddressFrom: GeoPoint;
 
-    @Field()
     @Column('varchar', { name: 'nameAddressTo', nullable: true, length: 255 })
-    nameAddressTo: string | null;
+    nameAddressTo: string;
 
-    @Field()
     @Column('varchar', { name: 'streetAddressTo', nullable: true, length: 255 })
-    streetAddressTo: string | null;
+    streetAddressTo: string;
 
-    @Field(() => Int)
     @Column('int', { name: 'numberAddressTo', nullable: true })
-    numberAddressTo: number | null;
+    numberAddressTo: number;
 
-    @Field()
     @Column('varchar', {
         name: 'complementAddressTo',
         nullable: true,
         length: 255,
     })
-    complementAddressTo: string | null;
+    complementAddressTo: string;
 
-    @Field()
     @Column('varchar', {
         name: 'districtAddressTo',
         nullable: true,
         length: 255,
     })
-    districtAddressTo: string | null;
+    districtAddressTo: string;
 
-    @Field(() => Int)
     @Column('int', { name: 'zipcodeAddressTo', nullable: true })
-    zipcodeAddressTo: number | null;
+    zipcodeAddressTo: number;
 
-    @Field()
     @Column('varchar', { name: 'cityAddressTo', nullable: true, length: 255 })
-    cityAddressTo: string | null;
+    cityAddressTo: string;
 
-    @Field()
     @Column('varchar', { name: 'stateAddressTo', nullable: true, length: 255 })
-    stateAddressTo: string | null;
+    stateAddressTo: string;
 
-    @Field()
     @Column('varchar', {
         name: 'referenceAddressTo',
         nullable: true,
         length: 255,
     })
-    referenceAddressTo: string | null;
+    referenceAddressTo: string;
 
-    @Field(() => GeoPoint) //GeoPointScalar
     @Column('point', {
         name: 'locationAddressTo',
         nullable: true,
@@ -189,21 +161,21 @@ export class Delivery {
     })
     locationAddressTo: GeoPoint;
 
-    @Field()
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
 
-    @Field()
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
 
     @Column('int', { name: 'orderId', nullable: true })
-    orderId: number | null;
+    orderId: number;
 
     @Column('int', { name: 'deliveryManId', nullable: true })
-    deliveryManId: number | null;
+    deliveryManId: number;
 
-    @Field(() => Order)
+    @Column('int', { name: 'companyId', default: 10 })
+    companyId: number;
+
     @ManyToOne(
         () => Order,
         orders => orders.deliveries,
@@ -215,7 +187,17 @@ export class Delivery {
     @JoinColumn([{ name: 'orderId', referencedColumnName: 'id' }])
     order: Order;
 
-    @Field(() => User)
+    @ManyToOne(
+        () => Company,
+        users => users.deliveries,
+        {
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+        },
+    )
+    @JoinColumn([{ name: 'companyId', referencedColumnName: 'id' }])
+    company: Company;
+
     @ManyToOne(
         () => User,
         users => users.deliveries,
