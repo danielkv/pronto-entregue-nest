@@ -16,6 +16,9 @@ import { CompanyModule } from '../company-association/company/company.module';
 import { DeliveryListener } from './listeners/delivery.listener';
 import { ChangeDeliveryStatusService } from './services/change-delivery-status.service';
 import { OrderModule } from '../order-association/order/order.module';
+import { NotifyDeliveryChangeStatusService } from './services/notify-delivery-status-change.service';
+import { StatusLabelsHelper } from './helpers/status-labels.helper';
+import { NotifyDeliveryMenService } from './services/notify-delivery-men.service';
 
 const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
@@ -25,6 +28,12 @@ const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
         SetDeliveryManService,
         CreateDeliveryFromOrderService,
         ChangeDeliveryStatusService,
+
+        NotifyDeliveryChangeStatusService,
+        NotifyDeliveryMenService,
+
+        // helpers
+        StatusLabelsHelper,
 
         // listeners
         DeliveryListener,
@@ -38,6 +47,7 @@ const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
         UserModule,
         UserMetaModule,
         CompanyModule,
+
         NestjsQueryGraphQLModule.forFeature({
             imports: [deliveryTypeOrmModule],
             assemblers: [DeliveryAssembler],

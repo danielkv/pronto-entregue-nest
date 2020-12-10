@@ -5,7 +5,6 @@ import { ConfigModule } from './modules/config/config.module';
 import { CouponModule } from './modules/coupon/coupon.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
 import { ProductModule } from './modules/product-association/product/product.module';
-
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,8 +18,8 @@ import { CompanyAssociationModule } from './modules/company-association/company-
 import { CreditAssociationModule } from './modules/credit-association/credit-association.module';
 import { ProductAssociationModule } from './modules/product-association/product-association.module';
 import { UserAssociationModule } from './modules/user-association/user-association.module';
+import { NotificationAssociationModule } from './modules/notification-association/notification-association.module';
 import { NestEventModule } from 'nest-event';
-import { NotificationModule } from './modules/notification/notification.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { InjectQueue } from '@nestjs/bull';
 import { setQueues, UI } from 'bull-board';
@@ -51,7 +50,7 @@ import { Queue } from 'bull';
         AuthModule,
         UserAssociationModule,
 
-        NotificationModule,
+        NotificationAssociationModule,
     ],
     providers: [],
 })

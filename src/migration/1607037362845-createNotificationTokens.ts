@@ -1,6 +1,6 @@
 import { DeepPartial } from '@nestjs-query/core';
-import { NotificationToken } from 'src/modules/notification/entities/notification-token.entity';
-import { NotificationTokenTypeEnum } from 'src/modules/notification/enums/notification-token-type.enum';
+import { NotificationToken } from 'src/modules/notification-association/notification/entities/notification-token.entity';
+import { NotificationTokenTypeEnum } from 'src/modules/notification-association/notification/enums/notification-token-type.enum';
 import { UserMeta } from 'src/modules/user-association/user-meta/entities/user.meta.entity';
 import { IsNull, MigrationInterface, Not, QueryRunner } from 'typeorm';
 

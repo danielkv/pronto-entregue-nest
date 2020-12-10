@@ -1,9 +1,9 @@
 import { InjectQueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
 import { On } from 'nest-event';
-import { NotificationToken } from 'src/modules/notification/entities/notification-token.entity';
-import { NotificationTokenService } from 'src/modules/notification/services/notification-token.service';
-import { QueueNotificationService } from 'src/modules/notification/services/queue-notification.service';
+import { NotificationToken } from 'src/modules/notification-association/notification/entities/notification-token.entity';
+import { NotificationTokenService } from 'src/modules/notification-association/notification/services/notification-token.service';
+import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
 import { ICreateOrderEvent } from '../interfaces/create-order-event.interface';
 
 @Injectable()

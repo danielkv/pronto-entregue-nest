@@ -8,6 +8,7 @@ import { Order } from 'src/modules/order-association/order/entities/order.entity
 import { OrderAssembler } from '../assemblers/order.assembler';
 import { OrderDTO } from '../dtos/order.dto';
 import { OrderStatusEnum } from '../enums/order.status.enum';
+import { IServiceOptions } from 'src/modules/common/interfaces/service-options.interface';
 
 @Injectable()
 export class ChangeOrderStatusService {
@@ -18,7 +19,12 @@ export class ChangeOrderStatusService {
         private eventEmitter: NestEventEmitter,
     ) {}
 
-    async execute(orderId: Order['id'], newStatus: OrderStatusEnum, authContext: IAuthContext): Promise<OrderDTO> {
+    async execute(
+        orderId: Order['id'],
+        newStatus: OrderStatusEnum,
+        authContext: IAuthContext,
+        options?: IServiceOptions,
+    ): Promise<OrderDTO> {
         // check if order exists
         const order = await this.orderService.findById(orderId);
         if (!order) throw new NotFoundException('Entrega não existe');
@@ -33,8 +39,9 @@ export class ChangeOrderStatusService {
         const event = {
             order: updatedOrder,
             status: newStatus,
+            authContext,
         };
-        this.eventEmitter.emit('changeOrderStatus', event);
+        if (!options.disableEvents) this.eventEmitter.emit('changeOrderStatus', event);
 
         // return
         return updatedOrder;

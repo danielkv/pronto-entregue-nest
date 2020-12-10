@@ -19,7 +19,7 @@ export class FCMAdapter extends NotificationAdapter implements INotificationAdap
         this.type = NotificationTokenTypeEnum.BROWSER;
 
         fbAdmin.initializeApp({
-            credential: fbAdmin.credential.cert(resolve(__dirname, '..', '..', '..', '..', 'fb-privatekey.json')),
+            credential: fbAdmin.credential.cert(resolve(__dirname, '..', '..', '..', '..', '..', 'fb-privatekey.json')),
             databaseURL: 'https://pronto-entregue.firebaseio.com',
         });
 

@@ -7,12 +7,14 @@ import { GetRequestHelper } from './helpers/get-request.helper';
 import { PasswordService } from './services/password.service';
 import { TransactionHelper } from './helpers/transactionHelper';
 import { ConfigToMetaService } from './services/config-to-meta.service';
+import { MobileScreenHelper } from './helpers/mobile-redirect.helper';
 
 @Global()
 @Module({
     imports: [PageInfo],
     providers: [
         // helpers
+        MobileScreenHelper,
         GeoPointHelper,
         ConfigTransformHelper,
         AddressHelper,
@@ -30,6 +32,7 @@ import { ConfigToMetaService } from './services/config-to-meta.service';
         PasswordService,
         TransactionHelper,
         ConfigToMetaService,
+        MobileScreenHelper,
     ],
 })
 export class CommonModule {}

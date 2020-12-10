@@ -21,7 +21,7 @@ export class OrderResolver {
         possession: 'own',
     })
     @Mutation(() => OrderDTO)
-    changeDeliveryStatus(
+    changeOrderStatus(
         @Args('orderId', { type: () => Int }) orderId: Order['id'],
         @Args('newStatus', { type: () => OrderStatusEnum }) newStatus: OrderStatusEnum,
         @AuthContext() authContext: IAuthContext,

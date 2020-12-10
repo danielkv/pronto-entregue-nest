@@ -11,6 +11,7 @@ import { DeliveryDTO } from '../dtos/delivery.dto';
 import { Order } from 'src/modules/order-association/order/entities/order.entity';
 
 import { OrderService } from 'src/modules/order-association/order/services/order.service';
+import { IServiceOptions } from 'src/modules/common/interfaces/service-options.interface';
 
 @Injectable()
 export class ChangeDeliveryStatusService {
@@ -27,6 +28,7 @@ export class ChangeDeliveryStatusService {
         deliveryId: Delivery['id'],
         newStatus: DeliveryStatusEnum,
         authContext: IAuthContext,
+        options?: IServiceOptions,
     ): Promise<DeliveryDTO> {
         // check if order exists
         const delivery = await this.deliveryService.findById(deliveryId);
@@ -42,8 +44,9 @@ export class ChangeDeliveryStatusService {
         const event = {
             delivery: updatedDelivery,
             status: newStatus,
+            authContext,
         };
-        this.eventEmitter.emit('changeDeliveryStatus', event);
+        if (!options.disableEvents) this.eventEmitter.emit('changeDeliveryStatus', event);
 
         // return
         return updatedDelivery;

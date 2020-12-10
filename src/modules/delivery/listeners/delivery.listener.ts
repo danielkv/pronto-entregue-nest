@@ -1,12 +1,30 @@
+import { InjectQueryService, QueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
 import { On } from 'nest-event';
+import { Order } from 'src/modules/order-association/order/entities/order.entity';
+import { OrderStatusEnum } from 'src/modules/order-association/order/enums/order.status.enum';
 import { OrderTypeEnum } from 'src/modules/order-association/order/enums/order.type.enum';
+import { IChangeOrderStatusEvent } from 'src/modules/order-association/order/interfaces/change-order-status-event.interface';
 import { ICreateOrderEvent } from 'src/modules/order-association/order/interfaces/create-order-event.interface';
+import { Delivery } from '../entities/delivery.entity';
+import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
+import { IChangeDeliveryStatusEvent } from '../interfaces/change-delivery-status-event.interface';
+import { ChangeDeliveryStatusService } from '../services/change-delivery-status.service';
 import { CreateDeliveryFromOrderService } from '../services/create-delivery-from-order.service';
+import { DeliveryService } from '../services/delivery.service';
+import { NotifyDeliveryMenService } from '../services/notify-delivery-men.service';
+import { NotifyDeliveryChangeStatusService } from '../services/notify-delivery-status-change.service';
 
 @Injectable()
 export class DeliveryListener {
-    constructor(private createDeliveryFromOrderService: CreateDeliveryFromOrderService) {}
+    constructor(
+        @InjectQueryService(Delivery) private deliveryService: DeliveryService,
+        @InjectQueryService(Order) private orderService: QueryService<Order>,
+        private notifyDeliveryMenService: NotifyDeliveryMenService,
+        private notifyDeliveryChangeStatusService: NotifyDeliveryChangeStatusService,
+        private createDeliveryFromOrderService: CreateDeliveryFromOrderService,
+        private changeDeliveryStatusService: ChangeDeliveryStatusService,
+    ) {}
 
     @On('createOrder')
     createOrderListener({ order }: ICreateOrderEvent) {
@@ -17,12 +35,61 @@ export class DeliveryListener {
         this.createDeliveryFromOrderService.execute(order);
     }
 
-    /*  @On('changeOrderStatus')
-    changeOrderStatusListener({ order }: ICreateOrderEvent) {
-        // check order type
+    @On('changeOrderStatus')
+    async changeOrderStatusListener({ order, status, authContext }: IChangeOrderStatusEvent) {
+        // check type
         if (order.type !== OrderTypeEnum.PE_DELIVERY) return;
 
-        // execute action
-        this.createDeliveryFromOrderService.execute(order);
-    } */
+        // check status
+        if ([OrderStatusEnum.WAITING_PICK_UP, OrderStatusEnum.DELIVERED, OrderStatusEnum.CANCELED].includes(status))
+            return;
+
+        // get or create delivery
+        let [delivery] = await this.deliveryService.query({
+            filter: { orderId: { eq: order.id } },
+            paging: { limit: 1 },
+        });
+        if (!delivery) delivery = await this.createDeliveryFromOrderService.execute(order);
+
+        const newDeliveryStatus: DeliveryStatusEnum = Object.values(DeliveryStatusEnum).find(
+            stat => String(stat) === String(status),
+        );
+
+        // also change delivery status if newStatus matches
+        if ([DeliveryStatusEnum.WAITING_DELIVERY, DeliveryStatusEnum.DELIVERING].includes(newDeliveryStatus))
+            this.changeDeliveryStatusService.execute(delivery.id, newDeliveryStatus, authContext, {
+                disableEvents: true,
+            });
+    }
+
+    @On('changeDeliveryStatus')
+    async changeDeliveryStatusListener({ delivery, status }: IChangeDeliveryStatusEvent) {
+        // send delivery data to subscribers
+        //pubSub.publish(DELIVERY_UPDATED, { delivery: instanceToData(delivery) })
+
+        // checks if any order is assign to
+        if (!delivery.orderId) return;
+
+        // check if order exits
+        const order = await this.orderService.findById(delivery.orderId);
+        if (!order) throw new Error('Pedido não encontrado');
+
+        // send delivery data to subscribers
+        //pubSub.publish(ORDER_UPDATED, { orderUpdated: instanceToData(order), companyId: order.get('companyId') });
+
+        if (status === DeliveryStatusEnum.CANCELED) {
+            // unassign delivery from order
+            await this.deliveryService.updateOne(delivery.id, { orderId: null });
+
+            // return order to status waiting delivery
+            if (order.status !== OrderStatusEnum.DELIVERED)
+                await this.orderService.updateOne(order.id, { status: OrderStatusEnum.WAITING_DELIVERY });
+        }
+
+        // notify company users if delivery is assign to order
+        if (status !== 'delivering') this.notifyDeliveryChangeStatusService.execute(delivery, order);
+
+        // case new status is waitingDelivery, notify delivery men
+        if (status === 'waitingDelivery') this.notifyDeliveryMenService.execute(delivery, order, order.company);
+    }
 }

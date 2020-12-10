@@ -26,7 +26,7 @@ export class DeliveryDTO {
     size: DeliverySizesEnum;
 
     @IsString()
-    @FilterableField()
+    @FilterableField(() => DeliveryStatusEnum)
     status: DeliveryStatusEnum;
 
     @IsNumber()

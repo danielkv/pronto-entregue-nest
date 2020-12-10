@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 import { OrderDTO } from './dtos/order.dto';
 import { OrderListener } from './listeners/order.listener';
 import { OrderService } from './services/order.service';
-import { NotificationModule } from '../../notification/notification.module';
+import { NotificationModule } from '../../notification-association/notification/notification.module';
 import { OrderInputDTO } from './dtos/order-input.dto';
 import { AddressModule } from 'src/modules/address/address.module';
 import { Order } from './entities/order.entity';

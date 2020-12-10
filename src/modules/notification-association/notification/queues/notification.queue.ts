@@ -4,7 +4,7 @@ import { configService } from 'src/config/config.service';
 import { resolve } from 'path';
 
 @Injectable()
-export class NotificationQueueConfig implements BullOptionsFactory {
+class NotificationQueueConfig implements BullOptionsFactory {
     createBullOptions(): BullModuleOptions {
         return {
             redis: {
