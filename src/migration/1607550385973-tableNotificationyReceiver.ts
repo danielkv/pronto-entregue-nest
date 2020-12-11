@@ -27,6 +27,10 @@ export class tableNotificationyReceiver1607550385973 implements MigrationInterfa
         });
 
         await companyReceiverRepository.insert(newCompanyReceivers);
+
+        await queryRunner.query(
+            "INSERT INTO pronto_entregue.notification_receivers (`userId`, `groupId`) (SELECT users.id, 'master' FROM users WHERE users.role = 'master');",
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
