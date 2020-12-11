@@ -1,17 +1,16 @@
-import { Filter, InjectQueryService, QueryService } from '@nestjs-query/core';
+import { Filter, InjectQueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
 import { NotificationToken } from '../../notification/entities/notification-token.entity';
 import { NotificationTokenTypeEnum } from '../../notification/enums/notification-token-type.enum';
 import { INotificationToken } from '../../notification/interfaces/notification-token.interface';
 import { NotificationTokenService } from '../../notification/services/notification-token.service';
-import { NotificationReceiver } from '../entities/notification-receiver.entity';
 import { NotificationGroupsEnum } from '../enums/notification-groups.enum';
+import { GetNotificationGroupUserIdsService } from './get-notification-group-user-ids.service';
 
 @Injectable()
 export class GetNotificationGroupTokensService {
     constructor(
-        @InjectQueryService(NotificationReceiver)
-        private notificationReceiverService: QueryService<NotificationReceiver>,
+        private getNotificationGroupUserIdsService: GetNotificationGroupUserIdsService,
         @InjectQueryService(NotificationToken) private notificationService: NotificationTokenService,
     ) {}
 
@@ -20,12 +19,7 @@ export class GetNotificationGroupTokensService {
         groupIdentificator?: string | number,
         types?: NotificationTokenTypeEnum[],
     ): Promise<INotificationToken[]> {
-        const groupId = this.buildGroudIdString(groupName, groupIdentificator);
-
-        const notificationGroup = await this.notificationReceiverService.query({
-            filter: { groupId: { eq: groupId } },
-        });
-        const userIds = notificationGroup.map(receiver => receiver.userId);
+        const userIds = await this.getNotificationGroupUserIdsService.execute(groupName, groupIdentificator);
 
         if (!userIds.length) return [];
 
@@ -45,11 +39,5 @@ export class GetNotificationGroupTokensService {
         if (types?.length) filter.type = { in: types };
 
         return filter;
-    }
-
-    private buildGroudIdString(groupName: NotificationGroupsEnum, groupIdentificator?: string | number): string {
-        if (!groupIdentificator) return String(groupName);
-
-        return `${String(groupName)}:${String(groupIdentificator)}`;
     }
 }

@@ -20,6 +20,7 @@ import { UserMeta } from '../../user-meta/entities/user.meta.entity';
 import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { Product } from '../../../product-association/product/entities/product.entity';
 import { Address } from '../../../address/entities/address.entity';
+import { DeliveryMan } from '../../../deliver-man/entities/delivery-man.entity';
 
 @Index('email', ['email'], { unique: true })
 @Entity('users')
@@ -121,6 +122,12 @@ export class User {
         orders => orders.user,
     )
     orders: Order[];
+
+    @OneToOne(
+        () => DeliveryMan,
+        deliveryMan => deliveryMan.user,
+    )
+    deliveryMan: DeliveryMan;
 
     @OneToMany(
         () => Rating,

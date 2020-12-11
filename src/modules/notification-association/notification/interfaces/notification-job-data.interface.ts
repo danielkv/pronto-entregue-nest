@@ -1,7 +1,9 @@
+import { User } from 'src/modules/user-association/user/entities/user.entity';
+import { NotificationTokenTypeEnum } from '../enums/notification-token-type.enum';
 import { INotificationData } from './notification-data.interface';
-import { INotificationToken } from './notification-token.interface';
 
 export interface INotificationJobData {
-    tokens: INotificationToken[];
+    type?: NotificationTokenTypeEnum[];
+    userIds: User['id'][];
     data: INotificationData;
 }

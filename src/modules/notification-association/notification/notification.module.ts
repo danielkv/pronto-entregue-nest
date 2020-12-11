@@ -11,6 +11,7 @@ import { NotificationTokenService } from './services/notification-token.service'
 import { SendNotificationService } from './services/send-notification.service';
 import { NotificationQueueModule } from './queues/notification.queue';
 import { QueueNotificationService } from './services/queue-notification.service';
+import { SendNotificationConsumer } from './consumers/notification.consumer';
 
 const notificationTokenTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([NotificationToken]);
 
@@ -37,6 +38,9 @@ const notificationTokenTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Noti
         // services
         SendNotificationService,
         QueueNotificationService,
+
+        // consumers
+        SendNotificationConsumer,
 
         // adapters
         ExpoSDKAtapter,

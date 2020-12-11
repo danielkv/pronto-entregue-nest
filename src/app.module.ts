@@ -24,6 +24,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { InjectQueue } from '@nestjs/bull';
 import { setQueues, UI } from 'bull-board';
 import { Queue } from 'bull';
+import { DeliverManModule } from './modules/deliver-man/deliver-man.module';
 
 @Module({
     imports: [
@@ -51,6 +52,8 @@ import { Queue } from 'bull';
         UserAssociationModule,
 
         NotificationAssociationModule,
+
+        DeliverManModule,
     ],
     providers: [],
 })

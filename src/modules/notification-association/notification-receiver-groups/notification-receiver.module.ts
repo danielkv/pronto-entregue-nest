@@ -4,7 +4,8 @@ import { Module } from '@nestjs/common';
 import { NotificationModule } from '../notification/notification.module';
 import { NotificationReceiverDTO } from './dtos/company-notification.dto';
 import { NotificationReceiver } from './entities/notification-receiver.entity';
-import { GetNotificationGroupTokensService } from './services/get-notification-group.service';
+import { GetNotificationGroupTokensService } from './services/get-notification-group-tokens.service';
+import { GetNotificationGroupUserIdsService } from './services/get-notification-group-user-ids.service';
 
 const notificationReceiverTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([NotificationReceiver]);
 
@@ -20,7 +21,8 @@ const notificationReceiverTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([N
     providers: [
         // services
         GetNotificationGroupTokensService,
+        GetNotificationGroupUserIdsService,
     ],
-    exports: [GetNotificationGroupTokensService],
+    exports: [GetNotificationGroupTokensService, GetNotificationGroupUserIdsService],
 })
 export class NotificationReceiverGroupModule {}

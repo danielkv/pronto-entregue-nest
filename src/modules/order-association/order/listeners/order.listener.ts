@@ -15,8 +15,7 @@ export class OrderListener {
 
     @On('createOrder')
     async onOrderCreated({ order }: ICreateOrderEvent) {
-        const tokens = await this.notificationTokenService.query({ filter: { userId: { eq: order.userId } } });
-
-        this.queueNotificationService.execute(tokens, { title: 'teste', body: 'body', subtitle: 'subtitulo' });
+        //const tokens = await this.notificationTokenService.query({ filter: { userId: { eq: order.userId } } });
+        //this.queueNotificationService.execute(tokens, { title: 'teste', body: 'body', subtitle: 'subtitulo' });
     }
 }
