@@ -8,30 +8,32 @@ import {
     INotificationMessage,
 } from 'src/modules/notification-association/notification/interfaces/notification-data.interface';
 import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
-import { Order } from 'src/modules/order-association/order/entities/order.entity';
+import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { Delivery } from '../entities/delivery.entity';
 
 @Injectable()
-export class NotifyDeliveryMenService {
+export class NotifyDeliveryMenSetService {
     constructor(
         private selectNotificationReceiverService: SelectNotificationReceiverService,
         private queueNotificationService: QueueNotificationService,
         private mobileScreenHelper: MobileScreenHelper,
     ) {}
 
-    async execute(delivery: Delivery, order: Order, company: Company) {
+    async execute(delivery: Delivery, user: User, company: Company) {
         const userIds = await this.selectNotificationReceiverService.execute('deliveryMan', company);
 
         const message: INotificationMessage = {
-            title: `Há um novo pedido (#${delivery.id}) a sua espera`,
-            body: `${company.displayName} tem um pedido (#${order.id}) pronto para entrega. Vá até o estabelecimento para retirar a encomenda.`,
+            title: `Um entregador aceitou o pedido de ${company.displayName}`,
+            body: `O entregador ${user.firstName} irá retirar o pedido #${delivery.orderId} em instantes`,
         };
 
+        // generate data
         const notificationData: INotificationData = {
             ...message,
             data: {
-                redirect: this.mobileScreenHelper.find('deliveries'),
-                alertData: message,
+                orderId: delivery.orderId,
+                deliveryManId: delivery.deliveryManId,
+                deliveryId: delivery.id,
             },
         };
 

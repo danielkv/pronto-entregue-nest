@@ -24,6 +24,7 @@ import { DeliveringStatus } from './helpers/status-labels/delivering-status.help
 import { DeliveredStatus } from './helpers/status-labels/delivered-status.helper';
 import { CanceledStatus } from './helpers/status-labels/canceled-status.helper';
 import { WaitingDeliveryStatus } from './helpers/status-labels/waiting-delivery-status.helper';
+import { NotifyDeliveryMenSetService } from './services/notify-delivery-man-set.service';
 
 const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
@@ -36,6 +37,7 @@ const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
         NotifyDeliveryChangeStatusService,
         NotifyDeliveryMenService,
+        NotifyDeliveryMenSetService,
 
         // helpers
         StatusLabelsHelper,

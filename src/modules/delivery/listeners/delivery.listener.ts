@@ -11,9 +11,11 @@ import { ICreateOrderEvent } from 'src/modules/order-association/order/interface
 import { Delivery } from '../entities/delivery.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
 import { IChangeDeliveryStatusEvent } from '../interfaces/change-delivery-status-event.interface';
+import { ISetDeliveryManEvent } from '../interfaces/set-delivery-man-event.interface';
 import { ChangeDeliveryStatusService } from '../services/change-delivery-status.service';
 import { CreateDeliveryFromOrderService } from '../services/create-delivery-from-order.service';
 import { DeliveryService } from '../services/delivery.service';
+import { NotifyDeliveryMenSetService } from '../services/notify-delivery-man-set.service';
 import { NotifyDeliveryMenService } from '../services/notify-delivery-men.service';
 import { NotifyDeliveryChangeStatusService } from '../services/notify-delivery-status-change.service';
 
@@ -23,6 +25,7 @@ export class DeliveryListener {
         @InjectQueryService(Delivery) private deliveryService: DeliveryService,
         @InjectQueryService(Order) private orderService: QueryService<Order>,
         @InjectQueryService(CompanyRepository) private companyService: QueryService<Company>,
+        private notifyDeliveryMenSetService: NotifyDeliveryMenSetService,
         private notifyDeliveryMenService: NotifyDeliveryMenService,
         private notifyDeliveryChangeStatusService: NotifyDeliveryChangeStatusService,
         private createDeliveryFromOrderService: CreateDeliveryFromOrderService,
@@ -36,6 +39,33 @@ export class DeliveryListener {
 
         // execute action
         this.createDeliveryFromOrderService.execute(order);
+    }
+
+    @On('setDeliveryMan')
+    async onSetOrderDeliveryMan({ delivery, user }: ISetDeliveryManEvent) {
+        // if is delivery from order
+        if (!delivery.orderId) return false;
+
+        // checks if order exists
+        const order = await this.orderService.findById(delivery.orderId);
+        if (!order) throw new Error('Pedido não encontrado');
+
+        // check if company exits
+        const company = await this.companyService.findById(order.companyId);
+        if (!company) throw new Error('Empresa não encontrada');
+
+        // get companyId
+
+        // send notification to subscribed clients
+        /* pubSub.publish(ORDER_UPDATED, {
+				orderUpdated: instanceToData(order),
+				companyId,
+			}); */
+
+        // get desktop tokens
+        this.notifyDeliveryMenSetService.execute(delivery, user, company);
+
+        return true;
     }
 
     @On('changeOrderStatus')
