@@ -95,7 +95,7 @@ export class DeliveryListener {
 
         // notify company users if delivery is assign to order
         if ([DeliveryStatusEnum.DELIVERED, DeliveryStatusEnum.CANCELED].includes(status))
-            this.notifyDeliveryChangeStatusService.execute(delivery, order);
+            this.notifyDeliveryChangeStatusService.execute(delivery, order, company);
 
         // case new status is waitingDelivery, notify delivery men
         if (status === DeliveryStatusEnum.WAITING_DELIVERY)

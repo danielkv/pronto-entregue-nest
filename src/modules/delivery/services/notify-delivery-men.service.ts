@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { MobileScreenHelper } from 'src/modules/common/helpers/mobile-redirect.helper';
 import { Company } from 'src/modules/company-association/company/entities/company.entity';
-import { NotificationGroupsEnum } from 'src/modules/notification-association/notification-receiver-groups/enums/notification-groups.enum';
 import { GetNotificationGroupUserIdsService } from 'src/modules/notification-association/notification-receiver-groups/services/get-notification-group-user-ids.service';
+import { SelectNotificationReceiverService } from 'src/modules/notification-association/notification-receiver-groups/services/select-receiver-user-ids.service';
 import { NotificationTokenTypeEnum } from 'src/modules/notification-association/notification/enums/notification-token-type.enum';
 import {
     INotificationData,
@@ -15,16 +15,13 @@ import { Delivery } from '../entities/delivery.entity';
 @Injectable()
 export class NotifyDeliveryMenService {
     constructor(
-        private getNotificationGroupUserIdsService: GetNotificationGroupUserIdsService,
+        private selectNotificationReceiverService: SelectNotificationReceiverService,
         private queueNotificationService: QueueNotificationService,
         private mobileScreenHelper: MobileScreenHelper,
     ) {}
 
     async execute(delivery: Delivery, order: Order, company: Company) {
-        const userIds = await this.getNotificationGroupUserIdsService.execute(
-            NotificationGroupsEnum.DELIVERY_MAN,
-            null,
-        );
+        const userIds = await this.selectNotificationReceiverService.execute('deliveryMan', company);
 
         const message: INotificationMessage = {
             title: `Há um novo pedido (#${delivery.id}) a sua espera`,

@@ -1,4 +1,1 @@
-export enum NotificationGroupsEnum {
-    COMPANY = 'company',
-    DELIVERY_MAN = 'deliveryMan',
-}
+export type NotificationGroup = 'master' | 'region' | 'company' | 'deliveryMan';

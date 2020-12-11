@@ -4,7 +4,7 @@ import { NotificationToken } from '../../notification/entities/notification-toke
 import { NotificationTokenTypeEnum } from '../../notification/enums/notification-token-type.enum';
 import { INotificationToken } from '../../notification/interfaces/notification-token.interface';
 import { NotificationTokenService } from '../../notification/services/notification-token.service';
-import { NotificationGroupsEnum } from '../enums/notification-groups.enum';
+import { NotificationGroup } from '../enums/notification-groups.enum';
 import { GetNotificationGroupUserIdsService } from './get-notification-group-user-ids.service';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class GetNotificationGroupTokensService {
     ) {}
 
     async execute(
-        groupName: NotificationGroupsEnum,
+        groupName: NotificationGroup,
         groupIdentificator?: string | number,
         types?: NotificationTokenTypeEnum[],
     ): Promise<INotificationToken[]> {

@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MobileScreenHelper } from 'src/modules/common/helpers/mobile-redirect.helper';
 import { Company } from 'src/modules/company-association/company/entities/company.entity';
-import { NotificationGroupsEnum } from 'src/modules/notification-association/notification-receiver-groups/enums/notification-groups.enum';
-import { GetNotificationGroupUserIdsService } from 'src/modules/notification-association/notification-receiver-groups/services/get-notification-group-user-ids.service';
+import { SelectNotificationReceiverService } from 'src/modules/notification-association/notification-receiver-groups/services/select-receiver-user-ids.service';
 import {
     INotificationData,
     INotificationMessage,
@@ -14,7 +13,7 @@ import { Order } from '../entities/order.entity';
 export class NotifyNewOrderService {
     constructor(
         private queueNotificationService: QueueNotificationService,
-        private getNotificationGroupUserIdsService: GetNotificationGroupUserIdsService,
+        private selectNotificationReceiverService: SelectNotificationReceiverService,
         private mobileScreenHelper: MobileScreenHelper,
     ) {}
 
@@ -42,10 +41,7 @@ export class NotifyNewOrderService {
         };
 
         // get company users desktop tokens
-        const userIds = await this.getNotificationGroupUserIdsService.execute(
-            NotificationGroupsEnum.COMPANY,
-            companyId,
-        );
+        const userIds = await this.selectNotificationReceiverService.execute('company', company);
 
         this.queueNotificationService.execute(userIds, notificationData);
     }

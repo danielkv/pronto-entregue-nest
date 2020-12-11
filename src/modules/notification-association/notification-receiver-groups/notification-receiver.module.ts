@@ -6,6 +6,7 @@ import { NotificationReceiverDTO } from './dtos/company-notification.dto';
 import { NotificationReceiver } from './entities/notification-receiver.entity';
 import { GetNotificationGroupTokensService } from './services/get-notification-group-tokens.service';
 import { GetNotificationGroupUserIdsService } from './services/get-notification-group-user-ids.service';
+import { SelectNotificationReceiverService } from './services/select-receiver-user-ids.service';
 
 const notificationReceiverTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([NotificationReceiver]);
 
@@ -22,7 +23,8 @@ const notificationReceiverTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([N
         // services
         GetNotificationGroupTokensService,
         GetNotificationGroupUserIdsService,
+        SelectNotificationReceiverService,
     ],
-    exports: [GetNotificationGroupTokensService, GetNotificationGroupUserIdsService],
+    exports: [GetNotificationGroupTokensService, SelectNotificationReceiverService],
 })
 export class NotificationReceiverGroupModule {}
