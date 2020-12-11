@@ -10,12 +10,16 @@ import { Order } from './entities/order.entity';
 import { OrderAssembler } from './assemblers/order.assembler';
 import { ChangeOrderStatusService } from './services/change-order-status.service';
 import { OrderResolver } from './resolvers/order.resolver';
+import { NotifyNewOrderService } from './services/notify-new-order.service';
+import { CompanyModule } from 'src/modules/company-association/company/company.module';
 
 const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
 
 @Module({
     imports: [
         AddressModule,
+        CompanyModule,
+
         NestjsQueryGraphQLModule.forFeature({
             imports: [orderTypeOrmModule],
             services: [OrderService],
@@ -37,6 +41,7 @@ const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
     providers: [
         // services
         ChangeOrderStatusService,
+        NotifyNewOrderService,
 
         // resolvers
         OrderResolver,
