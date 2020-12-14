@@ -1,0 +1,14 @@
+extends ../../index.pug
+
+block content
+	div
+		p #{name}, obrigado por sua indicação. Entraremos em contato com o estabelecimento o mais rápido possível.
+	br
+	div Estabelecimento indicado:
+	div
+		ul
+			li Nome: #{companyName}
+			if companyEmail
+				li Email: #{companyEmail}
+			if companyPhone
+				li telefone: #{companyPhone}

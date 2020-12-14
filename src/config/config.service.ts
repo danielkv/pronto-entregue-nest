@@ -58,6 +58,19 @@ class ConfigService {
             ssl: this.isProduction(),
         };
     }
+
+    public getMailerTransportConfig() {
+        return {
+            secure: this.getValue('EMAIL_SECURE') === 'true',
+            host: this.getValue('EMAIL_HOST'),
+            port: this.getValue('EMAIL_PORT'),
+            auth: {
+                user: this.getValue('EMAIL_USERNAME'),
+                pass: this.getValue('EMAIL_PASSWORD'),
+            },
+            debug: false,
+        };
+    }
 }
 
 const configService = new ConfigService(process.env).ensureValues([

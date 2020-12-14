@@ -1,0 +1,16 @@
+extends ../index.pug
+
+block content
+	div
+		p Olá #{user.firstName}. Esta é uma mensagem para gerar uma nova senha para o seu usuário no app <b>Pronto, Entregue!</b>.
+	hr
+	div(style={'text-align': 'center'})
+		p(style={'margin-bottom': '25px'}) Acesse o link abaixo para criar uma nova senha
+		p
+			a.link(href=link) Criar uma nova senha
+		p(style={'margin-bottom': 10})
+			small Esse link expira em #{expiresIn} horas
+		p(style={'max-width': '50%', margin: 'auto'})
+			small
+				small Não compartilhe o link ou código acima com ninguém. Caso alguém mal intencionado usar esse link poderá alterar sua senha e ter acesso aos seus dados
+		

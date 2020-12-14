@@ -1,0 +1,16 @@
+extends ../../index.pug
+
+block content
+	div Usuário #{name} (#{email}) indicou um estabelecimento
+	br
+	if message
+		div
+			p.
+				Mensagem: #{message}
+	div
+		ul
+			li Estabelecimento: #{companyName}
+			if companyEmail
+				li Email: #{companyEmail}
+			if companyPhone
+				li telefone: #{companyPhone}

@@ -1,0 +1,9 @@
+extends ../index.pug
+
+block content
+	div Oi, #{firstName},
+	br
+	div Seus dados foram atualizados:
+	div
+		for value, key in updated_data
+			li=key + ': ' + value
