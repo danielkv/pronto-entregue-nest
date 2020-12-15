@@ -4,7 +4,6 @@ import { Module } from '@nestjs/common';
 import { resolve } from 'path';
 import { configService } from 'src/config/config.service';
 import { SendEmailConsumer } from './consumers/mail.consumer';
-import { MailController } from './controllers/mail.controller';
 import { MailQueueModule } from './queues/mail.queue';
 import { QueueEmailService } from './services/queue-email.service';
 import { SendEmailService } from './services/send-email.service';
@@ -28,7 +27,7 @@ import { SendEmailService } from './services/send-email.service';
         }),
         MailQueueModule,
     ],
-    controllers: [MailController],
+
     providers: [
         // services
         QueueEmailService,
