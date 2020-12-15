@@ -61,8 +61,11 @@ import { MailModule } from './modules/mail/mail.module';
     providers: [],
 })
 export class AppModule {
-    constructor(@InjectQueue('notification') private notificationQueue: Queue) {
-        setQueues([this.notificationQueue]);
+    constructor(
+        @InjectQueue('notification') private notificationQueue: Queue,
+        @InjectQueue('mail') private mailQueue: Queue,
+    ) {
+        setQueues([this.notificationQueue, this.mailQueue]);
     }
 
     configure(consumer: MiddlewareConsumer) {
