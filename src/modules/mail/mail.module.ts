@@ -3,6 +3,7 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { Module } from '@nestjs/common';
 import { resolve } from 'path';
 import { configService } from 'src/config/config.service';
+import { MailController } from './controllers/mail.controller';
 import { SendEmailService } from './services/send-email.service';
 
 @Module({
@@ -23,6 +24,7 @@ import { SendEmailService } from './services/send-email.service';
             },
         }),
     ],
+    controllers: [MailController],
     providers: [
         // services
         SendEmailService,

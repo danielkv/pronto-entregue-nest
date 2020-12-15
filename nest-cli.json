@@ -2,7 +2,10 @@
 	"collection": "@nestjs/schematics",
 	"sourceRoot": "src",
 	"compilerOptions": {
-		"assets": [{ "include": "**/*.pug", "outDir": "dist/src" }],
-		"watchAssets": true
+		"assets": [
+			{ "include": "**/*.pug", "outDir": "dist/src", "watchAssets": true },
+			{ "include": "**/*.css", "outDir": "dist/src", "watchAssets": true }
+		]
+		
 	}
 }
