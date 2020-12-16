@@ -9,6 +9,6 @@ export class SendNotificationConsumer {
 
     @Process()
     execute(job: Job<INotificationJobData>) {
-        return this.sendNotificationService.execute(job.data.userIds, job.data.data, job.data.type);
+        return this.sendNotificationService.execute(job.data.receivers, job.data.data);
     }
 }

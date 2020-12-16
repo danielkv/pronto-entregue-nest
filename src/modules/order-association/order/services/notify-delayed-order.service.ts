@@ -9,8 +9,12 @@ import {
 import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
 import { Order } from '../entities/order.entity';
 
+/**
+ * Notifica resposáveis por pedidos, quando pedido está aguardando
+ */
+
 @Injectable()
-export class NotifyNewOrderService {
+export class NotifyDelayedOrderService {
     constructor(
         private queueNotificationService: QueueNotificationService,
         private selectNotificationReceiverService: SelectNotificationReceiverService,
@@ -22,8 +26,8 @@ export class NotifyNewOrderService {
         const companyId = order.companyId;
 
         const message: INotificationMessage = {
-            title: 'Novo pedido!',
-            body: `Há uma pedido (#${orderId}) aguardado em ${company.displayName}`,
+            title: 'Pedido não aberto!',
+            body: `Há um pedido (#${orderId}) aguardando em ${company.displayName}`,
         };
 
         const notificationData: INotificationData = {
@@ -40,7 +44,7 @@ export class NotifyNewOrderService {
             },
         };
 
-        // queue notification
-        this.queueNotificationService.execute({ group: { name: 'company', id: company.id } }, notificationData);
+        // queue notifications
+        this.queueNotificationService.execute({ group: { name: 'master' } }, notificationData);
     }
 }

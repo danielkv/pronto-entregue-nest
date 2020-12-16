@@ -12,6 +12,8 @@ import { ChangeOrderStatusService } from './services/change-order-status.service
 import { OrderResolver } from './resolvers/order.resolver';
 import { NotifyNewOrderService } from './services/notify-new-order.service';
 import { CompanyModule } from 'src/modules/company-association/company/company.module';
+import { TasksService } from './schedulers/order.scheduler';
+import { NotifyDelayedOrderService } from './services/notify-delayed-order.service';
 
 const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
 
@@ -42,12 +44,16 @@ const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
         // services
         ChangeOrderStatusService,
         NotifyNewOrderService,
+        NotifyDelayedOrderService,
 
         // resolvers
         OrderResolver,
 
         // listeners
         OrderListener,
+
+        // schedulers
+        TasksService,
     ],
     exports: [orderTypeOrmModule],
 })

@@ -47,10 +47,8 @@ export class NotifyDeliveryChangeStatusService {
             },
         };
 
-        // get tokens
-        const userIds = await this.selectNotificationReceiverService.execute('company', company);
-
-        this.queueNotificationService.execute(userIds, notificationData);
+        // queue notifications
+        this.queueNotificationService.execute({ group: { name: 'company', id: company.id } }, notificationData);
 
         return false;
     }

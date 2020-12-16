@@ -1,26 +1,16 @@
 import { Filter, InjectQueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
+import { User } from 'src/modules/user-association/user/entities/user.entity';
 import { NotificationToken } from '../../notification/entities/notification-token.entity';
 import { NotificationTokenTypeEnum } from '../../notification/enums/notification-token-type.enum';
 import { INotificationToken } from '../../notification/interfaces/notification-token.interface';
 import { NotificationTokenService } from '../../notification/services/notification-token.service';
-import { NotificationGroup } from '../enums/notification-groups.enum';
-import { GetNotificationGroupUserIdsService } from './get-notification-group-user-ids.service';
 
 @Injectable()
 export class GetNotificationGroupTokensService {
-    constructor(
-        private getNotificationGroupUserIdsService: GetNotificationGroupUserIdsService,
-        @InjectQueryService(NotificationToken) private notificationService: NotificationTokenService,
-    ) {}
+    constructor(@InjectQueryService(NotificationToken) private notificationService: NotificationTokenService) {}
 
-    async execute(
-        groupName: NotificationGroup,
-        groupIdentificator?: string | number,
-        types?: NotificationTokenTypeEnum[],
-    ): Promise<INotificationToken[]> {
-        const userIds = await this.getNotificationGroupUserIdsService.execute(groupName, groupIdentificator);
-
+    async execute(userIds: User['id'][], types?: NotificationTokenTypeEnum[]): Promise<INotificationToken[]> {
         if (!userIds.length) return [];
 
         const notificationTokenFilter = this.builtNotificationTokenFilter(userIds, types);

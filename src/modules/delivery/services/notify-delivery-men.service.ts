@@ -20,8 +20,6 @@ export class NotifyDeliveryMenService {
     ) {}
 
     async execute(delivery: Delivery, order: Order, company: Company) {
-        const userIds = await this.selectNotificationReceiverService.execute('deliveryMan', company);
-
         const message: INotificationMessage = {
             title: `Há um novo pedido (#${delivery.id}) a sua espera`,
             body: `${company.displayName} tem um pedido (#${order.id}) pronto para entrega. Vá até o estabelecimento para retirar a encomenda.`,
@@ -35,6 +33,12 @@ export class NotifyDeliveryMenService {
             },
         };
 
-        this.queueNotificationService.execute(userIds, notificationData, [NotificationTokenTypeEnum.MOBILE]);
+        this.queueNotificationService.execute(
+            {
+                group: { name: 'deliveryMan' },
+                type: [NotificationTokenTypeEnum.MOBILE],
+            },
+            notificationData,
+        );
     }
 }
