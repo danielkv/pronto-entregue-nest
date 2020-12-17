@@ -16,7 +16,7 @@ export class TasksService {
         private notifyNewOrderService: NotifyNewOrderService,
     ) {}
 
-    @Cron('*/10 * * * * *')
+    //@Cron('0 */2 * * * *')
     async checkForOpenOrders() {
         const orders = await this.orderRepository.find({
             where: { status: OrderStatusEnum.WAITING },
@@ -30,7 +30,7 @@ export class TasksService {
         await Promise.all(orders.map(order => this.notifyNewOrderService.execute(order, order.company)));
 
         // define time limit for
-        const limit = 30; // limit (in minutes) for order to be delayed
+        const limit = 6; // limit (in minutes) for order to be delayed
         const timeLimit = dayjs().subtract(limit, 'minute');
 
         // filter orders that are delayed
