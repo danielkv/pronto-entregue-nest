@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import * as dayjs from 'dayjs';
 import { MobileScreenHelper } from 'src/modules/common/helpers/mobile-redirect.helper';
 import { Company } from 'src/modules/company-association/company/entities/company.entity';
 import {
@@ -7,21 +8,25 @@ import {
 } from 'src/modules/notification-association/notification/interfaces/notification-data.interface';
 import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
 import { Order } from '../entities/order.entity';
+import { INotifyOrderType } from '../interfaces/notify-order-type.interface';
 
 @Injectable()
-export class NotifyNewOrderService {
+export class NotifyNewScheduledOrderService implements INotifyOrderType {
     constructor(
         private queueNotificationService: QueueNotificationService,
         private mobileScreenHelper: MobileScreenHelper,
     ) {}
 
-    async execute(order: Order, company: Company) {
+    async send(order: Order, company: Company) {
         const orderId = order.id;
         const companyId = order.companyId;
+        const scheduledTo = order.scheduledTo;
+
+        const readableTime = dayjs(scheduledTo).format('DD/MM/YY HH:mm');
 
         const message: INotificationMessage = {
-            title: 'Novo pedido!',
-            body: `Há uma pedido (#${orderId}) aguardado em ${company.displayName}`,
+            title: 'Novo pedido agendado!',
+            body: `Há uma pedido (#${orderId}) agendado para ${readableTime} aguardado em ${company.displayName}`,
         };
 
         const notificationData: INotificationData = {

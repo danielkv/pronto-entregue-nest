@@ -7,15 +7,16 @@ import {
 } from 'src/modules/notification-association/notification/interfaces/notification-data.interface';
 import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
 import { Order } from '../entities/order.entity';
+import { INotifyOrderType } from '../interfaces/notify-order-type.interface';
 
 @Injectable()
-export class NotifyNewOrderService {
+export class NotifyNewSimpleOrderService implements INotifyOrderType {
     constructor(
         private queueNotificationService: QueueNotificationService,
         private mobileScreenHelper: MobileScreenHelper,
     ) {}
 
-    async execute(order: Order, company: Company) {
+    async send(order: Order, company: Company) {
         const orderId = order.id;
         const companyId = order.companyId;
 
