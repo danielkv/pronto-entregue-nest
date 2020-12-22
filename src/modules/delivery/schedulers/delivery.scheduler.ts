@@ -2,23 +2,24 @@ import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as dayjs from 'dayjs';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { Delivery } from '../entities/delivery.entity';
 import { DeliveryStatusEnum } from '../enums/delivery.status.enum';
+import { NotifyDelayedDeliveryService } from '../services/notify-delayed-delivery.service';
 import { NotifyDeliveryMenService } from '../services/notify-delivery-men.service';
 
 @Injectable()
 export class DeliveryScheduler {
     constructor(
         @InjectRepository(Delivery) private deliveryRepository: Repository<Delivery>,
-        //private notifyDelayedOrderService: NotifyDelayedOrderService,
+        private notifyDelayedDeliveryService: NotifyDelayedDeliveryService,
         private notifyDeliveryMenService: NotifyDeliveryMenService,
     ) {}
 
     @Cron('*/10 * * * * *')
-    async checkForOpenOrders() {
+    async checkForOpenDeliveries() {
         const nonFilteredDeliveries = await this.deliveryRepository.find({
-            where: { status: DeliveryStatusEnum.WAITING_DELIVERY },
+            where: { status: DeliveryStatusEnum.WAITING_DELIVERY, deliveryManId: IsNull() },
             relations: ['company', 'order'],
         });
 
@@ -29,9 +30,9 @@ export class DeliveryScheduler {
 
         // queue notifications
         await Promise.all(
-            deliveries
-                .filter(delivery => delivery?.company && delivery?.order)
-                .map(delivery => this.notifyDeliveryMenService.execute(delivery, delivery.order, delivery.company)),
+            deliveries.map(delivery =>
+                this.notifyDeliveryMenService.execute(delivery, delivery.order, delivery.company),
+            ),
         );
 
         // define time limit for
@@ -47,6 +48,10 @@ export class DeliveryScheduler {
         if (!delayedDeliveries.length) return;
 
         // queue notifications
-        //await Promise.all(delayedDeliveries.map(order => this.notifyDelayedOrderService.execute(order, order.company)));
+        await Promise.all(
+            delayedDeliveries.map(delivery =>
+                this.notifyDelayedDeliveryService.execute(delivery, delivery.order, delivery.company),
+            ),
+        );
     }
 }
