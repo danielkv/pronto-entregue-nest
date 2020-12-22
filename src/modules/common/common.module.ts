@@ -8,6 +8,7 @@ import { PasswordService } from './services/password.service';
 import { TransactionHelper } from './helpers/transactionHelper';
 import { ConfigToMetaService } from './services/config-to-meta.service';
 import { MobileScreenHelper } from './helpers/mobile-redirect.helper';
+import { ConvertTimeHelper } from './helpers/convertTime.helper';
 
 @Global()
 @Module({
@@ -20,6 +21,7 @@ import { MobileScreenHelper } from './helpers/mobile-redirect.helper';
         AddressHelper,
         GetRequestHelper,
         TransactionHelper,
+        ConvertTimeHelper,
 
         // services
         PasswordService,
@@ -33,6 +35,7 @@ import { MobileScreenHelper } from './helpers/mobile-redirect.helper';
         TransactionHelper,
         ConfigToMetaService,
         MobileScreenHelper,
+        ConvertTimeHelper,
     ],
 })
 export class CommonModule {}

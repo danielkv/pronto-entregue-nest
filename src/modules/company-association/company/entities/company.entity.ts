@@ -26,6 +26,7 @@ import { Coupon } from '../../../coupon/entities/coupon.entity';
 import { DeliveryAreaTypeEnum } from 'src/modules/delivery-area/enums/delivery-area-type.enum';
 import { PickUpAreaTypeEnum } from 'src/modules/pickup/enums/pickup-area-type.enum';
 import { Delivery } from 'src/modules/delivery/entities/delivery.entity';
+import { BusinessHour } from '../../business-hour/entities/business-hour.entity';
 
 @Index('addressId', ['addressId'], {})
 @Entity('companies')
@@ -159,6 +160,12 @@ export class Company {
         ratings => ratings.company,
     )
     ratings: Rating[];
+
+    @OneToMany(
+        () => BusinessHour,
+        businessHour => businessHour.company,
+    )
+    businessHour: BusinessHour[];
 
     isOpen?: boolean;
 
