@@ -50,11 +50,11 @@ export interface IMainEvents {
 
     // section
     createSection(event: ICreateCompanySectionEvent): void;
-    updateSection(event: IUpdateCompanySectionEvent): void;
+    updateSection(event: IUpdateCompanySectionEvent): void;*/
 
     // coupon
     createCoupon(event: ICreateCouponEvent): void;
-    updateCoupon(event: IUpdateCouponEvent): void;*/
+    updateCoupon(event: IUpdateCouponEvent): void;
 
     // creditHistory
     createCreditHistory(event: ICreateCreditHistoryEvent): void;
