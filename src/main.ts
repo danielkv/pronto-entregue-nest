@@ -5,7 +5,7 @@ import { JwtCompanyAuthGuard } from './modules/auth/guards/jwt-company-auth.guar
 import { GetRequestHelper } from './modules/common/helpers/get-request.helper';
 
 import * as dayjs from 'dayjs';
-import calendar from 'dayjs/plugin/calendar';
+import * as calendar from 'dayjs/plugin/calendar';
 import 'dayjs/locale/pt-br';
 
 // define dayjs settings
