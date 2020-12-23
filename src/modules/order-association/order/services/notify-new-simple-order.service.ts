@@ -22,7 +22,7 @@ export class NotifyNewSimpleOrderService implements INotifyOrderType {
 
         const message: INotificationMessage = {
             title: 'Novo pedido!',
-            body: `Há uma pedido (#${orderId}) aguardado em ${company.displayName}`,
+            body: `Há um pedido (#${orderId}) aguardado em ${company.displayName}`,
         };
 
         const notificationData: INotificationData = {
