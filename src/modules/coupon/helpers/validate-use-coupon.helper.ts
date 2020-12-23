@@ -1,5 +1,7 @@
+import { DeepPartial } from '@nestjs-query/core';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { OrderInputDTO } from 'src/modules/order-association/order/dtos/order-input.dto';
 import { Order } from 'src/modules/order-association/order/entities/order.entity';
 import { Sale } from 'src/modules/product-association/sale/entities/sale.entity';
 import { In, Raw, Repository } from 'typeorm';
@@ -13,7 +15,7 @@ export class ValidateUseCouponHelper {
         @InjectRepository(Order) private orderRepository: Repository<Order>,
     ) {}
 
-    async validate(order: Order): Promise<boolean> {
+    async validate(order: DeepPartial<OrderInputDTO>): Promise<boolean> {
         const coupon = await this.couponRepository.findOne({
             where: { id: order.couponId },
             relations: ['coupon_companies', 'coupon_products', 'coupon_users'],
@@ -31,7 +33,7 @@ export class ValidateUseCouponHelper {
         return true;
     }
 
-    private async checkRules(coupon: Coupon, order: Order) {
+    private async checkRules(coupon: Coupon, order: DeepPartial<OrderInputDTO>) {
         // check minValue
         if (coupon.minValue > 0) {
             if (order.price + order.discount < coupon.minValue)
@@ -70,7 +72,7 @@ export class ValidateUseCouponHelper {
         return true;
     }
 
-    private async checkForSales(order: Order) {
+    private async checkForSales(order: DeepPartial<OrderInputDTO>) {
         const productIds = order.products.map(product => product.productRelatedId);
 
         const sales = await this.saleRepository.find({
@@ -90,7 +92,7 @@ export class ValidateUseCouponHelper {
         return true;
     }
 
-    private checkRestrictions(coupon: Coupon, order: Order) {
+    private checkRestrictions(coupon: Coupon, order: DeepPartial<OrderInputDTO>) {
         // check companies
         if (coupon?.companies?.length && !coupon.companies.map(company => company.id).includes(order.companyId))
             throw new ForbiddenException('Esse cupom não é aplicável à esse estabelecimento');
