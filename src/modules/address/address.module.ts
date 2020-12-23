@@ -5,12 +5,12 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { AddressInputDTO } from './dtos/address.input.dto';
 import { Address } from './entities/address.entity';
 
-const nestjsQueryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Address]);
+const addressQueryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Address]);
 
 @Module({
     imports: [
         NestjsQueryGraphQLModule.forFeature({
-            imports: [nestjsQueryTypeOrmModule],
+            imports: [addressQueryTypeOrmModule],
             resolvers: [
                 {
                     DTOClass: AddressDTO,
@@ -20,8 +20,8 @@ const nestjsQueryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Address]);
                 },
             ],
         }),
-        nestjsQueryTypeOrmModule,
+        addressQueryTypeOrmModule,
     ],
-    exports: [nestjsQueryTypeOrmModule],
+    exports: [addressQueryTypeOrmModule],
 })
 export class AddressModule {}

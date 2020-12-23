@@ -26,6 +26,7 @@ import { CanceledStatus } from './helpers/status-labels/canceled-status.helper';
 import { WaitingDeliveryStatus } from './helpers/status-labels/waiting-delivery-status.helper';
 import { NotifyDeliveryMenSetService } from './services/notify-delivery-man-set.service';
 import { DeliveryScheduler } from './schedulers/delivery.scheduler';
+import { NotifyDelayedDeliveryService } from './services/notify-delayed-delivery.service';
 
 const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
 
@@ -36,6 +37,7 @@ const deliveryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Delivery]);
         CreateDeliveryFromOrderService,
         ChangeDeliveryStatusService,
 
+        NotifyDelayedDeliveryService,
         NotifyDeliveryChangeStatusService,
         NotifyDeliveryMenService,
         NotifyDeliveryMenSetService,

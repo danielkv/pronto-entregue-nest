@@ -1,10 +1,10 @@
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
-import { CouponDTO } from 'src/modules/coupon/dto/coupon.dto';
-import { Coupon } from 'src/modules/coupon/entities/coupon.entity';
+import { SaleDTO } from './dtos/sale.dto';
+import { Sale } from './entities/sale.entity';
 
-const saleTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Coupon]);
+const saleTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Sale]);
 
 @Module({
     imports: [
@@ -12,8 +12,8 @@ const saleTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Coupon]);
             imports: [saleTypeOrmModule],
             resolvers: [
                 {
-                    DTOClass: CouponDTO,
-                    EntityClass: Coupon,
+                    DTOClass: SaleDTO,
+                    EntityClass: Sale,
                 },
             ],
         }),

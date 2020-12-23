@@ -4,14 +4,14 @@ import { IsBoolean, IsInt, IsNumber, IsOptional, IsString } from 'class-validato
 import { OptionGroupDTO } from '../../option-group/dtos/option.group.dto';
 import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/query-graphql';
 import { SortDirection } from '@nestjs-query/core';
-import { Sale } from '../../sale/entities/sale.entity';
+import { SaleDTO } from '../../sale/dtos/sale.dto';
 
 @ObjectType('Product')
 @FilterableRelation('optionsGroups', () => OptionGroupDTO, {
     defaultFilter: { removed: { isNot: true }, active: { is: true } },
     defaultSort: [{ field: 'order', direction: SortDirection.DESC }],
 })
-@Relation('sale', () => Sale)
+@Relation('sale', () => SaleDTO)
 export class ProductDTO {
     @IsOptional()
     @IsInt()

@@ -22,10 +22,10 @@ const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
     imports: [
         AddressModule,
         CompanyModule,
-        CouponModule,
 
         NestjsQueryGraphQLModule.forFeature({
-            imports: [orderTypeOrmModule],
+            imports: [orderTypeOrmModule, CouponModule],
+
             services: [OrderService],
             assemblers: [OrderAssembler],
             resolvers: [

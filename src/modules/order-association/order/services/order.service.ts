@@ -11,6 +11,7 @@ import { ValidateUseCouponHelper } from 'src/modules/coupon/helpers/validate-use
 export class OrderService extends EventEmitterService<Order, DeepPartial<OrderInputDTO>, DeepPartial<OrderInputDTO>> {
     constructor(
         @InjectAssemblerQueryService(OrderAssembler) readonly service: QueryService<Order>,
+
         private validateUseCouponHelper: ValidateUseCouponHelper,
         protected eventEmitter: NestEventEmitter,
     ) {

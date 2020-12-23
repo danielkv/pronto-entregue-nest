@@ -4,7 +4,6 @@ import { CategoryModule } from './modules/category/category.module';
 import { ConfigModule } from './modules/config/config.module';
 import { CouponModule } from './modules/coupon/coupon.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
-import { ProductModule } from './modules/product-association/product/product.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { RatingModule } from './modules/rating/rating.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -39,7 +38,6 @@ import { ScheduleModule } from '@nestjs/schedule';
         ConfigModule,
         CouponModule,
         DeliveryModule,
-        ProductModule,
 
         PaymentModule,
         RatingModule,
