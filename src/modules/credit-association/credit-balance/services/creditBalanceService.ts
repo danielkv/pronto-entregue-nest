@@ -14,4 +14,10 @@ export class CreditBalanceService extends TypeOrmQueryService<CreditBalance> {
     updateByUserId(userId: User['id'], balance: number) {
         return this.repository.update({ userId }, { value: balance });
     }
+
+    async getByUserId(userId: User['id']): Promise<number> {
+        const creditBalance = await this.repository.findOne({ userId });
+
+        return creditBalance.value;
+    }
 }

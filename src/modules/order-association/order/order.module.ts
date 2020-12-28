@@ -15,6 +15,7 @@ import { CompanyModule } from 'src/modules/company-association/company/company.m
 import { TasksService } from './schedulers/order.scheduler';
 import { NotifyDelayedOrderService } from './services/notify-delayed-order.service';
 import { CouponModule } from 'src/modules/coupon/coupon.module';
+import { CreditBalanceModule } from 'src/modules/credit-association/credit-balance/credit-balance.module';
 
 const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
 
@@ -24,7 +25,7 @@ const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
         CompanyModule,
 
         NestjsQueryGraphQLModule.forFeature({
-            imports: [orderTypeOrmModule, CouponModule],
+            imports: [orderTypeOrmModule, CouponModule, CreditBalanceModule, CompanyModule],
 
             services: [OrderService],
             assemblers: [OrderAssembler],

@@ -3,6 +3,7 @@ import { OrderType, OrderTypeEnum } from '../enums/order.type.enum';
 import { IsInt, IsNumber, IsString } from 'class-validator';
 import { AddressInputDTO } from 'src/modules/address/dtos/address.input.dto';
 import { OrderProductInputDTO } from '../../order-product/dtos/order-product-input.dto';
+import { CreditHistoryInputDTO } from 'src/modules/credit-association/credit-history/dtos/credit-history-input.dto';
 
 @InputType('OrderInput')
 export class OrderInputDTO {
@@ -43,8 +44,10 @@ export class OrderInputDTO {
     @Field(() => ID)
     companyId: number;
 
-    @Field(() => ID, { nullable: true })
-    creditHistoryId: number;
+    creditHistory: CreditHistoryInputDTO;
+
+    @Field({ nullable: true, defaultValue: false })
+    useCredit: boolean;
 
     @Field(() => ID, { nullable: true })
     couponId: number;

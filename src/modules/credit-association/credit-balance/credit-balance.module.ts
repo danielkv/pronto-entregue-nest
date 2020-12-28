@@ -5,10 +5,14 @@ import { CreditBalance } from './entities/credit.balance.entity';
 import { CreditBalanceListener } from './listeners/credit-balance.listener';
 import { CalculateUserBalanceService } from './services/calculate-user-balance.service';
 import { CreditBalanceService } from './services/creditBalanceService';
+import { ValidateUserBalanceService } from './services/validate-user-balance.service';
 
 @Module({
     imports: [CreditHistoryModule, NestjsQueryTypeOrmModule.forFeature([CreditBalance])],
     providers: [
+        // helpers
+        ValidateUserBalanceService,
+
         // listeners
         CreditBalanceListener,
 
@@ -16,5 +20,6 @@ import { CreditBalanceService } from './services/creditBalanceService';
         CreditBalanceService,
         CalculateUserBalanceService,
     ],
+    exports: [ValidateUserBalanceService],
 })
 export class CreditBalanceModule {}
