@@ -1,14 +1,11 @@
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
 import { Injectable } from '@nestjs/common';
 import { User } from '../../../user-association/user/entities/user.entity';
-import { CreditHistoryDTO } from '../dtos/credit.history.dto';
-import { CreditHistoryRepository } from '../repositories/credit-history.repository';
+import { CreditHistory } from '../../credit-history/entities/credit.history.entity';
 
 @Injectable()
-export class CalculateUserCreditService {
-    constructor(
-        @InjectQueryService(CreditHistoryRepository) private creditHistoriesService: QueryService<CreditHistoryDTO>,
-    ) {}
+export class CalculateUserBalanceService {
+    constructor(@InjectQueryService(CreditHistory) private creditHistoriesService: QueryService<CreditHistory>) {}
 
     async execute(userId: User['id']): Promise<number> {
         const creditHistoriesSum = await this.creditHistoriesService.aggregate(

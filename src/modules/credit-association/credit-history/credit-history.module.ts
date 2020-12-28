@@ -1,30 +1,25 @@
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Module } from '@nestjs/common';
-import { CreditHistoryFilterDTO } from './dtos/credit-history.filters.dto';
 import { CreditHistoryDTO } from './dtos/credit.history.dto';
-import { CreditHistoryRepository, CreditHistoryRepositoryProvider } from './repositories/credit-history.repository';
-import { CalculateUserCreditService } from './services/calculate-user-credit.service';
+import { CreditHistory } from './entities/credit.history.entity';
+
+const creditHistoryTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([CreditHistory]);
 
 @Module({
     imports: [
-        CreditHistoryFilterDTO,
         NestjsQueryGraphQLModule.forFeature({
-            imports: [NestjsQueryTypeOrmModule.forFeature([CreditHistoryRepository])],
+            imports: [creditHistoryTypeOrmModule],
+
             resolvers: [
                 {
                     DTOClass: CreditHistoryDTO,
-                    EntityClass: CreditHistoryRepository,
+                    EntityClass: CreditHistory,
                 },
             ],
         }),
+        creditHistoryTypeOrmModule,
     ],
-    providers: [
-        // services
-        CalculateUserCreditService,
-
-        // repositories
-        CreditHistoryRepositoryProvider,
-    ],
+    exports: [creditHistoryTypeOrmModule],
 })
 export class CreditHistoryModule {}

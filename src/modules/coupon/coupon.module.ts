@@ -8,14 +8,11 @@ import { Coupon } from './entities/coupon.entity';
 
 import { ValidateUseCouponHelper } from './helpers/validate-use-coupon.helper';
 
-const couponTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Coupon]);
-
-const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
+const couponTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Coupon, Order]);
 
 @Module({
     imports: [
         SaleModule,
-        orderTypeOrmModule,
         couponTypeOrmModule,
 
         NestjsQueryGraphQLModule.forFeature({
