@@ -16,7 +16,7 @@ export class DeliveryScheduler {
         private notifyDeliveryMenService: NotifyDeliveryMenService,
     ) {}
 
-    @Cron('*/10 * * * * *')
+    @Cron('30 */2 * * * *')
     async checkForOpenDeliveries() {
         const nonFilteredDeliveries = await this.deliveryRepository.find({
             where: { status: DeliveryStatusEnum.WAITING_DELIVERY, deliveryManId: IsNull() },

@@ -5,11 +5,7 @@ import { NotifyNewSimpleOrderService } from './notify-new-simple-order.service';
 import { NotifyNewReservedOrderService } from './notify-new-reserved-order.service';
 import { NotifyNewScheduledOrderService } from './notify-new-scheduled-order.service';
 import { OrderModeEnum } from '../enums/order-mode-enum';
-import { INotifyOrderMode } from '../interfaces/notify-order-mode.interface';
-
-type OrderNotifierType = {
-    [K in OrderModeEnum]: INotifyOrderMode;
-};
+import { OrderNotifierType } from '../types/order-notifier.type';
 
 @Injectable()
 export class NotifyNewOrderService {
