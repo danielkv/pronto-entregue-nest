@@ -8,10 +8,10 @@ import {
 } from 'src/modules/notification-association/notification/interfaces/notification-data.interface';
 import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
 import { Order } from '../entities/order.entity';
-import { INotifyOrderType } from '../interfaces/notify-order-type.interface';
+import { INotifyOrderMode } from '../interfaces/notify-order-mode.interface';
 
 @Injectable()
-export class NotifyNewScheduledOrderService implements INotifyOrderType {
+export class NotifyNewScheduledOrderService implements INotifyOrderMode {
     constructor(
         private queueNotificationService: QueueNotificationService,
         private mobileScreenHelper: MobileScreenHelper,

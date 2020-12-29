@@ -23,6 +23,7 @@ import { OrderStatusEnum } from '../enums/order.status.enum';
 import { OrderType, OrderTypeEnum } from '../enums/order.type.enum';
 import { GeoPoint } from '../../../common/types/geo-point';
 import { GeoPointHelper } from '../../../common/helpers/geo.point.helper';
+import { OrderModeEnum } from '../enums/order-mode-enum';
 
 const geoPointHelper = new GeoPointHelper();
 
@@ -154,6 +155,9 @@ export class Order {
 
     @Column('datetime', { name: 'scheduledTo', nullable: true })
     scheduledTo: Date;
+
+    @Column({ type: 'enum', enum: OrderModeEnum, name: 'mode', default: OrderModeEnum.SIMPLE })
+    mode: OrderModeEnum;
 
     @OneToMany(
         () => Delivery,

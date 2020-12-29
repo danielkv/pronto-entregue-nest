@@ -81,4 +81,18 @@ export class CompanyService extends TypeOrmQueryService<Company> {
 
         return orderTypes;
     }
+
+    async getCompanyWithMetas(companyId: number): Promise<Company> {
+        const query = this.companyRepository.createQueryBuilder('company');
+
+        query.whereInIds(companyId);
+
+        this.companyRepository.applyBaseSelection(query);
+
+        const { entities: companies, raw } = await query.getRawAndEntities();
+
+        const companiesReturn = this.companyRepository.mapProperties(companies, raw);
+
+        return companiesReturn[0];
+    }
 }

@@ -1,44 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { MobileScreenHelper } from 'src/modules/common/helpers/mobile-redirect.helper';
 import { Company } from 'src/modules/company-association/company/entities/company.entity';
-import {
-    INotificationData,
-    INotificationMessage,
-} from 'src/modules/notification-association/notification/interfaces/notification-data.interface';
-import { QueueNotificationService } from 'src/modules/notification-association/notification/services/queue-notification.service';
 import { Order } from '../entities/order.entity';
+import { NotifyNewSimpleOrderService } from './notify-new-simple-order.service';
+import { NotifyNewReservedOrderService } from './notify-new-reserved-order.service';
+import { NotifyNewScheduledOrderService } from './notify-new-scheduled-order.service';
+import { OrderModeEnum } from '../enums/order-mode-enum';
+import { INotifyOrderMode } from '../interfaces/notify-order-mode.interface';
+
+type OrderNotifierType = {
+    [K in OrderModeEnum]: INotifyOrderMode;
+};
 
 @Injectable()
 export class NotifyNewOrderService {
+    orderModeNotifier: OrderNotifierType;
+
     constructor(
-        private queueNotificationService: QueueNotificationService,
-        private mobileScreenHelper: MobileScreenHelper,
-    ) {}
+        private notifyNewReservedOrderService: NotifyNewReservedOrderService,
+        private notifyNewScheduledOrderService: NotifyNewScheduledOrderService,
+        private notifyNewSimpleOrderService: NotifyNewSimpleOrderService,
+    ) {
+        this.orderModeNotifier = {
+            [OrderModeEnum.RESERVED]: this.notifyNewReservedOrderService,
+            [OrderModeEnum.SCHEDULED]: this.notifyNewScheduledOrderService,
+            [OrderModeEnum.SIMPLE]: this.notifyNewSimpleOrderService,
+        };
+    }
 
     async execute(order: Order, company: Company) {
-        const orderId = order.id;
-        const companyId = order.companyId;
-
-        const message: INotificationMessage = {
-            title: 'Novo pedido!',
-            body: `Há uma pedido (#${orderId}) aguardado em ${company.displayName}`,
-        };
-
-        const notificationData: INotificationData = {
-            ...message,
-            data: {
-                action: 'orderCreated',
-                variant: 'warning',
-                orderId,
-                companyId,
-                redirect: this.mobileScreenHelper.find('companyOrders', {
-                    refetchOrders: true,
-                }),
-                alertData: message,
-            },
-        };
-
-        // queue notification
-        this.queueNotificationService.execute({ group: { name: 'company', id: company.id } }, notificationData);
+        this.orderModeNotifier[order.mode].send(order, company);
     }
 }

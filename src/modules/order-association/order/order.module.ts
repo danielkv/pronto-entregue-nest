@@ -16,6 +16,9 @@ import { TasksService } from './schedulers/order.scheduler';
 import { NotifyDelayedOrderService } from './services/notify-delayed-order.service';
 import { CouponModule } from 'src/modules/coupon/coupon.module';
 import { CreditBalanceModule } from 'src/modules/credit-association/credit-balance/credit-balance.module';
+import { NotifyNewReservedOrderService } from './services/notify-new-reserved-order.service';
+import { NotifyNewSimpleOrderService } from './services/notify-new-simple-order.service';
+import { NotifyNewScheduledOrderService } from './services/notify-new-scheduled-order.service';
 
 const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
 
@@ -48,6 +51,10 @@ const orderTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([Order]);
         ChangeOrderStatusService,
         NotifyNewOrderService,
         NotifyDelayedOrderService,
+
+        NotifyNewReservedOrderService,
+        NotifyNewScheduledOrderService,
+        NotifyNewSimpleOrderService,
 
         // resolvers
         OrderResolver,

@@ -6,6 +6,7 @@ import { FilterableField, FilterableRelation, Relation } from '@nestjs-query/que
 import { PaymentMethodDTO } from 'src/modules/payment/dtos/payment.method.dto';
 import { AddressDTO } from 'src/modules/address/dtos/address.dto';
 import { OrderProductDTO } from '../../order-product/dtos/order.product.dto';
+import { OrderModeEnum } from '../enums/order-mode-enum';
 
 @ObjectType('Order')
 @Relation('paymentMethod', () => PaymentMethodDTO)
@@ -66,4 +67,7 @@ export class OrderDTO {
 
     @FilterableField({ nullable: true })
     scheduledTo: Date;
+
+    @FilterableField(() => OrderModeEnum, { nullable: false })
+    mode: OrderModeEnum;
 }

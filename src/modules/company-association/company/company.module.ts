@@ -10,7 +10,7 @@ import { CompanyService } from './services/company.service';
 const companyTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([CompanyRepository]);
 
 @Module({
-    providers: [CompanyQueryResolver],
+    providers: [CompanyQueryResolver, CompanyService],
     imports: [
         NestjsQueryGraphQLModule.forFeature({
             imports: [companyTypeOrmModule],
@@ -28,6 +28,6 @@ const companyTypeOrmModule = NestjsQueryTypeOrmModule.forFeature([CompanyReposit
         }),
         companyTypeOrmModule,
     ],
-    exports: [companyTypeOrmModule],
+    exports: [companyTypeOrmModule, CompanyService],
 })
 export class CompanyModule {}

@@ -4,6 +4,7 @@ import { IsInt, IsNumber, IsString } from 'class-validator';
 import { AddressInputDTO } from 'src/modules/address/dtos/address.input.dto';
 import { OrderProductInputDTO } from '../../order-product/dtos/order-product-input.dto';
 import { CreditHistoryInputDTO } from 'src/modules/credit-association/credit-history/dtos/credit-history-input.dto';
+import { OrderModeEnum } from '../enums/order-mode-enum';
 
 @InputType('OrderInput')
 export class OrderInputDTO {
@@ -44,11 +45,6 @@ export class OrderInputDTO {
     @Field(() => ID)
     companyId: number;
 
-    creditHistory: CreditHistoryInputDTO;
-
-    @Field({ nullable: true, defaultValue: false })
-    useCredit: boolean;
-
     @Field(() => ID, { nullable: true })
     couponId: number;
 
@@ -57,4 +53,12 @@ export class OrderInputDTO {
 
     @Field(() => [OrderProductInputDTO])
     products: OrderProductInputDTO[];
+
+    // usado para criar um novo histórico
+    @Field({ nullable: true, defaultValue: false })
+    useCredit: boolean;
+    creditHistory: CreditHistoryInputDTO;
+
+    // pode ser definido apenas pelo backend
+    mode: OrderModeEnum;
 }
